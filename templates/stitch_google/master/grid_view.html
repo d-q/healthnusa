@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-custom-blue {
+            background-color: #4A90E2;
+        }
+        .text-custom-blue {
+            color: #4A90E2;
+        }
+        .bg-custom-gray {
+            background-color: #F7F8FA;
+        }
+        aside nav a.active,
+        aside nav a:hover {
+            background-color: #E9F2FE;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        aside nav a.active .material-icons,
+        aside nav a:hover .material-icons {
+            color: #4A90E2;
+        }
+        aside nav a {
+            color: #A0AEC0;
+        }
+        aside nav a .material-icons {
+            color: #A0AEC0;
+        }
+        .material-icons.md-30 {
+            font-size: 30px;
+        }
+        .group:hover .group-hover\:block {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-custom-gray">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white flex flex-col p-6">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800">Mario Hospital</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs mt-1">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs mt-1">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">badge</span>
+                        <span class="text-xs mt-1">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs mt-1">Room</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs mt-1">Payment</span>
+                    </a>
+                </div>
+                <span
+                    class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs mt-1">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs mt-1">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs mt-1">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span>
+                    Logout
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <div class="flex items-center">
+                    <button class="p-2 bg-white rounded-lg shadow mr-4">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Doctors</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiri3a6ED25vF7lzVZ-nJ6ve_iS-xexp41q1sR3_-unUTDtDRUlNDB5XusFaH3a7BK2LpZ6eYxl-JVdAvvXdxWZYdeWctpFtmB308-RSjKk3zCMAzv_DnNqhAf_g_n39X_tMS-Z27o1QcHNHFt_RQI1JexXeey3mgem3wkHxgKySMfYxjdbN0B75P99D-sT3iCtKZ1fs-P-jYirBewB6t1oJSWIk0KrhBE2Z0D7dbBqAwqz2_mUhsun_8tUK7A4iK_oLgXgQEUD8E" />
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+            <div class="grid grid-cols-1 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center bg-gray-100 rounded-lg p-1">
+                            <button class="p-2 rounded-lg">
+                                <span class="material-icons text-gray-500">list</span>
+                            </button>
+                            <button class="p-2 rounded-lg bg-white shadow">
+                                <span class="material-icons text-custom-blue">grid_view</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="relative">
+                                <span
+                                    class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                <input
+                                    class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                                    placeholder="Search" type="text" />
+                            </div>
+                            <button
+                                class="bg-custom-blue text-white font-semibold py-2 px-4 rounded-lg flex items-center">
+                                <span class="material-icons mr-2">add</span>
+                                Add Doctor
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div
+                            class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
+                            <img alt="Dr. John Smith" class="w-24 h-24 rounded-full mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBigeOiJzlQFE-ma3B1w4HxJQlxBuM1GEW4XohqYF76TY3ZdOvvEWhFVtFh2y174QoQUcA9u9BSTQZSFZPoqpp3PYQw2u0czeMj3C2UcaAAA-w3utR8AdtJBU3vpltWvQsqwCepQ792ro4pmXvD5dBsO8KFvMvZB3SXd1cdhikwjmjhSrXluKTQvhLJjLHUS470O_-ZmDNnz9DJJ3r5HsYoS8a8pq2HEjtE3OoYCO7Sy-AYMidCqfqFwL8If-JCr3DPd10m_HR3HxE" />
+                            <p class="font-bold text-gray-800">Dr. John Smith</p>
+                            <p class="text-sm text-gray-500">Heart Specialist</p>
+                            <span
+                                class="mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Available
+                            </span>
+                            <div class="mt-4 flex space-x-2">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative group">
+                                    <button
+                                        class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
+                            <img alt="Dr. Sarah Johnson" class="w-24 h-24 rounded-full mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuljr8ohdOaumoVzY7-FkAp65t92rUC93nBkj8SD-gskTE_jaJBT6JhWyOx_xu6a16KVTzx2TaDiWMh4LeYZhJtUk6VdI_ZHKDz6Whxi_Nvmjiu6dixycO13KpKp1JpnzTP83KpwLdG732hpEmm0zCNsH276d4xoj2HAPEKOcK45H4GUo8hhAieHIKHjjoyfhwdVKl-kDKy_h0OrSi6hamhFyiGeajsVvAk8A2IlYkrFvsqHwlwN9733xu3Kq_iew8GWZbpnfgNIg" />
+                            <p class="font-bold text-gray-800">Dr. Sarah Johnson</p>
+                            <p class="text-sm text-gray-500">Lungs Specialist</p>
+                            <span
+                                class="mt-3 bg-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                                Not Available
+                            </span>
+                            <div class="mt-4 flex space-x-2">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative group">
+                                    <button
+                                        class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
+                            <img alt="Dr. Michael Lee" class="w-24 h-24 rounded-full mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5pjp8tPgk3y5B_bPDWUUAVyGA1jB3lwm5WN9OoIy70OC7O7oenavtpiUhzs4ixeohBgu0FQ5wp_hsT03kJlUXeMWuGeuEVsACiscxSVD1oPfPAC7ylph0Sa0Ub-s8_kY-Sip_AnDPTddPmF2HIzaXsTZ2HIofoVNN7BQrnnNpmgjXcBu-YLA25oudCFaCGL9eJZzV5g8-FXJTvVGyJmNIq8WPqHXJvZRmdn5KfN-20h-9eoRC0i1iJUZglC8eoZiWpfxzB83pDdM" />
+                            <p class="font-bold text-gray-800">Dr. Michael Lee</p>
+                            <p class="text-sm text-gray-500">Dental Specialist</p>
+                            <span
+                                class="mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Available
+                            </span>
+                            <div class="mt-4 flex space-x-2">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative group">
+                                    <button
+                                        class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
+                            <img alt="Dr. Emily White" class="w-24 h-24 rounded-full mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlv6rPstOMOpzBlgPBTX5APlFTp_0mu4pZKMXO6CXi6X7P7i-PagbC8OWs_EH7KLzM0HTTpiADaDJO8wNHSGFb0fYJGixEgS8ZpdwDMAWmXSad4pJ_NRUugvs1f_72iLwPWei-iWx6RCtU_xwJWNNGk4ba87ixJku14A3IqG2L_pJlah52Oy-pO8EGJuRNeR4IhzB-LtehLEeJLzSOuns1QTknq_2y5CSKRDvvqUIJ-mH2kB_fgLW9klmmkRbfGNHufGUDdl-mlnQ" />
+                            <p class="font-bold text-gray-800">Dr. Emily White</p>
+                            <p class="text-sm text-gray-500">Brain Specialist</p>
+                            <span
+                                class="mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Available
+                            </span>
+                            <div class="mt-4 flex space-x-2">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative group">
+                                    <button
+                                        class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
+                            <img alt="Dr. Robert Brown" class="w-24 h-24 rounded-full mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkm2AknluWhTNGGe3q_iQdyyuYH25rX3L3Dou4JoUL8argizaeVsssOCS6pT1pMFYJrkUVqQjlW9wY-8GCSSLfx0AnfzQIs6c4kDk6xnS1pP_tKmRBHQihc0_SqUF4YnuwEYGOLETDJVypYaQXExfYyD3oj7ZS1K7Oz3Zsk17L7d9_PjfNMdQVlDpLACy_92ezonQucRXOlGpuLj1xPCaSQxex0HWvZPgiCutFhjnJ5XLG5Z0oNmW-3fqkw7pMhkuv5e_nTWuZDLQ" />
+                            <p class="font-bold text-gray-800">Dr. Robert Brown</p>
+                            <p class="text-sm text-gray-500">Orthopedic</p>
+                            <span
+                                class="mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Available
+                            </span>
+                            <div class="mt-4 flex space-x-2">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative group">
+                                    <button
+                                        class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
+                            <img alt="Dr. Jessica Davis" class="w-24 h-24 rounded-full mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB3UqBYil5hb4f5NlNNac8jfluGU_ptL2LIlypFy1s742u_sh4z3ZHL1XZa1Y2JJbI613j0JWJRJXQCs53XqE9_Kqza2DsuM0sY_J-yXuMJeknTDL5LAPIZVR9RIKN4JjcZO45RJLM18aIbhyVGWCBNSNw50DokkfLAhGjzwToirYpamMqRKESCX5VUKq3L5pp9KTM_g4p0-032EA-Dzd1zuiFRqLC4xMlkHOkuzldniRcl-emQUiXCJTuvllfoqTSlSoRXVr0BLs" />
+                            <p class="font-bold text-gray-800">Dr. Jessica Davis</p>
+                            <p class="text-sm text-gray-500">Pediatrician</p>
+                            <span
+                                class="mt-3 bg-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                                Not Available
+                            </span>
+                            <div class="mt-4 flex space-x-2">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative group">
+                                    <button
+                                        class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
+                            <img alt="Dr. David Wilson" class="w-24 h-24 rounded-full mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3cPl99ApJsco_Hxbq2E_W6GkCCjHOIL84ve93-GNoo_8YYduv0T65bjxawgz4lOxKgqoMTcu3J0PgbDe091lOezgvsJqVdvEUFOaxC-03GUkXlivCA80QSfrT7bl942KnsUd9EImsunwBEZETspbi13EzTXriQmkuLYOHcSJCfHJG_iUzsw343r5SdjUeYga_kikeDWi9Z-yydioB7_Zcq8FGURLF3hqF0B7sJlkAEao7CF0v1Mb5HiODKma0QHilGBcrBPgWm2M" />
+                            <p class="font-bold text-gray-800">Dr. David Wilson</p>
+                            <p class="text-sm text-gray-500">Cardiologist</p>
+                            <span
+                                class="mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Available
+                            </span>
+                            <div class="mt-4 flex space-x-2">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative group">
+                                    <button
+                                        class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
+                            <img alt="Dr. Linda Taylor" class="w-24 h-24 rounded-full mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXXMMsgHnYtkAErHS6tjZIXfwJqF684bnbLY-8u7NUJgVMP53zUQSf6VGHceIp-YTtwv0WWZCwaECtuvuxVQ4LgfpPQsHq7aDSSsBmA40esgXE9iPjLWngqi9RSx7NYlzm76VcUv-8Xs8TeZxNaIMRTw-UgzhLpzAXSEWcvf4LgrbPQCm4L7ltQjwkxSjeeXHS0sM1MAQrujoaLEycrky7aNeT-Z6DBhRVNHzxavnImBudVzmzRDQ16lildf6KgCU38R2ZdtUe5CQ" />
+                            <p class="font-bold text-gray-800">Dr. Linda Taylor</p>
+                            <p class="text-sm text-gray-500">Dermatologist</p>
+                            <span
+                                class="mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Available
+                            </span>
+                            <div class="mt-4 flex space-x-2">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative group">
+                                    <button
+                                        class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center mt-6">
+                        <div class="flex items-center space-x-1">
+                            <button
+                                class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">Previous</button>
+                            <button class="px-3 py-1 border rounded-lg bg-custom-blue text-white">1</button>
+                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">2</button>
+                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">3</button>
+                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

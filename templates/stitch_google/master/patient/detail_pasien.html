@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-custom-blue {
+            background-color: #4A90E2;
+        }
+        .text-custom-blue {
+            color: #4A90E2;
+        }
+        .bg-custom-gray {
+            background-color: #F7F8FA;
+        }
+        aside nav a.active,
+        aside nav a:hover {
+            background-color: #E9F2FE;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        aside nav a.active .material-icons,
+        aside nav a:hover .material-icons {
+            color: #4A90E2;
+        }
+        aside nav a {
+            color: #A0AEC0;
+        }
+        aside nav a .material-icons {
+            color: #A0AEC0;
+        }
+        .material-icons.md-30 {
+            font-size: 30px;
+        }
+        .nav-link.active {
+            border-bottom: 2px solid #4A90E2;
+            color: #4A90E2;
+            font-weight: 600;
+        }
+        .nav-link {
+            color: #6B7280;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover {
+            color: #4A90E2;
+            border-bottom: 2px solid #4A90E2;
+        }
+    </style>
+</head>
+
+<body class="bg-custom-gray">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white flex flex-col p-6">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800">Mario Hospital</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs mt-1">Patients</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs mt-1">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">badge</span>
+                        <span class="text-xs mt-1">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs mt-1">Room Allotment</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs mt-1">Payment</span>
+                    </a>
+                </div>
+                <span
+                    class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs mt-1">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs mt-1">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs mt-1">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span> Logout
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto" x-data="{ deleteModalOpen: false, activeTab: 'detail' }">
+            <header class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Detail Pasien</h2>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiri3a6ED25vF7lzVZ-nJ6ve_iS-xexp41q1sR3_-unUTDtDRUlNDB5XusFaH3a7BK2LpZ6eYxl-JVdAvvXdxWZYdeWctpFtmB308-RSjKk3zCMAzv_DnNqhAf_g_n39X_tMS-Z27o1QcHNHFt_RQI1JexXeey3mgem3wkHxgKySMfYxjdbN0B75P99D-sT3iCtKZ1fs-P-jYirBewB6t1oJSWIk0KrhBE2Z0D7dbBqAwqz2_mUhsun_8tUK7A4iK_oLgXgQEUD8E" />
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-[30%] w-full">
+                    <div class="bg-white p-6 rounded-2xl shadow-md h-full">
+                        <div class="flex flex-col items-center">
+                            <img alt="Foto Profil Pasien" class="w-40 h-40 rounded-full object-cover shadow-lg mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH9sG1RR-ygL90n66JGGvRFdJP_a5D8HK6CmWoRHRG2xoG6j_pFt-s1yTi5SMnYp3W77_-K60Gk7dkeY6xbds1VQdn9cPPbyqsedOMmnllkjKYYOfBqgU1zv16_3UVLQ4gB3j8Qm6Qj3ftxfC5q3FGZkXtHkUk0KyQvNfglpbX-wSNdJi5SSaz4zA9Eass_N-K8ho8bE2onR0B59ZnDGnV3eH5S84VhOLZyZYEfp5E0uuRHYnQluGehOGSrfBDAPsA4xEho7zvcMY" />
+                            <h3 class="text-xl font-bold text-gray-800 text-center">Sari Indah Lestari</h3>
+                            <p class="text-custom-blue font-semibold text-base text-center mb-4">MRN: MR-2024-001</p>
+                            <div class="w-full space-y-3 text-sm text-gray-700">
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 mr-3">badge</span>
+                                    <span>NIK: 3273024508900001</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 mr-3">phone</span>
+                                    <span>082298765432</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 mr-3">wc</span>
+                                    <span>Perempuan</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="material-icons text-gray-500 mr-3 mt-1">cake</span>
+                                    <span>Bandung, 08 Mei 1990 (33 tahun)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="material-icons text-gray-500 mr-3 mt-1">location_on</span>
+                                    <span>Jl. Melati No. 45, RT 03/RW 05, Bandung</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 mr-3">monitor_heart</span>
+                                    <span class="font-medium">Status:</span>
+                                    <span
+                                        class="ml-2 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 border-t pt-6 w-full space-y-3">
+                                <h3 class="text-base font-semibold text-gray-800 mb-2 text-center">Aksi</h3>
+                                <button
+                                    class="w-full bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center"
+                                    type="button">
+                                    <span class="material-icons mr-2 text-base">edit</span> Ubah Data
+                                </button>
+                                <button @click="deleteModalOpen = true"
+                                    class="w-full bg-red-500 text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 flex items-center justify-center"
+                                    type="button">
+                                    <span class="material-icons mr-2 text-base">delete</span> Hapus Pasien
+                                </button>
+                                <button
+                                    class="w-full py-2 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 flex items-center justify-center"
+                                    type="button">
+                                    <span class="material-icons mr-2 text-base">arrow_back</span> Kembali
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-[70%] w-full">
+                    <div class="bg-white p-6 rounded-2xl shadow-md h-full">
+                        <div class="border-b border-gray-200 mb-6">
+                            <nav aria-label="Tabs" class="-mb-px flex space-x-6 text-sm">
+                                <a :class="{ 'active': activeTab === 'detail' }" @click.prevent="activeTab = 'detail'"
+                                    class="nav-link active flex items-center space-x-2" href="#">
+                                    <span class="material-icons text-sm">person</span>
+                                    <span>Detail Pasien</span>
+                                </a>
+                                <a :class="{ 'active': activeTab === 'appointment' }"
+                                    @click.prevent="activeTab = 'appointment'" class="nav-link flex items-center space-x-2" href="#">
+                                    <span class="material-icons text-sm">event_note</span>
+                                    <span>Appointment</span>
+                                </a>
+                                <a :class="{ 'active': activeTab === 'resep' }" @click.prevent="activeTab = 'resep'"
+                                    class="nav-link flex items-center space-x-2" href="#">
+                                    <span class="material-icons text-sm">local_pharmacy</span>
+                                    <span>Resep</span>
+                                </a>
+                                <a :class="{ 'active': activeTab === 'billing' }" @click.prevent="activeTab = 'billing'"
+                                    class="nav-link flex items-center space-x-2" href="#">
+                                    <span class="material-icons text-sm">receipt</span>
+                                    <span>History Bill</span>
+                                </a>
+                                <a :class="{ 'active': activeTab === 'penjamin' }" @click.prevent="activeTab = 'penjamin'"
+                                    class="nav-link flex items-center space-x-2" href="#">
+                                    <span class="material-icons text-sm">security</span>
+                                    <span>Penjamin</span>
+                                </a>
+                            </nav>
+                        </div>
+                        
+                        <!-- Detail Pasien Tab -->
+                        <div class="text-gray-700 max-h-[calc(100vh-250px)] overflow-y-auto pr-2"
+                            x-show="activeTab === 'detail'">
+                            
+                            <!-- Identitas Umum -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Identitas Umum</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Nama Lengkap</p>
+                                        <p>Sari Indah Lestari</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Medical Record Number</p>
+                                        <p>MR-2024-001</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">NIK</p>
+                                        <p>3273024508900001</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Nama Ibu Kandung</p>
+                                        <p>Siti Aminah</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Tempat Lahir</p>
+                                        <p>Bandung</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Tanggal Lahir</p>
+                                        <p>08 Mei 1990</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Jenis Kelamin</p>
+                                        <p>Perempuan</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Agama</p>
+                                        <p>Islam</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Suku</p>
+                                        <p>Sunda</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Kemampuan Bahasa</p>
+                                        <p>Indonesia, Sunda, Inggris</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alamat KTP -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Alamat Sesuai KTP</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                                    <div class="md:col-span-2">
+                                        <p class="font-semibold text-gray-600">Alamat Lengkap</p>
+                                        <p>Jl. Melati No. 45, Sukajadi</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">RT/RW</p>
+                                        <p>003/005</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Kelurahan/Desa</p>
+                                        <p>Sukajadi</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Kecamatan</p>
+                                        <p>Sukajadi</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Kota/Kabupaten</p>
+                                        <p>Bandung</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Kode Pos</p>
+                                        <p>40161</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Provinsi</p>
+                                        <p>Jawa Barat</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Negara</p>
+                                        <p>Indonesia</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alamat Domisili -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Alamat Domisili Saat Ini</h3>
+                                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg mb-4">
+                                    <p class="text-sm text-blue-800">Alamat domisili sama dengan alamat KTP</p>
+                                </div>
+                            </div>
+
+                            <!-- Informasi Kontak -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Informasi Kontak & Personal</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Telepon Rumah</p>
+                                        <p>022-7654321</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Nomor HP</p>
+                                        <p>082298765432</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Pendidikan</p>
+                                        <p>S1 - Sarjana</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Pekerjaan</p>
+                                        <p>Karyawan Swasta</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600">Status Pernikahan</p>
+                                        <p>Menikah</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Riwayat Alergi -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Riwayat Alergi</h3>
+                                <ul class="list-disc list-inside space-y-2 text-sm">
+                                    <li>
+                                        <span class="font-semibold">Debu:</span> Reaksi ringan (bersin-bersin, mata berair).
+                                    </li>
+                                    <li>
+                                        <span class="font-semibold">Udang:</span> Reaksi sedang (gatal-gatal, ruam kulit).
+                                    </li>
+                                    <li>
+                                        <span class="font-semibold">Penisilin:</span> Reaksi berat (sesak napas, bengkak).
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Catatan Medis Penting -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Catatan Medis Penting</h3>
+                                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg">
+                                    <p class="text-sm text-yellow-800">Pasien memiliki riwayat penyakit asma sejak kecil. Harap
+                                        berhati-hati dalam pemberian obat yang dapat memicu serangan asma. Terakhir kali
+                                        kambuh pada tanggal 15 Januari 2024 karena kelelahan dan cuaca dingin.</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!-- Appointment Tab -->
+                        <div class="text-gray-700 max-h-[calc(100vh-250px)] overflow-y-auto" style="display: none;"
+                            x-show="activeTab === 'appointment'">
+                            <div class="flex justify-between items-center mb-6 sticky top-0 bg-white z-10 py-4">
+                                <h3 class="text-lg font-bold text-gray-800">Daftar Appointment</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="relative">
+                                        <input class="pl-10 pr-4 py-2 border rounded-lg text-sm"
+                                            placeholder="Cari appointment..." type="text" />
+                                        <span
+                                            class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                    </div>
+                                    <button
+                                        class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center">
+                                        <span class="material-icons mr-2 text-base">add</span> Buat Appointment
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="space-y-4 pr-2">
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <p class="font-semibold text-gray-800">25 Juli 2024 - 10:00 WIB</p>
+                                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Confirmed</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm">Dokter: Dr. Ahmad Wahyu, Sp.P</p>
+                                    <p class="text-gray-600 text-sm">Spesialisasi: Pulmonologi</p>
+                                    <p class="text-gray-600 text-sm">Ruangan: R. Konsultasi 3</p>
+                                    <p class="text-gray-600 text-sm">Catatan: Kontrol rutin asma</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Resep Tab -->
+                        <div class="text-gray-700 max-h-[calc(100vh-250px)] overflow-y-auto" style="display: none;"
+                            x-show="activeTab === 'resep'">
+                            <div class="flex justify-between items-center mb-6 sticky top-0 bg-white z-10 py-4">
+                                <h3 class="text-lg font-bold text-gray-800">Daftar Resep</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="relative">
+                                        <input class="pl-10 pr-4 py-2 border rounded-lg text-sm"
+                                            placeholder="Cari resep..." type="text" />
+                                        <span
+                                            class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                    </div>
+                                    <button
+                                        class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center">
+                                        <span class="material-icons mr-2 text-base">add</span> Tambah Resep
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="space-y-4 pr-2">
+                                <div class="border border-gray-200 rounded-lg" x-data="{ open: true }">
+                                    <div @click="open = !open"
+                                        class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-50">
+                                        <div>
+                                            <p class="font-semibold text-gray-800">Resep #R-2024-001</p>
+                                            <p class="text-xs text-gray-500">Tanggal: 15 Jan 2024 - Dr. Ahmad Wahyu, Sp.P</p>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span
+                                                class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Asma</span>
+                                            <span class="material-icons"
+                                                x-text="open ? 'expand_less' : 'expand_more'">expand_less</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border-t border-gray-200" x-show="open" x-transition="">
+                                        <h4 class="font-semibold text-sm mb-2 text-gray-700">Detail Obat:</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex justify-between items-center text-sm">
+                                                <div>
+                                                    <p class="font-medium text-gray-800">Salbutamol Inhaler</p>
+                                                    <p class="text-xs text-gray-500">Inhaler</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-medium">1 Inhaler</p>
+                                                    <p class="text-xs text-gray-500">2 semprot saat sesak</p>
+                                                </div>
+                                            </li>
+                                            <li class="flex justify-between items-center text-sm">
+                                                <div>
+                                                    <p class="font-medium text-gray-800">Prednisolone 5mg</p>
+                                                    <p class="text-xs text-gray-500">Tablet</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-medium">20 Tablet</p>
+                                                    <p class="text-xs text-gray-500">2x1 sehari</p>
+                                                </div>
+                                            </li>
+                                            <li class="flex justify-between items-center text-sm">
+                                                <div>
+                                                    <p class="font-medium text-gray-800">Ambroxol 30mg</p>
+                                                    <p class="text-xs text-gray-500">Tablet</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-medium">15 Tablet</p>
+                                                    <p class="text-xs text-gray-500">3x1 sehari</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="flex justify-end space-x-2 mt-4">
+                                            <button class="p-1 text-custom-blue hover:text-blue-700"><span
+                                                    class="material-icons text-base">print</span></button>
+                                            <button class="p-1 text-green-500 hover:text-green-700"><span
+                                                    class="material-icons text-base">file_download</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border border-gray-200 rounded-lg" x-data="{ open: false }">
+                                    <div @click="open = !open"
+                                        class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-50">
+                                        <div>
+                                            <p class="font-semibold text-gray-800">Resep #R-2023-078</p>
+                                            <p class="text-xs text-gray-500">Tanggal: 28 Nov 2023 - Dr. Sari Devi, Sp.PD</p>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span
+                                                class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Kontrol</span>
+                                            <span class="material-icons"
+                                                x-text="open ? 'expand_less' : 'expand_more'">expand_more</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border-t border-gray-200" x-show="open" x-transition="">
+                                        <h4 class="font-semibold text-sm mb-2 text-gray-700">Detail Obat:</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex justify-between items-center text-sm">
+                                                <div>
+                                                    <p class="font-medium text-gray-800">Seretide Inhaler</p>
+                                                    <p class="text-xs text-gray-500">Inhaler</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-medium">1 Inhaler</p>
+                                                    <p class="text-xs text-gray-500">2x2 semprot</p>
+                                                </div>
+                                            </li>
+                                            <li class="flex justify-between items-center text-sm">
+                                                <div>
+                                                    <p class="font-medium text-gray-800">Vitamin C 500mg</p>
+                                                    <p class="text-xs text-gray-500">Tablet</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-medium">30 Tablet</p>
+                                                    <p class="text-xs text-gray-500">1x1 sehari</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="flex justify-end space-x-2 mt-4">
+                                            <button class="p-1 text-custom-blue hover:text-blue-700"><span
+                                                    class="material-icons text-base">print</span></button>
+                                            <button class="p-1 text-green-500 hover:text-green-700"><span
+                                                    class="material-icons text-base">file_download</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- History Bill Tab -->
+                        <div class="text-gray-700 max-h-[calc(100vh-250px)] overflow-y-auto" style="display: none;" 
+                            x-show="activeTab === 'billing'">
+                            <div class="flex justify-between items-center mb-6 sticky top-0 bg-white z-10 py-4">
+                                <h3 class="text-lg font-bold text-gray-800">History Billing</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="relative">
+                                        <input class="pl-10 pr-4 py-2 border rounded-lg text-sm"
+                                            placeholder="Cari billing..." type="text" />
+                                        <span
+                                            class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4 pr-2">
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <p class="font-semibold text-gray-800">Invoice #INV-2024-001</p>
+                                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Lunas</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm">Tanggal: 15 Januari 2024</p>
+                                    <p class="text-gray-600 text-sm">Layanan: Konsultasi Spesialis + Obat</p>
+                                    <p class="text-gray-600 text-sm">Total: Rp 450.000</p>
+                                    <p class="text-gray-600 text-sm">Metode Bayar: Asuransi (Allianz)</p>
+                                </div>
+
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <p class="font-semibold text-gray-800">Invoice #INV-2023-078</p>
+                                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Lunas</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm">Tanggal: 28 November 2023</p>
+                                    <p class="text-gray-600 text-sm">Layanan: Konsultasi Umum + Resep</p>
+                                    <p class="text-gray-600 text-sm">Total: Rp 275.000</p>
+                                    <p class="text-gray-600 text-sm">Metode Bayar: Tunai</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Penjamin Tab -->
+                        <div class="text-gray-700 max-h-[calc(100vh-250px)] overflow-y-auto" style="display: none;" 
+                            x-show="activeTab === 'penjamin'">
+                            <div class="flex justify-between items-center mb-6 sticky top-0 bg-white z-10 py-4">
+                                <h3 class="text-lg font-bold text-gray-800">Data Penjamin</h3>
+                                <button
+                                    class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center">
+                                    <span class="material-icons mr-2 text-base">add</span> Tambah Penjamin
+                                </button>
+                            </div>
+                            
+                            <div class="space-y-6 pr-2">
+                                <!-- Penjamin Asuransi -->
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h4 class="font-semibold text-gray-800">Asuransi Kesehatan</h4>
+                                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Aktif</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <p class="font-semibold text-gray-600">Nama Asuransi</p>
+                                            <p>Allianz Indonesia</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600">Nomor Polis</p>
+                                            <p>ALZ-2023-987654321</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600">Masa Berlaku</p>
+                                            <p>01 Jan 2024 - 31 Des 2024</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600">Coverage</p>
+                                            <p>Rawat Jalan & Rawat Inap</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end mt-4">
+                                        <button class="text-custom-blue hover:text-blue-700 text-sm font-medium">Edit</button>
+                                    </div>
+                                </div>
+
+                                <!-- Penjamin Keluarga -->
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h4 class="font-semibold text-gray-800">Penjamin Keluarga</h4>
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Backup</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <p class="font-semibold text-gray-600">Nama Penjamin</p>
+                                            <p>Budi Santoso (Suami)</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600">NIK</p>
+                                            <p>3273024508900002</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600">Nomor HP</p>
+                                            <p>081234567890</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600">Hubungan</p>
+                                            <p>Suami</p>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <p class="font-semibold text-gray-600">Alamat</p>
+                                            <p>Jl. Melati No. 45, RT 03/RW 05, Sukajadi, Bandung</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end mt-4">
+                                        <button class="text-custom-blue hover:text-blue-700 text-sm font-medium">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Modal -->
+            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                style="display: none;" x-show="deleteModalOpen" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0"
+                x-transition:leave="transition ease-in duration-200" x-transition:leave-end="opacity-0"
+                x-transition:leave-start="opacity-100">
+                <div @click.away="deleteModalOpen = false"
+                    class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 mx-4">
+                    <div class="text-center">
+                        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100">
+                            <span class="material-icons text-red-600 text-4xl">warning_amber</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-5">Hapus Data Pasien</h3>
+                        <p class="text-base text-gray-600 mt-3">
+                            Apakah Anda yakin ingin menghapus data pasien <span class="font-bold">Sari Indah Lestari</span>?
+                            Tindakan ini tidak dapat dibatalkan.
+                        </p>
+                    </div>
+                    <div class="mt-8 flex justify-center gap-4">
+                        <button @click="deleteModalOpen = false"
+                            class="w-full py-2 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                            type="button">
+                            Batal
+                        </button>
+                        <button @click="deleteModalOpen = false"
+                            class="w-full bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                            type="button">
+                            Ya, Hapus
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script defer="" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body class="bg-custom-gray">
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
+    <div class="flex h-screen">
+        <aside id="sidebar" class="w-64 md:w-64 bg-white flex flex-col p-6 md:relative fixed h-full z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800 sidebar-text">Mario Hospital</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider sidebar-text">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">dashboard</span>
+                        <span class="text-xs mt-1 sidebar-text">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">event_note</span>
+                        <span class="text-xs mt-1 sidebar-text">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-24 md:md-30">people</span>
+                        <span class="text-xs mt-1 sidebar-text">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">badge</span>
+                        <span class="text-xs mt-1 sidebar-text">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">king_bed</span>
+                        <span class="text-xs mt-1 sidebar-text">Room</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">payment</span>
+                        <span class="text-xs mt-1 sidebar-text">Payment</span>
+                    </a>
+                </div>
+                <span class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block sidebar-text">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">person</span>
+                        <span class="text-xs mt-1 sidebar-text">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">settings</span>
+                        <span class="text-xs mt-1 sidebar-text">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">help_outline</span>
+                        <span class="text-xs mt-1 sidebar-text">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span>
+                    <span class="sidebar-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main id="main-content" class="flex-1 p-4 md:p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-6 md:mb-8">
+                <div class="flex items-center">
+                    <button id="menu-toggle" class="p-2 bg-white rounded-lg shadow mr-4 md:hidden">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <button id="desktop-menu-toggle" class="p-2 bg-white rounded-lg shadow mr-4 hidden md:block">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800">Doctors</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <button id="theme-toggle" class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="hidden sm:flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 gap-6 md:gap-8">
+                <div class="bg-white p-4 md:p-6 rounded-2xl shadow">
+                    <!-- Mobile Search and Add Button -->
+                    <div class="flex flex-col space-y-4 md:hidden mb-6">
+                        <div class="relative">
+                            <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                            <input id="search-input" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue w-full" placeholder="Search doctors..." type="text" />
+                        </div>
+                        <a href="create_update.html" class="bg-custom-blue text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors no-underline">
+                            <span class="material-icons mr-2">add</span> Add Doctor
+                        </a>
+                    </div>
+
+                    <!-- Desktop Controls -->
+                    <div class="hidden md:flex justify-between items-center mb-6">
+                        <div class="flex items-center bg-gray-100 rounded-lg p-1">
+                            <button id="list-view-btn" class="p-2 rounded-lg bg-white shadow">
+                                <span class="material-icons text-custom-blue">list</span>
+                            </button>
+                            <button id="grid-view-btn" class="p-2 rounded-lg">
+                                <span class="material-icons text-gray-500">grid_view</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="relative">
+                                <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                <input id="search-input-desktop" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue" placeholder="Search doctors..." type="text" />
+                            </div>
+                            <a href="create_update.html" class="bg-custom-blue text-white font-semibold py-2 px-4 rounded-lg flex items-center hover:bg-blue-600 transition-colors no-underline">
+                                <span class="material-icons mr-2">add</span> Add Doctor
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile View Toggle -->
+                    <div class="flex justify-center items-center bg-gray-100 rounded-lg p-1 mb-4 md:hidden">
+                        <button id="mobile-list-view-btn" class="flex-1 p-2 rounded-lg bg-white shadow">
+                            <span class="material-icons text-custom-blue">list</span>
+                        </button>
+                        <button id="mobile-grid-view-btn" class="flex-1 p-2 rounded-lg">
+                            <span class="material-icons text-gray-500">grid_view</span>
+                        </button>
+                    </div>
+
+                    <div id="doctors-list" class="space-y-2">
+                        <!-- Doctors will be populated by JavaScript -->
+                    </div>
+                    <div id="doctors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 hidden">
+                        <!-- Doctors grid will be populated by JavaScript -->
+                    </div>
+                    <div class="flex justify-center items-center mt-6">
+                        <div id="pagination" class="flex items-center space-x-1">
+                            <!-- Pagination will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl transform transition-all duration-300 scale-95">
+            <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full">
+                <span class="material-icons text-red-600 text-2xl">warning</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 text-center mb-2">Delete Doctor</h3>
+            <p class="text-gray-600 text-center mb-6">Are you sure you want to delete this doctor? This action cannot be undone.</p>
+            <div class="doctor-info mb-6 p-4 bg-gray-50 rounded-lg">
+                <div class="flex items-center space-x-3">
+                    <img id="modalDoctorAvatar" alt="Doctor" class="w-12 h-12 rounded-full" src="" />
+                    <div>
+                        <p id="modalDoctorName" class="font-semibold text-gray-800"></p>
+                        <p id="modalDoctorSpecialty" class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                <button id="cancelDelete" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium">
+                    Cancel
+                </button>
+                <button id="confirmDelete" class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

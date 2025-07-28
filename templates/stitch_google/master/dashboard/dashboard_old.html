@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-custom-blue {
+            background-color: #4A90E2;
+        }
+        .text-custom-blue {
+            color: #4A90E2;
+        }
+        .bg-custom-gray {
+            background-color: #F7F8FA;
+        }
+        aside nav a.active, aside nav a:hover {
+            background-color: #E9F2FE;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        aside nav a.active .material-icons, aside nav a:hover .material-icons {
+             color: #4A90E2;
+        }
+        aside nav a {
+            color: #A0AEC0;
+        }
+        aside nav a .material-icons {
+            color: #A0AEC0;
+        }
+        .material-icons.md-30 { font-size: 30px; }
+    </style>
+</head>
+
+<body class="bg-custom-gray">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white flex flex-col p-6">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800">Mario Hospital</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs mt-1">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs mt-1">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">badge</span>
+                        <span class="text-xs mt-1">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs mt-1">Room Allotment</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs mt-1">Payment</span>
+                    </a>
+                </div>
+                <span
+                    class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs mt-1">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs mt-1">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs mt-1">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span>
+                    Logout
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiri3a6ED25vF7lzVZ-nJ6ve_iS-xexp41q1sR3_-unUTDtDRUlNDB5XusFaH3a7BK2LpZ6eYxl-JVdAvvXdxWZYdeWctpFtmB308-RSjKk3zCMAzv_DnNqhAf_g_n39X_tMS-Z27o1QcHNHFt_RQI1JexXeey3mgem3wkHxgKySMfYxjdbN0B75P99D-sT3iCtKZ1fs-P-jYirBewB6t1oJSWIk0KrhBE2Z0D7dbBqAwqz2_mUhsun_8tUK7A4iK_oLgXgQEUD8E" />
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+            <div class="grid grid-cols-3 gap-8">
+                <div class="col-span-2">
+                    <div class="bg-custom-blue rounded-2xl p-8 text-white relative overflow-hidden">
+                        <div class="relative z-10">
+                            <h3 class="text-2xl font-bold">Welcome Alexa!</h3>
+                            <p class="mt-2 mb-6">Let's check your health with us. Care with <br /> your health from now
+                                to get more live better.</p>
+                            <button class="bg-white text-custom-blue font-semibold py-2 px-6 rounded-lg">Connect to
+                                Doctor</button>
+                        </div>
+                        <img alt="A group of doctors and nurses" class="absolute right-0 bottom-0 h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO5BMtVtqnMN2wuYcFz_XH4AvghGriHRKDaMg1_zPZCm0tKq2JwGL1nVS0n_v9zSJcHwBlYOy5wucFAp6xmJJdaDBSklwLVAkoxCPo0whi-6vY_f4VEdsPfTpjyEzg9PjVhjiibt0Ev-1kzon61wC35XvqU0SzB5n9lSW-vJZjxJjy4f0ko6D8CDlc74T39EftJPEEMxkI7tLrxD3fO-6xUJAiDT4wJ-qJ7tx2MxmNod2dECUWpK_GY5sEFSyv8_sgjlbIMzz-RTU" />
+                    </div>
+                    <div class="grid grid-cols-4 gap-6 mt-8">
+                        <div class="bg-white p-4 rounded-2xl shadow">
+                            <div class="flex items-center mb-2">
+                                <span class="material-icons text-blue-500 mr-2">bloodtype</span>
+                                <h4 class="text-gray-600 text-sm">Blood Pressure</h4>
+                            </div>
+                            <p class="text-xl font-bold text-gray-800">110/70</p>
+                            <p class="text-xs text-green-500 mt-1">10% Higher Then Last month</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow">
+                            <div class="flex items-center mb-2">
+                                <span class="material-icons text-red-500 mr-2">favorite_border</span>
+                                <h4 class="text-gray-600 text-sm">Heart Rate</h4>
+                            </div>
+                            <p class="text-xl font-bold text-gray-800">85 bmp</p>
+                            <p class="text-xs text-red-500 mt-1">5% Less Then Last month</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow">
+                            <div class="flex items-center mb-2">
+                                <span class="material-icons text-yellow-500 mr-2">opacity</span>
+                                <h4 class="text-gray-600 text-sm">Glucose Level</h4>
+                            </div>
+                            <p class="text-xl font-bold text-gray-800">75-90</p>
+                            <p class="text-xs text-green-500 mt-1">20% Higher Then Last month</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow">
+                            <div class="flex items-center mb-2">
+                                <span class="material-icons text-purple-500 mr-2">science</span>
+                                <h4 class="text-gray-600 text-sm">Blood Count</h4>
+                            </div>
+                            <p class="text-xl font-bold text-gray-800">9,456/ml</p>
+                            <p class="text-xs text-red-500 mt-1">25% Less Then Last month</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 bg-white p-6 rounded-2xl shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">Performance Heart Rate</h4>
+                                <p class="text-sm text-gray-500">1 - 7 December 2020</p>
+                            </div>
+                            <div class="flex items-center bg-gray-100 px-3 py-1 rounded-lg">
+                                <span class="font-semibold text-gray-700">72 bmp</span>
+                                <span class="text-sm text-gray-500 ml-2">Average</span>
+                            </div>
+                        </div>
+                        <div class="relative h-64">
+                            <img alt="Chart showing performance heart rate over a week"
+                                class="w-full h-full object-contain"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEm5_MH4U090I8vfDkwdP9mlujrUPtvB7GXkns0DEjwQvanUdAnzvWP80tJSpjMG2qgys-BUZVC-Gi4Sdzu9Q3dd9XTZky0tp0blu3wr2QLWVA9aEQQODoKCfmJM6TUQFQr1ng4h8cYQrcXuCWkJWlBRyDG6bc-OuEP66VHmLcdWs3HzHGZZkHE4wJL20-FEC--rsW7KLRsyCQDL8N7Se5kW-cNdsLLcZytnlDrZCmc0_zmkaHckNHjUef5QNYk3ORrQJAeiGsUPk" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-1 space-y-8">
+                    <div class="bg-white p-6 rounded-2xl shadow text-center">
+                        <h4 class="font-semibold text-gray-800 mb-4">Profile</h4>
+                        <img alt="Profile picture of Alexa" class="w-24 h-24 rounded-full mx-auto mb-4"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDICE3cmIX4w1BuZkALto1yIE6MzZJT-z7HCdz_g4MysSc7VK-VMZHN_355-fTa2Sw4N8I5Nsv6NhmAH_fH_RF1zDJ8Ohq9D5ALWCqS3mJrYFKEgsBNFRbcf-b0qwkKTeZZN9W7Laikra7iQDmoqWYqeUziqmkn81e3VtZRRGo4y9a9STuYghlW-BqJe50_hvpyqvX3OrW3xb-8QxsC--fTVNUB0UsQPii86sKm3_VGEQJDtv0v0HdC2BZz3x3mNy8LNSY2NhouQS4" />
+                        <h5 class="font-bold text-gray-800">Alexa</h5>
+                        <p class="text-sm text-gray-500">Heart Patient</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-lg font-semibold text-gray-800">Health Reports Document</h4>
+                            <a class="text-sm text-blue-500 font-semibold" href="#">View All</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-6">1 - 7 December 2020</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="p-3 bg-blue-100 rounded-lg">
+                                    <span class="material-icons text-blue-500">description</span>
+                                </div>
+                                <div class="flex-1 ml-4">
+                                    <p class="font-semibold text-gray-800">Medical Check Up Report.pdf</p>
+                                    <p class="text-sm text-gray-500">2 Mb</p>
+                                </div>
+                                <button class="p-2 text-gray-500 hover:text-gray-800">
+                                    <span class="material-icons">delete_outline</span>
+                                </button>
+                                <button class="p-2 text-gray-500 hover:text-gray-800">
+                                    <span class="material-icons">download</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="p-3 bg-blue-100 rounded-lg">
+                                    <span class="material-icons text-blue-500">description</span>
+                                </div>
+                                <div class="flex-1 ml-4">
+                                    <p class="font-semibold text-gray-800">Blood Count Report.docs</p>
+                                    <p class="text-sm text-gray-500">4 Mb</p>
+                                </div>
+                                <button class="p-2 text-gray-500 hover:text-gray-800">
+                                    <span class="material-icons">delete_outline</span>
+                                </button>
+                                <button class="p-2 text-gray-500 hover:text-gray-800">
+                                    <span class="material-icons">download</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="p-3 bg-blue-100 rounded-lg">
+                                    <span class="material-icons text-blue-500">description</span>
+                                </div>
+                                <div class="flex-1 ml-4">
+                                    <p class="font-semibold text-gray-800">Glucose Level Report.docs</p>
+                                    <p class="text-sm text-gray-500">12 Mb</p>
+                                </div>
+                                <button class="p-2 text-gray-500 hover:text-gray-800">
+                                    <span class="material-icons">delete_outline</span>
+                                </button>
+                                <button class="p-2 text-gray-500 hover:text-gray-800">
+                                    <span class="material-icons">download</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="p-3 bg-blue-100 rounded-lg">
+                                    <span class="material-icons text-blue-500">description</span>
+                                </div>
+                                <div class="flex-1 ml-4">
+                                    <p class="font-semibold text-gray-800">Heart Rate Report.pdf</p>
+                                    <p class="text-sm text-gray-500">2.5 Mb</p>
+                                </div>
+                                <button class="p-2 text-gray-500 hover:text-gray-800">
+                                    <span class="material-icons">delete_outline</span>
+                                </button>
+                                <button class="p-2 text-gray-500 hover:text-gray-800">
+                                    <span class="material-icons">download</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-custom-blue {
+            background-color: #4A90E2;
+        }
+        .text-custom-blue {
+            color: #4A90E2;
+        }
+        .bg-custom-gray {
+            background-color: #F7F8FA;
+        }
+        aside nav a.active, aside nav a:hover {
+            background-color: #E9F2FE;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        aside nav a.active .material-icons, aside nav a:hover .material-icons {
+             color: #4A90E2;
+        }
+        aside nav a {
+            color: #A0AEC0;
+        }
+        aside nav a .material-icons {
+            color: #A0AEC0;
+        }
+        .material-icons.md-30 { font-size: 30px; }
+    </style>
+</head>
+
+<body class="bg-custom-gray">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white flex flex-col p-6">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800">Mario Hospital</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs mt-1">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs mt-1">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">badge</span>
+                        <span class="text-xs mt-1">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs mt-1">Room Allotment</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs mt-1">Payment</span>
+                    </a>
+                </div>
+                <span
+                    class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs mt-1">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs mt-1">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs mt-1">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span>
+                    Logout
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Add Doctor</h2>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiri3a6ED25vF7lzVZ-nJ6ve_iS-xexp41q1sR3_-unUTDtDRUlNDB5XusFaH3a7BK2LpZ6eYxl-JVdAvvXdxWZYdeWctpFtmB308-RSjKk3zCMAzv_DnNqhAf_g_n39X_tMS-Z27o1QcHNHFt_RQI1JexXeey3mgem3wkHxgKySMfYxjdbN0B75P99D-sT3iCtKZ1fs-P-jYirBewB6t1oJSWIk0KrhBE2Z0D7dbBqAwqz2_mUhsun_8tUK7A4iK_oLgXgQEUD8E" />
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+            <div class="bg-white p-8 rounded-2xl shadow-md">
+                <h3 class="text-lg font-semibold text-gray-800 mb-6">Doctor Information</h3>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700" for="full_name">Full Name
+                                (Text)</label>
+                            <input
+                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                id="full_name" name="full_name" placeholder="e.g. John Doe" type="text" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700" for="phone_number">Nomor HP</label>
+                            <input
+                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                id="phone_number" name="phone_number" placeholder="e.g. 081234567890" type="tel" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700"
+                                for="specialization">Spesialisasi</label>
+                            <input
+                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                id="specialization" name="specialization" placeholder="e.g. Dokter Anak" type="text" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700" for="gender">Gender</label>
+                            <select
+                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                id="gender" name="gender">
+                                <option>Pilih Gender</option>
+                                <option>Laki-laki</option>
+                                <option>Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700" for="address">Alamat</label>
+                            <textarea
+                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                id="address" name="address" placeholder="Masukkan alamat lengkap" rows="4"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700">Availability (Checkbox)</label>
+                            <div class="mt-2 space-y-2">
+                                <div class="flex items-center">
+                                    <input
+                                        class="h-4 w-4 text-custom-blue border-gray-300 rounded focus:ring-custom-blue"
+                                        id="monday" name="availability" type="checkbox" />
+                                    <label class="ml-2 block text-sm text-gray-900" for="monday">Monday</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input
+                                        class="h-4 w-4 text-custom-blue border-gray-300 rounded focus:ring-custom-blue"
+                                        id="tuesday" name="availability" type="checkbox" />
+                                    <label class="ml-2 block text-sm text-gray-900" for="tuesday">Tuesday</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input
+                                        class="h-4 w-4 text-custom-blue border-gray-300 rounded focus:ring-custom-blue"
+                                        id="wednesday" name="availability" type="checkbox" />
+                                    <label class="ml-2 block text-sm text-gray-900" for="wednesday">Wednesday</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700">On Duty (Boolean/Radio)</label>
+                            <div class="mt-2 flex items-center space-x-4">
+                                <div class="flex items-center">
+                                    <input class="h-4 w-4 text-custom-blue border-gray-300 focus:ring-custom-blue"
+                                        id="on_duty_yes" name="on_duty" type="radio" />
+                                    <label class="ml-2 block text-sm text-gray-900" for="on_duty_yes">Yes</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input class="h-4 w-4 text-custom-blue border-gray-300 focus:ring-custom-blue"
+                                        id="on_duty_no" name="on_duty" type="radio" />
+                                    <label class="ml-2 block text-sm text-gray-900" for="on_duty_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700">Profile Photo (Binary/File)</label>
+                            <div
+                                class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                                <div class="space-y-1 text-center">
+                                    <span class="material-icons text-gray-400 mx-auto h-12 w-12">cloud_upload</span>
+                                    <div class="flex text-sm text-gray-600">
+                                        <label
+                                            class="relative cursor-pointer bg-white rounded-md font-medium text-custom-blue hover:text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-custom-blue"
+                                            for="file-upload">
+                                            <span>Upload a file</span>
+                                            <input class="sr-only" id="file-upload" name="file-upload" type="file" />
+                                        </label>
+                                        <p class="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <button
+                            class="py-2 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                            type="button">
+                            Cancel
+                        </button>
+                        <button
+                            class="bg-custom-blue text-white py-2 px-6 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue"
+                            type="submit">
+                            Save Doctor
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile - Diane Cooper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f6fa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            color: #333;
+        }
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        .breadcrumb-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .breadcrumb-text {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .breadcrumb-text a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumb-text .current {
+            color: #333;
+            font-weight: 500;
+        }
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 32px;
+            margin-bottom: 24px;
+            border: 1px solid #e9ecef;
+        }
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f8f9fa;
+        }
+        .profile-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 16px 0 4px 0;
+            color: #333;
+        }
+        .profile-email {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .profile-stats {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+        .stat-item {
+            text-align: center;
+            position: relative;
+        }
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, #e9ecef 20%, #e9ecef 80%, transparent);
+        }
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            line-height: 1;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+        .send-message-btn {
+            background: transparent;
+            border: 1px solid #6c5ce7;
+            color: #6c5ce7;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .send-message-btn:hover {
+            background: #6c5ce7;
+            color: white;
+        }
+        .profile-content {
+            position: relative;
+        }
+        .profile-content::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 70%;
+            background: linear-gradient(to bottom, transparent, #e9ecef 10%, #e9ecef 90%, transparent);
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 32px 24px;
+            margin-top: 24px;
+            padding-left: 24px;
+        }
+        .info-item {
+            margin-bottom: 0;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .info-value {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .member-status {
+            background: #d4edda;
+            color: #155724;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .tabs-container {
+            margin-top: 24px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+        }
+        .nav-tabs {
+            border-bottom: none;
+            margin-bottom: 0;
+            background: #f8f9fa;
+            padding: 0 32px;
+        }
+        .nav-tabs .nav-link {
+            border: none;
+            color: #8e8e93;
+            font-weight: 500;
+            padding: 20px 0;
+            font-size: 15px;
+            background: transparent;
+            border-radius: 0;
+            margin-right: 48px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-tabs .nav-link:hover {
+            color: #007bff;
+        }
+        .nav-tabs .nav-link.active {
+            color: #007bff;
+            background: transparent;
+            font-weight: 600;
+        }
+        .nav-tabs .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #007bff;
+            border-radius: 2px 2px 0 0;
+        }
+        .tab-content {
+            background: white;
+            border-radius: 0;
+            border: none;
+        }
+        .tab-pane {
+            padding: 32px;
+            min-height: 400px;
+        }
+        .treatment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .treatment-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        .add-appointments-btn {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .add-appointments-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+        .timeline-container {
+            max-height: 800px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        .timeline-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .timeline-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        .timeline-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        .timeline-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        .timeline {
+            position: relative;
+            padding: 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #007bff;
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 32px;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-marker {
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #007bff;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #007bff;
+        }
+        .timeline-date {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        .timeline-time {
+            color: #6c757d;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+        .timeline-content {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+        }
+        .timeline-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+        .detail-item {
+            margin: 0;
+        }
+        .detail-label {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .detail-value {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .note-btn {
+            background: #007bff;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            min-width: 70px;
+            justify-content: center;
+        }
+        .note-btn:hover {
+            background: #0056b3;
+        }
+        .notes-section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        .notes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .notes-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        .see-all-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .see-all-link:hover {
+            text-decoration: underline;
+        }
+        .note-item {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            padding: 12px 16px;
+            background: #f8f9fb;
+            border: 1px solid #e3e6f0;
+            border-radius: 6px;
+            border-left: 4px solid #007bff;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .note-item.warning {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+            border-left-color: #f39c12;
+        }
+        .note-item.important {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            border-left-color: #dc3545;
+        }
+        .note-item.allergy {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+            border-left-color: #17a2b8;
+        }
+        .note-item.medication {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            border-left-color: #28a745;
+        }
+        .note-item.behavior {
+            background: #e2e3e5;
+            border-color: #d6d8db;
+            border-left-color: #6c757d;
+        }
+        .note-item:hover {
+            transform: translateX(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .note-item.warning:hover {
+            background: #fff1b3;
+        }
+        .note-item.important:hover {
+            background: #f5c2c7;
+        }
+        .note-item.allergy:hover {
+            background: #b8daff;
+        }
+        .note-item.medication:hover {
+            background: #c3e6cb;
+        }
+        .note-item.behavior:hover {
+            background: #d6d8db;
+        }
+        .medical-record-header {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .record-type {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .record-doctor {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        .medical-record-details {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .record-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px 16px;
+            border-left: 4px solid #007bff;
+        }
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #007bff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .section-content {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .note-item {
+            padding: 12px 16px;
+        }
+        .save-note-btn {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 16px;
+            margin-bottom: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .save-note-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+        .note-author-section {
+            padding-top: 16px;
+            border-top: 1px solid #e9ecef;
+        }
+        .note-author-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .author-icon {
+            color: #007bff;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        .author-name {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        .author-date {
+            font-size: 12px;
+            color: #6c757d;
+            margin-left: auto;
+        }
+        .author-note {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
+            padding: 12px 16px;
+            background: #fff8f0;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            border-left: 4px solid #fdcb6e;
+        }
+        .files-section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        .files-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .files-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        .add-files-btn {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .add-files-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+        }
+        .file-item:hover {
+            background: #f1f3f4;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .file-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        .file-icon {
+            color: #dc3545;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+        .file-details {
+            flex: 1;
+        }
+        .file-name {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        .file-size {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        .file-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .file-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+            background: white;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .file-action-btn:hover {
+            background: #f8f9fa;
+            color: #333;
+        }
+        .file-action-btn.delete:hover {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+        .edit-patient-btn {
+            background: transparent;
+            border: 1px solid #e9ecef;
+            color: #6c757d;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .edit-patient-btn:hover {
+            background: #f8f9fa;
+            color: #333;
+        }
+        .modal-content {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        .modal-header {
+            border-bottom: 1px solid #e9ecef;
+            padding: 20px 24px;
+        }
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .modal-footer {
+            border-top: 1px solid #e9ecef;
+            padding: 16px 24px;
+        }
+        .form-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .form-control {
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 14px;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+        }
+        .alert-custom {
+            border-radius: 6px;
+            border: 1px solid #bee5eb;
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 12px 16px;
+            font-size: 13px;
+        }
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px 16px;
+                padding-left: 0;
+            }
+            .profile-content::before {
+                display: none;
+            }
+            .timeline-details {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .profile-stats {
+                justify-content: center;
+            }
+            .stat-item:not(:last-child)::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-text">
+                <a href="#" id="patientListLink">Patient List</a> &gt; <span class="current">Diane Cooper</span>
+            </div>
+            <button class="edit-patient-btn" id="editPatientBtn">
+                <i class="fas fa-edit"></i> Edit Patient
+            </button>
+        </div>
+
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- Profile Card -->
+                <div class="profile-card">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" 
+                                     alt="Diane Cooper" class="profile-image">
+                                <h3 class="profile-name">Diane Cooper</h3>
+                                <p class="profile-email">diane.cooper@example.com</p>
+                                
+                                <div class="profile-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-number">15</div>
+                                        <div class="stat-label">Past</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number">2</div>
+                                        <div class="stat-label">Upcoming</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-9 profile-content">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Gender</div>
+                                    <div class="info-value">Female</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Birthday</div>
+                                    <div class="info-value">Feb 24th, 1997</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Phone Number</div>
+                                    <div class="info-value">(239) 555-0108</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Street Address</div>
+                                    <div class="info-value">Jl. Diponegoro No. 21</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">City</div>
+                                    <div class="info-value">Cilacap</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">ZIP Code</div>
+                                    <div class="info-value">655849</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Member Status</div>
+                                    <div class="info-value">
+                                        <span class="member-status">Active Member</span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Registered Date</div>
+                                    <div class="info-value">Feb 24th, 1997</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs" id="patientTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab" aria-controls="upcoming" aria-selected="true">
+                                Upcoming Appointments
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab" aria-controls="past" aria-selected="false">
+                                Past Appointments
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="records-tab" data-bs-toggle="tab" data-bs-target="#records" type="button" role="tab" aria-controls="records" aria-selected="false">
+                                Medical Records
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="patientTabsContent">
+                        <div class="tab-pane fade show active" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
+                            <div class="treatment-header">
+                                <h5 class="treatment-title">Root Canal Treatment</h5>
+                                <button class="add-appointments-btn" id="addAppointmentsBtn">
+                                    <i class="fas fa-plus"></i> Add Appointments
+                                </button>
+                            </div>
+                            
+                            <div class="timeline-container">
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">26 Nov '19</div>
+                                        <div class="timeline-time">09:00 - 10:00</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">Open Access</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. Adam H.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Jessicamila</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="noteBtn1">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">12 Dec '19</div>
+                                        <div class="timeline-time">09:00 - 10:00</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">Root Canal prep</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. Adam H.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Jessicamila</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="noteBtn2">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">18 Dec '19</div>
+                                        <div class="timeline-time">14:00 - 15:00</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">Root Canal filling</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. Adam H.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Jessicamila</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="noteBtn3">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">22 Dec '19</div>
+                                        <div class="timeline-time">10:00 - 11:00</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">Crown placement</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. Adam H.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Jessicamila</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="noteBtn4">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="past" role="tabpanel" aria-labelledby="past-tab">
+                            <div class="treatment-header">
+                                <h5 class="treatment-title">Past Treatments</h5>
+                                <button class="add-appointments-btn" id="addPastAppointmentsBtn">
+                                    <i class="fas fa-plus"></i> Add Past Appointments
+                                </button>
+                            </div>
+                            
+                            <div class="timeline-container">
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">15 Oct '19</div>
+                                        <div class="timeline-time">10:00 - 11:00</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">Dental Cleaning</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. Sarah M.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Maria</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="pastNoteBtn1">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">08 Sep '19</div>
+                                        <div class="timeline-time">14:30 - 15:30</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">Tooth Filling</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. John D.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Linda</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="pastNoteBtn2">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">22 Aug '19</div>
+                                        <div class="timeline-time">09:00 - 10:00</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">Consultation</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. Adam H.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Jessicamila</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="pastNoteBtn3">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">10 Jul '19</div>
+                                        <div class="timeline-time">11:00 - 12:00</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">X-Ray Examination</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. Sarah M.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Maria</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="pastNoteBtn4">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">25 Jun '19</div>
+                                        <div class="timeline-time">15:00 - 16:00</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Treatment</div>
+                                                    <div class="detail-value">Regular Checkup</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Dentist</div>
+                                                    <div class="detail-value">Drg. John D.</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Nurse</div>
+                                                    <div class="detail-value">Linda</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="pastNoteBtn5">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="records" role="tabpanel" aria-labelledby="records-tab">
+                            <div class="treatment-header">
+                                <h5 class="treatment-title">Medical Records</h5>
+                                <button class="add-appointments-btn" id="addMedicalRecordsBtn">
+                                    <i class="fas fa-plus"></i> Add Medical Records
+                                </button>
+                            </div>
+                            
+                            <div class="timeline-container">
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">26 Nov '19</div>
+                                        <div class="timeline-time">09:00 - 10:00</div>
+                                        <div class="timeline-content">
+                                            <div class="medical-record-header">
+                                                <h6 class="record-type">Initial Assessment & Treatment Plan</h6>
+                                                <span class="record-doctor">Dr. Adam H. - Endodontist</span>
+                                            </div>
+                                            <div class="medical-record-details">
+                                                <div class="record-section">
+                                                    <div class="section-label">Chief Complaint</div>
+                                                    <div class="section-content">Patient reports severe throbbing pain in upper left molar (tooth #14) for the past 3 days. Pain increases with hot and cold stimuli and keeps patient awake at night. Pain scale 8/10.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Clinical Findings</div>
+                                                    <div class="section-content">Deep carious lesion involving pulp chamber. Positive response to percussion test. Periapical radiolucency observed on radiograph. Vital signs: BP 130/85, Pulse 76 bpm, Temp 98.6°F.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Diagnosis</div>
+                                                    <div class="section-content">Irreversible pulpitis with periapical periodontitis - Tooth #14. Requires immediate endodontic intervention.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Treatment Plan</div>
+                                                    <div class="section-content">1. Emergency access opening and pulpectomy<br>2. Root canal preparation and shaping<br>3. Root canal obturation<br>4. Post-endodontic restoration with crown</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Medications Prescribed</div>
+                                                    <div class="section-content">Amoxicillin 500mg TID x 7 days, Ibuprofen 600mg TID PRN pain, Acetaminophen 1000mg QID PRN severe pain</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <button class="note-btn" id="noteBtn4">
+                                                        <i class="fas fa-sticky-note"></i> Note
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">12 Dec '19</div>
+                                        <div class="timeline-time">09:00 - 10:00</div>
+                                        <div class="timeline-content">
+                                            <div class="medical-record-header">
+                                                <h6 class="record-type">Root Canal Preparation - Visit 2</h6>
+                                                <span class="record-doctor">Dr. Adam H. - Endodontist</span>
+                                            </div>
+                                            <div class="medical-record-details">
+                                                <div class="record-section">
+                                                    <div class="section-label">Procedure Performed</div>
+                                                    <div class="section-content">Root canal preparation and biomechanical shaping of all root canals using rotary NiTi instruments. Working length determined using apex locator and confirmed radiographically. Irrigation performed with 2.5% NaOCl and 17% EDTA.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Anesthesia</div>
+                                                    <div class="section-content">Local anesthesia: 2 cartridges of 2% Lidocaine with 1:100,000 epinephrine. Patient achieved adequate anesthesia without complications.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Clinical Notes</div>
+                                                    <div class="section-content">Patient tolerated procedure well. Significant improvement in pain levels reported since last visit. No swelling or signs of infection present. Temporary filling placed with cotton pellet and zinc oxide eugenol.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Post-Op Instructions</div>
+                                                    <div class="section-content">Avoid chewing on treated side, continue prescribed medications as directed, rinse with warm salt water 3x daily, return in 1 week for obturation.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Next Appointment</div>
+                                                    <div class="section-content">Scheduled for 18 Dec '19 at 14:00 for root canal obturation and final restoration planning.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">18 Dec '19</div>
+                                        <div class="timeline-time">14:00 - 15:00</div>
+                                        <div class="timeline-content">
+                                            <div class="medical-record-header">
+                                                <h6 class="record-type">Root Canal Obturation - Visit 3</h6>
+                                                <span class="record-doctor">Dr. Adam H. - Endodontist</span>
+                                            </div>
+                                            <div class="medical-record-details">
+                                                <div class="record-section">
+                                                    <div class="section-label">Procedure Performed</div>
+                                                    <div class="section-content">Root canal obturation completed using warm vertical compaction technique with gutta-percha and AH Plus sealer. All canals filled to working length with excellent apical seal confirmed radiographically.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Quality Assessment</div>
+                                                    <div class="section-content">Post-obturation radiograph shows complete fill of all root canals with no voids or overfill. Coronal seal restored with composite resin buildup to support future crown preparation.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Patient Response</div>
+                                                    <div class="section-content">Patient reports complete resolution of preoperative symptoms. No pain, sensitivity, or discomfort. Bite feels normal and comfortable.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Treatment Outcome</div>
+                                                    <div class="section-content">Endodontic treatment completed successfully. Tooth #14 now asymptomatic with excellent prognosis for long-term retention.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Referral</div>
+                                                    <div class="section-content">Patient referred back to general dentist for crown preparation and placement within 2-4 weeks to prevent fracture and ensure long-term success.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">22 Dec '19</div>
+                                        <div class="timeline-time">10:00 - 11:00</div>
+                                        <div class="timeline-content">
+                                            <div class="medical-record-header">
+                                                <h6 class="record-type">Crown Preparation & Impression</h6>
+                                                <span class="record-doctor">Dr. Sarah M. - General Dentist</span>
+                                            </div>
+                                            <div class="medical-record-details">
+                                                <div class="record-section">
+                                                    <div class="section-label">Pre-Treatment Assessment</div>
+                                                    <div class="section-content">Endodontically treated tooth #14 evaluated for crown preparation. Excellent endodontic seal confirmed. Patient asymptomatic with no percussion sensitivity or mobility.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Procedure Details</div>
+                                                    <div class="section-content">Crown preparation performed with 1.5mm reduction on all surfaces. Chamfer finish line placed 1mm subgingivally. Core buildup with composite resin provides adequate retention and resistance form.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Impression & Records</div>
+                                                    <div class="section-content">Final impression taken with polyvinyl siloxane (PVS) material using double-cord retraction technique. Bite registration recorded in centric occlusion. Shade selected: A2 to match adjacent teeth.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Temporary Crown</div>
+                                                    <div class="section-content">Temporary crown fabricated chairside with bis-acryl resin and cemented with temporary cement. Patient instructed on care and maintenance of temporary restoration.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Laboratory Instructions</div>
+                                                    <div class="section-content">Porcelain-fused-to-metal crown ordered. High noble metal alloy specified. Delivery scheduled for 05 Jan '20 pending laboratory completion.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-date">15 Oct '19</div>
+                                        <div class="timeline-time">10:00 - 11:00</div>
+                                        <div class="timeline-content">
+                                            <div class="medical-record-header">
+                                                <h6 class="record-type">Preventive Care & Oral Health Assessment</h6>
+                                                <span class="record-doctor">Dr. Sarah M. - General Dentist</span>
+                                            </div>
+                                            <div class="medical-record-details">
+                                                <div class="record-section">
+                                                    <div class="section-label">Comprehensive Examination</div>
+                                                    <div class="section-content">Full mouth examination completed including periodontal probing, caries assessment, and oral cancer screening. Overall oral health good with localized areas of concern identified.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Periodontal Status</div>
+                                                    <div class="section-content">Generalized mild gingivitis with bleeding on probing in posterior regions. Pocket depths 2-4mm throughout. Calculus deposits noted subgingivally in mandibular anterior region.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Caries Risk Assessment</div>
+                                                    <div class="section-content">Moderate caries risk due to frequent snacking habits and inadequate fluoride exposure. Several incipient lesions noted requiring monitoring and preventive intervention.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Treatment Performed</div>
+                                                    <div class="section-content">Prophylaxis completed with ultrasonic scaling and polishing. Fluoride varnish applied to all surfaces. Oral hygiene instruction provided with emphasis on interdental cleaning.</div>
+                                                </div>
+                                                <div class="record-section">
+                                                    <div class="section-label">Recommendations</div>
+                                                    <div class="section-content">Increase flossing frequency to daily, use fluoride rinse twice daily, reduce frequency of sugary snacks, schedule recall in 6 months for monitoring of incipient lesions.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="col-lg-4">
+                <!-- Notes Section -->
+                <div class="notes-section">
+                    <div class="notes-header">
+                        <h5 class="notes-title">Notes</h5>
+                        <a href="#" class="see-all-link" id="seeAllNotesLink">See all</a>
+                    </div>
+                    
+                    <div class="note-item allergy">This patient is lorem ipsum dolor sit amet Lorem ipsum dolor sit amet has allergic history with Cataflam</div>
+                    
+                    <button class="save-note-btn" id="saveNoteBtn">
+                        <i class="fas fa-save"></i> Note
+                    </button>
+                    
+                    <div class="note-author-section">
+                        <div class="note-author-info">
+                            <i class="fas fa-user-md author-icon"></i>
+                            <span class="author-name">Drg. Mega Nanade</span>
+                            <span class="author-date">20 Nov '19</span>
+                        </div>
+                        <div class="author-note">Lorem ipsum dolor sit amet</div>
+                    </div>
+                </div>
+                
+                <!-- Files Section -->
+                <div class="files-section">
+                    <div class="files-header">
+                        <h5 class="files-title">Files / Documents</h5>
+                        <button class="add-files-btn" id="addFilesBtn">
+                            <i class="fas fa-plus"></i> Add Files
+                        </button>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-info">
+                            <i class="fas fa-file-pdf file-icon"></i>
+                            <div class="file-details">
+                                <div class="file-name">Check Up Result.pdf</div>
+                                <div class="file-size">123kb</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-action-btn delete" onclick="deleteFile(this)" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="file-action-btn" onclick="downloadFile('Check Up Result.pdf')" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-info">
+                            <i class="fas fa-file-pdf file-icon"></i>
+                            <div class="file-details">
+                                <div class="file-name">Dental X-Ray Result 2.pdf</div>
+                                <div class="file-size">87kb</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-action-btn delete" onclick="deleteFile(this)" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="file-action-btn" onclick="downloadFile('Dental X-Ray Result 2.pdf')" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-info">
+                            <i class="fas fa-file-pdf file-icon"></i>
+                            <div class="file-details">
+                                <div class="file-name">Medical Prescriptions.pdf</div>
+                                <div class="file-size">87kb</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-action-btn delete" onclick="deleteFile(this)" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="file-action-btn" onclick="downloadFile('Medical Prescriptions.pdf')" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-info">
+                            <i class="fas fa-file-pdf file-icon"></i>
+                            <div class="file-details">
+                                <div class="file-name">Dental X-Ray Result.pdf</div>
+                                <div class="file-size">87kb</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-action-btn delete" onclick="deleteFile(this)" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="file-action-btn" onclick="downloadFile('Dental X-Ray Result.pdf')" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Send Message Modal -->
+    <div class="modal fade" id="sendMessageModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Send Message to Diane Cooper</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="messageSubject">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-control" rows="5" id="messageContent"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="sendMessage()">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Note Modal -->
+    <div class="modal fade" id="addNoteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Note</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Type Note</label>
+                        <select class="form-control" id="noteType">
+                            <option value="general">General</option>
+                            <option value="warning">Warning</option>
+                            <option value="important">Important</option>
+                            <option value="allergy">Allergy</option>
+                            <option value="medication">Medication</option>
+                            <option value="behavior">Behavior</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Note</label>
+                        <textarea class="form-control" rows="4" id="newNoteContent" placeholder="Enter your note here..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveNote()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Files Modal -->
+    <div class="modal fade" id="addFilesModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Files</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Select Files</label>
+                        <input type="file" class="form-control" multiple id="fileInput">
+                    </div>
+                    <div class="alert alert-custom">
+                        <i class="fas fa-info-circle"></i> You can upload multiple files at once. Supported formats: PDF, DOC, DOCX, JPG, PNG.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="uploadFiles()">Upload Files</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize Bootstrap modals
+        const sendMessageModal = new bootstrap.Modal(document.getElementById('sendMessageModal'));
+        const addNoteModal = new bootstrap.Modal(document.getElementById('addNoteModal'));
+        const addFilesModal = new bootstrap.Modal(document.getElementById('addFilesModal'));
+
+        // Button event listeners
+        document.getElementById('patientListLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Navigating to Patient List...');
+        });
+
+        document.getElementById('editPatientBtn').addEventListener('click', function() {
+            alert('Opening Edit Patient form...');
+        });
+
+        document.getElementById('saveNoteBtn').addEventListener('click', function() {
+            addNoteModal.show();
+        });
+
+        document.getElementById('addFilesBtn').addEventListener('click', function() {
+            addFilesModal.show();
+        });
+
+        document.getElementById('seeAllNotesLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Showing all notes...');
+        });
+
+        document.getElementById('addAppointmentsBtn').addEventListener('click', function() {
+            alert('Opening Add Appointments form...');
+        });
+
+        document.getElementById('noteBtn1').addEventListener('click', function() {
+            alert('Opening note for Open Access appointment...');
+        });
+
+        document.getElementById('noteBtn2').addEventListener('click', function() {
+            alert('Opening note for Root Canal prep appointment...');
+        });
+
+        document.getElementById('noteBtn3')?.addEventListener('click', function() {
+            alert('Opening note for Root Canal filling appointment...');
+        });
+
+        document.getElementById('addPastAppointmentsBtn').addEventListener('click', function() {
+            alert('Opening Add Past Appointments form...');
+        });
+
+        document.getElementById('pastNoteBtn1').addEventListener('click', function() {
+            alert('Opening note for Dental Cleaning appointment...');
+        });
+
+        document.getElementById('pastNoteBtn2').addEventListener('click', function() {
+            alert('Opening note for Tooth Filling appointment...');
+        });
+
+        document.getElementById('pastNoteBtn3').addEventListener('click', function() {
+            alert('Opening note for Consultation appointment...');
+        });
+
+        document.getElementById('pastNoteBtn4').addEventListener('click', function() {
+            alert('Opening note for X-Ray Examination appointment...');
+        });
+
+        document.getElementById('addMedicalRecordsBtn').addEventListener('click', function() {
+            alert('Opening Add Medical Records form...');
+        });
+
+        // Function to send message
+        function sendMessage() {
+            const subject = document.getElementById('messageSubject').value;
+            const content = document.getElementById('messageContent').value;
+            
+            if (subject && content) {
+                alert('Message sent successfully to Diane Cooper!');
+                sendMessageModal.hide();
+                document.getElementById('messageSubject').value = '';
+                document.getElementById('messageContent').value = '';
+            } else {
+                alert('Please fill in both subject and message fields.');
+            }
+        }
+
+        // Function to save note
+        function saveNote() {
+            const noteContent = document.getElementById('newNoteContent').value;
+            const noteType = document.getElementById('noteType').value;
+            
+            if (noteContent) {
+                // Create new note element
+                const notesContainer = document.querySelector('.notes-section');
+                const newNote = document.createElement('div');
+                newNote.className = `note-item ${noteType}`;
+                newNote.textContent = noteContent;
+                
+                // Insert before the save button
+                const saveButton = document.getElementById('saveNoteBtn');
+                saveButton.parentNode.insertBefore(newNote, saveButton);
+                
+                alert('Note saved successfully!');
+                addNoteModal.hide();
+                document.getElementById('newNoteContent').value = '';
+                document.getElementById('noteType').value = 'general';
+            } else {
+                alert('Please enter a note before saving.');
+            }
+        }
+
+        // Function to upload files
+        function uploadFiles() {
+            const fileInput = document.getElementById('fileInput');
+            const files = fileInput.files;
+            
+            if (files.length > 0) {
+                const filesContainer = document.querySelector('.files-section');
+                
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const fileSize = Math.round(file.size / 1024); // Convert to KB
+                    
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `
+                        <div class="file-info">
+                            <i class="fas fa-file-pdf file-icon"></i>
+                            <div class="file-details">
+                                <div class="file-name">${file.name}</div>
+                                <div class="file-size">${fileSize}kb</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-action-btn delete" onclick="deleteFile(this)" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="file-action-btn" onclick="downloadFile('${file.name}')" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    filesContainer.appendChild(fileItem);
+                }
+                
+                alert(`${files.length} file(s) uploaded successfully!`);
+                addFilesModal.hide();
+                fileInput.value = '';
+            } else {
+                alert('Please select at least one file to upload.');
+            }
+        }
+
+        // Function to delete file
+        function deleteFile(button) {
+            if (confirm('Are you sure you want to delete this file?')) {
+                const fileItem = button.closest('.file-item');
+                fileItem.remove();
+                alert('File deleted successfully!');
+            }
+        }
+
+        // Function to download file
+        function downloadFile(fileName) {
+            alert(`Downloading ${fileName}...`);
+        }
+
+        // Smooth scrollbar for timeline
+        const timelineContainer = document.querySelector('.timeline-container');
+        if (timelineContainer) {
+            timelineContainer.addEventListener('scroll', function() {
+                // Add smooth scrolling behavior
+                this.style.scrollBehavior = 'smooth';
+            });
+        }
+
+        // Add subtle animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fade in elements
+            const elements = document.querySelectorAll('.profile-card, .notes-section, .files-section, .tab-content');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Enhanced hover effects for file items
+        document.querySelectorAll('.file-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.2s ease';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Patient Profile</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        :root {
+            --primary-blue: #2972FE;
+            --blue-50: #F0F6FF;
+            --blue-100: #E0E9FF;
+            --blue-200: #BED0FF;
+            --blue-300: #93B0FF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --green-50: #F0FDF4;
+            --green-800: #166534;
+            --yellow-50: #FEFCE8;
+            --yellow-800: #854D0E;
+            --purple-50: #FAF5FF;
+            --purple-800: #6B21A8;
+            --red-50: #FEF2F2;
+            --red-800: #991B1B;
+            --teal-50: #F0FDFA;
+            --teal-700: #0F766E;
+            --orange-50: #FFF7ED;
+            --orange-700: #C2410C;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--gray-50);
+        }
+        .icon {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--gray-50)]">
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="flex justify-between items-center mb-6">
+            <div class="flex items-center text-sm text-[var(--gray-500)]">
+                <a class="hover:text-[var(--gray-700)]" href="#">Patients</a>
+                <span class="material-icons text-lg mx-1">chevron_right</span>
+                <span>Ludmila Sidorshina</span>
+            </div>
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <button class="p-2 rounded-full hover:bg-[var(--gray-200)] hidden sm:block">
+                    <span class="material-icons text-[var(--gray-600)]">person_add</span>
+                </button>
+                <button class="p-2 rounded-full hover:bg-[var(--gray-200)] hidden sm:block">
+                    <span class="material-icons text-[var(--gray-600)]">print</span>
+                </button>
+            </div>
+        </header>
+        <div class="flex flex-wrap lg:flex-nowrap gap-6">
+            <div class="w-full lg:w-[65%] space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex flex-col sm:flex-row items-start">
+                        <div
+                            class="w-full sm:w-1/3 text-center sm:text-left mb-6 sm:mb-0 sm:pr-6 flex flex-col items-center">
+                            <img alt="Ludmila Sidorshina profile picture"
+                                class="w-28 h-28 rounded-full mb-4 object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBS-f03ILJ1vskosgbR4yf3PCYHj0H39q4Q6VqG4B0G0VN8v2xZbJcl6NKq16feqvqixAhJNz9ot4eT4FeVv2tICbqXcwIwdih54mDPGjfHex-fAZHw7aPu9I9mjC_7QUY9hsGQl2RqSB649tGV08lvXydw9_kkm_qQN889paKF4cY9Kqs3dHJ6PKNq8FgPuPgY5nr6V6q2ZPTBN4YHFSegF-dPgxlW0wvlZGQfoQ7wTu974LU3gRX6dzoL69U7vdv4XBMtmNRzYA" />
+                            <h1 class="text-2xl font-bold text-[var(--gray-800)]">Ludmila Sidorshina</h1>
+                            <div class="mt-4 flex w-full justify-center space-x-2">
+                                <button
+                                    class="flex items-center justify-center bg-blue-500 text-white rounded-lg h-10 w-10 hover:bg-blue-600">
+                                    <span class="material-icons text-lg">person</span>
+                                </button>
+                                <button
+                                    class="flex items-center justify-center bg-yellow-500 text-white rounded-lg h-10 w-10 hover:bg-yellow-600">
+                                    <span class="material-icons text-lg">edit</span>
+                                </button>
+                                <button
+                                    class="flex items-center justify-center bg-gray-500 text-white rounded-lg h-10 w-10 hover:bg-gray-600">
+                                    <span class="material-icons text-lg">print</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="w-full sm:w-2/3 sm:pl-6 grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-6 text-sm">
+                            <div>
+                                <p class="text-[var(--gray-500)]">Gender</p>
+                                <div class="flex items-center space-x-2">
+                                    <p class="font-medium text-[var(--gray-800)]">Female</p>
+                                    <span
+                                        class="bg-[var(--orange-50)] text-[var(--orange-700)] text-xs font-semibold px-2 py-0.5 rounded-full">Ny</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-[var(--gray-500)]">Birthday</p>
+                                <div class="flex items-center space-x-2">
+                                    <p class="font-medium text-[var(--gray-800)]">Oct. 25, 1992</p>
+                                    <span
+                                        class="bg-[var(--teal-50)] text-[var(--teal-700)] text-xs font-semibold px-2 py-0.5 rounded-full">31</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-[var(--gray-500)]">Phone number</p>
+                                <p class="font-medium text-[var(--gray-800)]">(063) 222-3333</p>
+                            </div>
+                            <div>
+                                <p class="text-[var(--gray-500)]">Address</p>
+                                <p class="font-medium text-[var(--gray-800)]">Sonyachna str. 226B</p>
+                            </div>
+                            <div>
+                                <p class="text-[var(--gray-500)]">City</p>
+                                <p class="font-medium text-[var(--gray-800)]">Kharkiv</p>
+                            </div>
+                            <div>
+                                <p class="text-[var(--gray-500)]">ZIP Code</p>
+                                <p class="font-medium text-[var(--gray-800)]">61126</p>
+                            </div>
+                            <div>
+                                <p class="text-[var(--gray-500)]">Registration date</p>
+                                <p class="font-medium text-[var(--gray-800)]">Oct. 25, 1998</p>
+                            </div>
+                            <div>
+                                <p class="text-[var(--gray-500)]">Member status</p>
+                                <p class="font-medium text-[var(--gray-800)]">Active member</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 border-t border-[var(--gray-200)] pt-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="font-bold text-[var(--gray-800)] text-lg">Notes</h2>
+                        </div>
+                        <div class="bg-[var(--blue-50)] p-4 rounded-lg mb-4">
+                            <ul class="list-disc list-inside text-sm text-[var(--gray-700)] space-y-2">
+                                <li>The patient needs to get full amount of tests</li>
+                                <li>Tincidunt tincidunt fermentum odio pulvinar eget mauris lorem ipsum</li>
+                                <li>Attention to fermentum odio pulvinar</li>
+                                <li>Allergic reaction to penicillin</li>
+                            </ul>
+                        </div>
+                        <div class="flex justify-end items-center">
+                            <button
+                                class="bg-[var(--primary-blue)] text-white rounded-lg py-2 px-4 text-sm font-semibold hover:bg-blue-700 h-10">Edit
+                                note</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+                        <div
+                            class="flex space-x-1 border border-[var(--gray-200)] rounded-lg p-1 mb-4 sm:mb-0 flex-wrap">
+                            <button
+                                class="px-3 py-1.5 text-sm font-medium text-white bg-[var(--primary-blue)] rounded-md">Assesment</button>
+                            <button
+                                class="px-3 py-1.5 text-sm font-medium text-[var(--gray-600)] hover:bg-[var(--gray-100)] rounded-md">Tindakan</button>
+                            <button
+                                class="px-3 py-1.5 text-sm font-medium text-[var(--gray-600)] hover:bg-[var(--gray-100)] rounded-md">Laboratorium</button>
+                            <button
+                                class="px-3 py-1.5 text-sm font-medium text-[var(--gray-600)] hover:bg-[var(--gray-100)] rounded-md">Radiologi</button>
+                        </div>
+                    </div>
+                    <div class="bg-[var(--gray-50)] rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="font-bold text-lg text-[var(--gray-800)]">Assesment List</h2>
+                            <button
+                                class="bg-[var(--primary-blue)] text-white rounded-lg py-2 px-4 text-sm font-semibold hover:bg-blue-700 flex items-center h-10">
+                                <span class="material-icons text-lg mr-1">add</span> Add
+                            </button>
+                        </div>
+                        <div class="h-96 overflow-y-auto pr-2">
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <div
+                                        class="flex-grow bg-white p-4 rounded-lg grid grid-cols-1 md:grid-cols-5 gap-4 items-center shadow-sm">
+                                        <div>
+                                            <p class="font-bold text-[var(--gray-800)]">01 Jun'20</p>
+                                            <p class="text-sm text-[var(--gray-500)]">09:00 AM</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Type</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Consultation</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Doctor</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Dr. Arkadiy Ch.</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Nurse</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Jessica Mouboy</p>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-start text-[var(--primary-blue)] cursor-pointer">
+                                            <span class="material-icons text-xl">note_add</span>
+                                            <span class="ml-2 text-sm font-medium">Notes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div
+                                        class="flex-grow bg-white p-4 rounded-lg grid grid-cols-1 md:grid-cols-5 gap-4 items-center shadow-sm">
+                                        <div>
+                                            <p class="font-bold text-[var(--gray-800)]">04 Jun'20</p>
+                                            <p class="text-sm text-[var(--gray-500)]">09:00 AM</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Type</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Treatment Procedure</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Doctor</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Dr. Arkadiy Ch.</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Nurse</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Jessica Mouboy</p>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-start text-[var(--primary-blue)] cursor-pointer">
+                                            <span class="material-icons text-xl">note_add</span>
+                                            <span class="ml-2 text-sm font-medium">Notes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div
+                                        class="flex-grow bg-white p-4 rounded-lg grid grid-cols-1 md:grid-cols-5 gap-4 items-center shadow-sm">
+                                        <div>
+                                            <p class="font-bold text-[var(--gray-800)]">10 Jun'20</p>
+                                            <p class="text-sm text-[var(--gray-500)]">11:00 AM</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Type</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Follow-up</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Doctor</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Dr. Arkadiy Ch.</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Nurse</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Jessica Mouboy</p>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-start text-[var(--primary-blue)] cursor-pointer">
+                                            <span class="material-icons text-xl">note_add</span>
+                                            <span class="ml-2 text-sm font-medium">Notes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div
+                                        class="flex-grow bg-white p-4 rounded-lg grid grid-cols-1 md:grid-cols-5 gap-4 items-center shadow-sm">
+                                        <div>
+                                            <p class="font-bold text-[var(--gray-800)]">15 Jun'20</p>
+                                            <p class="text-sm text-[var(--gray-500)]">10:30 AM</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Type</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Diagnostic Test</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Doctor</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Dr. Maria</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Nurse</p>
+                                            <p class="font-medium text-[var(--gray-800)]">John Doe</p>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-start text-[var(--primary-blue)] cursor-pointer">
+                                            <span class="material-icons text-xl">note_add</span>
+                                            <span class="ml-2 text-sm font-medium">Notes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div
+                                        class="flex-grow bg-white p-4 rounded-lg grid grid-cols-1 md:grid-cols-5 gap-4 items-center shadow-sm">
+                                        <div>
+                                            <p class="font-bold text-[var(--gray-800)]">20 Jun'20</p>
+                                            <p class="text-sm text-[var(--gray-500)]">02:00 PM</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Type</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Consultation</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Doctor</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Dr. Arkadiy Ch.</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-[var(--gray-500)]">Nurse</p>
+                                            <p class="font-medium text-[var(--gray-800)]">Jessica Mouboy</p>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-start text-[var(--primary-blue)] cursor-pointer">
+                                            <span class="material-icons text-xl">note_add</span>
+                                            <span class="ml-2 text-sm font-medium">Notes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full lg:w-[35%]">
+                <div class="bg-white p-6 rounded-xl shadow-sm h-full flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="font-bold text-[var(--gray-800)] text-lg">History Kunjungan</h2>
+                    </div>
+                    <div class="flex-grow overflow-y-auto -mr-3 pr-3 bg-[var(--gray-50)] rounded-lg p-3 h-[900px]">
+                        <div class="space-y-4 text-sm relative">
+                            <div class="absolute left-4 top-1 bottom-0 w-0.5 bg-[var(--primary-blue)]"></div>
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-[var(--primary-blue)] bg-[var(--gray-50)]">
+                                </div>
+                                <h3 class="font-medium text-[var(--gray-600)] mb-2">12 Juni 2024 - Poliklinik Umum</h3>
+                                <div class="space-y-3">
+                                    <div class="bg-[var(--blue-50)] p-3 rounded-lg">
+                                        <p class="font-bold text-sm text-[var(--gray-800)] mb-2">Assesment</p>
+                                        <table class="w-full text-left text-[var(--gray-700)]">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Anamnesis:</td>
+                                                    <td class="py-0.5 text-left">Pasien batuk berdahak 3 hari, demam,
+                                                        pilek.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Pemeriksaan:</td>
+                                                    <td class="py-0.5 text-left">TD 120/80, Nadi 88, RR 20, S 37.8°C,
+                                                        Rhonki++.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Diagnosa:</td>
+                                                    <td class="py-0.5 text-left">Bronkitis Akut</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="bg-[var(--green-50)] p-3 rounded-lg">
+                                        <p class="font-bold text-sm text-[var(--green-800)] mb-2">Resep</p>
+                                        <table class="w-full text-left text-[var(--gray-700)]">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="py-0.5">- Ambroxol syr</td>
+                                                    <td class="py-0.5 font-medium text-left">3x1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="py-0.5">- Paracetamol 500mg</td>
+                                                    <td class="py-0.5 font-medium text-left">3x3</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="py-0.5">- Cetirizine 10mg</td>
+                                                    <td class="py-0.5 font-medium text-left">1x1 tab</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-[var(--primary-blue)] bg-[var(--gray-50)]">
+                                </div>
+                                <h3 class="font-medium text-[var(--gray-600)] mb-2">10 Mei 2024 - Laboratorium</h3>
+                                <div class="bg-[var(--yellow-50)] p-3 rounded-lg">
+                                    <p class="font-bold text-sm text-[var(--yellow-800)] mb-2">Pemeriksaan Lab</p>
+                                    <table class="w-full text-left text-[var(--gray-700)]">
+                                        <tbody>
+                                            <tr>
+                                                <td class="py-0.5" colspan="2">Darah Lengkap:</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-2 py-0.5">- Hb:</td>
+                                                <td class="font-medium text-left py-0.5">13.5 g/dL</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-2 py-0.5">- Leukosit:</td>
+                                                <td class="font-medium text-left py-0.5">11.000 /uL</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-2 py-0.5">- Trombosit:</td>
+                                                <td class="font-medium text-left py-0.5">280.000 /uL</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-2 py-0.5">- LED:</td>
+                                                <td class="font-medium text-left py-0.5">25 mm/jam</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-2 text-left" colspan="2">Kesan: Leukositosis</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-[var(--primary-blue)] bg-[var(--gray-50)]">
+                                </div>
+                                <h3 class="font-medium text-[var(--gray-600)] mb-2">2 April 2024 - Poliklinik Gigi</h3>
+                                <div class="space-y-3">
+                                    <div class="bg-[var(--blue-50)] p-3 rounded-lg">
+                                        <p class="font-bold text-sm text-[var(--gray-800)] mb-2">Assesment</p>
+                                        <table class="w-full text-left text-[var(--gray-700)]">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Anamnesis:</td>
+                                                    <td class="py-0.5 text-left">Sakit gigi geraham kanan bawah 1
+                                                        minggu.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Pemeriksaan:</td>
+                                                    <td class="py-0.5 text-left">Karies profunda gigi 46, non-vital.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Diagnosa:</td>
+                                                    <td class="py-0.5 text-left">Pulpitis ireversibel</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="bg-[var(--purple-50)] p-3 rounded-lg">
+                                        <p class="font-bold text-sm text-[var(--purple-800)] mb-2">Tindakan</p>
+                                        <table class="w-full text-left text-[var(--gray-700)]">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Perawatan:</td>
+                                                    <td class="py-0.5 text-left">PSA tahap 1 gigi 46</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-[var(--primary-blue)] bg-[var(--gray-50)]">
+                                </div>
+                                <h3 class="font-medium text-[var(--gray-600)] mb-2">15 Maret 2024 - Radiologi</h3>
+                                <div class="bg-[var(--red-50)] p-3 rounded-lg">
+                                    <p class="font-bold text-sm text-[var(--red-800)] mb-2">Hasil Radiologi</p>
+                                    <table class="w-full text-left text-[var(--gray-700)]">
+                                        <tbody>
+                                            <tr>
+                                                <td class="align-top pr-2 py-0.5">Foto Rontgen:</td>
+                                                <td class="py-0.5 text-left">Periapikal Gigi 46</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top pr-2 py-0.5">Hasil:</td>
+                                                <td class="py-0.5 text-left">Radiolusen di mahkota &amp; periapikal.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top pr-2 py-0.5">Kesan:</td>
+                                                <td class="py-0.5 text-left">Karies &amp; Abses</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-[var(--primary-blue)] bg-[var(--gray-50)]">
+                                </div>
+                                <h3 class="font-medium text-[var(--gray-600)] mb-2">1 Februari 2024 - Poliklinik THT
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="bg-[var(--blue-50)] p-3 rounded-lg">
+                                        <p class="font-bold text-sm text-[var(--gray-800)] mb-2">Assesment</p>
+                                        <table class="w-full text-left text-[var(--gray-700)]">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Anamnesis:</td>
+                                                    <td class="py-0.5 text-left">Nyeri telinga kiri, pendengaran
+                                                        menurun.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Pemeriksaan:</td>
+                                                    <td class="py-0.5 text-left">Membran timpani hiperemis, bulging.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Diagnosa:</td>
+                                                    <td class="py-0.5 text-left">Otitis Media Akut</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="bg-[var(--green-50)] p-3 rounded-lg">
+                                        <p class="font-bold text-sm text-[var(--green-800)] mb-2">Resep</p>
+                                        <table class="w-full text-left text-[var(--gray-700)]">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="py-0.5">- Amoxicillin 500mg</td>
+                                                    <td class="py-0.5 font-medium text-left">3x1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="py-0.5">- Ibuprofen 400mg</td>
+                                                    <td class="py-0.5 font-medium text-left">3x1</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

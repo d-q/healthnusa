@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>View Doctor Details</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white shadow-md flex flex-col">
+            <div class="p-6 text-2xl font-bold text-gray-800">
+                Mario Hospital
+            </div>
+            <nav class="flex-1 px-4">
+                <p class="text-gray-500 text-xs uppercase tracking-wider mb-2">Menu</p>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">dashboard</span>
+                    <span class="ml-3">Dashboard</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">calendar_today</span>
+                    <span class="ml-3">Appointments</span>
+                </a>
+                <a class="flex items-center p-2 text-blue-600 bg-blue-100 rounded-lg font-semibold" href="#">
+                    <span class="material-icons">groups</span>
+                    <span class="ml-3">Doctors</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">badge</span>
+                    <span class="ml-3">Staff</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">meeting_room</span>
+                    <span class="ml-3">Room Allotment</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">payment</span>
+                    <span class="ml-3">Payment</span>
+                </a>
+                <p class="text-gray-500 text-xs uppercase tracking-wider mt-6 mb-2">Appearance</p>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">person</span>
+                    <span class="ml-3">Profile</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">settings</span>
+                    <span class="ml-3">Settings</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">help_outline</span>
+                    <span class="ml-3">Support</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t">
+                <a class="flex items-center text-red-500" href="#">
+                    <span class="material-icons">logout</span>
+                    <span class="ml-3">Logout</span>
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Detail Dokter</h1>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 rounded-full hover:bg-gray-200">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-10 h-10 rounded-full bg-gray-300">
+                            <img alt="Admin avatar" class="w-10 h-10 rounded-full object-cover"
+                                src="https://lh3.googleusercontent.com/a-/ACNPEu8_3pA4Z3-2nC_Ie_s3yOEdei288CqJz2JqI-yG=s96-c" />
+                        </div>
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+            <div class="flex gap-8">
+                <div class="w-1/3">
+                    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <img alt="Doctor profile picture" class="w-36 h-36 rounded-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVI0osb-RABdJxYmVG6OTZhB0dYx69fid3eIWD4-iFUuy9vJ08BaB9ufoK5lCYYtqZUMZ3BWXGEEtBYexpLsWbTIkDrncZuqsnz7_1EeAMX6Wppa7la5Nq3MN3nceoYetzzTRAn1mm6aDtEut4fTgou7cbT0yp7Uws4dGCUOB6DeZ_GGOeGAbXpxl0y06BoTxqEef_YHBS_YZbKuQg366bA0nX69IHkxxFkyKFNgrZc19Q0YX_SoVmDstN8uuFPqiUvw59WY58Ics" />
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-800">Dr. John Doe</h2>
+                        <p class="text-blue-500 mb-6">Dokter Anak</p>
+                        <div class="w-full space-y-4 text-sm">
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">phone</span>
+                                <p class="text-gray-800">081234567890</p>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">wc</span>
+                                <p class="text-gray-800">Laki-laki</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 mr-3 mt-1">location_on</span>
+                                <p class="text-gray-800">Jl. Sudirman No. 123, Jakarta Pusat, DKI Jakarta</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 mr-3 mt-1">schedule</span>
+                                <div class="w-full">
+                                    <p class="text-gray-600 mb-2 font-medium">Schedule &amp; Practice Hours</p>
+                                    <div class="text-gray-800 space-y-1.5">
+                                        <div class="flex">
+                                            <div class="font-bold w-[30%]">Senin:</div>
+                                            <div class="w-[70%] flex flex-wrap gap-1">
+                                                <span
+                                                    class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">09:00-11:00</span>
+                                                <span
+                                                    class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">13:00-15:00</span>
+                                                <span
+                                                    class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">16:00-17:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="font-bold w-[30%]">Selasa:</div>
+                                            <div class="w-[70%] flex flex-wrap gap-1">
+                                                <span
+                                                    class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">09:00
+                                                    - 17:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="font-bold w-[30%]">Rabu:</div>
+                                            <div class="w-[70%] flex flex-wrap gap-1">
+                                                <span
+                                                    class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">09:00
+                                                    - 17:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="font-bold w-[30%]">Kamis:</div>
+                                            <div class="w-[70%] flex flex-wrap gap-1">
+                                                <span
+                                                    class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded-full">09:00-12:00</span>
+                                                <span
+                                                    class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded-full">14:00-16:00</span>
+                                                <span
+                                                    class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded-full">18:00-20:00</span>
+                                                <span
+                                                    class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded-full">21:00-22:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="font-bold w-[30%]">Jumat:</div>
+                                            <div class="w-[70%] flex flex-wrap gap-1">
+                                                <span
+                                                    class="bg-pink-100 text-pink-800 text-xs font-medium px-2 py-1 rounded-full">09:00
+                                                    - 12:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="font-bold w-[30%]">Sabtu:</div>
+                                            <div class="w-[70%]"><span class="text-gray-500">Off</span></div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="font-bold w-[30%]">Minggu:</div>
+                                            <div class="w-[70%]"><span class="text-gray-500">Off</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-start pt-2">
+                                <span class="material-icons text-gray-500 mr-3 mt-1">work_outline</span>
+                                <div class="w-full">
+                                    <p class="text-gray-600 font-medium mb-1.5">Duty Status</p>
+                                    <span
+                                        class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">On-Duty</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full mt-8 space-y-2">
+                            <button
+                                class="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 flex items-center justify-center space-x-2">
+                                <span class="material-icons">edit</span>
+                                <span>Edit Detail Dokter</span>
+                            </button>
+                            <button
+                                class="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition duration-300 flex items-center justify-center space-x-2">
+                                <span class="material-icons">delete</span>
+                                <span>Hapus Dokter</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-2/3">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <div class="border-b">
+                            <nav class="flex space-x-8 px-6">
+                                <a class="py-4 text-blue-600 border-b-2 border-blue-600 font-semibold" href="#">Detail
+                                    Dokter</a>
+                                <a class="py-4 text-gray-500 hover:text-gray-700" href="#">Dokumen Perijinan</a>
+                                <a class="py-4 text-gray-500 hover:text-gray-700" href="#">List Appointment</a>
+                                <a class="py-4 text-gray-500 hover:text-gray-700" href="#">List Pasien</a>
+                            </nav>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Biodata</h3>
+                            <div class="grid grid-cols-2 gap-6 text-sm">
+                                <div>
+                                    <label class="block text-gray-500 mb-1">Nama Lengkap</label>
+                                    <p class="text-gray-800 font-medium">Dr. John Doe</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 mb-1">Spesialisasi</label>
+                                    <p class="text-gray-800 font-medium">Dokter Anak (Pediatri)</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 mb-1">Nomor STR</label>
+                                    <p class="text-gray-800 font-medium">1234567890123456</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 mb-1">Nomor SIP</label>
+                                    <p class="text-gray-800 font-medium">SIP.123/DU/X/2023</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 mb-1">Email</label>
+                                    <p class="text-gray-800 font-medium">johndoe.md@hospital.com</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 mb-1">Tanggal Lahir</label>
+                                    <p class="text-gray-800 font-medium">15 Juni 1985</p>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mt-8 mb-4">Riwayat Pendidikan</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3" scope="col">Gelar</th>
+                                            <th class="px-6 py-3" scope="col">Institusi</th>
+                                            <th class="px-6 py-3" scope="col">Tahun</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 font-medium text-gray-900">Dokter Spesialis Anak</td>
+                                            <td class="px-6 py-4">Universitas Indonesia</td>
+                                            <td class="px-6 py-4">2015 - 2019</td>
+                                        </tr>
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 font-medium text-gray-900">Pendidikan Profesi Dokter
+                                            </td>
+                                            <td class="px-6 py-4">Universitas Gadjah Mada</td>
+                                            <td class="px-6 py-4">2009 - 2011</td>
+                                        </tr>
+                                        <tr class="bg-white">
+                                            <td class="px-6 py-4 font-medium text-gray-900">Sarjana Kedokteran</td>
+                                            <td class="px-6 py-4">Universitas Gadjah Mada</td>
+                                            <td class="px-6 py-4">2005 - 2009</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mt-8 mb-4">Pengalaman Kerja</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3" scope="col">Posisi</th>
+                                            <th class="px-6 py-3" scope="col">Institusi</th>
+                                            <th class="px-6 py-3" scope="col">Periode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 font-medium text-gray-900">Dokter Anak</td>
+                                            <td class="px-6 py-4">Mario Hospital</td>
+                                            <td class="px-6 py-4">2020 - Sekarang</td>
+                                        </tr>
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 font-medium text-gray-900">Dokter Umum</td>
+                                            <td class="px-6 py-4">Klinik Sehat Sejahtera</td>
+                                            <td class="px-6 py-4">2012 - 2015</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

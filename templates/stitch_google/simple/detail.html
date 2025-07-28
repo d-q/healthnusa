@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Doctor Details - NusaHealt Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body class="bg-custom-gray">
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
+    <div class="flex h-screen">
+        <aside id="sidebar" class="w-64 md:w-64 bg-white flex flex-col p-6 md:relative fixed h-full z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800 sidebar-text">NusaHealt</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider sidebar-text">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">dashboard</span>
+                        <span class="text-xs mt-1 sidebar-text">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">event_note</span>
+                        <span class="text-xs mt-1 sidebar-text">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-24 md:md-30">people</span>
+                        <span class="text-xs mt-1 sidebar-text">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">badge</span>
+                        <span class="text-xs mt-1 sidebar-text">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">king_bed</span>
+                        <span class="text-xs mt-1 sidebar-text">Room</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">payment</span>
+                        <span class="text-xs mt-1 sidebar-text">Payment</span>
+                    </a>
+                </div>
+                <span class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block sidebar-text">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">person</span>
+                        <span class="text-xs mt-1 sidebar-text">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">settings</span>
+                        <span class="text-xs mt-1 sidebar-text">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">help_outline</span>
+                        <span class="text-xs mt-1 sidebar-text">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span>
+                    <span class="sidebar-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main id="main-content" class="flex-1 p-4 md:p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-6 md:mb-8">
+                <!-- Left side: Menu, Back, Title -->
+                <div class="flex items-center flex-1 min-w-0">
+                    <button id="menu-toggle" class="p-2 bg-white rounded-lg shadow mr-3 md:hidden">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <button id="desktop-menu-toggle" class="p-2 bg-white rounded-lg shadow mr-3 hidden md:block">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <a href="index.html" id="back-btn" class="p-2 bg-white rounded-lg shadow hover:bg-gray-50 no-underline mr-3">
+                        <span class="material-icons text-gray-600">arrow_back</span>
+                    </a>
+                    <div class="flex-1 min-w-0">
+                        <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 truncate">Doctor Details</h2>
+                        <p class="text-xs sm:text-sm text-gray-500 hidden sm:block">View doctor information and details</p>
+                    </div>
+                </div>
+                
+                <!-- Right side: Theme & Avatar (always in same row) -->
+                <div class="flex items-center space-x-2 flex-shrink-0">
+                    <button id="theme-toggle" class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
+                        <span class="font-semibold text-gray-700 text-sm sm:text-base hidden min-[480px]:block">Alexa</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                <!-- Left Side - Profile & Information -->
+                <div class="w-full lg:w-1/3">
+                    <div class="bg-white p-4 md:p-6 rounded-2xl shadow">
+                        <div class="flex flex-col items-center">
+                            <div class="relative mb-4">
+                                <img id="doctor-avatar" alt="Doctor profile picture"
+                                    class="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-gray-100"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVI0osb-RABdJxYmVG6OTZhB0dYx69fid3eIWD4-iFUuy9vJ08BaB9ufoK5lCYYtqZUMZ3BWXGEEtBYexpLsWbTIkDrncZuqsnz7_1EeAMX6Wppa7la5Nq3MN3nceoYetzzTRAn1mm6aDtEut4fTgou7cbT0yp7Uws4dGCUOB6DeZ_GGOeGAbXpxl0y06BoTxqEef_YHBS_YZbKuQg366bA0nX69IHkxxFkyKFNgrZc19Q0YX_SoVmDstN8uuFPqiUvw59WY58Ics" />
+                            </div>
+                            <h3 id="doctor-name" class="text-lg md:text-xl font-bold text-gray-800 mb-1 text-center">Dr. John Doe</h3>
+                            <p id="doctor-specialty" class="text-custom-blue font-medium mb-6 text-center">Dokter Anak (Pediatri)</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Phone -->
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">phone</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-1">Phone Number</label>
+                                    <p id="doctor-phone" class="text-gray-800 font-medium">+62 812 3456 7890</p>
+                                </div>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">wc</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-1">Gender</label>
+                                    <p id="doctor-gender" class="text-gray-800 font-medium">Male</p>
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 mr-3 mt-2">location_on</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-1">Address</label>
+                                    <p id="doctor-address" class="text-gray-800 font-medium text-sm">Jl. Sudirman No. 123, Jakarta Pusat, DKI Jakarta</p>
+                                </div>
+                            </div>
+
+                            <!-- Schedule -->
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 mr-3 mt-2">schedule</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-2">Schedule & Practice Hours</label>
+                                    <div id="schedule-display" class="text-gray-800 space-y-2">
+                                        <div class="flex items-start">
+                                            <div class="font-semibold w-16 text-sm">Mon:</div>
+                                            <div class="flex-1 flex flex-wrap gap-1">
+                                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">09:00-11:00</span>
+                                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">13:00-15:00</span>
+                                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">16:00-17:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="font-semibold w-16 text-sm">Tue:</div>
+                                            <div class="flex-1 flex flex-wrap gap-1">
+                                                <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">09:00-17:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="font-semibold w-16 text-sm">Wed:</div>
+                                            <div class="flex-1 flex flex-wrap gap-1">
+                                                <span class="bg-pink-100 text-pink-800 text-xs font-medium px-2 py-1 rounded-full">09:00-17:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="font-semibold w-16 text-sm">Thu:</div>
+                                            <div class="flex-1 flex flex-wrap gap-1">
+                                                <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded-full">09:00-12:00</span>
+                                                <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded-full">14:00-16:00</span>
+                                                <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded-full">18:00-20:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="font-semibold w-16 text-sm">Fri:</div>
+                                            <div class="flex-1 flex flex-wrap gap-1">
+                                                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">09:00-12:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="font-semibold w-16 text-sm">Sat:</div>
+                                            <div class="flex-1"><span class="text-gray-500 text-sm">Off</span></div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="font-semibold w-16 text-sm">Sun:</div>
+                                            <div class="flex-1"><span class="text-gray-500 text-sm">Off</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Duty Status -->
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">work_outline</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-1">Duty Status</label>
+                                    <span id="duty-status"
+                                        class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> On-Duty
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="mt-6 md:mt-8 space-y-3">
+                            <button id="edit-btn"
+                                class="w-full bg-custom-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 flex items-center justify-center space-x-2">
+                                <span class="material-icons">edit</span>
+                                <span>Edit Doctor</span>
+                            </button>
+                            <button id="delete-btn"
+                                class="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition duration-300 flex items-center justify-center space-x-2">
+                                <span class="material-icons">delete</span>
+                                <span>Delete Doctor</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Detailed Information -->
+                <div class="w-full lg:w-2/3">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <div class="border-b">
+                            <nav class="flex space-x-4 md:space-x-8 px-4 md:px-6 overflow-x-auto">
+                                <a id="tab-personal" class="tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                    <span class="material-icons text-base">person</span>
+                                    <span class="hidden sm:inline">Detail Dokter</span>
+                                </a>
+                                <a id="tab-documents" class="tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                    <span class="material-icons text-base">description</span>
+                                    <span class="hidden sm:inline">Dokumen Perijinan</span>
+                                </a>
+                                <a id="tab-appointments" class="tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                    <span class="material-icons text-base">event</span>
+                                    <span class="hidden sm:inline">List Appointment</span>
+                                </a>
+                                <a id="tab-patients" class="tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                    <span class="material-icons text-base">people</span>
+                                    <span class="hidden sm:inline">List Pasien</span>
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="p-4 md:p-6">
+                            <!-- Personal Info Tab -->
+                            <div id="personal-tab" class="tab-content">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Biodata</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Nama Lengkap</label>
+                                        <p class="text-gray-800 font-medium">Dr. John Doe</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Spesialisasi</label>
+                                        <p class="text-gray-800 font-medium">Dokter Anak (Pediatri)</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Nomor STR</label>
+                                        <p class="text-gray-800 font-medium">1234567890123456</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Nomor SIP</label>
+                                        <p class="text-gray-800 font-medium">SIP.123/DU/X/2023</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Email</label>
+                                        <p class="text-gray-800 font-medium">johndoe.md@hospital.com</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Tanggal Lahir</label>
+                                        <p class="text-gray-800 font-medium">15 Juni 1985</p>
+                                    </div>
+                                </div>
+
+                                <h3 class="text-lg font-bold text-gray-800 mt-6 md:mt-8 mb-4">Riwayat Pendidikan</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-gray-500">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Gelar</th>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Institusi</th>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Tahun</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">Dokter Spesialis Anak</td>
+                                                <td class="px-4 md:px-6 py-4">Universitas Indonesia</td>
+                                                <td class="px-4 md:px-6 py-4">2015 - 2019</td>
+                                            </tr>
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">Pendidikan Profesi Dokter</td>
+                                                <td class="px-4 md:px-6 py-4">Universitas Gadjah Mada</td>
+                                                <td class="px-4 md:px-6 py-4">2009 - 2011</td>
+                                            </tr>
+                                            <tr class="bg-white">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">Sarjana Kedokteran</td>
+                                                <td class="px-4 md:px-6 py-4">Universitas Gadjah Mada</td>
+                                                <td class="px-4 md:px-6 py-4">2005 - 2009</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h3 class="text-lg font-bold text-gray-800 mt-6 md:mt-8 mb-4">Pengalaman Kerja</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-gray-500">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Posisi</th>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Institusi</th>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Periode</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">Dokter Anak</td>
+                                                <td class="px-4 md:px-6 py-4">NusaHealt</td>
+                                                <td class="px-4 md:px-6 py-4">2020 - Sekarang</td>
+                                            </tr>
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">Dokter Umum</td>
+                                                <td class="px-4 md:px-6 py-4">Klinik Sehat Sejahtera</td>
+                                                <td class="px-4 md:px-6 py-4">2012 - 2015</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Documents Tab -->
+                            <div id="documents-tab" class="tab-content hidden">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-bold text-gray-800">Dokumen Perijinan</h3>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    <div class="bg-gray-50 p-4 rounded-lg border-2 border-dashed border-gray-300">
+                                        <div class="text-center">
+                                            <span class="material-icons text-4xl text-gray-400 mb-2">description</span>
+                                            <p class="text-sm text-gray-600 font-medium">STR Certificate</p>
+                                            <p class="text-xs text-gray-500">PDF • 2.4 MB</p>
+                                            <button class="mt-2 text-custom-blue text-sm hover:underline">View Document</button>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg border-2 border-dashed border-gray-300">
+                                        <div class="text-center">
+                                            <span class="material-icons text-4xl text-gray-400 mb-2">description</span>
+                                            <p class="text-sm text-gray-600 font-medium">SIP Certificate</p>
+                                            <p class="text-xs text-gray-500">PDF • 1.8 MB</p>
+                                            <button class="mt-2 text-custom-blue text-sm hover:underline">View Document</button>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg border-2 border-dashed border-gray-300">
+                                        <div class="text-center">
+                                            <span class="material-icons text-4xl text-gray-400 mb-2">description</span>
+                                            <p class="text-sm text-gray-600 font-medium">Medical License</p>
+                                            <p class="text-xs text-gray-500">PDF • 3.1 MB</p>
+                                            <button class="mt-2 text-custom-blue text-sm hover:underline">View Document</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Appointments Tab -->
+                            <div id="appointments-tab" class="tab-content hidden">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-bold text-gray-800">Recent Appointments</h3>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-2 sm:space-y-0">
+                                            <div>
+                                                <p class="font-semibold text-gray-800">Consultation - Sarah Wilson</p>
+                                                <p class="text-sm text-gray-600">Regular checkup for pediatric care</p>
+                                                <div class="flex items-center mt-2 text-sm text-gray-500">
+                                                    <span class="material-icons text-sm mr-1">schedule</span>
+                                                    <span>Today, 10:00 AM - 10:30 AM</span>
+                                                </div>
+                                            </div>
+                                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full self-start">Completed</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-2 sm:space-y-0">
+                                            <div>
+                                                <p class="font-semibold text-gray-800">Follow-up - Michael Chen</p>
+                                                <p class="text-sm text-gray-600">Post-treatment follow-up examination</p>
+                                                <div class="flex items-center mt-2 text-sm text-gray-500">
+                                                    <span class="material-icons text-sm mr-1">schedule</span>
+                                                    <span>Tomorrow, 2:00 PM - 2:30 PM</span>
+                                                </div>
+                                            </div>
+                                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full self-start">Scheduled</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-2 sm:space-y-0">
+                                            <div>
+                                                <p class="font-semibold text-gray-800">Emergency - Emma Davis</p>
+                                                <p class="text-sm text-gray-600">Urgent pediatric consultation</p>
+                                                <div class="flex items-center mt-2 text-sm text-gray-500">
+                                                    <span class="material-icons text-sm mr-1">schedule</span>
+                                                    <span>Jul 15, 3:00 PM - 3:45 PM</span>
+                                                </div>
+                                            </div>
+                                            <span class="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded-full self-start">Pending</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Patients Tab -->
+                            <div id="patients-tab" class="tab-content hidden">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-bold text-gray-800">Recent Patients</h3>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex items-start space-x-4">
+                                            <img alt="Patient" class="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"
+                                                src="https://via.placeholder.com/48x48/f3f4f6/9ca3af?text=MC" />
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-gray-800">Michael Chen</p>
+                                                <p class="text-sm text-gray-600">Age: 5 years • Last visit: 2 days ago</p>
+                                                <p class="text-sm text-gray-500 mt-1">Treatment for common cold and fever</p>
+                                            </div>
+                                            <button class="text-custom-blue text-sm hover:underline flex-shrink-0">View Details</button>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex items-start space-x-4">
+                                            <img alt="Patient" class="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"
+                                                src="https://via.placeholder.com/48x48/f3f4f6/9ca3af?text=ED" />
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-gray-800">Emma Davis</p>
+                                                <p class="text-sm text-gray-600">Age: 12 years • Last visit: 1 week ago</p>
+                                                <p class="text-sm text-gray-500 mt-1">Growth monitoring and nutritional consultation</p>
+                                            </div>
+                                            <button class="text-custom-blue text-sm hover:underline flex-shrink-0">View Details</button>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex items-start space-x-4">
+                                            <img alt="Patient" class="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"
+                                                src="https://via.placeholder.com/48x48/f3f4f6/9ca3af?text=LJ" />
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-gray-800">Lucas Johnson</p>
+                                                <p class="text-sm text-gray-600">Age: 6 years • Last visit: 2 weeks ago</p>
+                                                <p class="text-sm text-gray-500 mt-1">Allergy testing and treatment plan</p>
+                                            </div>
+                                            <button class="text-custom-blue text-sm hover:underline flex-shrink-0">View Details</button>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex items-start space-x-4">
+                                            <img alt="Patient" class="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"
+                                                src="https://via.placeholder.com/48x48/f3f4f6/9ca3af?text=AB" />
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-gray-800">Aria Brown</p>
+                                                <p class="text-sm text-gray-600">Age: 9 years • Last visit: 3 weeks ago</p>
+                                                <p class="text-sm text-gray-500 mt-1">Respiratory infection follow-up</p>
+                                            </div>
+                                            <button class="text-custom-blue text-sm hover:underline flex-shrink-0">View Details</button>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex items-start space-x-4">
+                                            <img alt="Patient" class="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"
+                                                src="https://via.placeholder.com/48x48/f3f4f6/9ca3af?text=SW" />
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-gray-800">Sarah Wilson</p>
+                                                <p class="text-sm text-gray-600">Age: 8 years • Last visit: Today</p>
+                                                <p class="text-sm text-gray-500 mt-1">Regular pediatric checkup and vaccination</p>
+                                            </div>
+                                            <button class="text-custom-blue text-sm hover:underline flex-shrink-0">View Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl transform transition-all duration-300 scale-95">
+            <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full">
+                <span class="material-icons text-red-600 text-2xl">warning</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 text-center mb-2">Delete Doctor</h3>
+            <p class="text-gray-600 text-center mb-6">Are you sure you want to delete this doctor? This action cannot be undone.</p>
+            <div class="doctor-info mb-6 p-4 bg-gray-50 rounded-lg">
+                <div class="flex items-center space-x-3">
+                    <img id="modalDoctorAvatar" alt="Doctor" class="w-12 h-12 rounded-full" src="" />
+                    <div>
+                        <p id="modalDoctorName" class="font-semibold text-gray-800"></p>
+                        <p id="modalDoctorSpecialty" class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                <button id="cancelDelete" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium">
+                    Cancel
+                </button>
+                <button id="confirmDelete" class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="detail.js"></script>
+
+</body>
+
+</html>

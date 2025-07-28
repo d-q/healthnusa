@@ -1,0 +1,1013 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode colors */
+.bg-custom-blue {
+    background-color: #4A90E2;
+}
+
+.text-custom-blue {
+    color: #4A90E2;
+}
+
+.bg-custom-gray {
+    background-color: #F7F8FA;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    /* Mobile sidebar */
+    aside {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 40;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    aside.show {
+        transform: translateX(0);
+    }
+    
+    /* Main content on mobile */
+    main {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+    
+    /* Mobile overlay */
+    .mobile-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 30;
+    }
+    
+    .mobile-overlay.show {
+        display: block;
+    }
+    
+    /* Mobile header improvements */
+    header {
+        padding: 1rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    /* Mobile navbar single row layout */
+    header .flex.justify-between {
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    /* Left side of navbar - flexible but constrained */
+    header .flex-1.min-w-0 {
+        overflow: hidden;
+        margin-right: 0.5rem;
+    }
+    
+    /* Right side of navbar - fixed width */
+    header .flex-shrink-0 {
+        flex-shrink: 0;
+    }
+    
+    /* Mobile button improvements */
+    header button {
+        min-width: 36px;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+    }
+    
+    /* Mobile user info adjustments */
+    header .bg-white.p-2 {
+        padding: 0.375rem !important;
+    }
+    
+    /* Compact spacing for mobile */
+    header .space-x-2 > * + * {
+        margin-left: 0.375rem !important;
+    }
+    
+    /* Mobile title adjustments */
+    header h2 {
+        font-size: 1rem !important;
+        line-height: 1.2;
+        margin: 0;
+    }
+    
+    /* Hide subtitle on very small screens */
+    header p.text-xs {
+        display: none !important;
+    }
+    
+    /* Responsive table adjustments */
+    .overflow-x-auto {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Mobile-friendly card layouts */
+    .doctors-list .grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+    
+    .doctors-list .md\:grid-cols-6 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Stack form elements on mobile */
+    .grid.grid-cols-2 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Mobile schedule container */
+    #schedule-container .flex {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    #schedule-container .flex .w-20 {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .doctors-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .xl\:grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Material Icons responsive sizes */
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-30 {
+    font-size: 30px;
+}
+
+@media (min-width: 768px) {
+    .md\:md-30 {
+        font-size: 30px !important;
+    }
+}
+
+/* Dark mode colors */
+.dark {
+    color-scheme: dark;
+}
+
+.dark .bg-custom-gray {
+    background-color: #1a1a1a;
+}
+
+.dark .bg-white {
+    background-color: #2d2d2d !important;
+}
+
+.dark .text-gray-800 {
+    color: #e5e5e5 !important;
+}
+
+.dark .text-gray-700 {
+    color: #d1d1d1 !important;
+}
+
+.dark .text-gray-600 {
+    color: #b0b0b0 !important;
+}
+
+.dark .text-gray-500 {
+    color: #9a9a9a !important;
+}
+
+.dark .text-gray-400 {
+    color: #7a7a7a !important;
+}
+
+.dark .border-gray-300 {
+    border-color: #4a4a4a !important;
+}
+
+.dark .border {
+    border-color: #4a4a4a !important;
+}
+
+.dark .bg-gray-100 {
+    background-color: #3a3a3a !important;
+}
+
+.dark .bg-gray-200 {
+    background-color: #4a4a4a !important;
+}
+
+.dark .hover\:bg-gray-100:hover {
+    background-color: #3a3a3a !important;
+}
+
+.dark .hover\:bg-gray-200:hover {
+    background-color: #4a4a4a !important;
+}
+
+.dark .shadow {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .ring-1 {
+    --tw-ring-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .ring-black\/5 {
+    --tw-ring-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Main content dark mode */
+.dark #main-content {
+    background-color: #1a1a1a !important;
+}
+
+/* Search input dark mode */
+.dark #search-input,
+.dark #search-input-desktop {
+    background-color: #2d2d2d !important;
+    border-color: #4a4a4a !important;
+    color: #e5e5e5 !important;
+}
+
+.dark #search-input::placeholder,
+.dark #search-input-desktop::placeholder {
+    color: #7a7a7a !important;
+}
+
+.dark #search-input:focus,
+.dark #search-input-desktop:focus {
+    background-color: #2d2d2d !important;
+    border-color: #4A90E2 !important;
+}
+
+/* Navigation styles */
+aside nav a.active,
+aside nav a:hover {
+    background-color: #E9F2FE;
+    color: #4A90E2;
+    font-weight: 500;
+}
+
+.dark aside nav a.active,
+.dark aside nav a:hover {
+    background-color: rgba(74, 144, 226, 0.2);
+    color: #4A90E2;
+}
+
+aside nav a.active .material-icons,
+aside nav a:hover .material-icons {
+    color: #4A90E2;
+}
+
+aside nav a {
+    color: #A0AEC0;
+    transition: all 0.3s ease;
+}
+
+aside nav a .material-icons {
+    color: #A0AEC0;
+}
+
+/* Sidebar transition */
+aside {
+    transition: width 0.3s ease, padding 0.3s ease, transform 0.3s ease;
+}
+
+aside.collapsed {
+    width: 80px;
+    padding: 1.5rem 0.5rem;
+}
+
+aside.collapsed .sidebar-text {
+    display: none;
+}
+
+aside.collapsed .grid-cols-2 {
+    grid-template-columns: 1fr;
+}
+
+aside.collapsed .flex.items-center {
+    justify-content: center;
+}
+
+aside.collapsed .flex.items-center .sidebar-text {
+    display: none;
+}
+
+main {
+    transition: margin-left 0.3s ease;
+}
+
+/* Dropdown animations */
+.dropdown-menu {
+    transition: all 0.3s ease;
+    transform: scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dropdown-menu.show {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Hidden class for elements */
+.hidden {
+    display: none;
+}
+
+/* All transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Modal dark mode styles */
+.dark #deleteModal .bg-white {
+    background-color: #2d2d2d !important;
+    color: #e5e5e5 !important;
+}
+
+.dark #deleteModal .text-gray-800 {
+    color: #e5e5e5 !important;
+}
+
+.dark #deleteModal .text-gray-600 {
+    color: #b0b0b0 !important;
+}
+
+.dark #deleteModal .text-gray-500 {
+    color: #9a9a9a !important;
+}
+
+.dark #deleteModal .bg-gray-50 {
+    background-color: #3a3a3a !important;
+}
+
+.dark #deleteModal .bg-gray-200 {
+    background-color: #4a4a4a !important;
+}
+
+.dark #deleteModal .text-gray-700 {
+    color: #d1d1d1 !important;
+}
+
+.dark #deleteModal .hover\:bg-gray-300:hover {
+    background-color: #5a5a5a !important;
+}
+
+.dark #deleteModal .bg-red-100 {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+/* Modal animation */
+.modal-enter {
+    transform: scale(0.9);
+    opacity: 0;
+}
+
+.modal-enter-active {
+    transform: scale(1);
+    opacity: 1;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Grid view card styles */
+.dark #doctors-grid .bg-white {
+    background-color: #2d2d2d !important;
+}
+
+.dark #doctors-grid .text-gray-800 {
+    color: #e5e5e5 !important;
+}
+
+.dark #doctors-grid .text-gray-500 {
+    color: #9a9a9a !important;
+}
+
+.dark #doctors-grid .border {
+    border-color: #4a4a4a !important;
+}
+
+.dark #doctors-grid .hover\:bg-gray-200:hover {
+    background-color: #4a4a4a !important;
+}
+
+.dark #doctors-grid .text-gray-700 {
+    color: #d1d1d1 !important;
+}
+
+.dark #doctors-grid .hover\:bg-gray-100:hover {
+    background-color: #3a3a3a !important;
+}
+
+/* View toggle buttons */
+.dark .bg-gray-100 {
+    background-color: #3a3a3a !important;
+}
+
+.dark #list-view-btn.bg-white,
+.dark #grid-view-btn.bg-white,
+.dark #mobile-list-view-btn.bg-white,
+.dark #mobile-grid-view-btn.bg-white {
+    background-color: #4a4a4a !important;
+}
+
+.dark #list-view-btn.bg-white .material-icons,
+.dark #grid-view-btn.bg-white .material-icons,
+.dark #mobile-list-view-btn.bg-white .material-icons,
+.dark #mobile-grid-view-btn.bg-white .material-icons {
+    color: #4A90E2 !important;
+}
+
+/* Create/Update page styles */
+.dark .tab-btn {
+    color: #9a9a9a !important;
+}
+
+.dark .tab-btn.text-blue-600 {
+    color: #60a5fa !important;
+}
+
+.dark .tab-btn.border-blue-600 {
+    border-color: #60a5fa !important;
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+    background-color: #2d2d2d !important;
+    border-color: #4a4a4a !important;
+    color: #e5e5e5 !important;
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+    background-color: #2d2d2d !important;
+    border-color: #4A90E2 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+    color: #7a7a7a !important;
+}
+
+.dark label {
+    color: #9a9a9a !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: #3a3a3a !important;
+}
+
+.dark table thead {
+    background-color: #3a3a3a !important;
+}
+
+.dark table thead th {
+    color: #d1d1d1 !important;
+}
+
+.dark table tbody tr {
+    background-color: #2d2d2d !important;
+    border-color: #4a4a4a !important;
+}
+
+.dark table tbody td {
+    color: #e5e5e5 !important;
+}
+
+.dark .text-gray-900 {
+    color: #e5e5e5 !important;
+}
+
+/* Schedule checkbox styles for dark mode */
+.dark .form-checkbox {
+    background-color: #2d2d2d !important;
+    border-color: #4a4a4a !important;
+}
+
+.dark .form-checkbox:checked {
+    background-color: var(--checkbox-color, #4A90E2) !important;
+    border-color: var(--checkbox-color, #4A90E2) !important;
+}
+
+/* Schedule day labels dark mode */
+.dark .schedule-container label {
+    background-color: #3a3a3a !important;
+    border-color: #4a4a4a !important;
+    color: #9a9a9a !important;
+}
+
+.dark .schedule-container label.bg-blue-100 {
+    background-color: rgba(74, 144, 226, 0.2) !important;
+    color: #4A90E2 !important;
+}
+
+.dark .schedule-container label.bg-green-100 {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+    color: #22c55e !important;
+}
+
+.dark .schedule-container label.bg-pink-100 {
+    background-color: rgba(236, 72, 153, 0.2) !important;
+    color: #ec4899 !important;
+}
+
+.dark .schedule-container label.bg-purple-100 {
+    background-color: rgba(168, 85, 247, 0.2) !important;
+    color: #a855f7 !important;
+}
+
+.dark .schedule-container label.bg-yellow-100 {
+    background-color: rgba(245, 158, 11, 0.2) !important;
+    color: #f59e0b !important;
+}
+
+/* Default avatar dark mode */
+.dark #doctor-avatar {
+    border-color: #4a4a4a !important;
+}
+
+/* Button link styling */
+a.bg-custom-blue {
+    text-decoration: none;
+}
+
+a.bg-custom-blue:hover {
+    text-decoration: none;
+}
+
+a.bg-custom-blue:focus {
+    outline: 2px solid #4A90E2;
+    outline-offset: 2px;
+}
+
+.dark a.bg-custom-blue:focus {
+    outline-color: #60a5fa;
+}
+
+/* Back button link styling */
+a#back-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a#back-btn:hover {
+    text-decoration: none;
+}
+
+a#back-btn:focus {
+    outline: 2px solid #4A90E2;
+    outline-offset: 2px;
+}
+
+.dark a#back-btn {
+    background-color: #2d2d2d !important;
+}
+
+.dark a#back-btn:hover {
+    background-color: #3a3a3a !important;
+}
+
+.dark a#back-btn:focus {
+    outline-color: #60a5fa;
+}
+
+.dark a#back-btn .material-icons {
+    color: #e5e5e5 !important;
+}
+
+/* Loading overlay styles */
+#loadingOverlay {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+#loadingOverlay .bg-white {
+    animation: modalEnter 0.3s ease-out forwards;
+}
+
+@keyframes modalEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Enhanced spinning animation */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Pulse animation for dots */
+.animate-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Dark mode support for loading overlay */
+.dark #loadingOverlay .bg-white {
+    background-color: #2d2d2d !important;
+    color: #e5e5e5 !important;
+}
+
+.dark #loadingOverlay .text-gray-800 {
+    color: #e5e5e5 !important;
+}
+
+.dark #loadingOverlay .text-gray-600 {
+    color: #b0b0b0 !important;
+}
+
+.dark #loadingOverlay .border-gray-200 {
+    border-color: #4a4a4a !important;
+}
+
+/* Mobile-specific responsive styles */
+@media (max-width: 640px) {
+    /* Mobile header adjustments */
+    header h2 {
+        font-size: 1rem !important;
+    }
+    
+    /* Extra small screens - hide user name */
+    .hidden.xs\:block {
+        display: none !important;
+    }
+    
+    /* Mobile card spacing */
+    .p-4 {
+        padding: 0.75rem !important;
+    }
+    
+    .p-6 {
+        padding: 0.75rem !important;
+    }
+    
+    /* Mobile button adjustments */
+    .space-x-4 > * + * {
+        margin-left: 0.5rem !important;
+    }
+    
+    .space-x-2 > * + * {
+        margin-left: 0.25rem !important;
+    }
+    
+    /* Mobile table scrolling */
+    .overflow-x-auto {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e0 #f7fafc;
+    }
+    
+    .overflow-x-auto::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .overflow-x-auto::-webkit-scrollbar-track {
+        background: #f7fafc;
+        border-radius: 3px;
+    }
+    
+    .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 3px;
+    }
+    
+    .dark .overflow-x-auto::-webkit-scrollbar-track {
+        background: #2d2d2d;
+    }
+    
+    .dark .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: #4a4a4a;
+    }
+    
+    /* Mobile form improvements */
+    .grid.grid-cols-2.gap-6 {
+        gap: 1rem !important;
+    }
+    
+    /* Mobile schedule layout */
+    #schedule-container > div {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    
+    #schedule-container .w-20 {
+        width: 100% !important;
+        margin-bottom: 0.5rem;
+    }
+    
+    #schedule-container .schedule-time {
+        margin-top: 0.5rem;
+    }
+    
+    /* Mobile pagination */
+    #pagination {
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+    
+    #pagination button {
+        min-width: 2.5rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Mobile navbar specific */
+    header .flex.flex-col.space-y-4 {
+        gap: 1rem;
+    }
+    
+    /* Ensure proper mobile header layout */
+    @media (max-width: 480px) {
+        header h2 {
+            font-size: 0.9rem !important;
+        }
+        
+        header .text-xs {
+            font-size: 0.65rem !important;
+        }
+        
+        header button {
+            min-width: 36px;
+            min-height: 36px;
+        }
+        
+        header .w-6 {
+            width: 1.25rem !important;
+            height: 1.25rem !important;
+        }
+    }
+}
+
+/* Tablet-specific styles */
+@media (min-width: 641px) and (max-width: 1024px) {
+    /* Tablet grid adjustments */
+    .lg\:grid-cols-4 {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+    
+    .lg\:w-1\/3 {
+        width: 100% !important;
+    }
+    
+    .lg\:w-2\/3 {
+        width: 100% !important;
+    }
+    
+    /* Tablet form layout */
+    .xl\:flex-row {
+        flex-direction: column !important;
+    }
+    
+    .xl\:w-1\/3,
+    .xl\:w-2\/3 {
+        width: 100% !important;
+    }
+}
+
+/* Touch improvements */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets */
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .p-2 {
+        padding: 0.75rem !important;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .hover\:bg-gray-100:hover,
+    .hover\:bg-gray-200:hover,
+    .hover\:bg-gray-300:hover,
+    .hover\:shadow-md:hover,
+    .hover\:shadow-lg:hover {
+        background-color: inherit;
+        box-shadow: inherit;
+    }
+}
+
+/* Additional mobile navbar improvements */
+@media (max-width: 480px) {
+    /* Very small mobile devices */
+    header {
+        padding: 0.75rem !important;
+    }
+    
+    header .space-y-4 {
+        gap: 0.75rem !important;
+    }
+    
+    header .space-x-2 > * + * {
+        margin-left: 0.375rem !important;
+    }
+    
+    /* Compact mobile header */
+    header .flex.items-center.w-full {
+        flex-wrap: nowrap;
+    }
+    
+    header .flex-1.min-w-0 {
+        overflow: hidden;
+    }
+    
+    /* Better mobile title truncation */
+    header .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+}
+
+/* Tab Navigation Responsive Styles */
+.tab-btn {
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.5rem;
+}
+
+@media (max-width: 640px) {
+    /* Mobile tab navigation - icon only */
+    .tab-btn {
+        padding: 1rem 0.75rem;
+        min-width: 48px;
+        justify-content: center;
+    }
+    
+    .tab-btn .space-x-2 {
+        gap: 0;
+    }
+    
+    .tab-btn .material-icons {
+        font-size: 20px;
+    }
+    
+    /* Hide text on mobile, show only icons */
+    .tab-btn .hidden.sm\\:inline {
+        display: none !important;
+    }
+    
+    /* Tab navigation container adjustments */
+    nav.flex {
+        gap: 0.5rem;
+        padding: 0 1rem;
+        justify-content: space-around;
+    }
+    
+    /* Ensure equal spacing for mobile tabs */
+    nav.flex a {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+@media (min-width: 641px) {
+    /* Desktop and tablet - show both icon and text */
+    .tab-btn .space-x-2 {
+        gap: 0.5rem;
+    }
+    
+    .tab-btn .material-icons {
+        font-size: 18px;
+    }
+    
+    /* Show text on larger screens */
+    .tab-btn .hidden.sm\\:inline {
+        display: inline !important;
+    }
+}
+
+/* Dark mode tab styles */
+.dark .tab-btn.text-blue-600 {
+    color: #60a5fa !important;
+}
+
+.dark .tab-btn.border-blue-600 {
+    border-color: #60a5fa !important;
+}
+
+.dark .tab-btn:hover {
+    color: #d1d5db !important;
+}
+
+/* Active tab icon color inheritance */
+.tab-btn.text-blue-600 .material-icons {
+    color: inherit;
+}
+
+.tab-btn.text-gray-500 .material-icons {
+    color: inherit;
+}
+
+.tab-btn:hover .material-icons {
+    color: inherit;
+}
+
+/* Create/Update page specific order adjustments */
+@media (max-width: 1279px) {
+    /* On mobile and tablet, Profile Photo (order-1) comes first */
+    .xl\:order-1 {
+        order: 1;
+    }
+    
+    .xl\:order-2 {
+        order: 2;
+    }
+}
+
+@media (min-width: 1280px) {
+    /* On desktop (xl), maintain the specified order */
+    .xl\:order-1 {
+        order: 1;
+    }
+    
+    .xl\:order-2 {
+        order: 2;
+    }
+}
+
+/* Ensure consistent mobile spacing */
+@media (max-width: 640px) {
+    /* Mobile header container */
+    main {
+        padding: 1rem !important;
+    }
+    
+    /* Adjust header margin for mobile */
+    header {
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Mobile friendly shadows */
+    .shadow {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+    }
+}

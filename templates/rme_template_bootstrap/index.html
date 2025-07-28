@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPro - Patient Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-plus"></i>
+            </div>
+            <span class="brand">MediPro</span>
+        </div>
+        <div class="sidebar-nav">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#doctors">
+                        <i class="fas fa-user-md"></i>
+                        <span>Doctors</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#patients">
+                        <i class="fas fa-users"></i>
+                        <span>Patients</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#appointments">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#prescriptions">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span>Prescriptions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#ambulance">
+                        <i class="fas fa-ambulance"></i>
+                        <span>Ambulance</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#pharmacy">
+                        <i class="fas fa-pills"></i>
+                        <span>Pharmacy</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#reports">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <button class="btn-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div>
+                    <h1 class="header-title">Patients</h1>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- User Dropdown -->
+                <div class="user-dropdown">
+                    <button class="user-avatar-btn" id="userDropdownBtn">
+                        <div class="user-initials">SJ</div>
+                    </button>
+                    
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <div class="user-dropdown-header">
+                            <h6 class="user-dropdown-name">Dr. Sarah Johnson</h6>
+                            <p class="user-dropdown-email">admin@medixpro.com</p>
+                        </div>
+                        <div class="user-dropdown-body">
+                            <a href="#profile" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                Profile
+                            </a>
+                            <a href="#chat" class="dropdown-item">
+                                <i class="fas fa-comments"></i>
+                                Chat
+                            </a>
+                            <a href="#support" class="dropdown-item">
+                                <i class="fas fa-question-circle"></i>
+                                Support
+                            </a>
+                            <a href="#settings" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item text-danger" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Log out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Filter Panel -->
+            <div class="filter-panel">
+                <div class="filter-row">
+                    <div class="filter-controls">
+                        <div>
+                            <label class="form-label">Search patients</label>
+                            <div class="search-input-container">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="form-control search-input" id="searchInput" placeholder="Search by name, condition, or doctor...">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" id="genderFilter">
+                                <option value="">All</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Status</label>
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="age-range-container">
+                            <label class="form-label">Age Range</label>
+                            <div class="age-inputs">
+                                <input type="number" class="form-control" id="minAge" value="0" min="0" max="100">
+                                <span>to</span>
+                                <input type="number" class="form-control" id="maxAge" value="100" min="0" max="100">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label" style="visibility: hidden;">Filter</label>
+                            <button class="btn btn-outline-primary" id="filterToggle" title="Toggle Filters">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Column Filters -->
+                <div class="column-filters" id="columnFilters">
+                    <label class="form-label">Select columns to display:</label>
+                    <div class="column-grid">
+                        <div class="form-check">
+                            <input class="form-check-input column-filter" type="checkbox" value="checkbox" id="col-checkbox" checked>
+                            <label class="form-check-label" for="col-checkbox">Checkbox</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input column-filter" type="checkbox" value="name" id="col-name" checked>
+                            <label class="form-check-label" for="col-name">Name</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input column-filter" type="checkbox" value="age" id="col-age" checked>
+                            <label class="form-check-label" for="col-age">Age/Gender</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input column-filter" type="checkbox" value="status" id="col-status" checked>
+                            <label class="form-check-label" for="col-status">Status</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input column-filter" type="checkbox" value="lastVisit" id="col-lastVisit" checked>
+                            <label class="form-check-label" for="col-lastVisit">Last Visit</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input column-filter" type="checkbox" value="condition" id="col-condition" checked>
+                            <label class="form-check-label" for="col-condition">Condition</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input column-filter" type="checkbox" value="doctor" id="col-doctor" checked>
+                            <label class="form-check-label" for="col-doctor">Doctor</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Table -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-2">
+                            <!-- <button class="btn btn-outline-primary" id="addPatientBtn" title="Add Patient">
+                                <i class="fas fa-plus"></i>
+                            </button> -->
+
+                            <button class="btn btn-outline-primary btn-sm" type="button" id="addPatientBtn">
+                                <i class="fas fa-plus"></i>
+                                <span class="d-none d-md-inline ms-1">Add Patient</span>
+                            </button>
+                            
+                            <!-- Actions Dropdown - Hidden by default -->
+                            <div class="dropdown" id="actionsDropdownContainer" style="display: none;">
+                                <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="actionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-cog"></i>
+                                    <span class="d-none d-md-inline ms-1">Actions</span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="#" onclick="exportToCSV()">
+                                            <i class="fas fa-download me-2"></i>
+                                            Export Selected
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" onclick="archivePatients()">
+                                            <i class="fas fa-archive me-2"></i>
+                                            Archive Selected
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" onclick="unarchivePatients()">
+                                            <i class="fas fa-box-open me-2"></i>
+                                            Unarchive Selected
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" onclick="duplicatePatients()">
+                                            <i class="fas fa-copy me-2"></i>
+                                            Duplicate Selected
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#" onclick="deletePatients()">
+                                            <i class="fas fa-trash me-2"></i>
+                                            Delete Selected
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Selection Counter -->
+                            <div class="selection-counter" id="selectionCounter" style="display: none;">
+                                <span class="badge bg-primary">
+                                    <i class="fas fa-check-circle me-1"></i>
+                                    <span id="selectedCount">0</span> selected
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Page Size Controls -->
+                        <div class="page-size-controls">
+                            <input type="number" class="page-size-input" id="pageSize" value="10" min="1" max="100">
+                            <span class="page-size-separator">of</span>
+                            <span class="total-entries" id="totalEntries">100</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-checkbox checkbox-column">
+                                    <input type="checkbox" id="selectAllCheckbox" title="Select All">
+                                </th>
+                                <th class="col-name sortable" data-sort="name">
+                                    <div class="header-content">
+                                        <span class="header-text">Name</span>
+                                        <span class="sort-indicator">
+                                            <i class="fas fa-caret-up sort-up"></i>
+                                            <i class="fas fa-caret-down sort-down"></i>
+                                        </span>
+                                    </div>
+                                </th>
+                                <th class="col-age sortable" data-sort="age">
+                                    <div class="header-content">
+                                        <span class="header-text">Age/Gender</span>
+                                        <span class="sort-indicator">
+                                            <i class="fas fa-caret-up sort-up"></i>
+                                            <i class="fas fa-caret-down sort-down"></i>
+                                        </span>
+                                    </div>
+                                </th>
+                                <th class="col-status sortable" data-sort="status">
+                                    <div class="header-content">
+                                        <span class="header-text">Status</span>
+                                        <span class="sort-indicator">
+                                            <i class="fas fa-caret-up sort-up"></i>
+                                            <i class="fas fa-caret-down sort-down"></i>
+                                        </span>
+                                    </div>
+                                </th>
+                                <th class="col-lastVisit sortable" data-sort="lastVisit">
+                                    <div class="header-content">
+                                        <span class="header-text">Last Visit</span>
+                                        <span class="sort-indicator">
+                                            <i class="fas fa-caret-up sort-up"></i>
+                                            <i class="fas fa-caret-down sort-down"></i>
+                                        </span>
+                                    </div>
+                                </th>
+                                <th class="col-condition sortable" data-sort="condition">
+                                    <div class="header-content">
+                                        <span class="header-text">Condition</span>
+                                        <span class="sort-indicator">
+                                            <i class="fas fa-caret-up sort-up"></i>
+                                            <i class="fas fa-caret-down sort-down"></i>
+                                        </span>
+                                    </div>
+                                </th>
+                                <th class="col-doctor sortable" data-sort="doctor">
+                                    <div class="header-content">
+                                        <span class="header-text">Doctor</span>
+                                        <span class="sort-indicator">
+                                            <i class="fas fa-caret-up sort-up"></i>
+                                            <i class="fas fa-caret-down sort-down"></i>
+                                        </span>
+                                    </div>
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientsTableBody">
+                            <!-- Table content will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-container">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination">
+                            <!-- Pagination will be populated by JavaScript -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Detail Modal -->
+    <div class="modal-backdrop" id="patientDetailModal">
+        <div class="patient-detail-modal">
+            <div class="patient-modal-header">
+                <h3 class="patient-modal-title" id="patientModalTitle">Patient Details</h3>
+                <button class="modal-close-btn" onclick="closePatientDetailModal()" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="patient-modal-body">
+                <!-- Profile Section -->
+                <div class="patient-profile-section">
+                    <div class="text-center">
+                        <img id="patientModalAvatar" src="" alt="" class="patient-modal-image">
+                        <h4 class="patient-modal-name" id="patientModalName"></h4>
+                        <p class="patient-modal-email" id="patientModalEmail"></p>
+                        
+                        <div class="patient-modal-stats">
+                            <div class="modal-stat-item">
+                                <div class="modal-stat-number" id="pastAppointments">15</div>
+                                <div class="modal-stat-label">Past</div>
+                            </div>
+                            <div class="modal-stat-item">
+                                <div class="modal-stat-number" id="upcomingAppointments">2</div>
+                                <div class="modal-stat-label">Upcoming</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="patient-modal-content">
+                        <div class="patient-modal-info-grid">
+                            <div class="modal-info-item">
+                                <div class="modal-info-label">Gender</div>
+                                <div class="modal-info-value" id="patientModalGender"></div>
+                            </div>
+                            <div class="modal-info-item">
+                                <div class="modal-info-label">Age</div>
+                                <div class="modal-info-value" id="patientModalAge"></div>
+                            </div>
+                            <div class="modal-info-item">
+                                <div class="modal-info-label">Phone Number</div>
+                                <div class="modal-info-value" id="patientModalPhone">(239) 555-0108</div>
+                            </div>
+                            <div class="modal-info-item">
+                                <div class="modal-info-label">Current Status</div>
+                                <div class="modal-info-value">
+                                    <span class="modal-status-badge" id="patientModalStatus"></span>
+                                </div>
+                            </div>
+                            <div class="modal-info-item">
+                                <div class="modal-info-label">Last Visit</div>
+                                <div class="modal-info-value" id="patientModalLastVisit"></div>
+                            </div>
+                            <div class="modal-info-item">
+                                <div class="modal-info-label">Current Condition</div>
+                                <div class="modal-info-value" id="patientModalCondition"></div>
+                            </div>
+                            <div class="modal-info-item">
+                                <div class="modal-info-label">Assigned Doctor</div>
+                                <div class="modal-info-value" id="patientModalDoctor"></div>
+                            </div>
+                            <div class="modal-info-item">
+                                <div class="modal-info-label">Registration Date</div>
+                                <div class="modal-info-value" id="patientModalRegistered">Feb 24th, 2020</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Important Notes Section -->
+                    <div class="patient-notes-section">
+                        <div class="notes-header">
+                            <h6 class="notes-title">Important Notes</h6>
+                            <button class="btn-edit-notes" id="editNotesBtn" onclick="toggleEditNotes()">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                        </div>
+                        
+                        <div class="notes-content" id="notesDisplay">
+                            <div class="notes-text" id="notesText">
+                                Patient has allergic history with Cataflam. Currently taking blood pressure medication. Shows anxiety about dental procedures and requires extra care and reassurance during treatments. Previous bad experience with dental procedures in 2018.
+                            </div>
+                            <div class="notes-meta">
+                                <div class="notes-author">
+                                    <i class="fas fa-user-md"></i>
+                                    <span>Last edited by Dr. Sarah Johnson</span>
+                                </div>
+                                <div class="notes-timestamp">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="notesTimestamp">March 15, 2024 at 2:30 PM</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="notes-edit-form" id="notesEditForm" style="display: none;">
+                            <textarea class="notes-textarea" id="notesTextarea" placeholder="Enter important notes about the patient...">
+Patient has allergic history with Cataflam. Currently taking blood pressure medication. Shows anxiety about dental procedures and requires extra care and reassurance during treatments. Previous bad experience with dental procedures in 2018.
+                            </textarea>
+                            <div class="notes-edit-actions">
+                                <button class="btn-save-notes" onclick="saveNotes()">
+                                    <i class="fas fa-save"></i>
+                                    Save Changes
+                                </button>
+                                <button class="btn-cancel-notes" onclick="cancelEditNotes()">
+                                    <i class="fas fa-times"></i>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs Section -->
+                <div class="patient-modal-tabs">
+                    <ul class="modal-nav-tabs" id="patientModalTabs" role="tablist">
+                        <li class="modal-nav-item" role="presentation">
+                            <button class="modal-nav-link active" id="modal-recent-tab" data-tab="recent" type="button" role="tab">
+                                Recent Activity
+                            </button>
+                        </li>
+                        <li class="modal-nav-item" role="presentation">
+                            <button class="modal-nav-link" id="modal-appointments-tab" data-tab="appointments" type="button" role="tab">
+                                Appointments
+                            </button>
+                        </li>
+                        <li class="modal-nav-item" role="presentation">
+                            <button class="modal-nav-link" id="modal-notes-tab" data-tab="notes" type="button" role="tab">
+                                Notes & Files
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="modal-tab-content">
+                        <!-- Recent Activity Tab -->
+                        <div class="modal-tab-pane active" id="modal-recent" role="tabpanel">
+                            <div class="modal-recent-activity">
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Last Appointment Completed</div>
+                                        <div class="modal-activity-description">Root Canal Treatment with Dr. Adam H.</div>
+                                        <div class="modal-activity-time">3 days ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-notes-medical"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Medical Note Added</div>
+                                        <div class="modal-activity-description">Allergic to Cataflam - Important warning note</div>
+                                        <div class="modal-activity-time">1 week ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-file-upload"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">X-Ray Results Uploaded</div>
+                                        <div class="modal-activity-description">Dental X-Ray Result 2.pdf</div>
+                                        <div class="modal-activity-time">2 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="modal-activity-item">
+                                    <div class="modal-activity-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <div class="modal-activity-content">
+                                        <div class="modal-activity-title">Prescription Issued</div>
+                                        <div class="modal-activity-description">Amoxicillin 500mg and pain medications</div>
+                                        <div class="modal-activity-time">3 weeks ago</div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+
+                        <!-- Appointments Tab -->
+                        <div class="modal-tab-pane" id="modal-appointments" role="tabpanel">
+                            <div class="modal-appointments-section">
+                                <h6 class="modal-section-title">Upcoming Appointments</h6>
+                                <div class="modal-appointment-item upcoming">
+                                    <div class="modal-appointment-date">
+                                        <div class="modal-date-day">26</div>
+                                        <div class="modal-date-month">Nov</div>
+                                    </div>
+                                    <div class="modal-appointment-details">
+                                        <div class="modal-appointment-title">Root Canal Treatment</div>
+                                        <div class="modal-appointment-time">09:00 - 10:00</div>
+                                        <div class="modal-appointment-doctor">Dr. Adam H.</div>
+                                    </div>
+                                    <div class="modal-appointment-status">
+                                        <span class="status-badge upcoming">Upcoming</span>
+                                    </div>
+                                </div>
+                                <div class="modal-appointment-item upcoming">
+                                    <div class="modal-appointment-date">
+                                        <div class="modal-date-day">12</div>
+                                        <div class="modal-date-month">Dec</div>
+                                    </div>
+                                    <div class="modal-appointment-details">
+                                        <div class="modal-appointment-title">Follow-up Checkup</div>
+                                        <div class="modal-appointment-time">14:00 - 15:00</div>
+                                        <div class="modal-appointment-doctor">Dr. Adam H.</div>
+                                    </div>
+                                    <div class="modal-appointment-status">
+                                        <span class="status-badge upcoming">Upcoming</span>
+                                    </div>
+                                </div>
+
+                                <h6 class="modal-section-title" style="margin-top: 2rem;">Recent Past Appointments</h6>
+                                <div class="modal-appointment-item completed">
+                                    <div class="modal-appointment-date">
+                                        <div class="modal-date-day">15</div>
+                                        <div class="modal-date-month">Oct</div>
+                                    </div>
+                                    <div class="modal-appointment-details">
+                                        <div class="modal-appointment-title">Dental Cleaning</div>
+                                        <div class="modal-appointment-time">10:00 - 11:00</div>
+                                        <div class="modal-appointment-doctor">Dr. Sarah M.</div>
+                                    </div>
+                                    <div class="modal-appointment-status">
+                                        <span class="status-badge completed">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="modal-appointment-item completed">
+                                    <div class="modal-appointment-date">
+                                        <div class="modal-date-day">08</div>
+                                        <div class="modal-date-month">Sep</div>
+                                    </div>
+                                    <div class="modal-appointment-details">
+                                        <div class="modal-appointment-title">Tooth Filling</div>
+                                        <div class="modal-appointment-time">14:30 - 15:30</div>
+                                        <div class="modal-appointment-doctor">Dr. John D.</div>
+                                    </div>
+                                    <div class="modal-appointment-status">
+                                        <span class="status-badge completed">Completed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notes & Files Tab -->
+                        <div class="modal-tab-pane" id="modal-notes" role="tabpanel">
+                            <div class="modal-notes-files-section">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="modal-section-title">Important Notes</h6>
+                                        <div class="modal-note-item allergy">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            Patient has allergic history with Cataflam
+                                        </div>
+                                        <div class="modal-note-item medication">
+                                            <i class="fas fa-pills"></i>
+                                            Currently taking blood pressure medication
+                                        </div>
+                                        <div class="modal-note-item warning">
+                                            <i class="fas fa-user-shield"></i>
+                                            Anxiety about dental procedures - requires extra care
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="modal-section-title">Recent Files</h6>
+                                        <div class="modal-file-item">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <div class="modal-file-details">
+                                                <div class="modal-file-name">Check Up Result.pdf</div>
+                                                <div class="modal-file-size">123kb</div>
+                                            </div>
+                                            <button class="modal-file-download" onclick="downloadFile('Check Up Result.pdf')">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-file-item">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <div class="modal-file-details">
+                                                <div class="modal-file-name">X-Ray Result 2.pdf</div>
+                                                <div class="modal-file-size">87kb</div>
+                                            </div>
+                                            <button class="modal-file-download" onclick="downloadFile('X-Ray Result 2.pdf')">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-file-item">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <div class="modal-file-details">
+                                                <div class="modal-file-name">Prescriptions.pdf</div>
+                                                <div class="modal-file-size">87kb</div>
+                                            </div>
+                                            <button class="modal-file-download" onclick="downloadFile('Prescriptions.pdf')">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="patient-modal-footer">
+                <button class="btn-modal-secondary" onclick="closePatientDetailModal()">
+                    Close
+                </button>
+                <button class="btn-modal-primary" onclick="editPatientFromModal()">
+                    <i class="fas fa-edit"></i>
+                    Edit Patient
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-backdrop" id="deleteModal">
+        <div class="delete-modal">
+            <div class="modal-header">
+                <button class="modal-close-btn" onclick="closeDeleteModal()" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="modal-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 class="modal-title" id="modalTitle">Delete Patient</h3>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description" id="modalDescription">
+                    Are you sure you want to delete this patient? This action cannot be undone and will permanently remove all patient data including medical history, appointments, and records.
+                </p>
+                
+                <!-- Patient List (for multiple deletions) -->
+                <div class="patient-list" id="patientList" style="display: none;">
+                    <!-- Patient items will be populated by JavaScript -->
+                </div>
+
+                <!-- Warning Box -->
+                <div class="warning-box">
+                    <i class="fas fa-exclamation-triangle warning-icon"></i>
+                    <div>
+                        <p class="warning-text">
+                            <strong>Warning:</strong> This action is irreversible. All associated data including medical records, appointment history, prescriptions, and billing information will be permanently deleted.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Confirmation Input -->
+                <div class="confirmation-input-group">
+                    <label class="confirmation-label" for="confirmationInput">
+                        Type <strong>"DELETE"</strong> to confirm:
+                    </label>
+                    <input 
+                        type="text" 
+                        id="confirmationInput" 
+                        class="confirmation-input"
+                        placeholder="Type DELETE to confirm"
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeDeleteModal()">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button class="btn-delete" id="confirmDeleteBtn" onclick="confirmDelete()">
+                    <i class="fas fa-trash"></i>
+                    <span id="deleteButtonText">Delete Patient</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

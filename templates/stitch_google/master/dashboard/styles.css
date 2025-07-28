@@ -1,0 +1,209 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.bg-custom-blue {
+    background-color: #4A90E2;
+}
+
+.text-custom-blue {
+    color: #4A90E2;
+}
+
+.bg-custom-gray {
+    background-color: #F7F8FA;
+}
+
+aside nav a.active, 
+aside nav a:hover {
+    background-color: #E9F2FE;
+    color: #4A90E2;
+    font-weight: 500;
+}
+
+aside nav a.active .material-icons, 
+aside nav a:hover .material-icons {
+    color: #4A90E2;
+}
+
+aside nav a {
+    color: #A0AEC0;
+    transition: all 0.2s ease-in-out;
+}
+
+aside nav a .material-icons {
+    color: #A0AEC0;
+    transition: all 0.2s ease-in-out;
+}
+
+.material-icons.md-30 { 
+    font-size: 30px; 
+}
+
+.animate-pulse-custom {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.bg-white {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.bg-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.bg-red-50,
+.bg-yellow-50,
+.bg-orange-50 {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 1024px) {
+    .grid-cols-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    
+    .grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+    
+    .col-span-2 {
+        grid-column: span 1 / span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 200px;
+    }
+    
+    .grid-cols-4,
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    .text-2xl {
+        font-size: 1.5rem;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+button {
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.border-l-4.border-red-500 {
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, rgba(254, 242, 242, 1) 100%);
+}
+
+.border-l-4.border-yellow-500 {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0%, rgba(255, 251, 235, 1) 100%);
+}
+
+.border-l-4.border-orange-500 {
+    background: linear-gradient(90deg, rgba(249, 115, 22, 0.1) 0%, rgba(255, 247, 237, 1) 100%);
+}
+
+aside {
+    border-right: 1px solid #E5E7EB;
+}
+
+.calendar-grid .grid {
+    min-height: auto;
+}
+
+.calendar-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0 auto;
+}
+
+.calendar-day:hover {
+    background-color: #E9F2FE;
+    color: #4A90E2;
+}
+
+.calendar-day.today {
+    background-color: #4A90E2;
+    color: white;
+}
+
+.calendar-day.selected {
+    background-color: #1D4ED8;
+    color: white;
+}
+
+.calendar-day.other-month {
+    color: #D1D5DB;
+}
+
+.calendar-day.has-data {
+    position: relative;
+}
+
+.calendar-day.has-data::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: #10B981;
+    border-radius: 50%;
+}

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Add/Edit Doctor - NusaHealt Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body class="bg-custom-gray">
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
+    <div class="flex h-screen">
+        <aside id="sidebar" class="w-64 md:w-64 bg-white flex flex-col p-6 md:relative fixed h-full z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800 sidebar-text">NusaHealt</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider sidebar-text">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">dashboard</span>
+                        <span class="text-xs mt-1 sidebar-text">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">event_note</span>
+                        <span class="text-xs mt-1 sidebar-text">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-24 md:md-30">people</span>
+                        <span class="text-xs mt-1 sidebar-text">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">badge</span>
+                        <span class="text-xs mt-1 sidebar-text">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">king_bed</span>
+                        <span class="text-xs mt-1 sidebar-text">Room</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">payment</span>
+                        <span class="text-xs mt-1 sidebar-text">Payment</span>
+                    </a>
+                </div>
+                <span class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block sidebar-text">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">person</span>
+                        <span class="text-xs mt-1 sidebar-text">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">settings</span>
+                        <span class="text-xs mt-1 sidebar-text">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-24 md:md-30">help_outline</span>
+                        <span class="text-xs mt-1 sidebar-text">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span>
+                    <span class="sidebar-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main id="main-content" class="flex-1 p-4 md:p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-6 md:mb-8">
+                <!-- Left side: Menu, Back, Title -->
+                <div class="flex items-center flex-1 min-w-0">
+                    <button id="menu-toggle" class="p-2 bg-white rounded-lg shadow mr-3 md:hidden">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <button id="desktop-menu-toggle" class="p-2 bg-white rounded-lg shadow mr-3 hidden md:block">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <a href="index.html" id="back-btn" class="p-2 bg-white rounded-lg shadow hover:bg-gray-50 no-underline mr-3">
+                        <span class="material-icons text-gray-600">arrow_back</span>
+                    </a>
+                    <div class="flex-1 min-w-0">
+                        <h2 id="page-title" class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 truncate">Add New Doctor</h2>
+                        <p class="text-xs sm:text-sm text-gray-500 hidden sm:block">Fill in the doctor's information</p>
+                    </div>
+                </div>
+                
+                <!-- Right side: Theme & Avatar (always in same row) -->
+                <div class="flex items-center space-x-2 flex-shrink-0">
+                    <button id="theme-toggle" class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
+                        <span class="font-semibold text-gray-700 text-sm sm:text-base hidden min-[480px]:block">Alexa</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex flex-col xl:flex-row gap-6 xl:gap-8">
+                <!-- Left Side - Profile & Schedule (Order 1 - Muncul Pertama) -->
+                <div class="w-full xl:w-1/3 order-1">
+                    <div class="bg-white p-4 md:p-6 rounded-2xl shadow">
+                        <div class="flex flex-col items-center">
+                            <div class="relative mb-4">
+                                <img id="doctor-avatar" alt="Doctor profile picture" class="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-gray-100 bg-gray-100"
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='144' height='144' viewBox='0 0 144 144'%3E%3Crect width='144' height='144' fill='%23f3f4f6'/%3E%3Cg fill='%239ca3af'%3E%3Ccircle cx='72' cy='50' r='18'/%3E%3Cpath d='M72 80c-20 0-36 12-36 26v18h72V106c0-14-16-26-36-26z'/%3E%3C/g%3E%3C/svg%3E" />
+                                <button id="upload-photo" class="absolute bottom-0 right-0 bg-custom-blue p-2 rounded-full text-white hover:bg-blue-600 transition-colors">
+                                    <span class="material-icons text-base">edit</span>
+                                </button>
+                                <input type="file" id="photo-input" class="hidden" accept="image/*">
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">Profile Photo</h3>
+                            <p class="text-sm text-gray-500 text-center mb-6">Upload a professional photo of the doctor</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Phone -->
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">phone</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-1">Phone Number</label>
+                                    <input id="phone" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" 
+                                           type="text" placeholder="e.g. +62 812 3456 7890" />
+                                </div>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">wc</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-1">Gender</label>
+                                    <select id="gender" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 mr-3 mt-2">location_on</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-1">Address</label>
+                                    <textarea id="address" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                                              rows="3" placeholder="Enter full address"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Schedule -->
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 mr-3 mt-2">schedule</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-2">Schedule & Practice Hours</label>
+                                    <div id="schedule-container" class="space-y-4">
+                                        <!-- Schedule items will be generated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Duty Status -->
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">work_outline</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 text-sm mb-1">Duty Status</label>
+                                    <select id="duty-status" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue">
+                                        <option value="on-duty">On-Duty</option>
+                                        <option value="on-call">On-Call</option>
+                                        <option value="off-duty">Off-Duty</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="mt-6 md:mt-8 space-y-3">
+                            <button id="save-btn" class="w-full bg-custom-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">
+                                Save Doctor
+                            </button>
+                            <button id="cancel-btn" class="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition duration-300">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Detailed Information (Order 2 - Muncul Kedua) -->
+                <div class="w-full xl:w-2/3 order-2">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <div class="border-b">
+                            <nav class="flex space-x-4 md:space-x-8 px-4 md:px-6 overflow-x-auto">
+                                <a id="tab-personal" class="tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                    <span class="material-icons text-base">person</span>
+                                    <span class="hidden sm:inline">Detail Dokter</span>
+                                </a>
+                                <a id="tab-education" class="tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                    <span class="material-icons text-base">description</span>
+                                    <span class="hidden sm:inline">Dokumen Perijinan</span>
+                                </a>
+                                <a id="tab-experience" class="tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                    <span class="material-icons text-base">event</span>
+                                    <span class="hidden sm:inline">List Appointment</span>
+                                </a>
+                                <a class="py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                    <span class="material-icons text-base">people</span>
+                                    <span class="hidden sm:inline">List Pasien</span>
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="p-4 md:p-6">
+                            <!-- Personal Info Tab -->
+                            <div id="personal-tab" class="tab-content">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Biodata</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Nama Lengkap</label>
+                                        <input id="full-name" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" 
+                                               type="text" value="Dr. John Doe" required />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Spesialisasi</label>
+                                        <input id="specialization" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" 
+                                               type="text" value="Dokter Anak (Pediatri)" required />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Nomor STR</label>
+                                        <input id="str-number" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" 
+                                               type="text" value="1234567890123456" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Nomor SIP</label>
+                                        <input id="sip-number" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" 
+                                               type="text" value="SIP.123/DU/X/2023" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Email</label>
+                                        <input id="email" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" 
+                                               type="email" value="johndoe.md@hospital.com" required />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 mb-1">Tanggal Lahir</label>
+                                        <input id="birth-date" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" 
+                                               type="date" value="1985-06-15" />
+                                    </div>
+                                </div>
+
+                                <h3 class="text-lg font-bold text-gray-800 mt-6 md:mt-8 mb-4">Riwayat Pendidikan</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-gray-500">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Gelar</th>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Institusi</th>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Tahun</th>
+                                                <th class="px-4 md:px-6 py-3 text-right" scope="col">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="education-table-personal">
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text"
+                                                        value="Dokter Spesialis Anak" />
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text"
+                                                        value="Universitas Indonesia" />
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text"
+                                                        value="2015 - 2019" />
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button class="text-blue-600 hover:text-blue-800" onclick="saveEducationRowPersonal(this)"><span
+                                                                class="material-icons">save</span></button>
+                                                        <button class="text-red-600 hover:text-red-800" onclick="removeEducationRowPersonal(this)"><span
+                                                                class="material-icons">delete</span></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">Pendidikan Profesi Dokter</td>
+                                                <td class="px-4 md:px-6 py-4">Universitas Gadjah Mada</td>
+                                                <td class="px-4 md:px-6 py-4">2009 - 2011</td>
+                                                <td class="px-4 md:px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button class="text-gray-500 hover:text-gray-700" onclick="editEducationRowPersonal(this)"><span
+                                                                class="material-icons">edit</span></button>
+                                                        <button class="text-red-500 hover:text-red-700" onclick="removeEducationRowPersonal(this)"><span
+                                                                class="material-icons">delete</span></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-white">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">Sarjana Kedokteran</td>
+                                                <td class="px-4 md:px-6 py-4">Universitas Gadjah Mada</td>
+                                                <td class="px-4 md:px-6 py-4">2005 - 2009</td>
+                                                <td class="px-4 md:px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button class="text-gray-500 hover:text-gray-700" onclick="editEducationRowPersonal(this)"><span
+                                                                class="material-icons">edit</span></button>
+                                                        <button class="text-red-500 hover:text-red-700" onclick="removeEducationRowPersonal(this)"><span
+                                                                class="material-icons">delete</span></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button id="add-education-personal" class="mt-4 text-blue-500 hover:text-blue-700 font-semibold">+ Tambah Riwayat</button>
+
+                                <h3 class="text-lg font-bold text-gray-800 mt-6 md:mt-8 mb-4">Pengalaman Kerja</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-gray-500">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Posisi</th>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Institusi</th>
+                                                <th class="px-4 md:px-6 py-3" scope="col">Periode</th>
+                                                <th class="px-4 md:px-6 py-3 text-right" scope="col">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="experience-table-personal">
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text"
+                                                        value="Dokter Anak" />
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text"
+                                                        value="NusaHealt" />
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text"
+                                                        value="2020 - Sekarang" />
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button class="text-blue-600 hover:text-blue-800" onclick="saveExperienceRowPersonal(this)"><span
+                                                                class="material-icons">save</span></button>
+                                                        <button class="text-red-600 hover:text-red-800" onclick="removeExperienceRowPersonal(this)"><span
+                                                                class="material-icons">delete</span></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">Dokter Umum</td>
+                                                <td class="px-4 md:px-6 py-4">Klinik Sehat Sejahtera</td>
+                                                <td class="px-4 md:px-6 py-4">2012 - 2015</td>
+                                                <td class="px-4 md:px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button class="text-gray-500 hover:text-gray-700" onclick="editExperienceRowPersonal(this)"><span
+                                                                class="material-icons">edit</span></button>
+                                                        <button class="text-red-500 hover:text-red-700" onclick="removeExperienceRowPersonal(this)"><span
+                                                                class="material-icons">delete</span></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button id="add-experience-personal" class="mt-4 text-blue-500 hover:text-blue-700 font-semibold">+ Tambah Pengalaman</button>
+                            </div>
+
+                            <!-- Education Tab -->
+                            <div id="education-tab" class="tab-content hidden">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 space-y-2 sm:space-y-0">
+                                    <h3 class="text-lg font-bold text-gray-800">Dokumen Perijinan</h3>
+                                    <button id="add-education" class="bg-custom-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                        <span class="material-icons mr-1 text-sm">add</span> Add Document
+                                    </button>
+                                </div>
+                                <div class="text-center py-8 text-gray-500">
+                                    <span class="material-icons text-4xl mb-2">description</span>
+                                    <p>Dokumen perijinan belum tersedia</p>
+                                    <p class="text-sm">Klik "Add Document" untuk menambahkan dokumen</p>
+                                </div>
+                            </div>
+
+                            <!-- Experience Tab -->
+                            <div id="experience-tab" class="tab-content hidden">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 space-y-2 sm:space-y-0">
+                                    <h3 class="text-lg font-bold text-gray-800">List Appointment</h3>
+                                    <button id="add-experience" class="bg-custom-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                        <span class="material-icons mr-1 text-sm">add</span> Add Appointment
+                                    </button>
+                                </div>
+                                <div class="text-center py-8 text-gray-500">
+                                    <span class="material-icons text-4xl mb-2">event</span>
+                                    <p>Belum ada appointment</p>
+                                    <p class="text-sm">Klik "Add Appointment" untuk menambahkan jadwal</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="create_update.js"></script>
+
+</body>
+
+</html>

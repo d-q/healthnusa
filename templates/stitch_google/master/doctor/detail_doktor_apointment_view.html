@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-custom-blue {
+            background-color: #4A90E2;
+        }
+        .text-custom-blue {
+            color: #4A90E2;
+        }
+        .bg-custom-gray {
+            background-color: #F7F8FA;
+        }
+        aside nav a.active,
+        aside nav a:hover {
+            background-color: #E9F2FE;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        aside nav a.active .material-icons,
+        aside nav a:hover .material-icons {
+            color: #4A90E2;
+        }
+        aside nav a {
+            color: #A0AEC0;
+        }
+        aside nav a .material-icons {
+            color: #A0AEC0;
+        }
+        .material-icons.md-30 {
+            font-size: 30px;
+        }
+        .nav-link.active {
+            border-bottom: 2px solid #4A90E2;
+            color: #4A90E2;
+            font-weight: 600;
+        }
+        .nav-link {
+            color: #6B7280;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover {
+            color: #4A90E2;
+            border-bottom: 2px solid #4A90E2;
+        }
+    </style>
+</head>
+
+<body class="bg-custom-gray">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white flex flex-col p-6">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800">Mario Hospital</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs mt-1">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs mt-1">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">badge</span>
+                        <span class="text-xs mt-1">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs mt-1">Room Allotment</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs mt-1">Payment</span>
+                    </a>
+                </div>
+                <span
+                    class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs mt-1">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs mt-1">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs mt-1">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span> Logout
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto" x-data="{ deleteModalOpen: false }">
+            <header class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Detail Dokter</h2>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiri3a6ED25vF7lzVZ-nJ6ve_iS-xexp41q1sR3_-unUTDtDRUlNDB5XusFaH3a7BK2LpZ6eYxl-JVdAvvXdxWZYdeWctpFtmB308-RSjKk3zCMAzv_DnNqhAf_g_n39X_tMS-Z27o1QcHNHFt_RQI1JexXeey3mgem3wkHxgKySMfYxjdbN0B75P99D-sT3iCtKZ1fs-P-jYirBewB6t1oJSWIk0KrhBE2Z0D7dbBqAwqz2_mUhsun_8tUK7A4iK_oLgXgQEUD8E" />
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-[30%] w-full">
+                    <div class="bg-white p-6 rounded-2xl shadow-md h-full">
+                        <div class="flex flex-col items-center">
+                            <img alt="Foto Profil Dokter" class="w-40 h-40 rounded-full object-cover shadow-lg mb-4"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgm1mf0QBFPaBMpaXCPXdN3uAPA571WBHO_RySfZTEMYG7mN4OQYFOtwruuXfKKPiPQWtDmGtUkbhLQlncNEGR4Y8laTMoqZiBZwt1rgsvqog-vb5WBm_9G-NSPFVpiq36lWwMOtyAVfJTEnNoIIJuQ6zkDcBGWeh_Nlq4Tjhqs6v0Zn9x-cH_ojbaKPyB6uBeXsAcW8vOkygHC_U6QNguyBxnujjTrScuj2aOddnz1u_tBZuku3LF9-3LZJNyvIdjwf8s8JhW92I" />
+                            <h3 class="text-xl font-bold text-gray-800 text-center">Dr. John Doe</h3>
+                            <p class="text-custom-blue font-semibold text-base text-center mb-4">Dokter Anak</p>
+                            <div class="w-full space-y-3 text-sm text-gray-700">
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 mr-3">phone</span>
+                                    <span>081234567890</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 mr-3">wc</span>
+                                    <span>Laki-laki</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="material-icons text-gray-500 mr-3 mt-1">location_on</span>
+                                    <span>Jl. Sudirman No. 123, Jakarta Pusat, DKI Jakarta</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="material-icons text-gray-500 mr-3 mt-1">event_available</span>
+                                    <div>
+                                        <h4 class="font-medium mb-1">Jadwal Tersedia</h4>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span
+                                                class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Senin</span>
+                                            <span
+                                                class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Selasa</span>
+                                            <span
+                                                class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Rabu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 mr-3">work_history</span>
+                                    <span class="font-medium">Status Dinas:</span>
+                                    <span
+                                        class="ml-2 bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 border-t pt-6 w-full space-y-3">
+                                <h3 class="text-base font-semibold text-gray-800 mb-2 text-center">Aksi</h3>
+                                <button
+                                    class="w-full bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center"
+                                    type="button">
+                                    <span class="material-icons mr-2 text-base">edit</span> Ubah Data
+                                </button>
+                                <button @click="deleteModalOpen = true"
+                                    class="w-full bg-red-500 text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 flex items-center justify-center"
+                                    type="button">
+                                    <span class="material-icons mr-2 text-base">delete</span> Hapus Dokter
+                                </button>
+                                <button
+                                    class="w-full py-2 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 flex items-center justify-center"
+                                    type="button">
+                                    <span class="material-icons mr-2 text-base">arrow_back</span> Kembali
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-[70%] w-full">
+                    <div class="bg-white p-6 rounded-2xl shadow-md h-full">
+                        <div class="border-b border-gray-200 mb-6">
+                            <nav aria-label="Tabs" class="-mb-px flex space-x-6 text-sm">
+                                <a class="nav-link" href="#">Detail Dokter</a>
+                                <a class="nav-link" href="#">Dokumen Perijinan</a>
+                                <a class="nav-link active" href="#">List Appointment</a>
+                                <a class="nav-link" href="#">List Pasien</a>
+                            </nav>
+                        </div>
+                        <div class="text-gray-700">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-lg font-bold text-gray-800">Daftar Janji Temu</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="relative">
+                                        <input class="pl-10 pr-4 py-2 border rounded-lg text-sm"
+                                            placeholder="Cari pasien..." type="text" />
+                                        <span
+                                            class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                    </div>
+                                    <button
+                                        class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center">
+                                        <span class="material-icons mr-2 text-base">add</span> Buat Janji Temu
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3" scope="col">Nama Pasien</th>
+                                            <th class="px-6 py-3" scope="col">Tanggal</th>
+                                            <th class="px-6 py-3" scope="col">Waktu</th>
+                                            <th class="px-6 py-3" scope="col">Jenis Konsultasi</th>
+                                            <th class="px-6 py-3" scope="col">Status</th>
+                                            <th class="px-6 py-3" scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b hover:bg-gray-50">
+                                            <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                                scope="row">Ahmad Subagja</th>
+                                            <td class="px-6 py-4">25 Okt 2023</td>
+                                            <td class="px-6 py-4">09:00 - 10:00</td>
+                                            <td class="px-6 py-4">Konsultasi Rutin</td>
+                                            <td class="px-6 py-4">
+                                                <span
+                                                    class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Selesai</span>
+                                            </td>
+                                            <td class="px-6 py-4 flex items-center space-x-2">
+                                                <button class="p-1 text-custom-blue hover:text-blue-700">
+                                                    <span class="material-icons text-base">visibility</span>
+                                                </button>
+                                                <button class="p-1 text-red-500 hover:text-red-700">
+                                                    <span class="material-icons text-base">delete</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white border-b hover:bg-gray-50">
+                                            <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                                scope="row">Bunga Citra</th>
+                                            <td class="px-6 py-4">25 Okt 2023</td>
+                                            <td class="px-6 py-4">10:00 - 11:00</td>
+                                            <td class="px-6 py-4">Vaksinasi Anak</td>
+                                            <td class="px-6 py-4">
+                                                <span
+                                                    class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Akan
+                                                    Datang</span>
+                                            </td>
+                                            <td class="px-6 py-4 flex items-center space-x-2">
+                                                <button class="p-1 text-custom-blue hover:text-blue-700">
+                                                    <span class="material-icons text-base">visibility</span>
+                                                </button>
+                                                <button class="p-1 text-red-500 hover:text-red-700">
+                                                    <span class="material-icons text-base">delete</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white border-b hover:bg-gray-50">
+                                            <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                                scope="row">Cahya Purnama</th>
+                                            <td class="px-6 py-4">24 Okt 2023</td>
+                                            <td class="px-6 py-4">13:00 - 14:00</td>
+                                            <td class="px-6 py-4">Pemeriksaan Kesehatan</td>
+                                            <td class="px-6 py-4">
+                                                <span
+                                                    class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Dibatalkan</span>
+                                            </td>
+                                            <td class="px-6 py-4 flex items-center space-x-2">
+                                                <button class="p-1 text-custom-blue hover:text-blue-700">
+                                                    <span class="material-icons text-base">visibility</span>
+                                                </button>
+                                                <button class="p-1 text-red-500 hover:text-red-700">
+                                                    <span class="material-icons text-base">delete</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white hover:bg-gray-50">
+                                            <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                                scope="row">Dewi Lestari</th>
+                                            <td class="px-6 py-4">26 Okt 2023</td>
+                                            <td class="px-6 py-4">11:00 - 12:00</td>
+                                            <td class="px-6 py-4">Konsultasi Rutin</td>
+                                            <td class="px-6 py-4">
+                                                <span
+                                                    class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Akan
+                                                    Datang</span>
+                                            </td>
+                                            <td class="px-6 py-4 flex items-center space-x-2">
+                                                <button class="p-1 text-custom-blue hover:text-blue-700">
+                                                    <span class="material-icons text-base">visibility</span>
+                                                </button>
+                                                <button class="p-1 text-red-500 hover:text-red-700">
+                                                    <span class="material-icons text-base">delete</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                style="display: none;" x-show="deleteModalOpen" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0"
+                x-transition:leave="transition ease-in duration-200" x-transition:leave-end="opacity-0"
+                x-transition:leave-start="opacity-100">
+                <div @click.away="deleteModalOpen = false"
+                    class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 mx-4">
+                    <div class="text-center">
+                        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100">
+                            <span class="material-icons text-red-600 text-4xl">warning_amber</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-5">Hapus Data Dokter</h3>
+                        <p class="text-base text-gray-600 mt-3">
+                            Apakah Anda yakin ingin menghapus data dokter <span class="font-bold">Dr. John Doe</span>?
+                            Tindakan ini tidak dapat dibatalkan.
+                        </p>
+                    </div>
+                    <div class="mt-8 flex justify-center gap-4">
+                        <button @click="deleteModalOpen = false"
+                            class="w-full py-2 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                            type="button">
+                            Batal
+                        </button>
+                        <button @click="deleteModalOpen = false"
+                            class="w-full bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                            type="button">
+                            Ya, Hapus
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script defer="" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+
+</body>
+
+</html>

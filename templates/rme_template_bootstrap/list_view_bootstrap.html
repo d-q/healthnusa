@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        /* Mobile Responsive Styles */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1045;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            #sidebar {
+                transform: translateX(-100%);
+                position: fixed !important;
+                z-index: 1050;
+                transition: transform 0.3s ease;
+                height: 100vh;
+                overflow-y: auto;
+            }
+            
+            #sidebar.mobile-show {
+                transform: translateX(0);
+            }
+            
+            #mainContent {
+                margin-left: 0 !important;
+            }
+            
+            .sidebar-overlay.show {
+                display: block;
+            }
+            
+            /* Ensure menu items are clickable on mobile */
+            #sidebar .nav-link {
+                position: relative;
+                z-index: 1051;
+                pointer-events: auto;
+            }
+            
+            /* Mobile table adjustments */
+            .table-responsive {
+                font-size: 0.875rem;
+            }
+            
+            .table th,
+            .table td {
+                padding: 0.5rem 0.25rem;
+                white-space: nowrap;
+            }
+            
+            /* Hide less important columns on mobile */
+            .table th:nth-child(4),
+            .table td:nth-child(4),
+            .table th:nth-child(6),
+            .table td:nth-child(6),
+            .table th:nth-child(7),
+            .table td:nth-child(7),
+            .table th:nth-child(8),
+            .table td:nth-child(8) {
+                display: none;
+            }
+            
+            .page-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                font-size: 0.875rem;
+            }
+            
+            .btn-sm {
+                padding: 0.25rem 0.4rem;
+                font-size: 0.75rem;
+            }
+            
+            .input-group {
+                flex-wrap: wrap;
+            }
+            
+            .pagination {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .pagination .page-item {
+                margin: 0.1rem;
+            }
+            
+            .dropdown-menu {
+                font-size: 0.875rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container-fluid {
+                padding: 0.75rem;
+            }
+            
+            .card-body {
+                padding: 0.75rem;
+            }
+            
+            .table th:nth-child(5),
+            .table td:nth-child(5) {
+                display: none;
+            }
+            
+            .search-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .input-group {
+                width: 100%;
+            }
+            
+            .page-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: stretch;
+            }
+            
+            .page-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 991px) {
+            .table th:nth-child(7),
+            .table td:nth-child(7) {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .table th:nth-child(6),
+            .table td:nth-child(6) {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            #sidebar {
+                transform: translateX(0) !important;
+            }
+            
+            .sidebar-overlay {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- Sidebar -->
+    <div class="d-flex">
+        <div id="sidebar" class="bg-light border-end position-fixed h-100" style="width: 250px; z-index: 1051; transition: all 0.3s;">
+            <!-- Sidebar Header -->
+            <div class="p-3 border-bottom">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary rounded d-flex align-items-center justify-content-center text-white fw-bold me-2" style="width: 40px; height: 40px;">
+                        H
+                    </div>
+                    <span id="brandName" class="fw-semibold">HealthCare Pro</span>
+                </div>
+            </div>
+            
+            <!-- Sidebar Menu -->
+            <div class="p-2">
+                <nav class="nav flex-column">
+                    <a href="#" class="nav-link text-secondary py-2 px-3 rounded mb-1">
+                        <i class="bi bi-speedometer2 me-2"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-link text-secondary py-2 px-3 rounded mb-1">
+                        <i class="bi bi-people me-2"></i>
+                        <span class="menu-text">Employee</span>
+                    </a>
+                    <a href="#" class="nav-link bg-primary text-white py-2 px-3 rounded mb-1" id="patientsMenu">
+                        <i class="bi bi-person-heart me-2"></i>
+                        <span class="menu-text">Patients</span>
+                    </a>
+                    <a href="#" class="nav-link text-secondary py-2 px-3 rounded mb-1">
+                        <i class="bi bi-calendar-check me-2"></i>
+                        <span class="menu-text">Appointments</span>
+                    </a>
+                    <a href="#" class="nav-link text-secondary py-2 px-3 rounded mb-1">
+                        <i class="bi bi-capsule me-2"></i>
+                        <span class="menu-text">Pharmacy</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="flex-fill" style="margin-left: 250px; transition: all 0.3s;">
+            <!-- Navigation Bar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-3" id="mainNavbar">
+                <div class="d-flex align-items-center w-100">
+                    <!-- Menu Toggle Button -->
+                    <button class="btn btn-outline-secondary me-3" id="menuToggle">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    
+                    <!-- Spacer -->
+                    <div class="flex-fill"></div>
+                    
+                    <!-- Theme Toggle -->
+                    <button class="btn btn-outline-secondary me-3" id="themeToggle">
+                        <i class="bi bi-sun"></i>
+                    </button>
+                    
+                    <!-- User Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-2"></i>
+                            <span class="d-none d-sm-inline">Dr. Smith</span>
+                            <span class="d-sm-none">DS</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Page Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-12 col-md-6 page-header">
+                        <h2 class="mb-1">Patients</h2>
+                        <p class="text-muted">Manage patient records and information</p>
+                    </div>
+                    <div class="col-12 col-md-6 text-end">
+                        <div class="d-flex justify-content-end align-items-center gap-2 page-actions">
+                            <!-- Selected Count -->
+                            <span class="text-muted" id="selectedCount" style="display: none;">0 selected</span>
+                            
+                            <!-- Actions Dropdown -->
+                            <div class="dropdown" id="actionsDropdown" style="display: none;">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots me-1"></i>
+                                    <span class="d-none d-sm-inline">Actions</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-excel me-2"></i>Export</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-printer me-2"></i>Print</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-files me-2"></i>Duplicate</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Delete</a></li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Add Patient Button -->
+                            <button class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-1"></i>
+                                <span class="d-none d-sm-inline">Add Patient</span>
+                                <span class="d-sm-none">Add</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="row mb-3">
+                    <div class="col-12 col-md-8 mb-2 mb-md-0">
+                        <div class="d-flex align-items-center gap-3 search-controls">
+                            <div class="input-group" style="max-width: 400px;">
+                                <select class="form-select" id="searchField" style="max-width: 120px;">
+                                    <option value="name">Name</option>
+                                    <option value="id">ID</option>
+                                    <option value="phone">Phone</option>
+                                    <option value="email">Email</option>
+                                </select>
+                                <input type="text" class="form-control" placeholder="Search patients..." id="searchInput">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 d-flex justify-content-end align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <label for="recordsPerPage" class="form-label mb-0 text-nowrap">Show:</label>
+                            <input type="number" class="form-control" id="recordsPerPage" value="10" min="1" max="100" style="width: 70px;">
+                            <span class="text-muted text-nowrap d-none d-sm-inline" id="entriesLabel">of 25 entries</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patients Table -->
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light" id="tableHeader">
+                                    <tr>
+                                        <th style="width: 50px;">
+                                            <input type="checkbox" class="form-check-input" id="selectAll">
+                                        </th>
+                                        <th>Patient ID</th>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Last Visit</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patientsTableBody">
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P001</td>
+                                        <td>John Doe</td>
+                                        <td>45</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0123</td>
+                                        <td>john.doe@email.com</td>
+                                        <td>2024-07-05</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P002</td>
+                                        <td>Jane Smith</td>
+                                        <td>32</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0124</td>
+                                        <td>jane.smith@email.com</td>
+                                        <td>2024-07-03</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P003</td>
+                                        <td>Mike Johnson</td>
+                                        <td>28</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0125</td>
+                                        <td>mike.johnson@email.com</td>
+                                        <td>2024-07-01</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P004</td>
+                                        <td>Sarah Wilson</td>
+                                        <td>38</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0126</td>
+                                        <td>sarah.wilson@email.com</td>
+                                        <td>2024-06-28</td>
+                                        <td><span class="badge bg-danger">Inactive</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P005</td>
+                                        <td>David Brown</td>
+                                        <td>55</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0127</td>
+                                        <td>david.brown@email.com</td>
+                                        <td>2024-06-25</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P006</td>
+                                        <td>Emily Davis</td>
+                                        <td>29</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0128</td>
+                                        <td>emily.davis@email.com</td>
+                                        <td>2024-06-22</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P007</td>
+                                        <td>Robert Miller</td>
+                                        <td>42</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0129</td>
+                                        <td>robert.miller@email.com</td>
+                                        <td>2024-06-20</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P008</td>
+                                        <td>Lisa Anderson</td>
+                                        <td>36</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0130</td>
+                                        <td>lisa.anderson@email.com</td>
+                                        <td>2024-06-18</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P009</td>
+                                        <td>Thomas Garcia</td>
+                                        <td>51</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0131</td>
+                                        <td>thomas.garcia@email.com</td>
+                                        <td>2024-06-15</td>
+                                        <td><span class="badge bg-danger">Inactive</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P010</td>
+                                        <td>Amanda Taylor</td>
+                                        <td>27</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0132</td>
+                                        <td>amanda.taylor@email.com</td>
+                                        <td>2024-06-12</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P011</td>
+                                        <td>Kevin Martinez</td>
+                                        <td>39</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0133</td>
+                                        <td>kevin.martinez@email.com</td>
+                                        <td>2024-06-10</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P012</td>
+                                        <td>Nicole White</td>
+                                        <td>33</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0134</td>
+                                        <td>nicole.white@email.com</td>
+                                        <td>2024-06-08</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P013</td>
+                                        <td>Christopher Lee</td>
+                                        <td>47</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0135</td>
+                                        <td>christopher.lee@email.com</td>
+                                        <td>2024-06-05</td>
+                                        <td><span class="badge bg-danger">Inactive</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P014</td>
+                                        <td>Rachel Thompson</td>
+                                        <td>31</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0136</td>
+                                        <td>rachel.thompson@email.com</td>
+                                        <td>2024-06-03</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P015</td>
+                                        <td>Daniel Wilson</td>
+                                        <td>44</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0137</td>
+                                        <td>daniel.wilson@email.com</td>
+                                        <td>2024-06-01</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P016</td>
+                                        <td>Jessica Moore</td>
+                                        <td>26</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0138</td>
+                                        <td>jessica.moore@email.com</td>
+                                        <td>2024-05-30</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P017</td>
+                                        <td>Mark Jackson</td>
+                                        <td>53</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0139</td>
+                                        <td>mark.jackson@email.com</td>
+                                        <td>2024-05-28</td>
+                                        <td><span class="badge bg-danger">Inactive</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P018</td>
+                                        <td>Stephanie Harris</td>
+                                        <td>35</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0140</td>
+                                        <td>stephanie.harris@email.com</td>
+                                        <td>2024-05-25</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P019</td>
+                                        <td>Andrew Clark</td>
+                                        <td>41</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0141</td>
+                                        <td>andrew.clark@email.com</td>
+                                        <td>2024-05-22</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P020</td>
+                                        <td>Michelle Lewis</td>
+                                        <td>30</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0142</td>
+                                        <td>michelle.lewis@email.com</td>
+                                        <td>2024-05-20</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P021</td>
+                                        <td>Joshua Walker</td>
+                                        <td>37</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0143</td>
+                                        <td>joshua.walker@email.com</td>
+                                        <td>2024-05-18</td>
+                                        <td><span class="badge bg-danger">Inactive</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P022</td>
+                                        <td>Kimberly Hall</td>
+                                        <td>43</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0144</td>
+                                        <td>kimberly.hall@email.com</td>
+                                        <td>2024-05-15</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P023</td>
+                                        <td>Brian Allen</td>
+                                        <td>49</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0145</td>
+                                        <td>brian.allen@email.com</td>
+                                        <td>2024-05-12</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P024</td>
+                                        <td>Laura Young</td>
+                                        <td>34</td>
+                                        <td>Female</td>
+                                        <td>+1-555-0146</td>
+                                        <td>laura.young@email.com</td>
+                                        <td>2024-05-10</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="form-check-input row-checkbox"></td>
+                                        <td>P025</td>
+                                        <td>Steven King</td>
+                                        <td>46</td>
+                                        <td>Male</td>
+                                        <td>+1-555-0147</td>
+                                        <td>steven.king@email.com</td>
+                                        <td>2024-05-08</td>
+                                        <td><span class="badge bg-danger">Inactive</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                    <nav>
+                        <ul class="pagination mb-0" id="pagination">
+                            <li class="page-item disabled">
+                                <span class="page-link">Previous</span>
+                            </li>
+                            <li class="page-item active">
+                                <span class="page-link">1</span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">Next</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Menu toggle functionality
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const brandName = document.getElementById('brandName');
+            const menuTexts = document.querySelectorAll('.menu-text');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (window.innerWidth <= 768) {
+                // Mobile behavior
+                // sidebar.classList.toggle('mobile-show');
+                sidebar.classList.toggle('mobile-show');
+                overlay.classList.toggle('show');
+            } else {
+                // Desktop behavior
+                if (sidebar.style.width === '60px') {
+                    // Expand sidebar
+                    sidebar.style.width = '250px';
+                    mainContent.style.marginLeft = '250px';
+                    brandName.style.display = 'inline';
+                    menuTexts.forEach(text => text.style.display = 'inline');
+                } else {
+                    // Collapse sidebar
+                    sidebar.style.width = '60px';
+                    mainContent.style.marginLeft = '60px';
+                    brandName.style.display = 'none';
+                    menuTexts.forEach(text => text.style.display = 'none');
+                }
+            }
+        });
+
+        // Close sidebar when clicking overlay (mobile)
+        document.getElementById('sidebarOverlay').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('mobile-show');
+            overlay.classList.remove('show');
+        });
+
+        // Theme toggle functionality
+        let isDarkMode = false;
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const body = document.body;
+            const themeIcon = this.querySelector('i');
+            const sidebar = document.getElementById('sidebar');
+            const mainNavbar = document.getElementById('mainNavbar');
+            const tableHeader = document.getElementById('tableHeader');
+            
+            if (isDarkMode) {
+                // Switch to light mode
+                body.setAttribute('data-bs-theme', 'light');
+                themeIcon.className = 'bi bi-sun';
+                
+                // Update sidebar
+                sidebar.classList.remove('bg-dark', 'border-secondary');
+                sidebar.classList.add('bg-light', 'border-end');
+                
+                // Update navbar
+                mainNavbar.classList.remove('navbar-dark', 'bg-dark', 'border-secondary');
+                mainNavbar.classList.add('navbar-light', 'bg-white', 'border-bottom');
+                
+                // Update table header
+                tableHeader.classList.remove('table-dark');
+                tableHeader.classList.add('table-light');
+                
+                isDarkMode = false;
+            } else {
+                // Switch to dark mode
+                body.setAttribute('data-bs-theme', 'dark');
+                themeIcon.className = 'bi bi-moon';
+                
+                // Update sidebar
+                sidebar.classList.remove('bg-light', 'border-end');
+                sidebar.classList.add('bg-dark', 'border-secondary');
+                
+                // Update navbar
+                mainNavbar.classList.remove('navbar-light', 'bg-white', 'border-bottom');
+                mainNavbar.classList.add('navbar-dark', 'bg-dark', 'border-secondary');
+                
+                // Update table header
+                tableHeader.classList.remove('table-light');
+                tableHeader.classList.add('table-dark');
+                
+                isDarkMode = true;
+            }
+        });
+
+        // Checkbox functionality
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+        const actionsDropdown = document.getElementById('actionsDropdown');
+        const selectedCount = document.getElementById('selectedCount');
+
+        function updateSelectedCount() {
+            const visibleCheckboxes = document.querySelectorAll('.row-checkbox');
+            const checkedBoxes = Array.from(visibleCheckboxes).filter(cb => 
+                cb.checked && cb.closest('tr').style.display !== 'none'
+            );
+            const count = checkedBoxes.length;
+            selectedCount.textContent = `${count} selected`;
+            
+            if (count > 0) {
+                selectedCount.style.display = 'inline';
+                actionsDropdown.style.display = 'block';
+            } else {
+                selectedCount.style.display = 'none';
+                actionsDropdown.style.display = 'none';
+            }
+            
+            // Update select all checkbox state
+            const visibleUncheckedBoxes = Array.from(visibleCheckboxes).filter(cb => 
+                !cb.checked && cb.closest('tr').style.display !== 'none'
+            );
+            const totalVisibleCheckboxes = Array.from(visibleCheckboxes).filter(cb => 
+                cb.closest('tr').style.display !== 'none'
+            ).length;
+            
+            if (totalVisibleCheckboxes === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (visibleUncheckedBoxes.length === 0) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedBoxes.length > 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            }
+        }
+
+        selectAllCheckbox.addEventListener('change', function() {
+            const visibleCheckboxes = Array.from(document.querySelectorAll('.row-checkbox')).filter(cb => 
+                cb.closest('tr').style.display !== 'none'
+            );
+            visibleCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            updateSelectedCount();
+        });
+
+        rowCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                updateSelectedCount();
+            });
+        });
+
+        // Pagination functionality
+        let currentPage = 1;
+        let recordsPerPage = 10;
+        let allRows = [];
+
+        function initializePagination() {
+            allRows = Array.from(document.querySelectorAll('#patientsTableBody tr'));
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const totalRecords = allRows.length;
+            const totalPages = Math.ceil(totalRecords / recordsPerPage);
+
+            // Update entries label
+            document.getElementById('entriesLabel').textContent = `of ${totalRecords} entries`;
+
+            // Hide all rows
+            allRows.forEach(row => row.style.display = 'none');
+
+            // Show current page rows
+            for (let i = (currentPage - 1) * recordsPerPage; i < currentPage * recordsPerPage && i < totalRecords; i++) {
+                allRows[i].style.display = '';
+            }
+
+            // Update pagination buttons
+            updatePaginationButtons(totalPages);
+        }
+
+        function updatePaginationButtons(totalPages) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            // Previous button
+            const prevItem = document.createElement('li');
+            prevItem.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+            prevItem.innerHTML = currentPage === 1 ? 
+                '<span class="page-link">Previous</span>' : 
+                '<button class="page-link" onclick="changePage(' + (currentPage - 1) + ')">Previous</button>';
+            pagination.appendChild(prevItem);
+
+            // Page numbers
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+
+            if (startPage > 1) {
+                const firstItem = document.createElement('li');
+                firstItem.className = 'page-item';
+                firstItem.innerHTML = '<button class="page-link" onclick="changePage(1)">1</button>';
+                pagination.appendChild(firstItem);
+
+                if (startPage > 2) {
+                    const dotsItem = document.createElement('li');
+                    dotsItem.className = 'page-item disabled';
+                    dotsItem.innerHTML = '<span class="page-link">...</span>';
+                    pagination.appendChild(dotsItem);
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                pageItem.innerHTML = i === currentPage ? 
+                    `<span class="page-link">${i}</span>` : 
+                    `<button class="page-link" onclick="changePage(${i})">${i}</button>`;
+                pagination.appendChild(pageItem);
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const dotsItem = document.createElement('li');
+                    dotsItem.className = 'page-item disabled';
+                    dotsItem.innerHTML = '<span class="page-link">...</span>';
+                    pagination.appendChild(dotsItem);
+                }
+
+                const lastItem = document.createElement('li');
+                lastItem.className = 'page-item';
+                lastItem.innerHTML = `<button class="page-link" onclick="changePage(${totalPages})">${totalPages}</button>`;
+                pagination.appendChild(lastItem);
+            }
+
+            // Next button
+            const nextItem = document.createElement('li');
+            nextItem.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextItem.innerHTML = currentPage === totalPages ? 
+                '<span class="page-link">Next</span>' : 
+                '<button class="page-link" onclick="changePage(' + (currentPage + 1) + ')">Next</button>';
+            pagination.appendChild(nextItem);
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            updatePagination();
+            updateSelectedCount();
+        }
+
+        // Records per page change handler
+        document.getElementById('recordsPerPage').addEventListener('input', function() {
+            let value = parseInt(this.value);
+            if (isNaN(value) || value < 1) {
+                value = 1;
+                this.value = 1;
+            }
+            if (value > 100) {
+                value = 100;
+                this.value = 100;
+            }
+            recordsPerPage = value;
+            currentPage = 1;
+            updatePagination();
+            updateSelectedCount();
+        });
+        
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const searchField = document.getElementById('searchField').value;
+            
+            allRows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let cellIndex;
+                
+                switch(searchField) {
+                    case 'name': cellIndex = 2; break;
+                    case 'id': cellIndex = 1; break;
+                    case 'phone': cellIndex = 5; break;
+                    case 'email': cellIndex = 6; break;
+                    default: cellIndex = 2;
+                }
+                
+                const cellText = cells[cellIndex].textContent.toLowerCase();
+                if (cellText.includes(searchTerm)) {
+                    row.classList.remove('search-hidden');
+                } else {
+                    row.classList.add('search-hidden');
+                }
+            });
+            
+            currentPage = 1;
+            updatePaginationForSearch();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', performSearch);
+        document.getElementById('searchField').addEventListener('change', performSearch);
+
+        function updatePaginationForSearch() {
+            const visibleRows = allRows.filter(row => !row.classList.contains('search-hidden'));
+            const totalRecords = visibleRows.length;
+            const totalPages = Math.ceil(totalRecords / recordsPerPage);
+
+            document.getElementById('entriesLabel').textContent = `of ${totalRecords} entries`;
+
+            allRows.forEach(row => row.style.display = 'none');
+
+            const startIndex = (currentPage - 1) * recordsPerPage;
+            const endIndex = startIndex + recordsPerPage;
+            visibleRows.slice(startIndex, endIndex).forEach(row => {
+                row.style.display = '';
+            });
+
+            updatePaginationButtons(totalPages);
+        }
+
+        // Menu item click handling
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('bg-primary', 'text-white');
+                    item.classList.add('text-secondary');
+                });
+                
+                this.classList.remove('text-secondary');
+                this.classList.add('bg-primary', 'text-white');
+
+                if (window.innerWidth <= 768) {
+                    const sidebar = document.getElementById('sidebar');
+                    const overlay = document.getElementById('sidebarOverlay');
+                    sidebar.classList.remove('mobile-show');
+                    overlay.classList.remove('show');
+                }
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+                sidebar.classList.remove('mobile-show');
+                overlay.classList.remove('show');
+            }
+        });
+
+        // Initialize
+        initializePagination();
+        updateSelectedCount();
+    </script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-custom-blue {
+            background-color: #4A90E2;
+        }
+        .text-custom-blue {
+            color: #4A90E2;
+        }
+        .bg-custom-gray {
+            background-color: #F7F8FA;
+        }
+        aside nav a.active,
+        aside nav a:hover {
+            background-color: #E9F2FE;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        aside nav a.active .material-icons,
+        aside nav a:hover .material-icons {
+            color: #4A90E2;
+        }
+        aside nav a {
+            color: #A0AEC0;
+        }
+        aside nav a .material-icons {
+            color: #A0AEC0;
+        }
+        .material-icons.md-30 {
+            font-size: 30px;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-custom-gray">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white flex flex-col p-6">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800">Mario Hospital</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs mt-1">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs mt-1">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">badge</span>
+                        <span class="text-xs mt-1">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs mt-1">Room</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs mt-1">Payment</span>
+                    </a>
+                </div>
+                <span
+                    class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs mt-1">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs mt-1">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs mt-1">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span> Logout
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <div class="flex items-center">
+                    <button class="p-2 bg-white rounded-lg shadow mr-4">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Doctors</h2>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+            <div class="grid grid-cols-1 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center bg-gray-100 rounded-lg p-1">
+                            <button class="p-2 rounded-lg bg-white shadow">
+                                <span class="material-icons text-custom-blue">list</span>
+                            </button>
+                            <button class="p-2 rounded-lg">
+                                <span class="material-icons text-gray-500">grid_view</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="relative">
+                                <span
+                                    class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                <input
+                                    class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                                    placeholder="Search" type="text" />
+                            </div>
+                            <button
+                                class="bg-custom-blue text-white font-semibold py-2 px-4 rounded-lg flex items-center">
+                                <span class="material-icons mr-2">add</span> Add Doctor
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div
+                            class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <img alt="Dr. John Smith" class="w-12 h-12 rounded-full"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9VZ2QGo_li4LVhp8iYr9JrYqBgDi7QcGRtO7mGPKp67wrxh6TRm7oERXDQPHvz_aIBsizfvar_AtjDPhiAxQR-eAhFB99IFeem6OH5EC-lEdXUF-P10asmzb-Ai-PTHt3lTUapROxoBZq2bmjhBodQGLi3CAkRpa6yWr1M_RQafpT8cISUblFSu8aIDZG-X90IxWrDyK8pZcMbfDZWj4a2qiNnzHY9XZORaOAu4stjYDGRq6hGTeW-P5DnNTpHvLt8I4CVN1p1xU" />
+                                <div>
+                                    <p class="font-bold text-gray-800">Dr. John Smith</p>
+                                    <p class="text-sm text-gray-500">Heart Specialist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800">+123 456 7890</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800">Male</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative dropdown">
+                                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <img alt="Dr. Sarah Johnson" class="w-12 h-12 rounded-full"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw2jnMhMsOW5Nk1gB37rDOIfRnnVKhMYyUdcJvuprs8qNwZCe60oxn0SYyq1PBtjXwMG3wZiV9i_6ptqZBWL8-1A-zVkBTsp6qv7X0ZOE9PGZjBbMSU20ClGeUG5a78E3Q61XtIn0rKfqHQIsSVzmEbUgQaSqrw2I5tfFx4pvB6pVizE-5cUK5ECVKdBJKRLmrvcvrrmHf51zKS_QyxZeYNeKglNTC_lP9AQKXJKrySihxezsrMKjEtm1ZvnqNTc-Ttwh4U8d-w7A" />
+                                <div>
+                                    <p class="font-bold text-gray-800">Dr. Sarah Johnson</p>
+                                    <p class="text-sm text-gray-500">Lungs Specialist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800">+123 456 7891</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800">Female</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span> Not Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative dropdown">
+                                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <img alt="Dr. Michael Lee" class="w-12 h-12 rounded-full"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYt2Cj93QZ6c_CAYI8zNKJH4TDKbBcWwLUuSQjtJBSpKkEG0j6AsmZCsz36zIC-iB8N7q408L9LZaUSw0rZ-wd4xDgosZRjwbYnjaUo3sbE1RvCCZf4Lb-lInyxSb6-pHhe20_njLIdTJj0JkY8WlhE0AaFUwqdTUuJE-jfvCjVw67XSD1MIy36AJdt0KV7NcmLyXpB3_B-GIJ29rOGvZsFaaf7K3wuO5Zdd1n7dHVZdt18fwEp_e9gd_k23uHsE5HtZPGWtOASjc" />
+                                <div>
+                                    <p class="font-bold text-gray-800">Dr. Michael Lee</p>
+                                    <p class="text-sm text-gray-500">Dental Specialist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800">+123 456 7892</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800">Male</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative dropdown">
+                                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <img alt="Dr. Emily White" class="w-12 h-12 rounded-full"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCmPPiTpXSVd5189soDOe2MtpgNrqE2R0khIQCNur9TRt7lyBGUcebkSK5_45thKZTCtZLx60nb3GVrT7ZrXrdTmuKyvT4m3pFmd-tCkC6jcuC0r019LpboQK8mYJLSoRCG3zXMuXWsT4HmQk2fSETOu7cFl3p2nQJtB1OnYVI3vKDbt5z_MMOn5Z0q8hU9X6Ey6YbBAUw_apdDSjReQFh34785mGwoNGVmaOghS6hj9jg6MLsUtX2MT8j7z_BtOFTW0gJhX3jpao" />
+                                <div>
+                                    <p class="font-bold text-gray-800">Dr. Emily White</p>
+                                    <p class="text-sm text-gray-500">Brain Specialist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800">+123 456 7893</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800">Female</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
+                                        class="material-icons">edit</span></button>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
+                                        class="material-icons">delete_outline</span></button>
+                                <div class="relative dropdown">
+                                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Print</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Export</a>
+                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            href="#">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center mt-6">
+                        <div class="flex items-center space-x-1">
+                            <button
+                                class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">Previous</button>
+                            <button class="px-3 py-1 border rounded-lg bg-custom-blue text-white">1</button>
+                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">2</button>
+                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">3</button>
+                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

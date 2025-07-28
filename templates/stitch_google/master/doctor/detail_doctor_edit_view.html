@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Edit Doctor Details</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white shadow-md flex flex-col">
+            <div class="p-6 text-2xl font-bold text-gray-800">
+                Mario Hospital
+            </div>
+            <nav class="flex-1 px-4">
+                <p class="text-gray-500 text-xs uppercase tracking-wider mb-2">Menu</p>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">dashboard</span>
+                    <span class="ml-3">Dashboard</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">calendar_today</span>
+                    <span class="ml-3">Appointments</span>
+                </a>
+                <a class="flex items-center p-2 text-blue-600 bg-blue-100 rounded-lg font-semibold" href="#">
+                    <span class="material-icons">groups</span>
+                    <span class="ml-3">Doctors</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">badge</span>
+                    <span class="ml-3">Staff</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">meeting_room</span>
+                    <span class="ml-3">Room Allotment</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">payment</span>
+                    <span class="ml-3">Payment</span>
+                </a>
+                <p class="text-gray-500 text-xs uppercase tracking-wider mt-6 mb-2">Appearance</p>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">person</span>
+                    <span class="ml-3">Profile</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">settings</span>
+                    <span class="ml-3">Settings</span>
+                </a>
+                <a class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-200" href="#">
+                    <span class="material-icons">help_outline</span>
+                    <span class="ml-3">Support</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t">
+                <a class="flex items-center text-red-500" href="#">
+                    <span class="material-icons">logout</span>
+                    <span class="ml-3">Logout</span>
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Detail Dokter</h1>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 rounded-full hover:bg-gray-200">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-10 h-10 rounded-full bg-gray-300">
+                            <img alt="Admin avatar" class="w-10 h-10 rounded-full object-cover"
+                                src="https://lh3.googleusercontent.com/a-/ACNPEu8_3pA4Z3-2nC_Ie_s3yOEdei288CqJz2JqI-yG=s96-c" />
+                        </div>
+                        <span class="font-semibold text-gray-700">Alexa</span>
+                    </div>
+                </div>
+            </header>
+            <div class="flex gap-8">
+                <div class="w-1/3">
+                    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <img alt="Doctor profile picture" class="w-36 h-36 rounded-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVI0osb-RABdJxYmVG6OTZhB0dYx69fid3eIWD4-iFUuy9vJ08BaB9ufoK5lCYYtqZUMZ3BWXGEEtBYexpLsWbTIkDrncZuqsnz7_1EeAMX6Wppa7la5Nq3MN3nceoYetzzTRAn1mm6aDtEut4fTgou7cbT0yp7Uws4dGCUOB6DeZ_GGOeGAbXpxl0y06BoTxqEef_YHBS_YZbKuQg366bA0nX69IHkxxFkyKFNgrZc19Q0YX_SoVmDstN8uuFPqiUvw59WY58Ics" />
+                            <button class="absolute bottom-0 right-0 bg-blue-500 p-2 rounded-full text-white">
+                                <span class="material-icons text-base">edit</span>
+                            </button>
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-800">Dr. John Doe</h2>
+                        <p class="text-blue-500 mb-6">Dokter Anak</p>
+                        <div class="w-full space-y-4 text-sm">
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">phone</span>
+                                <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                    value="081234567890" />
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">wc</span>
+                                <select class="w-full p-2 border border-gray-300 rounded-md">
+                                    <option selected="" value="laki-laki">Laki-laki</option>
+                                    <option value="perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 mr-3 mt-2">location_on</span>
+                                <textarea class="w-full p-2 border border-gray-300 rounded-md"
+                                    rows="3">Jl. Sudirman No. 123, Jakarta Pusat, DKI Jakarta</textarea>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 mr-3 mt-2">schedule</span>
+                                <div class="w-full">
+                                    <p class="text-gray-600 mb-2">Schedule &amp; Practice Hours</p>
+                                    <div class="space-y-4">
+                                        <div class="flex items-start space-x-2">
+                                            <label
+                                                class="flex items-center space-x-2 p-2 border rounded-md cursor-pointer has-[:checked]:bg-blue-100 has-[:checked]:text-blue-600 w-20 justify-center">
+                                                <input checked="" class="form-checkbox h-4 w-4 text-blue-600"
+                                                    type="checkbox" />
+                                                <span>Sen</span>
+                                            </label>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="flex items-center space-x-2">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="09:00" />
+                                                    <span>-</span>
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="17:00" />
+                                                    <button class="text-gray-400 hover:text-red-500"><span
+                                                            class="material-icons text-base">delete</span></button>
+                                                </div>
+                                                <button class="text-blue-500 text-xs font-semibold">+ Tambah
+                                                    jam</button>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-2">
+                                            <label
+                                                class="flex items-center space-x-2 p-2 border rounded-md cursor-pointer has-[:checked]:bg-green-100 has-[:checked]:text-green-600 w-20 justify-center">
+                                                <input checked="" class="form-checkbox h-4 w-4 text-green-600"
+                                                    type="checkbox" />
+                                                <span>Sel</span>
+                                            </label>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="flex items-center space-x-2">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="09:00" />
+                                                    <span>-</span>
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="17:00" />
+                                                    <button class="text-gray-400 hover:text-red-500"><span
+                                                            class="material-icons text-base">delete</span></button>
+                                                </div>
+                                                <button class="text-blue-500 text-xs font-semibold">+ Tambah
+                                                    jam</button>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-2">
+                                            <label
+                                                class="flex items-center space-x-2 p-2 border rounded-md cursor-pointer has-[:checked]:bg-pink-100 has-[:checked]:text-pink-600 w-20 justify-center">
+                                                <input checked="" class="form-checkbox h-4 w-4 text-pink-600"
+                                                    type="checkbox" />
+                                                <span>Rab</span>
+                                            </label>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="flex items-center space-x-2">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="09:00" />
+                                                    <span>-</span>
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="17:00" />
+                                                    <button class="text-gray-400 hover:text-red-500"><span
+                                                            class="material-icons text-base">delete</span></button>
+                                                </div>
+                                                <button class="text-blue-500 text-xs font-semibold">+ Tambah
+                                                    jam</button>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-2">
+                                            <label
+                                                class="flex items-center space-x-2 p-2 border rounded-md cursor-pointer has-[:checked]:bg-purple-100 has-[:checked]:text-purple-600 w-20 justify-center">
+                                                <input checked="" class="form-checkbox h-4 w-4 text-purple-600"
+                                                    type="checkbox" />
+                                                <span>Kam</span>
+                                            </label>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="flex items-center space-x-2">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="09:00" />
+                                                    <span>-</span>
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="17:00" />
+                                                    <button class="text-gray-400 hover:text-red-500"><span
+                                                            class="material-icons text-base">delete</span></button>
+                                                </div>
+                                                <button class="text-blue-500 text-xs font-semibold">+ Tambah
+                                                    jam</button>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-2">
+                                            <label
+                                                class="flex items-center space-x-2 p-2 border rounded-md cursor-pointer has-[:checked]:bg-yellow-100 has-[:checked]:text-yellow-600 w-20 justify-center">
+                                                <input checked="" class="form-checkbox h-4 w-4 text-yellow-600"
+                                                    type="checkbox" />
+                                                <span>Jum</span>
+                                            </label>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="flex items-center space-x-2">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="09:00" />
+                                                    <span>-</span>
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        type="time" value="12:00" />
+                                                    <button class="text-gray-400 hover:text-red-500"><span
+                                                            class="material-icons text-base">delete</span></button>
+                                                </div>
+                                                <button class="text-blue-500 text-xs font-semibold">+ Tambah
+                                                    jam</button>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-2">
+                                            <label
+                                                class="flex items-center space-x-2 p-2 border rounded-md cursor-pointer bg-gray-100 text-gray-500 w-20 justify-center">
+                                                <input class="form-checkbox h-4 w-4 text-gray-600" type="checkbox" />
+                                                <span>Sab</span>
+                                            </label>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="flex items-center space-x-2 opacity-50">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        disabled="" type="time" />
+                                                    <span>-</span>
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        disabled="" type="time" />
+                                                    <button class="text-gray-400" disabled=""><span
+                                                            class="material-icons text-base">delete</span></button>
+                                                </div>
+                                                <button class="text-blue-500 text-xs font-semibold" disabled="">+ Tambah
+                                                    jam</button>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-2">
+                                            <label
+                                                class="flex items-center space-x-2 p-2 border rounded-md cursor-pointer bg-gray-100 text-gray-500 w-20 justify-center">
+                                                <input class="form-checkbox h-4 w-4 text-gray-600" type="checkbox" />
+                                                <span>Min</span>
+                                            </label>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="flex items-center space-x-2 opacity-50">
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        disabled="" type="time" />
+                                                    <span>-</span>
+                                                    <input class="w-full p-2 border border-gray-300 rounded-md"
+                                                        disabled="" type="time" />
+                                                    <button class="text-gray-400" disabled=""><span
+                                                            class="material-icons text-base">delete</span></button>
+                                                </div>
+                                                <button class="text-blue-500 text-xs font-semibold" disabled="">+ Tambah
+                                                    jam</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">work_outline</span>
+                                <div class="w-full">
+                                    <label class="block text-gray-600 mb-1">Duty Status</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-md">
+                                        <option class="text-green-600" value="on-duty">On-Duty</option>
+                                        <option class="text-yellow-600" value="on-call">On-Call</option>
+                                        <option class="text-red-600" value="off-duty">Off-Duty</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full mt-8">
+                            <p class="text-gray-600 font-semibold mb-2">Aksi</p>
+                            <button
+                                class="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">Simpan
+                            </button>
+                            <button
+                                class="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 mt-2 transition duration-300">Batal</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-2/3">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <div class="border-b">
+                            <nav class="flex space-x-8 px-6">
+                                <a class="py-4 text-blue-600 border-b-2 border-blue-600 font-semibold" href="#">Detail
+                                    Dokter</a>
+                                <a class="py-4 text-gray-500 hover:text-gray-700" href="#">Dokumen Perijinan</a>
+                                <a class="py-4 text-gray-500 hover:text-gray-700" href="#">List Appointment</a>
+                                <a class="py-4 text-gray-500 hover:text-gray-700" href="#">List Pasien</a>
+                            </nav>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Biodata</h3>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Nama Lengkap</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                        value="Dr. John Doe" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Spesialisasi</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                        value="Dokter Anak (Pediatri)" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Nomor STR</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                        value="1234567890123456" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Nomor SIP</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                        value="SIP.123/DU/X/2023" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Email</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="email"
+                                        value="johndoe.md@hospital.com" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Tanggal Lahir</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="date"
+                                        value="1985-06-15" />
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mt-8 mb-4">Riwayat Pendidikan</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3" scope="col">Gelar</th>
+                                            <th class="px-6 py-3" scope="col">Institusi</th>
+                                            <th class="px-6 py-3" scope="col">Tahun</th>
+                                            <th class="px-6 py-3 text-right" scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 font-medium text-gray-900">
+                                                <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                                    value="Dokter Spesialis Anak" />
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                                    value="Universitas Indonesia" />
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                                    value="2015 - 2019" />
+                                            </td>
+                                            <td class="px-6 py-4 text-right">
+                                                <div class="flex justify-end space-x-2">
+                                                    <button class="text-blue-600 hover:text-blue-800"><span
+                                                            class="material-icons">save</span></button>
+                                                    <button class="text-red-600 hover:text-red-800"><span
+                                                            class="material-icons">delete</span></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 font-medium text-gray-900">Pendidikan Profesi Dokter
+                                            </td>
+                                            <td class="px-6 py-4">Universitas Gadjah Mada</td>
+                                            <td class="px-6 py-4">2009 - 2011</td>
+                                            <td class="px-6 py-4 text-right">
+                                                <div class="flex justify-end space-x-2">
+                                                    <button class="text-gray-500 hover:text-gray-700"><span
+                                                            class="material-icons">edit</span></button>
+                                                    <button class="text-red-500 hover:text-red-700"><span
+                                                            class="material-icons">delete</span></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white">
+                                            <td class="px-6 py-4 font-medium text-gray-900">Sarjana Kedokteran</td>
+                                            <td class="px-6 py-4">Universitas Gadjah Mada</td>
+                                            <td class="px-6 py-4">2005 - 2009</td>
+                                            <td class="px-6 py-4 text-right">
+                                                <div class="flex justify-end space-x-2">
+                                                    <button class="text-gray-500 hover:text-gray-700"><span
+                                                            class="material-icons">edit</span></button>
+                                                    <button class="text-red-500 hover:text-red-700"><span
+                                                            class="material-icons">delete</span></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="mt-4 text-blue-500 hover:text-blue-700 font-semibold">+ Tambah
+                                Riwayat</button>
+                            <h3 class="text-lg font-bold text-gray-800 mt-8 mb-4">Pengalaman Kerja</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3" scope="col">Posisi</th>
+                                            <th class="px-6 py-3" scope="col">Institusi</th>
+                                            <th class="px-6 py-3" scope="col">Periode</th>
+                                            <th class="px-6 py-3 text-right" scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 font-medium text-gray-900">
+                                                <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                                    value="Dokter Anak" />
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                                    value="Mario Hospital" />
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <input class="w-full p-2 border border-gray-300 rounded-md" type="text"
+                                                    value="2020 - Sekarang" />
+                                            </td>
+                                            <td class="px-6 py-4 text-right">
+                                                <div class="flex justify-end space-x-2">
+                                                    <button class="text-blue-600 hover:text-blue-800"><span
+                                                            class="material-icons">save</span></button>
+                                                    <button class="text-red-600 hover:text-red-800"><span
+                                                            class="material-icons">delete</span></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 font-medium text-gray-900">Dokter Umum</td>
+                                            <td class="px-6 py-4">Klinik Sehat Sejahtera</td>
+                                            <td class="px-6 py-4">2012 - 2015</td>
+                                            <td class="px-6 py-4 text-right">
+                                                <div class="flex justify-end space-x-2">
+                                                    <button class="text-gray-500 hover:text-gray-700"><span
+                                                            class="material-icons">edit</span></button>
+                                                    <button class="text-red-500 hover:text-red-700"><span
+                                                            class="material-icons">delete</span></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="mt-4 text-blue-500 hover:text-blue-700 font-semibold">+ Tambah
+                                Pengalaman</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>
