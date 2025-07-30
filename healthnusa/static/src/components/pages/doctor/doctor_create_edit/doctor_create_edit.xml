@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.DoctorCreateEdit">
+        <div class="flex flex-col xl:flex-row gap-6 xl:gap-8">
+            <!-- Left Side - Profile &amp; Schedule -->
+            <div class="w-full xl:w-1/3 order-1">
+                <div class="bg-white p-4 md:p-6 rounded-2xl shadow">
+                    <div class="flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <img class="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-gray-100 bg-gray-100" t-att-src="state.formData.avatar" alt="Doctor profile picture" />
+                            <button t-on-click="() => document.getElementById('photo-input').click()" class="absolute bottom-0 right-0 bg-custom-blue p-2 rounded-full text-white hover:bg-blue-600 transition-colors">
+                                <span class="material-icons text-base">edit</span>
+                            </button>
+                            <input type="file" id="photo-input" class="hidden" accept="image/*" t-on-change="handlePhotoUpload" />
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">Profile Photo</h3>
+                        <p class="text-sm text-gray-500 text-center mb-6">Upload a professional photo of the doctor</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Phone -->
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 mr-3">phone</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-1">Phone Number</label>
+                                <input t-model="state.formData.phone" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="e.g. +62 812 3456 7890" />
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 mr-3">wc</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-1">Gender</label>
+                                <select t-model="state.formData.gender" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue">
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="flex items-start">
+                            <span class="material-icons text-gray-500 mr-3 mt-2">location_on</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-1">Address</label>
+                                <textarea t-model="state.formData.address" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" rows="3" placeholder="Enter full address"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Schedule -->
+                        <div class="flex items-start">
+                            <span class="material-icons text-gray-500 mr-3 mt-2">schedule</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-2">Schedule &amp; Practice Hours</label>
+                                <div class="space-y-4">
+                                    <t t-foreach="daysOfWeek" t-as="day" t-key="day.id">
+                                        <div class="flex items-start space-x-2">
+                                            <label t-att-class="'flex items-center space-x-2 p-2 border rounded-md cursor-pointer w-20 justify-center ' + (day.color === 'gray' ? 'bg-gray-100 text-gray-500' : '')" t-att-data-day="day.id">
+                                                <input class="form-checkbox h-4 w-4" t-att-class="'form-checkbox h-4 w-4 text-' + day.color + '-600'" type="checkbox" t-att-checked="state.schedule[day.id].enabled" t-on-change="() => this.toggleScheduleDay(day.id)" />
+                                                <span t-esc="day.name"></span>
+                                            </label>
+                                            <div class="flex-1 space-y-2">
+                                                <t t-foreach="state.schedule[day.id].slots" t-as="slot" t-key="slot_index">
+                                                    <div class="flex items-center space-x-2 schedule-time mb-2" t-att-style="!state.schedule[day.id].enabled ? 'opacity: 0.5' : ''">
+                                                        <input class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="time" t-att-value="slot.start" t-att-disabled="!state.schedule[day.id].enabled" t-on-change="(e) => this.updateTimeSlot(day.id, slot_index, 'start', e.target.value)" />
+                                                        <span>-</span>
+                                                        <input class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="time" t-att-value="slot.end" t-att-disabled="!state.schedule[day.id].enabled" t-on-change="(e) => this.updateTimeSlot(day.id, slot_index, 'end', e.target.value)" />
+                                                        <button class="text-gray-400 hover:text-red-500" t-att-disabled="!state.schedule[day.id].enabled" t-on-click="() => this.removeTimeSlot(day.id, slot_index)">
+                                                            <span class="material-icons text-base">delete</span>
+                                                        </button>
+                                                    </div>
+                                                </t>
+                                                <button class="text-blue-500 text-xs font-semibold add-time-btn" t-att-disabled="!state.schedule[day.id].enabled" t-on-click="() => this.addTimeSlot(day.id)">
+                                                    + Add time
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Duty Status -->
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 mr-3">work_outline</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-1">Duty Status</label>
+                                <select t-model="state.formData.dutyStatus" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue">
+                                    <option value="on_duty">On Duty</option>
+                                    <option value="on_call">On Call</option>
+                                    <option value="off_duty">Off Duty</option>
+                                    <option value="leave">On Leave</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-6 md:mt-8 space-y-3">
+                        <button t-on-click="saveDoctor" t-att-disabled="state.saving" class="w-full bg-custom-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 disabled:opacity-50">
+                            <span t-if="state.saving">Saving...</span>
+                            <span t-else="" t-esc="saveButtonText"></span>
+                        </button>
+                        <button t-on-click="cancelEdit" class="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition duration-300">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Detailed Information -->
+            <div class="w-full xl:w-2/3 order-2">
+                <div class="bg-white rounded-lg shadow-md">
+                    <div class="border-b">
+                        <nav class="flex space-x-4 md:space-x-8 px-4 md:px-6 overflow-x-auto">
+                            <a t-on-click="() => this.switchTab('personal')" t-att-class="state.currentTab === 'personal' ? 'tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2' : 'tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2'">
+                                <span class="material-icons text-base">person</span>
+                                <span class="hidden sm:inline">Detail Dokter</span>
+                            </a>
+                            <a t-on-click="() => this.switchTab('education')" t-att-class="state.currentTab === 'education' ? 'tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2' : 'tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2'">
+                                <span class="material-icons text-base">description</span>
+                                <span class="hidden sm:inline">Dokumen Perijinan</span>
+                            </a>
+                            <a t-on-click="() => this.switchTab('experience')" t-att-class="state.currentTab === 'experience' ? 'tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2' : 'tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2'">
+                                <span class="material-icons text-base">event</span>
+                                <span class="hidden sm:inline">List Appointment</span>
+                            </a>
+                            <a class="py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2">
+                                <span class="material-icons text-base">people</span>
+                                <span class="hidden sm:inline">List Pasien</span>
+                            </a>
+                        </nav>
+                    </div>
+
+                    <div class="p-4 md:p-6">
+                        <!-- Personal Info Tab -->
+                        <div t-if="state.currentTab === 'personal'">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Biodata</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">
+                                        Nama Lengkap *
+                                        <span t-if="state.validationErrors.fullName" class="text-red-500 text-xs ml-1">
+                                            <span class="material-icons text-xs">error</span>
+                                            Required
+                                        </span>
+                                    </label>
+                                    <input 
+                                        name="fullName"
+                                        data-field="fullName"
+                                        t-model="state.formData.fullName" 
+                                        t-att-class="'w-full p-2 border rounded-md focus:outline-none focus:ring-2 ' + this.getFieldErrorClass('fullName')" 
+                                        type="text" 
+                                        placeholder="Enter full name"
+                                        t-on-input="(e) => this.updateFormData('fullName', e.target.value)" />
+                                    <div t-if="state.validationErrors.fullName" class="text-red-500 text-xs mt-1" t-esc="state.validationErrors.fullName"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">
+                                        Spesialisasi *
+                                        <span t-if="state.validationErrors.specialization" class="text-red-500 text-xs ml-1">
+                                            <span class="material-icons text-xs">error</span>
+                                            Required
+                                        </span>
+                                    </label>
+                                    <!-- Updated specialization field to use select dropdown -->
+                                    <select 
+                                        name="specialization"
+                                        data-field="specialization"
+                                        t-model="state.formData.specialization" 
+                                        t-att-class="'w-full p-2 border rounded-md focus:outline-none focus:ring-2 ' + this.getFieldErrorClass('specialization')" 
+                                        t-att-disabled="state.loadingSpecialties">
+                                        <option value="">
+                                            <t t-if="state.loadingSpecialties">Loading specialties...</t>
+                                            <t t-else="">Select specialization</t>
+                                        </option>
+                                        <t t-foreach="state.specialtyOptions" t-as="specialty" t-key="specialty.id">
+                                            <option t-att-value="specialty.id" t-esc="specialty.name"></option>
+                                        </t>
+                                    </select>
+                                    <div t-if="state.validationErrors.specialization" class="text-red-500 text-xs mt-1" t-esc="state.validationErrors.specialization"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Nomor STR</label>
+                                    <input t-model="state.formData.strNumber" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="Enter STR number" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Nomor SIP</label>
+                                    <input t-model="state.formData.sipNumber" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="Enter SIP number" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">
+                                        Email *
+                                        <span t-if="state.validationErrors.email" class="text-red-500 text-xs ml-1">
+                                            <span class="material-icons text-xs">error</span>
+                                            Required
+                                        </span>
+                                    </label>
+                                    <input 
+                                        name="email"
+                                        data-field="email"
+                                        t-model="state.formData.email" 
+                                        t-att-class="'w-full p-2 border rounded-md focus:outline-none focus:ring-2 ' + this.getFieldErrorClass('email')" 
+                                        type="email" 
+                                        placeholder="Enter email address"
+                                        t-on-input="(e) => this.updateFormData('email', e.target.value)" />
+                                    <div t-if="state.validationErrors.email" class="text-red-500 text-xs mt-1" t-esc="state.validationErrors.email"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Tanggal Lahir</label>
+                                    <input t-model="state.formData.birthDate" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="date" />
+                                </div>
+                            </div>
+
+                            <h3 class="text-lg font-bold text-gray-800 mt-6 md:mt-8 mb-4">Riwayat Pendidikan</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Gelar</th>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Institusi</th>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Tahun</th>
+                                            <th class="px-4 md:px-6 py-3 text-right" scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="state.education" t-as="edu" t-key="edu_index">
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">
+                                                    <input t-if="edu.editing" t-model="edu.degree" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="Degree" />
+                                                    <span t-else="" t-esc="edu.degree"></span>
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4">
+                                                    <input t-if="edu.editing" t-model="edu.institution" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="Institution" />
+                                                    <span t-else="" t-esc="edu.institution"></span>
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4">
+                                                    <input t-if="edu.editing" t-model="edu.year" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="Year" />
+                                                    <span t-else="" t-esc="edu.year"></span>
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button t-if="edu.editing" t-on-click="() => this.saveEducationRow(edu_index)" class="text-blue-600 hover:text-blue-800">
+                                                            <span class="material-icons">save</span>
+                                                        </button>
+                                                        <button t-else="" t-on-click="() => this.editEducationRow(edu_index)" class="text-gray-500 hover:text-gray-700">
+                                                            <span class="material-icons">edit</span>
+                                                        </button>
+                                                        <button t-on-click="() => this.removeEducationRow(edu_index)" class="text-red-600 hover:text-red-800">
+                                                            <span class="material-icons">delete</span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button t-on-click="addEducationRow" class="mt-4 text-blue-500 hover:text-blue-700 font-semibold">
+                                + Tambah Riwayat
+                            </button>
+
+                            <h3 class="text-lg font-bold text-gray-800 mt-6 md:mt-8 mb-4">Pengalaman Kerja</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Posisi</th>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Institusi</th>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Periode</th>
+                                            <th class="px-4 md:px-6 py-3 text-right" scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="state.experience" t-as="exp" t-key="exp_index">
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900">
+                                                    <input t-if="exp.editing" t-model="exp.position" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="Position" />
+                                                    <span t-else="" t-esc="exp.position"></span>
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4">
+                                                    <input t-if="exp.editing" t-model="exp.institution" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="Institution" />
+                                                    <span t-else="" t-esc="exp.institution"></span>
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4">
+                                                    <input t-if="exp.editing" t-model="exp.period" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue" type="text" placeholder="Period" />
+                                                    <span t-else="" t-esc="exp.period"></span>
+                                                </td>
+                                                <td class="px-4 md:px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button t-if="exp.editing" t-on-click="() => this.saveExperienceRow(exp_index)" class="text-blue-600 hover:text-blue-800">
+                                                            <span class="material-icons">save</span>
+                                                        </button>
+                                                        <button t-else="" t-on-click="() => this.editExperienceRow(exp_index)" class="text-gray-500 hover:text-gray-700">
+                                                            <span class="material-icons">edit</span>
+                                                        </button>
+                                                        <button t-on-click="() => this.removeExperienceRow(exp_index)" class="text-red-600 hover:text-red-800">
+                                                            <span class="material-icons">delete</span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button t-on-click="addExperienceRow" class="mt-4 text-blue-500 hover:text-blue-700 font-semibold">
+                                + Tambah Pengalaman
+                            </button>
+                        </div>
+
+                        <!-- Education Tab -->
+                        <div t-if="state.currentTab === 'education'">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 space-y-2 sm:space-y-0">
+                                <h3 class="text-lg font-bold text-gray-800">Dokumen Perijinan</h3>
+                                <button class="bg-custom-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                    <span class="material-icons mr-1 text-sm">add</span> Add Document
+                                </button>
+                            </div>
+                            <div class="text-center py-8 text-gray-500">
+                                <span class="material-icons text-4xl mb-2">description</span>
+                                <p>Dokumen perijinan belum tersedia</p>
+                                <p class="text-sm">Klik "Add Document" untuk menambahkan dokumen</p>
+                            </div>
+                        </div>
+
+                        <!-- Experience Tab -->
+                        <div t-if="state.currentTab === 'experience'">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 space-y-2 sm:space-y-0">
+                                <h3 class="text-lg font-bold text-gray-800">List Appointment</h3>
+                                <button class="bg-custom-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                    <span class="material-icons mr-1 text-sm">add</span> Add Appointment
+                                </button>
+                            </div>
+                            <div class="text-center py-8 text-gray-500">
+                                <span class="material-icons text-4xl mb-2">event</span>
+                                <p>Belum ada appointment</p>
+                                <p class="text-sm">Klik "Add Appointment" untuk menambahkan jadwal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

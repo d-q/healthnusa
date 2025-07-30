@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.HeaderComponent">
+        <header class="flex justify-between items-center mb-6 md:mb-8">
+            <!-- Left side: Menu, Back, Title -->
+            <div class="flex items-center flex-1 min-w-0">
+                <button id="menu-toggle" class="p-2 bg-white rounded-lg shadow mr-3 md:hidden" t-on-click="onMenuToggle">
+                    <span class="material-icons text-gray-600">menu</span>
+                </button>
+                <button id="desktop-menu-toggle" class="p-2 bg-white rounded-lg shadow mr-3 hidden md:block" t-on-click="onMenuToggle">
+                    <span class="material-icons text-gray-600">menu</span>
+                </button>
+
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 truncate" t-esc="props.pageTitle"></h2>
+                    <p class="text-xs sm:text-sm text-gray-500 hidden sm:block" t-esc="props.pageSubtitle"></p>
+                </div>
+            </div>
+
+            <!-- Right side: Theme &amp; Avatar -->
+            <div class="flex items-center space-x-2 flex-shrink-0">
+                <button id="theme-toggle" class="p-2 bg-white rounded-lg shadow" t-on-click="onThemeToggle">
+                    <span class="material-icons" t-att-class="props.darkMode ? 'text-yellow-400' : 'text-gray-600'" t-esc="props.darkMode ? 'light_mode' : 'dark_mode'"></span>
+                </button>
+                <!-- Profile Section - Added cursor-pointer and click handler -->
+                <button class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow cursor-pointer hover:bg-gray-50 transition-colors" t-on-click="onProfileClick">
+                    <img alt="User avatar" class="w-6 h-6 sm:w-8 sm:h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
+                    <span class="font-semibold text-gray-700 text-sm sm:text-base hidden min-[480px]:block">Admin</span>
+                </button>
+            </div>
+        </header>
+    </t>
+</templates>

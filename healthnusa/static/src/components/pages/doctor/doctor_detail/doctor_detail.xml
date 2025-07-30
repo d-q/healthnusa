@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.DoctorDetail">
+        <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+            <!-- Left Side - Profile &amp; Information -->
+            <div class="w-full lg:w-1/3">
+                <div class="bg-white p-4 md:p-6 rounded-2xl shadow">
+                    <div class="flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <img 
+                                t-att-alt="doctorData.name"
+                                class="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-gray-100"
+                                t-att-src="doctorData.avatar"
+                            />
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-1 text-center" t-esc="doctorData.name"></h3>
+                        <p class="text-custom-blue font-medium mb-6 text-center" t-esc="doctorData.specialty"></p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Phone -->
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 mr-3">phone</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-1">Phone Number</label>
+                                <p class="text-gray-800 font-medium" t-esc="doctorData.phone"></p>
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 mr-3">wc</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-1">Gender</label>
+                                <p class="text-gray-800 font-medium" t-esc="doctorData.gender"></p>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="flex items-start">
+                            <span class="material-icons text-gray-500 mr-3 mt-2">location_on</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-1">Address</label>
+                                <p class="text-gray-800 font-medium text-sm" t-esc="doctorData.address"></p>
+                            </div>
+                        </div>
+
+                        <!-- Schedule -->
+                        <div class="flex items-start">
+                            <span class="material-icons text-gray-500 mr-3 mt-2">schedule</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-2">Schedule &amp; Practice Hours</label>
+                                <div class="text-gray-800 space-y-2">
+                                    <t t-foreach="Object.keys(doctorData.schedule)" t-as="day" t-key="day">
+                                        <div class="flex items-start">
+                                            <div class="font-semibold w-16 text-sm" t-esc="getDayName(day) + ':'"></div>
+                                            <div class="flex-1 flex flex-wrap gap-1">
+                                                <t t-if="doctorData.schedule[day].length > 0">
+                                                    <t t-foreach="doctorData.schedule[day]" t-as="slot" t-key="slot_index">
+                                                        <span t-att-class="'bg-' + getScheduleColor(day) + '-100 text-' + getScheduleColor(day) + '-800 text-xs font-medium px-2 py-1 rounded-full'" t-esc="slot.start + '-' + slot.end"></span>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="text-gray-500 text-sm">Off</span>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Duty Status -->
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 mr-3">work_outline</span>
+                            <div class="w-full">
+                                <label class="block text-gray-600 text-sm mb-1">Duty Status</label>
+                                <span t-att-class="doctorData.dutyStatus === 'on-duty' ? 'bg-green-100 text-green-800 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center' : 'bg-red-100 text-red-800 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center'">
+                                    <span t-att-class="doctorData.dutyStatus === 'on-duty' ? 'w-2 h-2 bg-green-500 rounded-full mr-2' : 'w-2 h-2 bg-red-500 rounded-full mr-2'"></span>
+                                    <t t-if="doctorData.dutyStatus === 'on-duty'">On-Duty</t>
+                                    <t t-else="">Off-Duty</t>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-6 md:mt-8 space-y-3">
+                        <button 
+                            t-on-click="editDoctor"
+                            class="w-full bg-custom-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 flex items-center justify-center space-x-2"
+                        >
+                            <span class="material-icons">edit</span>
+                            <span>Edit Doctor</span>
+                        </button>
+                        <button 
+                            t-on-click="showDeleteModal"
+                            class="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition duration-300 flex items-center justify-center space-x-2"
+                        >
+                            <span class="material-icons">delete</span>
+                            <span>Delete Doctor</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Detailed Information -->
+            <div class="w-full lg:w-2/3">
+                <div class="bg-white rounded-lg shadow-md">
+                    <div class="border-b">
+                        <nav class="flex space-x-4 md:space-x-8 px-4 md:px-6 overflow-x-auto">
+                            <a 
+                                t-on-click="() => this.switchTab('personal')"
+                                t-att-class="state.currentTab === 'personal' ? 'tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2' : 'tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2'"
+                            >
+                                <span class="material-icons text-base">person</span>
+                                <span class="hidden sm:inline">Detail Dokter</span>
+                            </a>
+                            <a 
+                                t-on-click="() => this.switchTab('documents')"
+                                t-att-class="state.currentTab === 'documents' ? 'tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2' : 'tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2'"
+                            >
+                                <span class="material-icons text-base">description</span>
+                                <span class="hidden sm:inline">Dokumen Perijinan</span>
+                            </a>
+                            <a 
+                                t-on-click="() => this.switchTab('appointments')"
+                                t-att-class="state.currentTab === 'appointments' ? 'tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2' : 'tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2'"
+                            >
+                                <span class="material-icons text-base">event</span>
+                                <span class="hidden sm:inline">List Appointment</span>
+                            </a>
+                            <a 
+                                t-on-click="() => this.switchTab('patients')"
+                                t-att-class="state.currentTab === 'patients' ? 'tab-btn py-4 text-blue-600 border-b-2 border-blue-600 font-semibold cursor-pointer whitespace-nowrap flex items-center space-x-2' : 'tab-btn py-4 text-gray-500 hover:text-gray-700 cursor-pointer whitespace-nowrap flex items-center space-x-2'"
+                            >
+                                <span class="material-icons text-base">people</span>
+                                <span class="hidden sm:inline">List Pasien</span>
+                            </a>
+                        </nav>
+                    </div>
+
+                    <div class="p-4 md:p-6">
+                        <!-- Personal Info Tab -->
+                        <div t-if="state.currentTab === 'personal'">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Biodata</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Nama Lengkap</label>
+                                    <p class="text-gray-800 font-medium" t-esc="doctorData.name"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Spesialisasi</label>
+                                    <p class="text-gray-800 font-medium" t-esc="doctorData.specialty"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Nomor STR</label>
+                                    <p class="text-gray-800 font-medium" t-esc="doctorData.strNumber"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Nomor SIP</label>
+                                    <p class="text-gray-800 font-medium" t-esc="doctorData.sipNumber"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Email</label>
+                                    <p class="text-gray-800 font-medium" t-esc="doctorData.email"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 mb-1">Tanggal Lahir</label>
+                                    <p class="text-gray-800 font-medium" t-esc="doctorData.birthDate"></p>
+                                </div>
+                            </div>
+
+                            <h3 class="text-lg font-bold text-gray-800 mt-6 md:mt-8 mb-4">Riwayat Pendidikan</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Gelar</th>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Institusi</th>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Tahun</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="doctorData.education" t-as="edu" t-key="edu_index">
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900" t-esc="edu.degree"></td>
+                                                <td class="px-4 md:px-6 py-4" t-esc="edu.institution"></td>
+                                                <td class="px-4 md:px-6 py-4" t-esc="edu.year"></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h3 class="text-lg font-bold text-gray-800 mt-6 md:mt-8 mb-4">Pengalaman Kerja</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Posisi</th>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Institusi</th>
+                                            <th class="px-4 md:px-6 py-3" scope="col">Periode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="doctorData.experience" t-as="exp" t-key="exp_index">
+                                            <tr class="bg-white border-b">
+                                                <td class="px-4 md:px-6 py-4 font-medium text-gray-900" t-esc="exp.position"></td>
+                                                <td class="px-4 md:px-6 py-4" t-esc="exp.institution"></td>
+                                                <td class="px-4 md:px-6 py-4" t-esc="exp.period"></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Documents Tab -->
+                        <div t-if="state.currentTab === 'documents'">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold text-gray-800">Dokumen Perijinan</h3>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <t t-foreach="doctorData.documents" t-as="doc" t-key="doc_index">
+                                    <div class="bg-gray-50 p-4 rounded-lg border-2 border-dashed border-gray-300">
+                                        <div class="text-center">
+                                            <span class="material-icons text-4xl text-gray-400 mb-2">description</span>
+                                            <p class="text-sm text-gray-600 font-medium" t-esc="doc.name"></p>
+                                            <p class="text-xs text-gray-500" t-esc="doc.type + ' • ' + doc.size"></p>
+                                            <button class="mt-2 text-custom-blue text-sm hover:underline">View Document</button>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Appointments Tab -->
+                        <div t-if="state.currentTab === 'appointments'">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold text-gray-800">Recent Appointments</h3>
+                            </div>
+                            <div class="space-y-4">
+                                <t t-foreach="doctorData.appointments" t-as="appointment" t-key="appointment_index">
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-2 sm:space-y-0">
+                                            <div>
+                                                <p class="font-semibold text-gray-800" t-esc="appointment.type + ' - ' + appointment.patient"></p>
+                                                <p class="text-sm text-gray-600" t-esc="appointment.description"></p>
+                                                <div class="flex items-center mt-2 text-sm text-gray-500">
+                                                    <span class="material-icons text-sm mr-1">schedule</span>
+                                                    <span t-esc="appointment.time"></span>
+                                                </div>
+                                            </div>
+                                            <span t-att-class="'bg-' + getStatusColor(appointment.status) + '-100 text-' + getStatusColor(appointment.status) + '-800 text-xs font-medium px-2 py-1 rounded-full self-start'" t-esc="appointment.status"></span>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Patients Tab -->
+                        <div t-if="state.currentTab === 'patients'">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold text-gray-800">Recent Patients</h3>
+                            </div>
+                            <div class="space-y-4">
+                                <t t-foreach="doctorData.patients" t-as="patient" t-key="patient_index">
+                                    <div class="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <div class="flex items-start space-x-4">
+                                            <img 
+                                                t-att-alt="patient.name" 
+                                                class="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"
+                                                t-att-src="patient.avatar" 
+                                            />
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-gray-800" t-esc="patient.name"></p>
+                                                <p class="text-sm text-gray-600" t-esc="'Age: ' + patient.age + ' • Last visit: ' + patient.lastVisit"></p>
+                                                <p class="text-sm text-gray-500 mt-1" t-esc="patient.treatment"></p>
+                                            </div>
+                                            <button class="text-custom-blue text-sm hover:underline flex-shrink-0">View Details</button>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div t-if="state.showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl transform transition-all duration-300 scale-100">
+                <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full">
+                    <span class="material-icons text-red-600 text-2xl">warning</span>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 text-center mb-2">Delete Doctor</h3>
+                <p class="text-gray-600 text-center mb-6">Are you sure you want to delete this doctor? This action cannot be undone.</p>
+                <div class="doctor-info mb-6 p-4 bg-gray-50 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        <img t-att-alt="doctorData.name" class="w-12 h-12 rounded-full" t-att-src="doctorData.avatar" />
+                        <div>
+                            <p class="font-semibold text-gray-800" t-esc="doctorData.name"></p>
+                            <p class="text-sm text-gray-500" t-esc="doctorData.specialty"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                    <button 
+                        t-on-click="closeDeleteModal" 
+                        class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium"
+                    >
+                        Cancel
+                    </button>
+                    <button 
+                        t-on-click="confirmDeleteDoctor" 
+                        class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

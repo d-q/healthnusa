@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.Sidebar">
+        <aside id="sidebar" t-att-class="'w-64 md:w-64 bg-white flex flex-col p-6 md:relative fixed h-full z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300' + (props.expanded ? '' : ' collapsed')">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800 sidebar-text">HealthNusa</h1>
+            </div>
+
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider sidebar-text">Service</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <t t-foreach="props.apps" t-as="app" t-key="app.icon">
+                        <t t-if="app.category === 'Service'">
+                            <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center cursor-pointer transition-all duration-200" 
+                            t-att-class="app.id === props.currentApp ? 'active bg-blue-50 text-custom-blue' : 'text-gray-600 hover:bg-gray-50'" t-att-href="app.href">
+                                <span class="material-icons md-24 md:md-30" t-esc="app.icon"></span>
+                                <span class="text-xs mt-1 sidebar-text" t-esc="app.name"></span>
+                            </a>
+                        </t>
+                    </t>
+                </div>
+
+                <span class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block sidebar-text">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <t t-foreach="props.apps" t-as="app" t-key="app.icon">
+                        <t t-if="app.category === 'Menu'">
+                            <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center cursor-pointer transition-all duration-200" 
+                            t-att-class="app.id === props.currentApp ? 'active bg-blue-50 text-custom-blue' : 'text-gray-600 hover:bg-gray-50'" t-att-href="app.href">
+                                <span class="material-icons md-24 md:md-30" t-esc="app.icon"></span>
+                                <span class="text-xs mt-1 sidebar-text" t-esc="app.name"></span>
+                            </a>
+                        </t>
+                    </t>
+                </div>
+            </nav>
+
+            <div class="mt-auto">
+                <div class="border-t border-gray-200 pt-4 mb-4"></div>
+                <button t-on-click="handleLogout" class="w-full flex items-center py-3 px-4 rounded-lg text-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200 cursor-pointer group" title="Sign out of your account">
+                    <span class="material-icons mr-3 group-hover:scale-110 transition-transform duration-200">logout</span>
+                    <span class="sidebar-text font-medium">Sign Out</span>
+                </button>
+            </div>
+        </aside>
+    </t>
+</templates>

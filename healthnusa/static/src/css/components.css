@@ -1,0 +1,145 @@
+/* Component Styles */
+
+/* Focus and Accessibility */
+.focus\:ring-2:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #4A90E2;
+}
+
+.focus\:ring-custom-blue:focus {
+    box-shadow: 0 0 0 2px #4A90E2;
+}
+
+/* Transition Effects */
+.transition-shadow {
+    transition: box-shadow 0.3s ease;
+}
+
+.transition-colors {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Navigation Styles */
+aside nav a.active,
+aside nav a:hover {
+    background-color: #E9F2FE;
+    color: #4A90E2;
+    font-weight: 500;
+}
+
+.dark aside nav a.active,
+.dark aside nav a:hover {
+    background-color: rgba(74, 144, 226, 0.2);
+    color: #4A90E2;
+}
+
+aside nav a.active .material-icons,
+aside nav a:hover .material-icons {
+    color: #4A90E2;
+}
+
+aside nav a {
+    color: #A0AEC0;
+    transition: all 0.3s ease;
+}
+
+aside nav a .material-icons {
+    color: #A0AEC0;
+}
+
+/* Sidebar Styles */
+aside {
+    transition: width 0.3s ease, padding 0.3s ease, transform 0.3s ease;
+}
+
+aside.collapsed {
+    width: 80px;
+    padding: 1.5rem 0.5rem;
+}
+
+aside.collapsed .sidebar-text {
+    display: none;
+}
+
+aside.collapsed .grid-cols-2 {
+    grid-template-columns: 1fr;
+}
+
+aside.collapsed .flex.items-center {
+    justify-content: center;
+}
+
+aside.collapsed .flex.items-center .sidebar-text {
+    display: none;
+}
+
+main {
+    transition: margin-left 0.3s ease;
+}
+
+/* Dropdown Animations */
+.dropdown-menu {
+    transition: all 0.3s ease;
+    animation: dropdownShow 0.2s ease-out;
+}
+
+@keyframes dropdownShow {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Tab Navigation */
+.tab-btn {
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.5rem;
+}
+
+.tab-btn.text-blue-600 .material-icons {
+    color: inherit;
+}
+
+.tab-btn.text-gray-500 .material-icons {
+    color: inherit;
+}
+
+.tab-btn:hover .material-icons {
+    color: inherit;
+}
+
+/* Search Input */
+input[type="text"]::placeholder {
+    color: #9ca3af;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #4A90E2;
+    box-shadow: 0 0 0 1px #4A90E2;
+}
+
+/* Popup Styles - Matching the provided modal style */
+.popup-overlay {
+    transition: opacity 0.3s ease;
+}
+
+.popup-content {
+    /* Already has the correct classes applied inline */
+}
+
+/* Focus States for Accessibility */
+.popup-close-btn:focus,
+.popup-confirm-btn:focus,
+.popup-cancel-btn:focus {
+    outline: 2px solid #4A90E2;
+    outline-offset: 2px;
+}

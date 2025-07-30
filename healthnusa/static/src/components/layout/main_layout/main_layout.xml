@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.MainLayout">
+        <div class="grid grid-cols-1 gap-6 md:gap-8">
+            <t t-component="CurrentComponent"/>
+        </div>
+    </t>
+</templates>

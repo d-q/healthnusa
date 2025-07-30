@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Specialty Tree View -->
+        <record id="view_specialty_tree" model="ir.ui.view">
+            <field name="name">healthnusa.specialty.list</field>
+            <field name="model">healthnusa.doctor.specialty</field>
+            <field name="arch" type="xml">
+                <list string="Medical Specialties" create="true" edit="true" delete="true">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="doctor_count"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Specialty Form View -->
+        <record id="view_specialty_form" model="ir.ui.view">
+            <field name="name">healthnusa.specialty.form</field>
+            <field name="model">healthnusa.doctor.specialty</field>
+            <field name="arch" type="xml">
+                <form string="Medical Specialty">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_doctors" type="object" class="oe_stat_button" icon="fa-user-md">
+                                <field name="doctor_count" widget="statinfo" string="Doctors"/>
+                            </button>
+                        </div>
+                        
+                        <group>
+                            <group name="basic_info" string="Basic Information">
+                                <field name="name" required="1"/>
+                                <field name="code" required="1"/>
+                                <field name="active"/>
+                            </group>
+                            <group name="display_info" string="Display Settings">
+                                <field name="icon"/>
+                                <field name="color" widget="color"/>
+                            </group>
+                        </group>
+                        
+                        <group name="description" string="Description">
+                            <field name="description" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Specialty Action -->
+        <record id="action_doctor_specialty" model="ir.actions.act_window">
+            <field name="name">Medical Specialties</field>
+            <field name="res_model">healthnusa.doctor.specialty</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first medical specialty
+                </p>
+                <p>
+                    Define medical specialties to categorize your doctors.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

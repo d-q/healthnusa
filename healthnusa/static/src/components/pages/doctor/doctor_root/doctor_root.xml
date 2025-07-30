@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.DoctorRoot">
+        <!-- Breadcrumb Section -->
+        <div class="breadcrumb-container">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center">
+                    <t t-foreach="breadcrumbItems" t-as="item" t-key="item_index">
+                        <li class="inline-flex items-center">
+                            <t t-if="item_index > 0">
+                                <span class="material-icons md-24 md:md-30 text-gray-400 mx-2">chevron_right</span>
+                            </t>
+
+                            <t t-if="item_index === breadcrumbItems.length - 1">
+                                <span class="text-sm font-medium text-gray-500">
+                                    <t t-esc="item"/>
+                                </span>
+                            </t>
+                            <t t-else="">
+                                <a href="#" class="inline-flex items-center text-sm font-medium text-blue-500 hover:text-blue-600" t-on-click="() => this.navigateTo(item_index)">
+                                    <t t-if="item_index === 0">
+                                        <span class="material-icons text-sm mr-2">home</span>
+                                    </t>
+                                    <t t-esc="item"/>
+                                </a>
+                            </t>
+                        </li>
+                    </t>
+                </ol>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 gap-6 md:gap-8">
+            <!-- Doctor List Component -->
+            <t t-if="state.currentApp.id === 'list'">
+                <t t-component="state.currentApp.Component" 
+                   showCreateEdit.bind="showCreateEdit"
+                   showDoctorDetail.bind="showDoctorDetail"
+                   showDoctorForm.bind="showDoctorForm"/>
+            </t>
+            
+            <!-- Doctor Create/Edit Component -->
+            <t t-if="state.currentApp.id === 'createEdit'">
+                <t t-component="state.currentApp.Component" 
+                   t-props="{
+                       currentDoctor: state.currentDoctorId,
+                       isEditMode: isEditMode,
+                       showDoctorDetail: showDoctorDetail,
+                       showDoctorList: showDoctorList
+                   }"/>
+            </t>
+            
+            <!-- Doctor Detail Component -->
+            <t t-if="state.currentApp.id === 'detail'">
+                <t t-component="state.currentApp.Component" 
+                   t-props="{
+                       currentDoctor: state.currentDoctorId,
+                       showDoctorForm: showDoctorForm,
+                       showDoctorList: showDoctorList
+                   }"/>
+            </t>
+        </div>
+    </t>
+</templates>
