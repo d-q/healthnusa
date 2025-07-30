@@ -15,37 +15,49 @@
 
             <!-- Desktop Controls -->
             <div class="hidden md:flex justify-between items-center mb-6">
-                <div class="flex items-center bg-gray-100 rounded-lg p-1">
-                    <button t-on-click="() => this.switchView('list')" t-att-class="state.currentView === 'list' ? 'p-2 rounded-lg bg-white shadow' : 'p-2 rounded-lg'">
-                        <span t-att-class="state.currentView === 'list' ? 'material-icons text-custom-blue' : 'material-icons text-gray-500'">list</span>
+                <!-- Previous/Next Navigation for Desktop -->
+                <div class="flex items-center bg-gray-100 rounded-lg p-1 h-12">
+                    <button t-on-click="goToPreviousPage" t-att-class="state.currentPage === 1 ? 'p-2 rounded-lg text-gray-400 cursor-not-allowed h-10 w-10 flex items-center justify-center' : 'p-2 rounded-lg hover:bg-white hover:shadow text-gray-600 h-10 w-10 flex items-center justify-center'" t-att-disabled="state.currentPage === 1" title="Previous Page">
+                        <span class="material-icons">chevron_left</span>
                     </button>
-                    <button t-on-click="() => this.switchView('grid')" t-att-class="state.currentView === 'grid' ? 'p-2 rounded-lg bg-white shadow' : 'p-2 rounded-lg'">
-                        <span t-att-class="state.currentView === 'grid' ? 'material-icons text-custom-blue' : 'material-icons text-gray-500'">grid_view</span>
+                    <button t-on-click="goToNextPage" t-att-class="state.currentPage === state.totalPages ? 'p-2 rounded-lg text-gray-400 cursor-not-allowed h-10 w-10 flex items-center justify-center' : 'p-2 rounded-lg hover:bg-white hover:shadow text-gray-600 h-10 w-10 flex items-center justify-center'" t-att-disabled="state.currentPage === state.totalPages" title="Next Page">
+                        <span class="material-icons">chevron_right</span>
                     </button>
+                    <!--<span class="px-4 py-2 text-sm text-gray-600">-->
+                    <!--    <span class="font-semibold" t-esc="(state.currentPage - 1) * state.itemsPerPage + 1"></span> - -->
+                    <!--    <span class="font-semibold" t-esc="Math.min(state.currentPage * state.itemsPerPage, state.filteredDoctors.length)"></span> /-->
+                    <!--    <span class="font-semibold" t-esc="state.filteredDoctors.length"></span>-->
+                    <!--</span>-->
                 </div>
+
                 <div class="flex items-center space-x-4">
                     <div class="relative">
                         <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                        <input t-model="state.searchTerm" t-on-input="onSearch" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue" placeholder="Search doctors..." type="text" />
+                        <input t-model="state.searchTerm" t-on-input="onSearch" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue h-10" placeholder="Search doctors..." type="text" />
                     </div>
-                    <button t-on-click="addDoctor" class="bg-custom-blue text-white font-semibold py-2 px-4 rounded-lg flex items-center hover:bg-blue-600 transition-colors">
+                    <button t-on-click="addDoctor" class="bg-custom-blue text-white font-semibold py-2 px-4 rounded-lg flex items-center hover:bg-blue-600 transition-colors h-10">
                         <span class="material-icons mr-2">add</span> Add Doctor
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile View Toggle -->
+            <!-- Mobile Navigation -->
             <div class="flex justify-center items-center bg-gray-100 rounded-lg p-1 mb-4 md:hidden">
-                <button t-on-click="() => this.switchView('list')" t-att-class="state.currentView === 'list' ? 'flex-1 p-2 rounded-lg bg-white shadow' : 'flex-1 p-2 rounded-lg'">
-                    <span t-att-class="state.currentView === 'list' ? 'material-icons text-custom-blue' : 'material-icons text-gray-500'">list</span>
+                <button t-on-click="goToPreviousPage" t-att-class="state.currentPage === 1 ? 'flex-1 p-2 rounded-lg text-gray-400 cursor-not-allowed' : 'flex-1 p-2 rounded-lg hover:bg-white hover:shadow text-gray-600'" t-att-disabled="state.currentPage === 1">
+                    <span class="material-icons">chevron_left</span>
                 </button>
-                <button t-on-click="() => this.switchView('grid')" t-att-class="state.currentView === 'grid' ? 'flex-1 p-2 rounded-lg bg-white shadow' : 'flex-1 p-2 rounded-lg'">
-                    <span t-att-class="state.currentView === 'grid' ? 'material-icons text-custom-blue' : 'material-icons text-gray-500'">grid_view</span>
+                <button t-on-click="goToNextPage" t-att-class="state.currentPage === state.totalPages ? 'flex-1 p-2 rounded-lg text-gray-400 cursor-not-allowed' : 'flex-1 p-2 rounded-lg hover:bg-white hover:shadow text-gray-600'" t-att-disabled="state.currentPage === state.totalPages">
+                    <span class="material-icons">chevron_right</span>
                 </button>
+<!--                <span class="flex-1 text-center px-4 py-2 text-sm text-gray-600">-->
+<!--                    <span class="font-semibold" t-esc="(state.currentPage - 1) * state.itemsPerPage + 1"></span> - -->
+<!--                    <span class="font-semibold" t-esc="Math.min(state.currentPage * state.itemsPerPage, state.filteredDoctors.length)"></span> /-->
+<!--                    <span class="font-semibold" t-esc="state.filteredDoctors.length"></span>-->
+<!--                </span>-->
             </div>
 
-            <!-- List View -->
-            <div t-if="state.currentView === 'list'" class="space-y-2">
+            <!-- List View (Always shown) -->
+            <div class="space-y-2">
                 <t t-foreach="state.paginatedDoctors" t-as="doctor" t-key="doctor.id">
                     <div class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200">
                         <!-- Mobile Layout: Horizontal rectangular layout -->
@@ -65,14 +77,14 @@
                                         </div>
                                     </t>
                                 </div>
-                                
+
                                 <!-- Doctor Info - takes up remaining space -->
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-start justify-between">
                                         <div class="min-w-0 flex-1">
                                             <p class="font-bold text-gray-800 truncate text-sm" t-esc="doctor.name"></p>
                                             <p class="text-xs text-gray-500 truncate" t-esc="doctor.specialty"></p>
-                                            
+
                                             <!-- Status Badge moved below name and specialty -->
                                             <div class="mt-2">
                                                 <span t-att-class="doctor.available ? 'bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full inline-flex items-center' : 'bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full inline-flex items-center'">
@@ -82,7 +94,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        
+
                                         <!-- Action buttons moved to right side -->
                                         <div class="flex-shrink-0 ml-2">
                                             <div class="flex items-center space-x-1">
@@ -202,68 +214,6 @@
                 </t>
             </div>
 
-            <!-- Grid View -->
-            <div t-if="state.currentView === 'grid'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                <t t-foreach="state.paginatedDoctors" t-as="doctor" t-key="doctor.id">
-                    <div class="bg-white border rounded-lg p-4 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-200">
-                        <div class="relative w-20 h-20 md:w-24 md:h-24 rounded-full mb-4 flex-shrink-0 overflow-hidden">
-                            <t t-if="doctor.avatar">
-                                <img t-att-alt="doctor.name" class="w-full h-full object-cover" t-att-src="doctor.avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                                <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xl md:text-2xl" style="display: none; background: linear-gradient(135deg, #4A90E2, #357ABD);">
-                                    <t t-esc="doctor.name ? (doctor.name.split(' ').length > 1 ? doctor.name.split(' ')[0].substring(0,1).toUpperCase() + doctor.name.split(' ')[1].substring(0,1).toUpperCase() : doctor.name.substring(0, 2).toUpperCase()) : 'DR'"></t>
-                                </div>
-                            </t>
-                            <t t-else="">
-                                <div class="w-full h-full flex items-center justify-center text-white font-bold text-xl md:text-2xl" style="background: linear-gradient(135deg, #4A90E2, #357ABD);">
-                                    <t t-esc="doctor.name ? (doctor.name.split(' ').length > 1 ? doctor.name.split(' ')[0].substring(0,1).toUpperCase() + doctor.name.split(' ')[1].substring(0,1).toUpperCase() : doctor.name.substring(0, 2).toUpperCase()) : 'DR'"></t>
-                                </div>
-                            </t>
-                        </div>
-                        <p class="font-bold text-gray-800 mb-1 text-sm md:text-base" t-esc="doctor.name"></p>
-                        <p class="text-sm text-gray-500 mb-3" t-esc="doctor.specialty"></p>
-                        <span t-att-class="doctor.available ? 'mt-auto bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center' : 'mt-auto bg-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center'">
-                            <span t-att-class="doctor.available ? 'w-2 h-2 bg-green-500 rounded-full mr-2' : 'w-2 h-2 bg-red-500 rounded-full mr-2'"></span>
-                            <t t-if="doctor.available">Available</t>
-                            <t t-else="">Not Available</t>
-                        </span>
-                        <div class="mt-4 flex space-x-2">
-                            <button t-on-click="() => this.viewDoctor(doctor.id)" class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue" title="View Doctor">
-                                <span class="material-icons">visibility</span>
-                            </button>
-                            <button t-on-click="() => this.editDoctor(doctor.id)" class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue" title="Edit Doctor">
-                                <span class="material-icons">edit</span>
-                            </button>
-                            <div class="relative dropdown">
-                                <button type="button" t-on-click="(ev) => { ev.stopPropagation(); this.toggleDropdown('grid-' + doctor.id); }" class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue" title="More Options">
-                                    <span class="material-icons">more_vert</span>
-                                </button>
-                                <div t-if="this.isDropdownOpen('grid-' + doctor.id)" class="dropdown-menu absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden">
-                                    <div class="py-1">
-                                        <button type="button" t-on-click="(ev) => { ev.preventDefault(); ev.stopPropagation(); this.printDoctor(doctor); }" class="flex items-center w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
-                                            <span class="material-icons text-sm mr-3">print</span>
-                                            Print
-                                        </button>
-                                        <button type="button" t-on-click="(ev) => { ev.preventDefault(); ev.stopPropagation(); this.exportDoctor(doctor); }" class="flex items-center w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
-                                            <span class="material-icons text-sm mr-3">file_download</span>
-                                            Export
-                                        </button>
-                                        <button type="button" t-on-click="(ev) => { ev.preventDefault(); ev.stopPropagation(); this.archiveDoctor(doctor); }" class="flex items-center w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
-                                            <span class="material-icons text-sm mr-3">archive</span>
-                                            Archive
-                                        </button>
-                                        <hr class="my-1 border-gray-200"/>
-                                        <button type="button" t-on-click="(ev) => { ev.stopPropagation(); this.showDeleteModal(doctor); }" class="flex items-center w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50">
-                                            <span class="material-icons text-sm mr-3">delete_outline</span>
-                                            Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </t>
-            </div>
-
             <!-- Empty State -->
             <div t-if="state.paginatedDoctors.length === 0" class="text-center py-12">
                 <div class="flex flex-col items-center">
@@ -302,20 +252,6 @@
                         <span class="hidden sm:inline">Next</span>
                         <span class="sm:hidden">›</span>
                     </button>
-                </div>
-            </div>
-
-            <!-- Results Info -->
-            <div class="flex justify-between items-center mt-4 text-sm text-gray-500" t-if="state.filteredDoctors.length > 0">
-                <div>
-                    Showing <span class="font-semibold" t-esc="(state.currentPage - 1) * state.itemsPerPage + 1"></span> to 
-                    <span class="font-semibold" t-esc="Math.min(state.currentPage * state.itemsPerPage, state.filteredDoctors.length)"></span> of 
-                    <span class="font-semibold" t-esc="state.filteredDoctors.length"></span> doctors
-                </div>
-                <div t-if="state.searchTerm">
-                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
-                        Search: "<span t-esc="state.searchTerm"></span>"
-                    </span>
                 </div>
             </div>
         </div>

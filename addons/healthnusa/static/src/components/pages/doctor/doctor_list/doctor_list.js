@@ -15,7 +15,7 @@ export class DoctorList extends Component {
     setup() {
         this.orm = useService("orm");
         this.state = useState({
-            currentView: 'list', // 'list' or 'grid'
+            currentView: 'list', // Always 'list' now
             searchTerm: '',
             currentPage: 1,
             itemsPerPage: 12,
@@ -112,11 +112,7 @@ export class DoctorList extends Component {
         this.state.pageNumbers = this.getPageNumbers(this.state.currentPage, totalPages);
     }
 
-    switchView(view) {
-        this.state.currentView = view;
-        this.state.currentPage = 1;
-        this.updatePagination();
-    }
+    // Remove switchView method since we only have list view now
 
     onSearch(event) {
         const searchTerm = event.target.value.toLowerCase();
@@ -144,6 +140,19 @@ export class DoctorList extends Component {
         this.updatePagination();
     }
 
+    // Navigation methods for Previous/Next
+    goToPreviousPage() {
+        if (this.state.currentPage > 1) {
+            this.changePage(this.state.currentPage - 1);
+        }
+    }
+
+    goToNextPage() {
+        if (this.state.currentPage < this.state.totalPages) {
+            this.changePage(this.state.currentPage + 1);
+        }
+    }
+
     toggleDropdown(dropdownId) {
         this.closeAllDropdowns();
         this.state.openDropdowns[dropdownId] = true;
@@ -165,7 +174,7 @@ export class DoctorList extends Component {
     viewDoctor(doctorId) {
         this.closeAllDropdowns();
         console.log('Viewing doctor with ID:', doctorId);
-        
+
         // If showDoctorDetail prop is available, use it
         if (this.props.showDoctorDetail) {
             this.props.showDoctorDetail(doctorId);
