@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Start Odoo",
+      "type": "python",
+      "request": "launch",
+      "program": "D:/kerjaan/odoo/odoo/odoo-bin",
+      "args": [
+        "-c", "D:/kerjaan/odoo/conf/odoo18.conf",
+        "-d", "nusahealth_1",
+        "-u", "oxp"
+      ],
+      "python": "D:/kerjaan/odoo/env/env18/Scripts/python.exe",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}
