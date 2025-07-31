@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Schedule Tree View -->
+        <record id="view_schedule_tree" model="ir.ui.view">
+            <field name="name">healthnusa.schedule.list</field>
+            <field name="model">healthnusa.doctor.schedule</field>
+            <field name="arch" type="xml">
+                <list string="Doctor Schedules" create="true" edit="true" delete="true">
+                    <field name="doctor_id"/>
+                    <field name="day_of_week"/>
+                    <field name="start_time" widget="float_time"/>
+                    <field name="end_time" widget="float_time"/>
+                    <field name="duration_hours"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Schedule Form View -->
+        <record id="view_schedule_form" model="ir.ui.view">
+            <field name="name">healthnusa.schedule.form</field>
+            <field name="model">healthnusa.doctor.schedule</field>
+            <field name="arch" type="xml">
+                <form string="Doctor Schedule">
+                    <sheet>
+                        <group>
+                            <group name="basic_info" string="Schedule Information">
+                                <field name="doctor_id" required="1"/>
+                                <field name="day_of_week" required="1"/>
+                                <field name="active"/>
+                            </group>
+                            <group name="time_info" string="Time Information">
+                                <field name="start_time" widget="float_time" required="1"/>
+                                <field name="end_time" widget="float_time" required="1"/>
+                                <field name="duration_hours" readonly="1"/>
+                            </group>
+                        </group>
+                        
+                        <group name="notes" string="Notes">
+                            <field name="notes" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Schedule Action -->
+        <record id="action_doctor_schedule" model="ir.actions.act_window">
+            <field name="name">Doctor Schedules</field>
+            <field name="res_model">healthnusa.doctor.schedule</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first doctor schedule
+                </p>
+                <p>
+                    Set up practice schedules for your doctors.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,43 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.bg-custom-blue {
+    background-color: #4A90E2;
+}
+
+.text-custom-blue {
+    color: #4A90E2;
+}
+
+.bg-custom-gray {
+    background-color: #F7F8FA;
+}
+
+aside nav a.active,
+aside nav a:hover {
+    background-color: #E9F2FE;
+    color: #4A90E2;
+    font-weight: 500;
+}
+
+aside nav a.active .material-icons,
+aside nav a:hover .material-icons {
+    color: #4A90E2;
+}
+
+aside nav a {
+    color: #A0AEC0;
+}
+
+aside nav a .material-icons {
+    color: #A0AEC0;
+}
+
+.material-icons.md-30 {
+    font-size: 30px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}

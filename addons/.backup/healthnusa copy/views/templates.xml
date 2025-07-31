@@ -7,7 +7,8 @@
                     var odoo = {
                         csrf_token: "<t t-nocache="The csrf token must always be up to date." t-esc="request.csrf_token(None)"/>",
                         debug: "<t t-esc="debug"/>",
-                        __session_info__: <t t-esc="json.dumps(session_info)"/>
+                        __session_info__: <t t-esc="json.dumps(session_info)"/>,
+                        values: <t t-esc="json.dumps(values)"/>,
                     };
                 </script>
                 <meta charset="utf-8" />
@@ -20,6 +21,8 @@
                 <t t-call-assets="healthnusa.assets_app" />
             </head>
             <body class="bg-custom-gray">
+    
+                
             </body>
         </html>
     </template>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Medical Specialties Data -->
+        <record id="specialty_general_practice" model="healthnusa.doctor.specialty">
+            <field name="name">General Practice</field>
+            <field name="code">GP</field>
+            <field name="description">Family medicine and general healthcare</field>
+            <field name="icon">local_hospital</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="specialty_internal_medicine" model="healthnusa.doctor.specialty">
+            <field name="name">Internal Medicine</field>
+            <field name="code">IM</field>
+            <field name="description">Internal medicine and adult healthcare</field>
+            <field name="icon">healing</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="specialty_pediatrics" model="healthnusa.doctor.specialty">
+            <field name="name">Pediatrics</field>
+            <field name="code">PED</field>
+            <field name="description">Children's healthcare and development</field>
+            <field name="icon">child_care</field>
+            <field name="color">3</field>
+        </record>
+
+        <record id="specialty_cardiology" model="healthnusa.doctor.specialty">
+            <field name="name">Cardiology</field>
+            <field name="code">CARD</field>
+            <field name="description">Heart and cardiovascular diseases</field>
+            <field name="icon">favorite</field>
+            <field name="color">4</field>
+        </record>
+
+        <record id="specialty_neurology" model="healthnusa.doctor.specialty">
+            <field name="name">Neurology</field>
+            <field name="code">NEUR</field>
+            <field name="description">Brain and nervous system disorders</field>
+            <field name="icon">psychology</field>
+            <field name="color">5</field>
+        </record>
+
+        <record id="specialty_orthopedics" model="healthnusa.doctor.specialty">
+            <field name="name">Orthopedics</field>
+            <field name="code">ORTH</field>
+            <field name="description">Bones, joints, and musculoskeletal system</field>
+            <field name="icon">accessible</field>
+            <field name="color">6</field>
+        </record>
+
+        <record id="specialty_dermatology" model="healthnusa.doctor.specialty">
+            <field name="name">Dermatology</field>
+            <field name="code">DERM</field>
+            <field name="description">Skin, hair, and nail conditions</field>
+            <field name="icon">face</field>
+            <field name="color">7</field>
+        </record>
+
+        <record id="specialty_gynecology" model="healthnusa.doctor.specialty">
+            <field name="name">Gynecology</field>
+            <field name="code">GYN</field>
+            <field name="description">Women's reproductive health</field>
+            <field name="icon">pregnant_woman</field>
+            <field name="color">8</field>
+        </record>
+
+        <record id="specialty_ophthalmology" model="healthnusa.doctor.specialty">
+            <field name="name">Ophthalmology</field>
+            <field name="code">OPH</field>
+            <field name="description">Eye and vision care</field>
+            <field name="icon">visibility</field>
+            <field name="color">9</field>
+        </record>
+
+        <record id="specialty_ent" model="healthnusa.doctor.specialty">
+            <field name="name">ENT (Otolaryngology)</field>
+            <field name="code">ENT</field>
+            <field name="description">Ear, nose, and throat conditions</field>
+            <field name="icon">hearing</field>
+            <field name="color">10</field>
+        </record>
+
+        <record id="specialty_psychiatry" model="healthnusa.doctor.specialty">
+            <field name="name">Psychiatry</field>
+            <field name="code">PSY</field>
+            <field name="description">Mental health and behavioral disorders</field>
+            <field name="icon">psychology_alt</field>
+            <field name="color">11</field>
+        </record>
+
+        <record id="specialty_surgery" model="healthnusa.doctor.specialty">
+            <field name="name">General Surgery</field>
+            <field name="code">SURG</field>
+            <field name="description">Surgical procedures and operations</field>
+            <field name="icon">medical_services</field>
+            <field name="color">12</field>
+        </record>
+
+        <record id="specialty_anesthesiology" model="healthnusa.doctor.specialty">
+            <field name="name">Anesthesiology</field>
+            <field name="code">ANES</field>
+            <field name="description">Anesthesia and pain management</field>
+            <field name="icon">local_pharmacy</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="specialty_radiology" model="healthnusa.doctor.specialty">
+            <field name="name">Radiology</field>
+            <field name="code">RAD</field>
+            <field name="description">Medical imaging and diagnostics</field>
+            <field name="icon">scanner</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="specialty_emergency" model="healthnusa.doctor.specialty">
+            <field name="name">Emergency Medicine</field>
+            <field name="code">EM</field>
+            <field name="description">Emergency and urgent care</field>
+            <field name="icon">emergency</field>
+            <field name="color">3</field>
+        </record>
+
+        <!-- Sequence for doctor code -->
+        <record id="seq_doctor_code" model="ir.sequence">
+            <field name="name">Doctor Code Sequence</field>
+            <field name="code">healthnusa.doctor.code</field>
+            <field name="prefix">DR</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

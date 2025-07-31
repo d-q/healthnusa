@@ -10,10 +10,8 @@
         'views/document_views.xml',
         'views/schedule_views.xml',
         'views/specialty_views.xml',
-        'views/menu_views.xml',
-
         'views/templates.xml',
-        
+        'views/menu_views.xml',
         'data/specialty_data.xml',
     ],
     # 'demo': [
@@ -30,6 +28,7 @@
             'healthnusa/static/src/components/**/*',
             'healthnusa/static/src/components/layout/**/*',
             'healthnusa/static/src/components/pages/**/*',
+            'healthnusa/static/src/components/pages/doctor/**/*',
         ],
     },
     'sequence': 1,
