@@ -8,7 +8,7 @@
       "program": "D:/kerjaan/odoo/odoo/odoo-bin",
       "args": [
         "-c", "D:/kerjaan/odoo/conf/odoo18.conf",
-        "-d", "nusahealth_1",
+        // "-d", "nusahealth_1",
         // "-u", "healthnusa"
       ],
       "python": "D:/kerjaan/odoo/env/env18/Scripts/python.exe",
