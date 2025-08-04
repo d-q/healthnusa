@@ -6,169 +6,496 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Mario Hospital Dashboard</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <style type="text/tailwindcss">
         body {
-            font-family: 'Poppins', sans-serif;
-        }
-        .bg-custom-blue {
-            background-color: #4A90E2;
-        }
-        .text-custom-blue {
-            color: #4A90E2;
-        }
-        .bg-custom-gray {
-            background-color: #F7F8FA;
-        }
-        aside nav a.active,
-        aside nav a:hover {
-            background-color: #E9F2FE;
-            color: #4A90E2;
-            font-weight: 500;
-        }
-        aside nav a.active .material-icons,
-        aside nav a:hover .material-icons {
-            color: #4A90E2;
-        }
-        aside nav a {
-            color: #A0AEC0;
-        }
-        aside nav a .material-icons {
-            color: #A0AEC0;
-        }
-        .material-icons.md-30 {
-            font-size: 30px;
-        }
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-    </style>
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .bg-custom-blue {
+        background-color: #4A90E2;
+    }
+    
+    .text-custom-blue {
+        color: #4A90E2;
+    }
+    
+    .bg-custom-gray {
+        background-color: #F7F8FA;
+    }
+    
+    /* Standardized button heights - all buttons should be h-10 (40px) */
+    .btn-standard {
+        height: 40px !important;
+        min-height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Navigation buttons in sidebar - standardized height */
+    .nav-btn {
+        height: 60px !important;
+        min-height: 60px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 8px !important;
+    }
+    
+    /* Sidebar Navigation Styles */
+    aside nav a.active,
+    aside nav a:hover {
+        background-color: #E9F2FE;
+        color: #4A90E2;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(74, 144, 226, 0.1);
+        transform: translateY(-1px);
+    }
+    
+    aside nav a.active .material-icons,
+    aside nav a:hover .material-icons {
+        color: #4A90E2;
+    }
+    
+    aside nav a {
+        color: #A0AEC0;
+        transition: all 0.2s ease;
+    }
+    
+    aside nav a .material-icons {
+        color: #A0AEC0;
+        transition: color 0.2s ease;
+    }
+    
+    /* Better hover effects for navigation */
+    aside nav a:hover {
+        transform: translateY(-1px);
+    }
+    
+    /* Active state styling */
+    aside nav a.active {
+        background-color: #E9F2FE;
+        color: #4A90E2;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(74, 144, 226, 0.1);
+    }
+    
+    /* Material Icons Sizes */
+    .material-icons.md-30 {
+        font-size: 30px;
+    }
+    
+    /* Dropdown Menus */
+    .dropdown-menu.show,
+    .search-filter-menu.show {
+        display: block;
+    }
+    
+    /* Sidebar Minimized Styles */
+    #sidebar.w-20 {
+        min-width: 80px;
+    }
+    
+    #sidebar.w-20 nav {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    #sidebar.w-20 nav a {
+        min-height: 60px;
+        padding: 8px 4px !important;
+        justify-content: center;
+    }
+    
+    #sidebar.w-20 .material-icons {
+        font-size: 30px;
+    }
+    
+    #sidebar.w-20 #logoutBtn {
+        padding: 12px 8px;
+        justify-content: center;
+        height: 40px !important;
+    }
+    
+    #sidebar.w-20 .sidebar-text {
+        display: none;
+    }
+    
+    #sidebar.w-20 #logo {
+        margin: 0 auto;
+    }
+    
+    /* Sidebar Header when minimized */
+    #sidebar.w-20 .p-6.pb-4 {
+        padding: 16px 8px;
+        text-align: center;
+    }
+    
+    /* Navigation Grid Spacing when minimized */
+    #sidebar.w-20 .grid {
+        gap: 4px;
+    }
+    
+    /* Logo container when minimized */
+    #sidebar.w-20 .flex.items-center.mb-8 {
+        justify-content: center;
+        margin-bottom: 24px;
+    }
+    
+    /* Logout button styling when minimized */
+    #sidebar.w-20 .mt-auto .flex {
+        justify-content: center;
+    }
+    
+    /* Smooth transitions for all sidebar elements */
+    #sidebar * {
+        transition: all 0.3s ease;
+    }
+    
+    /* Hide overflow to prevent layout issues during transition */
+    #sidebar {
+        overflow-x: hidden;
+    }
+    
+    /* Better spacing for minimized navigation sections */
+    #sidebar.w-20 nav > span {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    
+    /* Ensure icons are properly centered in minimized mode */
+    #sidebar.w-20 nav a .material-icons {
+        margin: 0;
+    }
+    
+    /* Better padding for navigation container */
+    #sidebar nav {
+        transition: padding 0.3s ease;
+    }
+    
+    /* Responsive hover effects */
+    #sidebar nav a:not(.active):hover {
+        background-color: rgba(74, 144, 226, 0.1);
+        color: #4A90E2;
+    }
+    
+    #sidebar nav a:not(.active):hover .material-icons {
+        color: #4A90E2;
+    }
+    
+    /* Dark mode specific adjustments */
+    .dark #sidebar nav a:not(.active):hover {
+        background-color: rgba(74, 144, 226, 0.2);
+    }
+    
+    /* Logo styling consistency */
+    #logo {
+        transition: margin 0.3s ease;
+    }
+    
+    /* Text elements fade effect */
+    .sidebar-text {
+        transition: opacity 0.3s ease;
+    }
+    
+    #sidebar.w-20 .sidebar-text {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+    }
+    
+    /* Pagination buttons standardization */
+    .pagination-btn {
+        height: 40px !important;
+        min-height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 12px !important;
+    }
+</style>
 </head>
 
-<body class="bg-custom-gray">
+<body class="bg-custom-gray dark:bg-gray-900 transition-colors duration-300">
     <div class="flex h-screen">
-        <aside class="w-64 bg-white flex flex-col p-6">
-            <div class="flex items-center mb-10">
-                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
-                <h1 class="text-xl font-bold text-gray-800">Mario Hospital</h1>
+        <aside id="sidebar"
+            class="w-64 bg-white dark:bg-gray-800 flex flex-col transition-all duration-300 overflow-hidden shadow-lg border-r border-gray-200 dark:border-gray-700">
+            <div class="p-6 pb-4">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 bg-custom-blue rounded-lg flex-shrink-0" id="logo"></div>
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-white ml-3 sidebar-text">Mario Hospital</h1>
+                </div>
             </div>
-            <nav class="flex-grow">
-                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Menu</span>
-                <div class="grid grid-cols-2 gap-2 mt-2">
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+
+            <nav class="flex-grow px-4 pb-4">
+                <span
+                    class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mb-6" id="mainNav">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">dashboard</span>
-                        <span class="text-xs mt-1">Dashboard</span>
+                        <span class="text-xs sidebar-text">Dashboard</span>
                     </a>
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">event_note</span>
-                        <span class="text-xs mt-1">Appointments</span>
+                        <span class="text-xs sidebar-text">Appointments</span>
                     </a>
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                    <a class="nav-btn rounded-lg text-center active hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">people</span>
-                        <span class="text-xs mt-1">Doctors</span>
+                        <span class="text-xs sidebar-text">Employee</span>
                     </a>
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">badge</span>
-                        <span class="text-xs mt-1">Staff</span>
+                        <span class="text-xs sidebar-text">Staff</span>
                     </a>
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">king_bed</span>
-                        <span class="text-xs mt-1">Room</span>
+                        <span class="text-xs sidebar-text">Room</span>
                     </a>
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">payment</span>
-                        <span class="text-xs mt-1">Payment</span>
+                        <span class="text-xs sidebar-text">Payment</span>
                     </a>
                 </div>
+
                 <span
-                    class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block">Appearance</span>
-                <div class="grid grid-cols-2 gap-2 mt-2">
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                    class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text">Appearance</span>
+                <div class="grid grid-cols-2 gap-2" id="appearanceNav">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">person</span>
-                        <span class="text-xs mt-1">Profile</span>
+                        <span class="text-xs sidebar-text">Profile</span>
                     </a>
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">settings</span>
-                        <span class="text-xs mt-1">Settings</span>
+                        <span class="text-xs sidebar-text">Settings</span>
                     </a>
-                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
                         <span class="material-icons md-30">help_outline</span>
-                        <span class="text-xs mt-1">Support</span>
+                        <span class="text-xs sidebar-text">Support</span>
                     </a>
                 </div>
             </nav>
-            <div class="mt-auto">
-                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
-                    <span class="material-icons mr-3">logout</span> Logout
+
+            <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-600">
+                <a class="btn-standard rounded-lg text-gray-600 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 group px-4"
+                    href="#" id="logoutBtn">
+                    <span
+                        class="material-icons group-hover:text-red-600 dark:group-hover:text-red-400 flex-shrink-0">logout</span>
+                    <span class="font-medium ml-3 sidebar-text">Logout</span>
                 </a>
             </div>
         </aside>
-        <main class="flex-1 p-8 overflow-y-auto">
-            <header class="flex justify-between items-center mb-8">
+        <main class="flex-1 p-8 overflow-y-auto dark:bg-gray-900 transition-colors duration-300">
+            <header class="flex justify-between items-center mb-6">
                 <div class="flex items-center">
-                    <button class="p-2 bg-white rounded-lg shadow mr-4">
-                        <span class="material-icons text-gray-600">menu</span>
+                    <button onclick="toggleSidebar()"
+                        class="btn-standard bg-white dark:bg-gray-700 rounded-lg shadow mr-4 w-10 transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <span id="menuIcon" class="material-icons text-gray-600 dark:text-gray-300">menu</span>
                     </button>
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-800">Doctors</h2>
+                    <div class="flex items-center space-x-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Employee</h2>
+                        <div class="flex items-center space-x-2">
+                            <a href="#"
+                                class="btn-standard px-3 text-sm font-medium bg-blue-50 text-custom-blue rounded-lg">Doctors</a>
+                            <a href="#"
+                                class="btn-standard px-3 text-sm font-medium text-gray-500 hover:bg-blue-50 hover:text-custom-blue rounded-lg transition-all duration-200">Nurses</a>
+                            <a href="#"
+                                class="btn-standard px-3 text-sm font-medium text-gray-500 hover:bg-blue-50 hover:text-custom-blue rounded-lg transition-all duration-200">Staff</a>
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button class="p-2 bg-white rounded-lg shadow">
-                        <span class="material-icons text-gray-600">dark_mode</span>
+                    <button onclick="toggleDarkMode()"
+                        class="btn-standard bg-white rounded-lg shadow w-10 dark:bg-gray-800">
+                        <span id="darkModeIcon" class="material-icons text-gray-600 dark:text-gray-300">dark_mode</span>
                     </button>
-                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
-                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                    <div
+                        class="btn-standard bg-white dark:bg-gray-700 p-2 rounded-lg shadow transition-colors duration-300 space-x-2">
+                        <img alt="User avatar" class="w-6 h-6 rounded-full"
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
-                        <span class="font-semibold text-gray-700">Alexa</span>
+                        <span class="font-semibold text-gray-700 dark:text-gray-200">Alexa</span>
                     </div>
                 </div>
             </header>
+
             <div class="grid grid-cols-1 gap-8">
-                <div class="bg-white p-6 rounded-2xl shadow">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow transition-colors duration-300">
                     <div class="flex justify-between items-center mb-6">
-                        <div class="flex items-center bg-gray-100 rounded-lg p-1">
-                            <button class="p-2 rounded-lg bg-white shadow">
-                                <span class="material-icons text-custom-blue">list</span>
-                            </button>
-                            <button class="p-2 rounded-lg">
-                                <span class="material-icons text-gray-500">grid_view</span>
-                            </button>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <div class="relative">
-                                <span
-                                    class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                                <input
-                                    class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue"
-                                    placeholder="Search" type="text" />
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <button
+                                    class="btn-standard bg-custom-blue hover:bg-blue-600 text-white font-medium px-5 rounded-lg transition-colors duration-200 shadow-sm">
+                                    <span class="material-icons mr-2 text-lg">add</span> Add
+                                </button>
+                                <div class="flex flex-col justify-center h-10">
+                                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 leading-tight">Doctor
+                                    </h3>
+                                    <nav class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                                        <a href="#"
+                                            class="flex items-center hover:text-custom-blue transition-colors duration-200">
+                                            <span class="material-icons text-base">people</span>
+                                        </a>
+                                        <span class="material-icons text-xs">chevron_right</span>
+                                        <span class="text-gray-800 dark:text-gray-100 font-medium">Doctors</span>
+                                    </nav>
+                                </div>
                             </div>
-                            <button
-                                class="bg-custom-blue text-white font-semibold py-2 px-4 rounded-lg flex items-center">
-                                <span class="material-icons mr-2">add</span> Add Doctor
-                            </button>
+                        </div>
+                        <div
+                            class="flex items-center focus-within:ring-2 focus-within:ring-custom-blue border border-gray-300 dark:border-gray-600 rounded-lg transition-colors duration-300 min-w-80 w-96">
+                            <div class="relative flex-1">
+                                <span
+                                    class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">search</span>
+                                <input
+                                    class="pl-10 pr-4 py-2 border-0 rounded-l-lg focus:outline-none focus:ring-0 h-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-colors duration-300 w-full"
+                                    placeholder="Search..." type="text" />
+                            </div>
+                            <div class="relative border-l border-gray-300 dark:border-gray-600">
+                                <button onclick="toggleSearchFilter(this)"
+                                    class="btn-standard px-3 rounded-r-lg bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm text-gray-600 dark:text-gray-300 transition-colors duration-300 focus:outline-none">
+                                    <span class="material-icons text-sm">view_list</span>
+                                </button>
+                                <div
+                                    class="search-filter-menu absolute hidden right-0 top-full mt-1 w-56 bg-white dark:bg-gray-700 rounded-md shadow-lg z-20 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                    <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-600">
+                                        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Search in:
+                                        </h3>
+                                    </div>
+                                    <div class="py-2">
+                                        <label
+                                            class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                            <input type="radio" name="searchField" value="all" checked
+                                                class="mr-3 text-custom-blue">
+                                            <span class="text-sm text-gray-700 dark:text-gray-200">All Fields</span>
+                                        </label>
+                                        <label
+                                            class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                            <input type="radio" name="searchField" value="name"
+                                                class="mr-3 text-custom-blue">
+                                            <span class="text-sm text-gray-700 dark:text-gray-200">Doctor Name</span>
+                                        </label>
+                                        <label
+                                            class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                            <input type="radio" name="searchField" value="specialty"
+                                                class="mr-3 text-custom-blue">
+                                            <span class="text-sm text-gray-700 dark:text-gray-200">Specialty</span>
+                                        </label>
+                                        <label
+                                            class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                            <input type="radio" name="searchField" value="phone"
+                                                class="mr-3 text-custom-blue">
+                                            <span class="text-sm text-gray-700 dark:text-gray-200">Phone Number</span>
+                                        </label>
+                                        <label
+                                            class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                            <input type="radio" name="searchField" value="status"
+                                                class="mr-3 text-custom-blue">
+                                            <span class="text-sm text-gray-700 dark:text-gray-200">Availability
+                                                Status</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Data Count and Navigation Controls -->
+                        <div class="flex items-center space-x-4">
+                            <div class="text-sm text-gray-600 dark:text-gray-300 font-medium">
+                                1-4 / 4
+                            </div>
+                            <div
+                                class="flex items-center bg-gray-100 dark:bg-gray-600 rounded-lg p-1 transition-colors duration-300">
+                                <button
+                                    class="btn-standard rounded-lg bg-white dark:bg-gray-700 shadow w-10 transition-colors duration-300">
+                                    <span class="material-icons text-custom-blue">chevron_left</span>
+                                </button>
+                                <button
+                                    class="btn-standard rounded-lg w-10 hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors duration-300">
+                                    <span class="material-icons text-gray-500 dark:text-gray-300">chevron_right</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Header untuk tabel -->
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-6 gap-4 items-center p-4 bg-gray-100 dark:bg-gray-600 rounded-lg mb-2 font-semibold text-gray-600 dark:text-gray-300">
+                        <div class="col-span-1 md:col-span-2 flex items-center space-x-4">
+                            <input type="checkbox"
+                                class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                            <button
+                                class="flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group">
+                                <span class="text-sm">Doctor Information</span>
+                                <span
+                                    class="material-icons text-sm text-gray-400 group-hover:text-custom-blue">unfold_more</span>
+                            </button>
+                        </div>
+                        <div class="col-span-1">
+                            <button
+                                class="flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group">
+                                <span class="text-sm">Phone</span>
+                                <span
+                                    class="material-icons text-sm text-gray-400 group-hover:text-custom-blue">unfold_more</span>
+                            </button>
+                        </div>
+                        <div class="col-span-1">
+                            <button
+                                class="flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group">
+                                <span class="text-sm">Gender</span>
+                                <span
+                                    class="material-icons text-sm text-gray-400 group-hover:text-custom-blue">unfold_more</span>
+                            </button>
+                        </div>
+                        <div class="col-span-1">
+                            <button
+                                class="flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group">
+                                <span class="text-sm">Status</span>
+                                <span
+                                    class="material-icons text-sm text-gray-400 group-hover:text-custom-blue">unfold_more</span>
+                            </button>
+                        </div>
+                        <div class="col-span-1 text-center">
+                            <span class="text-sm">Actions</span>
+                        </div>
+                    </div>
+
+
                     <div class="space-y-2">
                         <div
-                            class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
                             <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <img alt="Dr. John Smith" class="w-12 h-12 rounded-full"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9VZ2QGo_li4LVhp8iYr9JrYqBgDi7QcGRtO7mGPKp67wrxh6TRm7oERXDQPHvz_aIBsizfvar_AtjDPhiAxQR-eAhFB99IFeem6OH5EC-lEdXUF-P10asmzb-Ai-PTHt3lTUapROxoBZq2bmjhBodQGLi3CAkRpa6yWr1M_RQafpT8cISUblFSu8aIDZG-X90IxWrDyK8pZcMbfDZWj4a2qiNnzHY9XZORaOAu4stjYDGRq6hGTeW-P5DnNTpHvLt8I4CVN1p1xU" />
                                 <div>
-                                    <p class="font-bold text-gray-800">Dr. John Smith</p>
-                                    <p class="text-sm text-gray-500">Heart Specialist</p>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. John Smith</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Heart Specialist</p>
                                 </div>
                             </div>
                             <div class="col-span-1">
-                                <p class="text-gray-500 text-sm">Phone</p>
-                                <p class="font-semibold text-gray-800">+123 456 7890</p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7890</p>
                             </div>
                             <div class="col-span-1">
-                                <p class="text-gray-500 text-sm">Gender</p>
-                                <p class="font-semibold text-gray-800">Male</p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Male</p>
                             </div>
                             <div class="col-span-1">
                                 <span
@@ -178,43 +505,65 @@
                             </div>
                             <div class="flex items-center justify-end space-x-2 col-span-1">
                                 <button
-                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
-                                        class="material-icons">edit</span></button>
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
                                 <button
-                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
-                                        class="material-icons">delete_outline</span></button>
-                                <div class="relative dropdown">
-                                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500"><span
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
                                             class="material-icons">more_vert</span></button>
                                     <div
-                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Print</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Export</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Archive</a>
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>
+                                            Print
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>
+                                            Export
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>
+                                            Archive
+                                        </a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>
+                                            Delete
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div
-                            class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
                             <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <img alt="Dr. Sarah Johnson" class="w-12 h-12 rounded-full"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw2jnMhMsOW5Nk1gB37rDOIfRnnVKhMYyUdcJvuprs8qNwZCe60oxn0SYyq1PBtjXwMG3wZiV9i_6ptqZBWL8-1A-zVkBTsp6qv7X0ZOE9PGZjBbMSU20ClGeUG5a78E3Q61XtIn0rKfqHQIsSVzmEbUgQaSqrw2I5tfFx4pvB6pVizE-5cUK5ECVKdBJKRLmrvcvrrmHf51zKS_QyxZeYNeKglNTC_lP9AQKXJKrySihxezsrMKjEtm1ZvnqNTc-Ttwh4U8d-w7A" />
                                 <div>
-                                    <p class="font-bold text-gray-800">Dr. Sarah Johnson</p>
-                                    <p class="text-sm text-gray-500">Lungs Specialist</p>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Sarah Johnson</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Lungs Specialist</p>
                                 </div>
                             </div>
                             <div class="col-span-1">
-                                <p class="text-gray-500 text-sm">Phone</p>
-                                <p class="font-semibold text-gray-800">+123 456 7891</p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7891</p>
                             </div>
                             <div class="col-span-1">
-                                <p class="text-gray-500 text-sm">Gender</p>
-                                <p class="font-semibold text-gray-800">Female</p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Female</p>
                             </div>
                             <div class="col-span-1">
                                 <span
@@ -224,43 +573,65 @@
                             </div>
                             <div class="flex items-center justify-end space-x-2 col-span-1">
                                 <button
-                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
-                                        class="material-icons">edit</span></button>
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
                                 <button
-                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
-                                        class="material-icons">delete_outline</span></button>
-                                <div class="relative dropdown">
-                                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500"><span
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
                                             class="material-icons">more_vert</span></button>
                                     <div
-                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Print</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Export</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Archive</a>
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>
+                                            Print
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>
+                                            Export
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>
+                                            Archive
+                                        </a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>
+                                            Delete
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div
-                            class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
                             <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <img alt="Dr. Michael Lee" class="w-12 h-12 rounded-full"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYt2Cj93QZ6c_CAYI8zNKJH4TDKbBcWwLUuSQjtJBSpKkEG0j6AsmZCsz36zIC-iB8N7q408L9LZaUSw0rZ-wd4xDgosZRjwbYnjaUo3sbE1RvCCZf4Lb-lInyxSb6-pHhe20_njLIdTJj0JkY8WlhE0AaFUwqdTUuJE-jfvCjVw67XSD1MIy36AJdt0KV7NcmLyXpB3_B-GIJ29rOGvZsFaaf7K3wuO5Zdd1n7dHVZdt18fwEp_e9gd_k23uHsE5HtZPGWtOASjc" />
                                 <div>
-                                    <p class="font-bold text-gray-800">Dr. Michael Lee</p>
-                                    <p class="text-sm text-gray-500">Dental Specialist</p>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Michael Lee</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Dental Specialist</p>
                                 </div>
                             </div>
                             <div class="col-span-1">
-                                <p class="text-gray-500 text-sm">Phone</p>
-                                <p class="font-semibold text-gray-800">+123 456 7892</p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7892</p>
                             </div>
                             <div class="col-span-1">
-                                <p class="text-gray-500 text-sm">Gender</p>
-                                <p class="font-semibold text-gray-800">Male</p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Male</p>
                             </div>
                             <div class="col-span-1">
                                 <span
@@ -270,43 +641,65 @@
                             </div>
                             <div class="flex items-center justify-end space-x-2 col-span-1">
                                 <button
-                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
-                                        class="material-icons">edit</span></button>
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
                                 <button
-                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
-                                        class="material-icons">delete_outline</span></button>
-                                <div class="relative dropdown">
-                                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500"><span
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
                                             class="material-icons">more_vert</span></button>
                                     <div
-                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Print</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Export</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Archive</a>
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>
+                                            Print
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>
+                                            Export
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>
+                                            Archive
+                                        </a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>
+                                            Delete
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div
-                            class="p-4 border rounded-lg hover:shadow-md transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
                             <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <img alt="Dr. Emily White" class="w-12 h-12 rounded-full"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCmPPiTpXSVd5189soDOe2MtpgNrqE2R0khIQCNur9TRt7lyBGUcebkSK5_45thKZTCtZLx60nb3GVrT7ZrXrdTmuKyvT4m3pFmd-tCkC6jcuC0r019LpboQK8mYJLSoRCG3zXMuXWsT4HmQk2fSETOu7cFl3p2nQJtB1OnYVI3vKDbt5z_MMOn5Z0q8hU9X6Ey6YbBAUw_apdDSjReQFh34785mGwoNGVmaOghS6hj9jg6MLsUtX2MT8j7z_BtOFTW0gJhX3jpao" />
                                 <div>
-                                    <p class="font-bold text-gray-800">Dr. Emily White</p>
-                                    <p class="text-sm text-gray-500">Brain Specialist</p>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Emily White</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Brain Specialist</p>
                                 </div>
                             </div>
                             <div class="col-span-1">
-                                <p class="text-gray-500 text-sm">Phone</p>
-                                <p class="font-semibold text-gray-800">+123 456 7893</p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7893</p>
                             </div>
                             <div class="col-span-1">
-                                <p class="text-gray-500 text-sm">Gender</p>
-                                <p class="font-semibold text-gray-800">Female</p>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Female</p>
                             </div>
                             <div class="col-span-1">
                                 <span
@@ -316,35 +709,643 @@
                             </div>
                             <div class="flex items-center justify-end space-x-2 col-span-1">
                                 <button
-                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-custom-blue"><span
-                                        class="material-icons">edit</span></button>
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
                                 <button
-                                    class="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-red-500"><span
-                                        class="material-icons">delete_outline</span></button>
-                                <div class="relative dropdown">
-                                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500"><span
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
                                             class="material-icons">more_vert</span></button>
                                     <div
-                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Print</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Export</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            href="#">Archive</a>
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>
+                                            Print
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>
+                                            Export
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>
+                                            Archive
+                                        </a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#">
+                                            <span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>
+                                            Delete
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
+                        <!-- tambahan data -->
+                        <!-- Data 5 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. Robert Chen" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Robert Chen</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Orthopedic Surgeon</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7894</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Male</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 6 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. Maria Rodriguez" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Maria Rodriguez</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Pediatrician</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7895</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Female</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span> On Break
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 7 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. James Wilson" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. James Wilson</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Dermatologist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7896</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Male</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 8 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. Lisa Park" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1594824717593-c4fe35e55a4c?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Lisa Park</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Gynecologist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7897</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Female</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span> Not Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 9 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. Ahmed Hassan" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Ahmed Hassan</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Ophthalmologist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7898</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Male</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 10 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. Anna Thompson" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Anna Thompson</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Psychiatrist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7899</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Female</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span> On Break
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 11 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. David Kumar" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. David Kumar</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Anesthesiologist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7900</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Male</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 12 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. Rachel Green" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1594824717593-c4fe35e55a4c?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Rachel Green</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Radiologist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7901</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Female</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span> In Surgery
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 13 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. Marcus Williams" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Marcus Williams</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Urologist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7902</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Male</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data 14 -->
+                        <div
+                            class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <img alt="Dr. Sophie Martinez" class="w-12 h-12 rounded-full"
+                                    src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">Dr. Sophie Martinez</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Endocrinologist</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">+123 456 7903</p>
+                            </div>
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Gender</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">Female</p>
+                            </div>
+                            <div class="col-span-1">
+                                <span
+                                    class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                                    <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span> Not Available
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">visibility</span></button>
+                                <button
+                                    class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10"><span
+                                        class="material-icons">edit</span></button>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(this)"
+                                        class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300"><span
+                                            class="material-icons">more_vert</span></button>
+                                    <div
+                                        class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export</a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive</a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                        <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200"
+                                            href="#"><span
+                                                class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- tambahan data -->
+
+
                     </div>
                     <div class="flex justify-center items-center mt-6">
                         <div class="flex items-center space-x-1">
                             <button
-                                class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">Previous</button>
-                            <button class="px-3 py-1 border rounded-lg bg-custom-blue text-white">1</button>
-                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">2</button>
-                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">3</button>
-                            <button class="px-3 py-1 border rounded-lg hover:bg-gray-100 text-gray-600">Next</button>
+                                class="pagination-btn border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">Previous</button>
+                            <button class="pagination-btn border rounded-lg bg-custom-blue text-white">1</button>
+                            <button
+                                class="pagination-btn border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">2</button>
+                            <button
+                                class="pagination-btn border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">3</button>
+                            <button
+                                class="pagination-btn border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">Next</button>
                         </div>
                     </div>
                 </div>
@@ -352,6 +1353,155 @@
         </main>
     </div>
 
+    <script>
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('darkModeIcon');
+
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.textContent = 'dark_mode';
+                localStorage.setItem('darkMode', 'false');
+            } else {
+                html.classList.add('dark');
+                icon.textContent = 'light_mode';
+                localStorage.setItem('darkMode', 'true');
+            }
+        }
+
+        // Initialize dark mode based on saved preference (default to light)
+        function initDarkMode() {
+            const savedMode = localStorage.getItem('darkMode');
+            const icon = document.getElementById('darkModeIcon');
+
+            // Default to light mode
+            if (savedMode === 'true') {
+                document.documentElement.classList.add('dark');
+                icon.textContent = 'light_mode';
+            } else {
+                document.documentElement.classList.remove('dark');
+                icon.textContent = 'dark_mode';
+            }
+        }
+
+        // Initialize dark mode when page loads
+        initDarkMode();
+
+        function toggleSearchFilter(button) {
+            const dropdown = button.nextElementSibling;
+            const isVisible = dropdown.classList.contains('show');
+
+            // Close all other dropdowns first
+            document.querySelectorAll('.search-filter-menu').forEach(menu => {
+                menu.classList.remove('show');
+            });
+
+            // Toggle current dropdown
+            if (!isVisible) {
+                dropdown.classList.add('show');
+            }
+        }
+
+        function toggleDropdown(button) {
+            const dropdown = button.nextElementSibling;
+            const isVisible = dropdown.classList.contains('show');
+
+            // Close all other dropdowns first
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.classList.remove('show');
+            });
+
+            // Toggle current dropdown
+            if (!isVisible) {
+                dropdown.classList.add('show');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const dropdowns = document.querySelectorAll('.dropdown-menu, .search-filter-menu');
+            const isDropdownButton = event.target.closest('button[onclick*="toggleDropdown"]') ||
+                event.target.closest('button[onclick*="toggleSearchFilter"]');
+            const isInsideSearchFilter = event.target.closest('.search-filter-menu');
+
+            if (!isDropdownButton && !isInsideSearchFilter) {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+        });
+
+        // Close dropdown when pressing escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.dropdown-menu, .search-filter-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            }
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const menuIcon = document.getElementById('menuIcon');
+            const sidebarTexts = document.querySelectorAll('.sidebar-text');
+            const mainNav = document.getElementById('mainNav');
+            const appearanceNav = document.getElementById('appearanceNav');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (sidebar.classList.contains('w-64')) {
+                // Minimize sidebar
+                sidebar.classList.remove('w-64');
+                sidebar.classList.add('w-20');
+                menuIcon.textContent = 'menu_open';
+
+                // Hide text elements
+                sidebarTexts.forEach(el => {
+                    el.style.display = 'none';
+                });
+
+                // Change grid layout
+                mainNav.classList.remove('grid-cols-2');
+                mainNav.classList.add('grid-cols-1');
+                appearanceNav.classList.remove('grid-cols-2');
+                appearanceNav.classList.add('grid-cols-1');
+
+                // Adjust logout button
+                logoutBtn.classList.remove('justify-center');
+                logoutBtn.classList.add('justify-center');
+
+                // Adjust nav links padding
+                const navLinks = sidebar.querySelectorAll('nav a');
+                navLinks.forEach(link => {
+                    link.classList.remove('p-3');
+                    link.classList.add('p-2');
+                });
+
+            } else {
+                // Maximize sidebar
+                sidebar.classList.remove('w-20');
+                sidebar.classList.add('w-64');
+                menuIcon.textContent = 'menu';
+
+                // Show text elements
+                sidebarTexts.forEach(el => {
+                    el.style.display = '';
+                });
+
+                // Restore grid layout
+                mainNav.classList.remove('grid-cols-1');
+                mainNav.classList.add('grid-cols-2');
+                appearanceNav.classList.remove('grid-cols-1');
+                appearanceNav.classList.add('grid-cols-2');
+
+                // Restore nav links padding
+                const navLinks = sidebar.querySelectorAll('nav a');
+                navLinks.forEach(link => {
+                    link.classList.remove('p-2');
+                    link.classList.add('p-3');
+                });
+            }
+        }
+    </script>
 </body>
 
 </html>

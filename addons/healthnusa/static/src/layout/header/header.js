@@ -4,5 +4,7 @@ import { Component } from "@odoo/owl";
 
 export class HeaderComponent extends Component {
     static template = "healthnusa.HeaderComponent";
-    static props = {};
+    static props = {
+        pageSubtitle: String,
+    };
 }

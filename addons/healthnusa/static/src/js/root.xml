@@ -12,8 +12,8 @@
                 <main id="main-content" t-att-class="'flex-1 p-4 md:p-8 overflow-y-auto' + (state.darkMode ? ' dark-main' : '')">
 
                     <!-- Header - Added navigateToProfile prop -->
-                    <!-- <HeaderComponent currentApp="state.currentApp" toggleSidebar.bind="toggleSidebar" toggleDarkMode.bind="toggleDarkMode" darkMode="state.darkMode" pageSubtitle="state.currentApp.name" pageTitle="state.currentApp.name" navigateToProfile.bind="navigateToProfile" /> -->
-                    <HeaderComponent />
+                    <HeaderComponent  pageSubtitle="state.currentApp.name" />
+                    
 
                     <!-- Main Content -->
                     <MainLayout currentApp="state.currentApp" />

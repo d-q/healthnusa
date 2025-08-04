@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital - Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body class="bg-custom-gray dark:bg-gray-900 transition-colors duration-300 login-container">
+    <!-- Dark Mode Toggle -->
+    <div class="fixed top-6 right-6 z-50">
+        <button onclick="toggleDarkMode()"
+            class="btn-standard bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-600">
+            <span id="darkModeIcon" class="material-icons text-gray-600 dark:text-gray-300">dark_mode</span>
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="min-h-screen flex">
+        <!-- Left Side - Login Form -->
+        <div class="flex-1 flex items-center justify-center px-6 py-12">
+            <div class="max-w-md w-full space-y-8">
+                <!-- Logo and Header -->
+                <div class="text-center">
+                    <div class="flex justify-center mb-6">
+                        <div class="w-20 h-20 bg-custom-blue rounded-2xl flex items-center justify-center shadow-xl">
+                            <span class="material-icons text-white text-4xl">local_hospital</span>
+                        </div>
+                    </div>
+                    <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400">Sign in to Mario Hospital Dashboard</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="mt-10 space-y-6" novalidate>
+                    <div class="space-y-5">
+                        <!-- Email Field -->
+                        <div class="form-group">
+                            <label for="email" class="form-label text-gray-700 dark:text-gray-300">
+                                Email Address
+                            </label>
+                            <div class="relative">
+                                <span class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xl">email</span>
+                                <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    autocomplete="email"
+                                    required
+                                    class="form-input pl-12 pr-4 h-14 text-base w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-custom-blue focus:border-custom-blue"
+                                    placeholder="Enter your email address"
+                                />
+                            </div>
+                            <div class="form-error hidden" id="emailError">
+                                Please enter a valid email address
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-group">
+                            <label for="password" class="form-label text-gray-700 dark:text-gray-300">
+                                Password
+                            </label>
+                            <div class="relative">
+                                <span class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xl">lock</span>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    autocomplete="current-password"
+                                    required
+                                    class="form-input pl-12 pr-12 h-14 text-base w-full border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-custom-blue focus:border-custom-blue"
+                                    placeholder="Enter your password"
+                                />
+                                <button
+                                    type="button"
+                                    onclick="togglePasswordVisibility()"
+                                    class="password-toggle absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors duration-200"
+                                >
+                                    <span id="passwordToggleIcon" class="material-icons text-xl">visibility</span>
+                                </button>
+                            </div>
+                            <div class="form-error hidden" id="passwordError">
+                                Password must be at least 6 characters long
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me and Forgot Password -->
+                    <div class="flex items-center justify-between mt-6">
+                        <div class="flex items-center">
+                            <input
+                                id="remember"
+                                name="remember"
+                                type="checkbox"
+                                class="w-5 h-5 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            />
+                            <label for="remember" class="ml-3 text-sm text-gray-700 dark:text-gray-300 font-medium">
+                                Remember me
+                            </label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="#" class="font-semibold text-custom-blue hover:text-blue-600 transition-colors duration-200">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Sign In Button -->
+                    <div class="mt-8">
+                        <button
+                            type="submit"
+                            id="loginButton"
+                            class="group relative w-full flex justify-center py-4 px-6 border border-transparent text-base font-semibold rounded-xl text-white bg-custom-blue hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue transition-all duration-200 shadow-lg hover:shadow-xl"
+                        >
+                            <span class="flex items-center">
+                                <span id="loginButtonText">Sign In</span>
+                                <span id="loginSpinner" class="hidden ml-3">
+                                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </span>
+                                <span class="material-icons ml-3 group-hover:translate-x-1 transition-transform duration-200 text-xl">arrow_forward</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Demo Credentials -->
+                    <div class="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800 demo-credentials">
+                        <h4 class="text-base font-bold text-blue-800 dark:text-blue-200 mb-3 flex items-center">
+                            <span class="material-icons text-lg mr-2">info</span>
+                            Demo Credentials
+                        </h4>
+                        <div class="text-sm text-blue-700 dark:text-blue-300 space-y-2">
+                            <p><strong>Email:</strong> admin@mariohospital.com</p>
+                            <p><strong>Password:</strong> admin123</p>
+                        </div>
+                        <button
+                            type="button"
+                            onclick="fillDemoCredentials()"
+                            class="mt-4 text-sm text-custom-blue hover:text-blue-600 font-semibold underline transition-colors duration-200"
+                        >
+                            Use Demo Credentials
+                        </button>
+                    </div>
+
+                    <!-- Sign Up Link -->
+                    <div class="text-center mt-6">
+                        <p class="text-base text-gray-600 dark:text-gray-400">
+                            Don't have an account?
+                            <a href="#" class="font-semibold text-custom-blue hover:text-blue-600 transition-colors duration-200">
+                                Contact Administrator
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Side - Illustration/Info -->
+        <div class="hidden lg:flex lg:flex-1 bg-gradient-to-br from-custom-blue via-blue-500 to-blue-600 relative overflow-hidden login-right-panel">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute top-0 left-0 w-full h-full">
+                    <div class="grid grid-cols-8 grid-rows-8 h-full w-full">
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                        <div class="border border-white/30"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10 flex flex-col justify-center items-center px-12 text-white w-full">
+                <div class="max-w-lg text-center">
+                    <!-- Animated Hospital Icon -->
+                    <div class="mb-8 relative flex justify-center">
+                        <div class="w-40 h-40 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm shadow-2xl pulse-animation border-4 border-white/20">
+                            <span class="material-icons text-white" style="font-size: 4rem;">local_hospital</span>
+                        </div>
+                        <div class="absolute -top-4 -right-4 w-12 h-12 bg-green-400 rounded-full flex items-center justify-center shadow-xl heartbeat-animation border-2 border-white">
+                            <span class="material-icons text-white text-2xl">favorite</span>
+                        </div>
+                    </div>
+
+                    <h1 class="text-5xl font-bold mb-6 text-white drop-shadow-lg">Mario Hospital</h1>
+                    <p class="text-xl mb-10 text-blue-100 font-medium">
+                        Modern Healthcare Management System
+                    </p>
+                    
+                    <!-- Features List -->
+                    <div class="space-y-6 text-left">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20">
+                                <span class="material-icons text-white text-lg">check</span>
+                            </div>
+                            <span class="text-blue-50 text-lg font-medium">Comprehensive Patient Management</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20">
+                                <span class="material-icons text-white text-lg">check</span>
+                            </div>
+                            <span class="text-blue-50 text-lg font-medium">Real-time Appointment Scheduling</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20">
+                                <span class="material-icons text-white text-lg">check</span>
+                            </div>
+                            <span class="text-blue-50 text-lg font-medium">Advanced Analytics & Reporting</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20">
+                                <span class="material-icons text-white text-lg">check</span>
+                            </div>
+                            <span class="text-blue-50 text-lg font-medium">Secure & HIPAA Compliant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Elements -->
+            <div class="absolute top-20 left-20 w-20 h-20 bg-white/20 rounded-full blur-sm floating-animation shadow-xl" style="animation-delay: 0s;"></div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-white/25 rounded-full blur-sm floating-animation shadow-xl" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-40 left-40 w-24 h-24 bg-white/15 rounded-full blur-sm floating-animation shadow-xl" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 right-40 w-12 h-12 bg-white/30 rounded-full blur-sm floating-animation shadow-xl" style="animation-delay: 3s;"></div>
+            <div class="absolute top-60 left-60 w-8 h-8 bg-white/25 rounded-full blur-sm floating-animation shadow-xl" style="animation-delay: 4s;"></div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="successModalContent">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="material-icons text-3xl text-green-600 dark:text-green-400">check_circle</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Login Successful!</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">Welcome to Mario Hospital Dashboard</p>
+                <div class="flex space-x-3">
+                    <button
+                        onclick="redirectToDashboard()"
+                        class="flex-1 bg-custom-blue hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+                    >
+                        Continue to Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+</body>
+
+</html>

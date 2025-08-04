@@ -21,7 +21,7 @@ export class Root extends Component {
     setup() {
         this.apps = [
             { id: "dashboard", name: "Dashboard", Component: Dashboard },
-            { id: "contacts", name: "Doctor", Component: Doctor },
+            { id: "people", name: "Employee", Component: Doctor },
         ];
 
         // Get current app from URL or default to first app
@@ -43,23 +43,46 @@ export class Root extends Component {
         });
     }
 
-    getCurrentAppFromUrl() {
-        const hash = window.location.hash;
-        if (hash.startsWith("#app=")) {
-            const match = hash.match(/#app=([^&]*)/);
-            return match ? match[1] : null;
-        }
-        return null;
-    }
 
-    updateUrl(appId, replace = false) {
-        const newUrl = `${window.location.pathname}${window.location.search}#app=${appId}`;
-        if (replace) {
-            window.history.replaceState({}, "", newUrl);
-        } else {
-            window.history.pushState({}, "", newUrl);
-        }
+
+
+    getCurrentAppFromUrl() {
+    const path = window.location.pathname;
+
+    console.log(" path >>> ", path)
+    console.log(" path >>> ", path)
+    
+    // Misalnya dari "/someAppId", ambil "someAppId"
+    const segments = path.split('/').filter(Boolean); // buang elemen kosong
+    return segments.length > 0 ? segments[0] : null;
+}
+
+updateUrl(appId, replace = false) {
+    const newPath = `/${appId}${window.location.search}`;
+    if (replace) {
+        window.history.replaceState({}, "", newPath);
+    } else {
+        window.history.pushState({}, "", newPath);
     }
+}
+
+    // getCurrentAppFromUrl() {
+    //     const hash = window.location.hash;
+    //     if (hash.startsWith("#app=")) {
+    //         const match = hash.match(/#app=([^&]*)/);
+    //         return match ? match[1] : null;
+    //     }
+    //     return null;
+    // }
+
+    // updateUrl(appId, replace = false) {
+    //     const newUrl = `${window.location.pathname}${window.location.search}#app=${appId}`;
+    //     if (replace) {
+    //         window.history.replaceState({}, "", newUrl);
+    //     } else {
+    //         window.history.pushState({}, "", newUrl);
+    //     }
+    // }
 
     onPopState() {
         const appId = this.getCurrentAppFromUrl();

@@ -1,0 +1,263 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.bg-custom-blue {
+    background-color: #4A90E2;
+}
+
+.text-custom-blue {
+    color: #4A90E2;
+}
+
+.bg-custom-gray {
+    background-color: #F7F8FA;
+}
+
+/* Standardized button heights - all buttons should be h-10 (40px) */
+.btn-standard {
+    height: 40px !important;
+    min-height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Navigation buttons in sidebar - standardized height */
+.nav-btn {
+    height: 60px !important;
+    min-height: 60px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;
+}
+
+/* Sidebar Navigation Styles */
+aside nav a.active,
+aside nav a:hover {
+    background-color: #E9F2FE;
+    color: #4A90E2;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.1);
+    transform: translateY(-1px);
+}
+
+aside nav a.active .material-icons,
+aside nav a:hover .material-icons {
+    color: #4A90E2;
+}
+
+aside nav a {
+    color: #A0AEC0;
+    transition: all 0.2s ease;
+}
+
+aside nav a .material-icons {
+    color: #A0AEC0;
+    transition: color 0.2s ease;
+}
+
+/* Better hover effects for navigation */
+aside nav a:hover {
+    transform: translateY(-1px);
+}
+
+/* Active state styling */
+aside nav a.active {
+    background-color: #E9F2FE;
+    color: #4A90E2;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.1);
+}
+
+/* Material Icons Sizes */
+.material-icons.md-30 {
+    font-size: 30px;
+}
+
+/* Dropdown Menus */
+.dropdown-menu.show,
+.search-filter-menu.show {
+    display: block;
+}
+
+/* Sidebar Minimized Styles */
+#sidebar.w-20 {
+    min-width: 80px;
+}
+
+#sidebar.w-20 nav {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#sidebar.w-20 nav a {
+    min-height: 60px;
+    padding: 8px 4px !important;
+    justify-content: center;
+}
+
+#sidebar.w-20 .material-icons {
+    font-size: 30px;
+}
+
+#sidebar.w-20 #logoutBtn {
+    padding: 12px 8px;
+    justify-content: center;
+    height: 40px !important;
+}
+
+#sidebar.w-20 .sidebar-text {
+    display: none;
+}
+
+#sidebar.w-20 #logo {
+    margin: 0 auto;
+}
+
+/* Sidebar Header when minimized */
+#sidebar.w-20 .p-6.pb-4 {
+    padding: 16px 8px;
+    text-align: center;
+}
+
+/* Navigation Grid Spacing when minimized */
+#sidebar.w-20 .grid {
+    gap: 4px;
+}
+
+/* Logo container when minimized */
+#sidebar.w-20 .flex.items-center.mb-8 {
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+/* Logout button styling when minimized */
+#sidebar.w-20 .mt-auto .flex {
+    justify-content: center;
+}
+
+/* Smooth transitions for all sidebar elements */
+#sidebar * {
+    transition: all 0.3s ease;
+}
+
+/* Hide overflow to prevent layout issues during transition */
+#sidebar {
+    overflow-x: hidden;
+}
+
+/* Better spacing for minimized navigation sections */
+#sidebar.w-20 nav>span {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+/* Ensure icons are properly centered in minimized mode */
+#sidebar.w-20 nav a .material-icons {
+    margin: 0;
+}
+
+/* Better padding for navigation container */
+#sidebar nav {
+    transition: padding 0.3s ease;
+}
+
+/* Responsive hover effects */
+#sidebar nav a:not(.active):hover {
+    background-color: rgba(74, 144, 226, 0.1);
+    color: #4A90E2;
+}
+
+#sidebar nav a:not(.active):hover .material-icons {
+    color: #4A90E2;
+}
+
+/* Dark mode specific adjustments */
+.dark #sidebar nav a:not(.active):hover {
+    background-color: rgba(74, 144, 226, 0.2);
+}
+
+/* Logo styling consistency */
+#logo {
+    transition: margin 0.3s ease;
+}
+
+/* Text elements fade effect */
+.sidebar-text {
+    transition: opacity 0.3s ease;
+}
+
+#sidebar.w-20 .sidebar-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+/* Pagination buttons standardization */
+.pagination-btn {
+    height: 40px !important;
+    min-height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 12px !important;
+}
+
+/* Doctor Cards Container - Scrollable */
+#doctorCardsContainer {
+    max-height: 100%; /* Full height untuk area scroll */
+    overflow-y: auto; /* Scroll vertikal jika konten melebihi max-height */
+    overflow-x: hidden; /* Hide horizontal scroll */
+    padding-right: 4px; /* Space for scrollbar */
+}
+
+/* Custom scrollbar styling - Light Mode */
+#doctorCardsContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+#doctorCardsContainer::-webkit-scrollbar-track {
+    background: #ffffff; /* White background for light mode */
+    border-radius: 3px;
+}
+
+#doctorCardsContainer::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* Gray thumb for light mode */
+    border-radius: 3px;
+}
+
+#doctorCardsContainer::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; /* Darker gray on hover for light mode */
+}
+
+/* Custom scrollbar styling - Dark Mode */
+.dark #doctorCardsContainer::-webkit-scrollbar-track {
+    background: #1f2937; /* Dark background for dark mode */
+}
+
+.dark #doctorCardsContainer::-webkit-scrollbar-thumb {
+    background: #6b7280; /* Dark mode thumb */
+}
+
+.dark #doctorCardsContainer::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af; /* Dark mode thumb hover */
+}
+
+/* Firefox scrollbar styling - Light Mode */
+#doctorCardsContainer {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #ffffff; /* thumb color, track color for light mode */
+}
+
+/* Firefox scrollbar styling - Dark Mode */
+.dark #doctorCardsContainer {
+    scrollbar-color: #6b7280 #1f2937; /* thumb color, track color for dark mode */
+}
+
+/* Smooth scrolling */
+#doctorCardsContainer {
+    scroll-behavior: smooth;
+}

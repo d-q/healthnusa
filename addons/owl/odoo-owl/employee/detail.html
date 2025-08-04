@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard - Doctor Details</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-custom-gray dark:bg-gray-900 transition-colors duration-300">
+    <div class="flex h-screen">
+        <aside class="sidebar w-64 bg-white dark:bg-gray-800 flex flex-col transition-all duration-300 overflow-hidden shadow-lg border-r border-gray-200 dark:border-gray-700">
+            <div class="p-6 pb-4">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 bg-custom-blue rounded-lg flex-shrink-0 logo"></div>
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-white ml-3 sidebar-text">Mario Hospital</h1>
+                </div>
+            </div>
+
+            <nav class="flex-grow px-4 pb-4">
+                <span
+                    class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mb-6 main-nav">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs sidebar-text">Dashboard</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs sidebar-text">Appointments</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center active hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs sidebar-text">Employee</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">badge</span>
+                        <span class="text-xs sidebar-text">Staff</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs sidebar-text">Room</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs sidebar-text">Payment</span>
+                    </a>
+                </div>
+
+                <span
+                    class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 appearance-nav">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs sidebar-text">Profile</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs sidebar-text">Settings</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs sidebar-text">Support</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-600">
+                <a class="btn-standard rounded-lg text-gray-600 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 group px-4 logout-btn"
+                    href="#">
+                    <span
+                        class="material-icons group-hover:text-red-600 dark:group-hover:text-red-400 flex-shrink-0">logout</span>
+                    <span class="font-medium ml-3 sidebar-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-hidden dark:bg-gray-900 transition-colors duration-300">
+            <!-- Fixed Header -->
+            <header class="flex-shrink-0 p-8 pb-0">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center">
+                        <button onclick="toggleSidebar()"
+                            class="btn-standard bg-white dark:bg-gray-700 rounded-lg shadow mr-4 w-10 transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <span id="menuIcon" class="material-icons text-gray-600 dark:text-gray-300">menu</span>
+                        </button>
+                        <div class="flex items-center space-x-6">
+                            <div class="flex flex-col justify-center h-10">
+                                <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Employee</h2>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <a href="index.html"
+                                    class="btn-standard px-3 text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-custom-blue rounded-lg">Doctors</a>
+                                <a href="#"
+                                    class="btn-standard px-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-custom-blue rounded-lg transition-all duration-200">Nurses</a>
+                                <a href="#"
+                                    class="btn-standard px-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-custom-blue rounded-lg transition-all duration-200">Staff</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="toggleDarkMode()"
+                            class="btn-standard bg-white rounded-lg shadow w-10 dark:bg-gray-800">
+                            <span id="darkModeIcon" class="material-icons text-gray-600 dark:text-gray-300">dark_mode</span>
+                        </button>
+                        <div
+                            class="btn-standard bg-white dark:bg-gray-700 p-2 rounded-lg shadow transition-colors duration-300 space-x-2">
+                            <img alt="User avatar" class="w-6 h-6 rounded-full"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
+                            <span class="font-semibold text-gray-700 dark:text-gray-200">Alexa</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Breadcrumb -->
+            <div class="px-8 py-4">
+                <nav class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                    <a href="#" class="flex items-center hover:text-custom-blue transition-colors duration-200">
+                        <span class="material-icons text-base">home</span>
+                    </a>
+                    <span class="material-icons text-xs">chevron_right</span>
+                    <a href="index.html" class="hover:text-custom-blue transition-colors duration-200">Employee</a>
+                    <span class="material-icons text-xs">chevron_right</span>
+                    <a href="index.html" class="hover:text-custom-blue transition-colors duration-200">Doctors</a>
+                    <span class="material-icons text-xs">chevron_right</span>
+                    <span class="text-gray-800 dark:text-gray-100 font-medium">Dr. John Smith</span>
+                </nav>
+            </div>
+
+            <!-- Scrollable Content Area -->
+            <div class="flex-1 overflow-y-auto px-8 pb-8">
+                <div class="flex gap-8">
+                    <!-- Left Column - Doctor Profile -->
+                    <div class="w-1/3">
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow transition-colors duration-300 flex flex-col items-center">
+                            <div class="relative mb-4">
+                                <img alt="Doctor profile picture" class="w-36 h-36 rounded-full object-cover"
+                                    src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=144&h=144&fit=crop&crop=face" />
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Dr. John Smith</h2>
+                            <p class="text-custom-blue mb-6">Heart Specialist</p>
+                            <div class="w-full space-y-4 text-sm">
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">phone</span>
+                                    <p class="text-gray-800 dark:text-gray-100">+123 456 7890</p>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">wc</span>
+                                    <p class="text-gray-800 dark:text-gray-100">Male</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">location_on</span>
+                                    <p class="text-gray-800 dark:text-gray-100">Jl. Sudirman No. 123, Jakarta Pusat, DKI Jakarta</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">schedule</span>
+                                    <div class="w-full">
+                                        <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Schedule & Practice Hours</p>
+                                        <div class="text-gray-800 dark:text-gray-100 space-y-1.5">
+                                            <div class="flex">
+                                                <div class="font-bold w-[30%]">Monday:</div>
+                                                <div class="w-[70%] flex flex-wrap gap-1">
+                                                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">09:00-11:00</span>
+                                                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">13:00-15:00</span>
+                                                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">16:00-17:00</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="font-bold w-[30%]">Tuesday:</div>
+                                                <div class="w-[70%] flex flex-wrap gap-1">
+                                                    <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">09:00 - 17:00</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="font-bold w-[30%]">Wednesday:</div>
+                                                <div class="w-[70%] flex flex-wrap gap-1">
+                                                    <span class="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs font-medium px-2 py-1 rounded-full">09:00 - 17:00</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="font-bold w-[30%]">Thursday:</div>
+                                                <div class="w-[70%] flex flex-wrap gap-1">
+                                                    <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs font-medium px-2 py-1 rounded-full">09:00-12:00</span>
+                                                    <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs font-medium px-2 py-1 rounded-full">14:00-16:00</span>
+                                                    <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs font-medium px-2 py-1 rounded-full">18:00-20:00</span>
+                                                    <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs font-medium px-2 py-1 rounded-full">21:00-22:00</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="font-bold w-[30%]">Friday:</div>
+                                                <div class="w-[70%] flex flex-wrap gap-1">
+                                                    <span class="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 text-xs font-medium px-2 py-1 rounded-full">09:00 - 12:00</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="font-bold w-[30%]">Saturday:</div>
+                                                <div class="w-[70%]"><span class="text-gray-500 dark:text-gray-400">Off</span></div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="font-bold w-[30%]">Sunday:</div>
+                                                <div class="w-[70%]"><span class="text-gray-500 dark:text-gray-400">Off</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start pt-2">
+                                    <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">work_outline</span>
+                                    <div class="w-full">
+                                        <p class="text-gray-600 dark:text-gray-300 font-medium mb-1.5">Duty Status</p>
+                                        <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Available</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full mt-8 space-y-2">
+                                <button
+                                    class="w-full bg-custom-blue hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition duration-300 flex items-center justify-center space-x-2">
+                                    <span class="material-icons">edit</span>
+                                    <span>Edit Doctor Details</span>
+                                </button>
+                                <button
+                                    class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold transition duration-300 flex items-center justify-center space-x-2">
+                                    <span class="material-icons">delete</span>
+                                    <span>Delete Doctor</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Doctor Details -->
+                    <div class="w-2/3">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow transition-colors duration-300">
+                            <div class="border-b border-gray-200 dark:border-gray-700">
+                                <nav class="flex space-x-8 px-6">
+                                    <a class="tab-nav py-4 text-custom-blue border-b-2 border-custom-blue font-semibold flex items-center space-x-2" href="#" data-tab="doctor-details">
+                                        <span class="material-icons text-lg">person</span>
+                                        <span>Doctor Details</span>
+                                    </a>
+                                    <a class="tab-nav py-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 flex items-center space-x-2" href="#" data-tab="medical-license">
+                                        <span class="material-icons text-lg">verified_user</span>
+                                        <span>Medical License</span>
+                                    </a>
+                                    <a class="tab-nav py-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 flex items-center space-x-2" href="#" data-tab="appointments">
+                                        <span class="material-icons text-lg">event_note</span>
+                                        <span>Appointments</span>
+                                    </a>
+                                </nav>
+                            </div>
+                            
+                            <!-- Doctor Details Tab -->
+                            <div id="doctor-details" class="tab-content p-6">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Personal Information</h3>
+                                <div class="grid grid-cols-2 gap-6 text-sm">
+                                    <div>
+                                        <label class="block text-gray-500 dark:text-gray-400 mb-1">Full Name</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium">Dr. John Smith</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-500 dark:text-gray-400 mb-1">Specialization</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium">Heart Specialist (Cardiology)</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-500 dark:text-gray-400 mb-1">Medical License Number</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium">1234567890123456</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-500 dark:text-gray-400 mb-1">Practice License Number</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium">SIP.123/DU/X/2023</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-500 dark:text-gray-400 mb-1">Email</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium">johnsmith.md@hospital.com</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-500 dark:text-gray-400 mb-1">Date of Birth</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium">15 June 1980</p>
+                                    </div>
+                                </div>
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mt-8 mb-4">Educational Background</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <thead class="text-xs text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-700">
+                                            <tr>
+                                                <th class="px-6 py-3" scope="col">Degree</th>
+                                                <th class="px-6 py-3" scope="col">Institution</th>
+                                                <th class="px-6 py-3" scope="col">Year</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">Cardiologist Specialist</td>
+                                                <td class="px-6 py-4">University of Indonesia</td>
+                                                <td class="px-6 py-4">2010 - 2014</td>
+                                            </tr>
+                                            <tr class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">Medical Doctor</td>
+                                                <td class="px-6 py-4">Gadjah Mada University</td>
+                                                <td class="px-6 py-4">2004 - 2006</td>
+                                            </tr>
+                                            <tr class="bg-white dark:bg-gray-800">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">Bachelor of Medicine</td>
+                                                <td class="px-6 py-4">Gadjah Mada University</td>
+                                                <td class="px-6 py-4">2000 - 2004</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mt-8 mb-4">Work Experience</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <thead class="text-xs text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-700">
+                                            <tr>
+                                                <th class="px-6 py-3" scope="col">Position</th>
+                                                <th class="px-6 py-3" scope="col">Institution</th>
+                                                <th class="px-6 py-3" scope="col">Period</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">Cardiologist</td>
+                                                <td class="px-6 py-4">Mario Hospital</td>
+                                                <td class="px-6 py-4">2015 - Present</td>
+                                            </tr>
+                                            <tr class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">General Practitioner</td>
+                                                <td class="px-6 py-4">Sehat Sejahtera Clinic</td>
+                                                <td class="px-6 py-4">2007 - 2010</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Medical License Tab -->
+                            <div id="medical-license" class="tab-content p-6 hidden">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Medical Licenses & Certifications</h3>
+                                <div class="space-y-6">
+                                    <!-- STR License -->
+                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <span class="material-icons text-green-600 dark:text-green-400">verified</span>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800 dark:text-gray-100">Surat Tanda Registrasi (STR)</h4>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300">Medical Registration Certificate</p>
+                                                </div>
+                                            </div>
+                                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Active</span>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4 text-sm">
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">License Number</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">1234567890123456</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Issue Date</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">15 January 2020</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Expiry Date</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">15 January 2025</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Issuing Authority</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">Indonesian Medical Council</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- SIP License -->
+                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <span class="material-icons text-blue-600 dark:text-blue-400">workspace_premium</span>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800 dark:text-gray-100">Surat Izin Praktik (SIP)</h4>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300">Medical Practice License</p>
+                                                </div>
+                                            </div>
+                                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Active</span>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4 text-sm">
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">License Number</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">SIP.123/DU/X/2023</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Issue Date</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">10 March 2023</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Expiry Date</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">10 March 2028</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Practice Location</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">Mario Hospital, Jakarta</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Specialist Certification -->
+                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <span class="material-icons text-purple-600 dark:text-purple-400">school</span>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800 dark:text-gray-100">Specialist Certification</h4>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300">Cardiology Specialist Certificate</p>
+                                                </div>
+                                            </div>
+                                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Valid</span>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4 text-sm">
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Certificate Number</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">CARD-2014-001234</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Completion Date</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">20 December 2014</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Institution</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">University of Indonesia</p>
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-500 dark:text-gray-400 mb-1">Specialty</label>
+                                                <p class="text-gray-800 dark:text-gray-100 font-medium">Cardiology</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Appointments Tab -->
+                            <div id="appointments" class="tab-content p-6 hidden">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Upcoming Appointments</h3>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-sm text-gray-600 dark:text-gray-300">Today: January 15, 2025</span>
+                                        <span class="bg-custom-blue text-white text-xs font-medium px-2 py-1 rounded-full">8 appointments</span>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-4">
+                                    <!-- Appointment Card 1 -->
+                                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                                                    <span class="material-icons text-gray-600 dark:text-gray-300">person</span>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800 dark:text-gray-100">Sarah Johnson</h4>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300">ID: PAT-001234</p>
+                                                    <p class="text-sm text-gray-500 dark:text-gray-400">Chest pain consultation</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="flex items-center space-x-2 mb-1">
+                                                    <span class="material-icons text-sm text-gray-500">schedule</span>
+                                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-100">09:00 - 09:30</span>
+                                                </div>
+                                                <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Confirmed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Appointment Card 2 -->
+                                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                                                    <span class="material-icons text-gray-600 dark:text-gray-300">person</span>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800 dark:text-gray-100">Michael Chen</h4>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300">ID: PAT-001235</p>
+                                                    <p class="text-sm text-gray-500 dark:text-gray-400">Regular checkup</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="flex items-center space-x-2 mb-1">
+                                                    <span class="material-icons text-sm text-gray-500">schedule</span>
+                                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-100">10:00 - 10:30</span>
+                                                </div>
+                                                <span class="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs font-medium px-2 py-1 rounded-full">Waiting</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Appointment Card 3 -->
+                                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                                                    <span class="material-icons text-gray-600 dark:text-gray-300">person</span>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800 dark:text-gray-100">Emma Williams</h4>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300">ID: PAT-001236</p>
+                                                    <p class="text-sm text-gray-500 dark:text-gray-400">Hypertension follow-up</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="flex items-center space-x-2 mb-1">
+                                                    <span class="material-icons text-sm text-gray-500">schedule</span>
+                                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-100">11:00 - 11:30</span>
+                                                </div>
+                                                <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">In Progress</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Appointment Card 4 -->
+                                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                                                    <span class="material-icons text-gray-600 dark:text-gray-300">person</span>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800 dark:text-gray-100">Robert Davis</h4>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300">ID: PAT-001237</p>
+                                                    <p class="text-sm text-gray-500 dark:text-gray-400">Heart rhythm evaluation</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="flex items-center space-x-2 mb-1">
+                                                    <span class="material-icons text-sm text-gray-500">schedule</span>
+                                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-100">13:00 - 13:30</span>
+                                                </div>
+                                                <span class="bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200 text-xs font-medium px-2 py-1 rounded-full">Scheduled</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Appointment Card 5 -->
+                                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                                                    <span class="material-icons text-gray-600 dark:text-gray-300">person</span>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-800 dark:text-gray-100">Lisa Anderson</h4>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300">ID: PAT-001238</p>
+                                                    <p class="text-sm text-gray-500 dark:text-gray-400">Post-surgery follow-up</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="flex items-center space-x-2 mb-1">
+                                                    <span class="material-icons text-sm text-gray-500">schedule</span>
+                                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-100">14:00 - 14:30</span>
+                                                </div>
+                                                <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Confirmed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- View More Button -->
+                                    <div class="text-center pt-4">
+                                        <button class="bg-custom-blue hover:bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                                            View All Appointments
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                // Tab functionality
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const tabNavs = document.querySelectorAll('.tab-nav');
+                                    const tabContents = document.querySelectorAll('.tab-content');
+
+                                    tabNavs.forEach(tab => {
+                                        tab.addEventListener('click', function(e) {
+                                            e.preventDefault();
+                                            const targetTab = this.getAttribute('data-tab');
+
+                                            // Remove active state from all tabs
+                                            tabNavs.forEach(nav => {
+                                                nav.classList.remove('text-custom-blue', 'border-b-2', 'border-custom-blue');
+                                                nav.classList.add('text-gray-500', 'dark:text-gray-400');
+                                            });
+
+                                            // Add active state to clicked tab
+                                            this.classList.remove('text-gray-500', 'dark:text-gray-400');
+                                            this.classList.add('text-custom-blue', 'border-b-2', 'border-custom-blue');
+
+                                            // Hide all tab contents
+                                            tabContents.forEach(content => {
+                                                content.classList.add('hidden');
+                                            });
+
+                                            // Show target tab content
+                                            document.getElementById(targetTab).classList.remove('hidden');
+                                        });
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
