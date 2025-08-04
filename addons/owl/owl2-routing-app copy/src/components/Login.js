@@ -28,6 +28,17 @@ export class Login extends Component {
             required="true"
           />
         </div>
+        <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 5px;">Database:</label>
+          <input 
+            type="text" 
+            t-model="state.database" 
+            style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+            placeholder="Database name"
+            t-att-disabled="state.isLoading"
+          />
+          <small style="color: #666;">Default: nusahealth_1</small>
+        </div>
         <div t-if="state.error" style="color: red; margin-bottom: 15px; padding: 10px; background: #ffeaea; border-radius: 4px;">
           <t t-esc="state.error"/>
         </div>
@@ -44,7 +55,6 @@ export class Login extends Component {
         </button>
       </form>
       <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 14px;">
-        <strong>Database:</strong> nusahealth_1<br/>
         <strong>Odoo Server:</strong> http://localhost:8069<br/>
         <strong>Note:</strong> Pastikan Odoo server sudah berjalan dan CORS dikonfigurasi untuk development.
       </div>
@@ -53,8 +63,9 @@ export class Login extends Component {
 
   setup() {
     this.state = useState({
-      username: '', // Kosong, tidak ada default
-      password: '', // Kosong, tidak ada default
+      username: 'admin', // Default untuk testing
+      password: '',
+      database: 'nusahealth_1', // Default database
       error: '',
       success: false,
       isLoading: false
@@ -67,6 +78,11 @@ export class Login extends Component {
     this.state.success = false;
 
     try {
+      // Update database name jika diisi
+      if (this.state.database) {
+        AuthService.DB_NAME = this.state.database;
+      }
+
       const result = await AuthService.login(this.state.username, this.state.password);
       
       if (result.success) {

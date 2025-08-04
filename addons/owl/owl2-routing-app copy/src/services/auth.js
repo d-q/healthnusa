@@ -26,7 +26,7 @@ export class AuthService {
     const raw = JSON.stringify({
       "jsonrpc": "2.0",
       "params": {
-        "db": this.DB_NAME, // Langsung gunakan static DB_NAME
+        "db": this.DB_NAME,
         "login": username,
         "password": password
       }
@@ -53,7 +53,7 @@ export class AuthService {
         localStorage.setItem('odoo_username', result.result.username || username);
         localStorage.setItem('odoo_user_id', result.result.uid.toString());
         localStorage.setItem('odoo_user_context', JSON.stringify(result.result.user_context));
-
+        
         return {
           success: true,
           user: {
@@ -77,7 +77,7 @@ export class AuthService {
 
   static async logout() {
     const sessionId = this.getSessionId();
-
+    
     if (sessionId) {
       // Optional: Call Odoo logout endpoint
       try {
@@ -108,7 +108,7 @@ export class AuthService {
 
   static async checkSession() {
     const sessionId = this.getSessionId();
-
+    
     if (!sessionId) {
       return false;
     }
@@ -129,7 +129,7 @@ export class AuthService {
       });
 
       const result = await response.json();
-
+      
       if (result.result && result.result.uid) {
         return true;
       } else {

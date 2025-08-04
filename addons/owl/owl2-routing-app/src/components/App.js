@@ -58,10 +58,10 @@ export class App extends Component {
         this.router.navigate(path);
     }
 
-    handleLogout() {
-        AuthService.logout();
-        this.state.isLoggedIn = false;
-        this.state.username = '';
-        this.router.navigate('/login');
+    async handleLogout() {
+      await AuthService.logout();
+      this.state.isLoggedIn = false;
+      this.state.username = '';
+      this.router.navigate('/login');
     }
 }

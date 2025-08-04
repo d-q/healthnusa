@@ -17,16 +17,20 @@ export class SimpleRouter {
         this.handleRouteChange();
     }
 
-    handleRouteChange() {
+    // Di dalam method handleRouteChange(), update bagian auth check:
+    async handleRouteChange() {
         const path = window.location.pathname;
         const route = this.routes.find(r => r.path === path);
 
         if (route) {
             // Check if route requires authentication
-            if (route.requiresAuth && !AuthService.isLoggedIn()) {
-                // Redirect ke login jika belum login
-                this.navigate('/login');
-                return;
+            if (route.requiresAuth) {
+                const isValid = await AuthService.checkSession();
+                if (!isValid) {
+                    // Redirect ke login jika session tidak valid
+                    this.navigate('/login');
+                    return;
+                }
             }
 
             // Jika sudah login dan mencoba akses login page, redirect ke home
@@ -38,7 +42,7 @@ export class SimpleRouter {
             this.currentRoute = route;
             this.notifyListeners();
         } else {
-            // Import NotFound component
+            // Handle 404
             import("../components/NotFound.js").then(module => {
                 this.currentRoute = {
                     path: window.location.pathname,
