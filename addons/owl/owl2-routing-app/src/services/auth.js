@@ -41,6 +41,8 @@ export class AuthService {
 
     try {
       const response = await fetch(`${this.ODOO_URL}/web/session/authenticate`, requestOptions);
+
+      console.log(" response >>>> ", response)
       const result = await response.json();
 
       if (result.error) {
