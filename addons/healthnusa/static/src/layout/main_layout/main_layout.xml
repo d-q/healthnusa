@@ -2,7 +2,8 @@
 <templates xml:space="preserve">
     <t t-name="healthnusa.MainLayout">
         <div class="grid grid-cols-1 gap-6 md:gap-8">
-            <t t-component="CurrentComponent"/>
+            <!-- <t t-component="CurrentComponent"/> -->
+            <h1>main 123</h1>
         </div>
     </t>
 </templates>

@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="healthnusa.Root">
-        <div t-att-class="state.darkMode ? 'dark' : ''">
-            <!-- Mobile Overlay -->
+        <!-- <div t-att-class="state.darkMode ? 'dark' : ''">
             <div id="mobile-overlay" class="mobile-overlay" t-on-click="toggleMobileSidebar"></div>
 
             <div class="flex h-screen">
-                <!-- Sidebar -->
-                <Sidebar apps="apps" currentApp="state.currentApp.id" selectApp.bind="selectApp" />
-
+                <Sidebar/>
                 <main id="main-content" t-att-class="'flex-1 p-4 md:p-8 overflow-y-auto' + (state.darkMode ? ' dark-main' : '')">
-
-                    <!-- Header - Added navigateToProfile prop -->
-                    <HeaderComponent  pageSubtitle="state.currentApp.name" />
-                    
-
-                    <!-- Main Content -->
-                    <MainLayout currentApp="state.currentApp" />
+                    <HeaderComponent/>
+                    <MainLayout/>
                 </main>
             </div>
-        </div>
+        </div> -->
+        <h1>root 123</h1>
     </t>
 </templates>

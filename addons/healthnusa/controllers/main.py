@@ -4,7 +4,7 @@ from odoo.http import request
 
 class HealthnusaController(http.Controller):
 
-    @http.route(['/api/healthnusa'], type='http', auth='user', website=True)
+    @http.route(['/healthnusa'], type='http', auth='user', website=True)
     def show_healthnusa_page(self):
         """Main route for HealthNusa application"""
         return request.render('healthnusa.page', {
