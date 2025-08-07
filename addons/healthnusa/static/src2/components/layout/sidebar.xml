@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.Sidebar">
+        <aside t-ref="sidebar" t-attf-class="sidebar {{ sidebarClass }} bg-white dark:bg-gray-800 flex flex-col transition-all duration-300 overflow-hidden shadow-lg border-r border-gray-200 dark:border-gray-700">
+            <div class="p-6 pb-4">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 bg-custom-blue rounded-lg flex-shrink-0 logo"></div>
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-white ml-3 sidebar-text">Mario Hospital</h1>
+                </div>
+            </div>
+
+            <nav class="flex-grow px-4 pb-4">
+                <span class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text">Menu</span>
+                <div t-attf-class="grid {{ mainNavClass }} gap-2 mb-6 main-nav">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs sidebar-text">Dashboard</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs sidebar-text">Appointments</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center active hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs sidebar-text">Employee</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">badge</span>
+                        <span class="text-xs sidebar-text">Staff</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs sidebar-text">Room</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs sidebar-text">Payment</span>
+                    </a>
+                </div>
+
+                <span class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text">Appearance</span>
+                <div t-attf-class="grid {{ appearanceNavClass }} gap-2 appearance-nav">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs sidebar-text">Profile</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs sidebar-text">Settings</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200" href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs sidebar-text">Support</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-600">
+                <a t-on-click="onLogout" class="btn-standard rounded-lg text-gray-600 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 group px-4 logout-btn cursor-pointer" href="#">
+                    <span class="material-icons group-hover:text-red-600 dark:group-hover:text-red-400 flex-shrink-0">logout</span>
+                    <span class="font-medium ml-3 sidebar-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+    </t>
+</templates>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.Header">
+        <header class="flex-shrink-0 p-8 pb-0">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center">
+                    <button t-on-click="onToggleSidebar" class="btn-standard bg-white dark:bg-gray-700 rounded-lg shadow mr-4 w-10 transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <span t-ref="menuIcon" id="menuIcon" class="material-icons text-gray-600 dark:text-gray-300" t-esc="menuIcon"></span>
+                    </button>
+                    <div class="flex items-center space-x-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Employee</h2>
+                        <div class="flex items-center space-x-2">
+                            <a href="#" class="btn-standard px-3 text-sm font-medium bg-blue-50 text-custom-blue rounded-lg">Doctors</a>
+                            <a href="#" class="btn-standard px-3 text-sm font-medium text-gray-500 hover:bg-blue-50 hover:text-custom-blue rounded-lg transition-all duration-200">Nurses</a>
+                            <a href="#" class="btn-standard px-3 text-sm font-medium text-gray-500 hover:bg-blue-50 hover:text-custom-blue rounded-lg transition-all duration-200">Staff</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button t-on-click="onToggleDarkMode" class="btn-standard bg-white rounded-lg shadow w-10 dark:bg-gray-800">
+                        <span t-ref="darkModeIcon" id="darkModeIcon" class="material-icons text-gray-600 dark:text-gray-300" t-esc="darkModeIcon"></span>
+                    </button>
+                    <div class="btn-standard bg-white dark:bg-gray-700 p-2 rounded-lg shadow transition-colors duration-300 space-x-2">
+                        <img alt="User avatar" class="w-6 h-6 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
+                        <span class="font-semibold text-gray-700 dark:text-gray-200">Alexa</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </t>
+</templates>

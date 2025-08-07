@@ -9,7 +9,7 @@
       "args": [
         "-c", "D:/kerjaan/odoo/conf/odoo18.conf",
         "-d", "nusahealth_1",
-        // "-u", "healthnusa"
+        "-u", "healthnusa"
       ],
       "python": "D:/kerjaan/odoo/env/env18/Scripts/python.exe",
       "console": "integratedTerminal",

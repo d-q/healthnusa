@@ -3,6 +3,7 @@
         <html>
             <head>
                 <title>Healthnusa</title>
+                <link rel="icon" type="image/x-icon" href="healthnusa/static/description/icon.png"/>
                 <script type="text/javascript">
                     var odoo = {
                         csrf_token: "<t t-nocache="The csrf token must always be up to date." t-esc="request.csrf_token(None)"/>",
@@ -12,15 +13,18 @@
                 </script>
                 <meta charset="utf-8" />
                 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-                <title>Mario Hospital Dashboard</title>
                 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
-                    rel="stylesheet" />
+                <script>
+                    tailwind.config = {
+                        darkMode: 'class'  // Ini penting!
+                    }
+                </script>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                 <t t-call-assets="healthnusa.assets_app" />
             </head>
-            <body class="bg-custom-gray">
+            <body class="bg-custom-gray dark:bg-gray-900 transition-colors duration-300">
             </body>
-        </html>
+    </html>
     </template>
 </odoo>
