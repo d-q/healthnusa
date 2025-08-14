@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Hospital - Inventory Adjustment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-blue': '#2563eb',
+                        'custom-gray': '#f8fafc'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        .sidebar { min-height: 100vh; }
+        .nav-item { 
+            @apply flex flex-col items-center justify-center p-3 min-h-[80px] rounded-lg text-center transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700;
+        }
+        .nav-item.active { 
+            @apply bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400;
+        }
+        .btn { 
+            @apply flex items-center justify-center h-10 transition-all duration-200;
+        }
+        .icon-lg { font-size: 28px; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Main Container -->
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white dark:bg-gray-800 shadow-lg border-r border-gray-200 dark:border-gray-700 sidebar">
+            <!-- Logo -->
+            <div class="p-6">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg"></div>
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-white ml-3">Mario Hospital</h1>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="px-4 pb-4">
+                <div class="mb-6">
+                    <p class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">Menu</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="#" class="nav-item">
+                            <span class="material-icons icon-lg">dashboard</span>
+                            <span class="text-xs mt-1">Dashboard</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <span class="material-icons icon-lg">event_note</span>
+                            <span class="text-xs mt-1">Appointments</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <span class="material-icons icon-lg">people</span>
+                            <span class="text-xs mt-1">Employee</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <span class="material-icons icon-lg">badge</span>
+                            <span class="text-xs mt-1">Staff</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <span class="material-icons icon-lg">king_bed</span>
+                            <span class="text-xs mt-1">Room</span>
+                        </a>
+                        <a href="#" class="nav-item active">
+                            <span class="material-icons icon-lg">inventory</span>
+                            <span class="text-xs mt-1">Inventory</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">Appearance</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="#" class="nav-item">
+                            <span class="material-icons icon-lg">person</span>
+                            <span class="text-xs mt-1">Profile</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <span class="material-icons icon-lg">settings</span>
+                            <span class="text-xs mt-1">Settings</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <span class="material-icons icon-lg">help_outline</span>
+                            <span class="text-xs mt-1">Support</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Logout -->
+            <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-600">
+                <a href="#" class="btn w-full px-4 text-gray-600 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 rounded-lg group">
+                    <span class="material-icons mr-3">logout</span>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <!-- Header -->
+            <header class="bg-white dark:bg-gray-800 shadow-sm p-6">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <button id="sidebarToggle" class="btn w-10 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                            <span class="material-icons text-gray-600 dark:text-gray-300">menu</span>
+                        </button>
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Inventory Adjustment</h2>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button id="darkModeToggle" class="btn w-10 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                            <span class="material-icons text-gray-600 dark:text-gray-300">dark_mode</span>
+                        </button>
+                        <div class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                            <img src="https://ui-avatars.com/api/?name=Alexa&background=2563eb&color=fff&size=24" alt="Avatar" class="w-6 h-6 rounded-full">
+                            <span class="font-medium text-gray-700 dark:text-gray-200">Alexa</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Breadcrumb -->
+            <div class="bg-white dark:bg-gray-800 px-6 py-3 border-b border-gray-200 dark:border-gray-700">
+                <nav class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-base">inventory</span>
+                    <span class="material-icons text-xs">chevron_right</span>
+                    <span>Inventory</span>
+                    <span class="material-icons text-xs">chevron_right</span>
+                    <span class="text-gray-800 dark:text-gray-100 font-medium">Adjustment</span>
+                </nav>
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 p-6 bg-gray-50 dark:bg-gray-900">
+                <div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                    <div class="p-8">
+                        <!-- Adjustment Header -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
+                            <!-- Adjustment Info -->
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Adjustment Details</h3>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Adjustment ID</label>
+                                            <input type="text" value="ADJ-2025-001" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" readonly>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Date</label>
+                                            <input type="date" value="2025-01-15" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Location & Department</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Department</label>
+                                            <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                                <option>Pharmacy</option>
+                                                <option>Emergency Department</option>
+                                                <option>Surgery Department</option>
+                                                <option>Cardiology Department</option>
+                                                <option>Laboratory</option>
+                                                <option>Radiology</option>
+                                                <option>ICU</option>
+                                                <option>General Ward</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Storage Location</label>
+                                            <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                                <option>Main Pharmacy Storage</option>
+                                                <option>Emergency Supply Room</option>
+                                                <option>OR Supply Room</option>
+                                                <option>Lab Storage</option>
+                                                <option>General Storage A</option>
+                                                <option>General Storage B</option>
+                                                <option>Refrigerated Storage</option>
+                                                <option>Controlled Substances Safe</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Adjustment Reason & Authority -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Adjustment Authorization</h3>
+                                <div class="space-y-4 mb-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Adjustment Type</label>
+                                        <select id="adjustmentType" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="Physical Count">Physical Count Adjustment</option>
+                                            <option value="Damaged">Damaged/Expired Items</option>
+                                            <option value="Lost">Lost/Stolen Items</option>
+                                            <option value="Found">Found Items</option>
+                                            <option value="Transfer">Department Transfer</option>
+                                            <option value="Return">Supplier Return</option>
+                                            <option value="Usage">Usage Correction</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Authorized By</label>
+                                        <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option>Dr. Sarah Johnson - Chief Pharmacist</option>
+                                            <option>Dr. Michael Chen - Inventory Manager</option>
+                                            <option>Lisa Anderson - Supply Chain Director</option>
+                                            <option>David Martinez - Department Head</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Reference Number</label>
+                                        <input type="text" placeholder="PO#, Invoice#, etc." class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                </div>
+
+                                <!-- Additional Information Toggle -->
+                                <button id="toggleAdditional" class="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center mb-4">
+                                    <span>Show additional information</span>
+                                    <span id="toggleIcon" class="material-icons text-sm ml-1">expand_more</span>
+                                </button>
+
+                                <!-- Additional Fields -->
+                                <div id="additionalFields" class="space-y-4 hidden">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Cost Center</label>
+                                        <input type="text" placeholder="Cost center code" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Batch/Lot Tracking</label>
+                                        <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option>Enable batch tracking</option>
+                                            <option>Skip batch tracking</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Items Section -->
+                        <div class="border-t border-gray-200 dark:border-gray-600 pt-8">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Inventory Items</h3>
+                                <button id="addItemBtn" class="text-blue-600 hover:text-blue-700 font-medium flex items-center">
+                                    <span class="material-icons mr-1">add</span>
+                                    <span>Add Item</span>
+                                </button>
+                            </div>
+
+                            <!-- Items Table -->
+                            <div class="overflow-hidden border border-gray-200 dark:border-gray-600 rounded-lg">
+                                <table class="w-full">
+                                    <thead class="bg-gray-50 dark:bg-gray-700">
+                                        <tr>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Item Code</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Current Stock</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actual Count</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Variance</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Unit Cost</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Impact</th>
+                                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="itemsTableBody" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                                        <!-- Items will be added here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Notes and Summary -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-200 dark:border-gray-600">
+                            <!-- Notes -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Adjustment Notes</label>
+                                <textarea rows="6" placeholder="Detailed explanation of the inventory adjustment, including any relevant circumstances or findings..." class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            </div>
+
+                            <!-- Summary -->
+                            <div>
+                                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Adjustment Summary</h4>
+                                    <div class="space-y-3">
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600 dark:text-gray-300">Total Items:</span>
+                                            <span id="totalItems" class="font-medium text-gray-800 dark:text-gray-100">0</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600 dark:text-gray-300">Positive Adjustments:</span>
+                                            <span id="positiveCount" class="font-medium text-green-600">0</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600 dark:text-gray-300">Negative Adjustments:</span>
+                                            <span id="negativeCount" class="font-medium text-red-600">0</span>
+                                        </div>
+                                        <div class="border-t border-gray-300 dark:border-gray-500 pt-3">
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-600 dark:text-gray-300">Total Value Impact:</span>
+                                                <span id="totalImpact" class="font-medium text-gray-800 dark:text-gray-100">$0.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="border-t border-gray-300 dark:border-gray-500 pt-3">
+                                            <div class="flex justify-between">
+                                                <span class="text-lg font-bold text-gray-800 dark:text-gray-100">Net Financial Impact:</span>
+                                                <span id="netImpact" class="text-lg font-bold text-gray-800 dark:text-gray-100">$0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                            <button class="px-6 py-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+                                Save Draft
+                            </button>
+                            <button class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                                Submit Adjustment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Inventory Adjustment Application
+        class InventoryAdjustmentApp {
+            constructor() {
+                this.items = [];
+                this.itemCounter = 0;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.addInitialItems();
+                this.updateSummary();
+            }
+
+            setupEventListeners() {
+                // Dark mode toggle
+                document.getElementById('darkModeToggle').addEventListener('click', this.toggleDarkMode);
+                
+                // Additional fields toggle
+                document.getElementById('toggleAdditional').addEventListener('click', this.toggleAdditionalFields);
+                
+                // Add item button
+                document.getElementById('addItemBtn').addEventListener('click', () => this.addItem());
+            }
+
+            toggleDarkMode() {
+                document.documentElement.classList.toggle('dark');
+                const icon = document.querySelector('#darkModeToggle .material-icons');
+                if (document.documentElement.classList.contains('dark')) {
+                    icon.textContent = 'light_mode';
+                } else {
+                    icon.textContent = 'dark_mode';
+                }
+            }
+
+            toggleAdditionalFields() {
+                const fields = document.getElementById('additionalFields');
+                const icon = document.getElementById('toggleIcon');
+                
+                if (fields.classList.contains('hidden')) {
+                    fields.classList.remove('hidden');
+                    icon.textContent = 'expand_less';
+                } else {
+                    fields.classList.add('hidden');
+                    icon.textContent = 'expand_more';
+                }
+            }
+
+            addItem(itemCode = '', description = '', currentStock = 0, actualCount = 0, unitCost = 0) {
+                this.itemCounter++;
+                const variance = actualCount - currentStock;
+                const totalImpact = variance * unitCost;
+                
+                const item = {
+                    id: this.itemCounter,
+                    itemCode,
+                    description,
+                    currentStock,
+                    actualCount,
+                    variance,
+                    unitCost,
+                    totalImpact
+                };
+                
+                this.items.push(item);
+                this.renderItem(item);
+                this.updateSummary();
+            }
+
+            addInitialItems() {
+                this.addItem('MED-001', 'Acetaminophen 500mg Tablets', 1000, 985, 0.15);
+                this.addItem('SUP-045', 'Surgical Gloves (Box)', 50, 47, 12.50);
+                this.addItem('EQP-123', 'Digital Thermometer', 25, 28, 45.00);
+            }
+
+            renderItem(item) {
+                const tbody = document.getElementById('itemsTableBody');
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors';
+                row.dataset.itemId = item.id;
+
+                const varianceClass = item.variance > 0 ? 'text-green-600' : item.variance < 0 ? 'text-red-600' : 'text-gray-600';
+                const impactClass = item.totalImpact > 0 ? 'text-green-600' : item.totalImpact < 0 ? 'text-red-600' : 'text-gray-600';
+
+                row.innerHTML = `
+                    <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">${this.items.length}</td>
+                    <td class="px-4 py-3">
+                        <input type="text" value="${item.itemCode}" placeholder="Item code" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm" onchange="adjustmentApp.updateItemField(${item.id}, 'itemCode', this.value)">
+                    </td>
+                    <td class="px-4 py-3">
+                        <input type="text" value="${item.description}" placeholder="Item description" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm" onchange="adjustmentApp.updateItemField(${item.id}, 'description', this.value)">
+                    </td>
+                    <td class="px-4 py-3">
+                        <input type="number" value="${item.currentStock}" min="0" class="w-20 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm" onchange="adjustmentApp.updateItemField(${item.id}, 'currentStock', parseInt(this.value) || 0)">
+                    </td>
+                    <td class="px-4 py-3">
+                        <input type="number" value="${item.actualCount}" min="0" class="w-20 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm" onchange="adjustmentApp.updateItemField(${item.id}, 'actualCount', parseInt(this.value) || 0)">
+                    </td>
+                    <td class="px-4 py-3 text-sm font-medium ${varianceClass}">${item.variance > 0 ? '+' : ''}${item.variance}</td>
+                    <td class="px-4 py-3">
+                        <input type="number" value="${item.unitCost}" min="0" step="0.01" class="w-20 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm" onchange="adjustmentApp.updateItemField(${item.id}, 'unitCost', parseFloat(this.value) || 0)">
+                    </td>
+                    <td class="px-4 py-3 text-sm font-medium ${impactClass}">$${item.totalImpact.toFixed(2)}</td>
+                    <td class="px-4 py-3 text-center">
+                        <button onclick="adjustmentApp.removeItem(${item.id})" class="text-red-500 hover:text-red-700 transition-colors">
+                            <span class="material-icons text-lg">delete</span>
+                        </button>
+                    </td>
+                `;
+
+                tbody.appendChild(row);
+            }
+
+            updateItemField(itemId, field, value) {
+                const item = this.items.find(i => i.id === itemId);
+                if (item) {
+                    item[field] = value;
+                    
+                    // Recalculate variance and impact
+                    item.variance = item.actualCount - item.currentStock;
+                    item.totalImpact = item.variance * item.unitCost;
+                    
+                    // Update the display
+                    const row = document.querySelector(`tr[data-item-id="${itemId}"]`);
+                    const varianceCell = row.cells[5];
+                    const impactCell = row.cells[7];
+                    
+                    // Update variance display with color
+                    const varianceClass = item.variance > 0 ? 'text-green-600' : item.variance < 0 ? 'text-red-600' : 'text-gray-600';
+                    varianceCell.className = `px-4 py-3 text-sm font-medium ${varianceClass}`;
+                    varianceCell.textContent = `${item.variance > 0 ? '+' : ''}${item.variance}`;
+                    
+                    // Update impact display with color
+                    const impactClass = item.totalImpact > 0 ? 'text-green-600' : item.totalImpact < 0 ? 'text-red-600' : 'text-gray-600';
+                    impactCell.className = `px-4 py-3 text-sm font-medium ${impactClass}`;
+                    impactCell.textContent = `${item.totalImpact.toFixed(2)}`;
+                    
+                    this.updateSummary();
+                }
+            }
+
+            removeItem(itemId) {
+                this.items = this.items.filter(item => item.id !== itemId);
+                const row = document.querySelector(`tr[data-item-id="${itemId}"]`);
+                if (row) {
+                    row.remove();
+                }
+                this.renumberRows();
+                this.updateSummary();
+            }
+
+            renumberRows() {
+                const rows = document.querySelectorAll('#itemsTableBody tr');
+                rows.forEach((row, index) => {
+                    row.cells[0].textContent = index + 1;
+                });
+            }
+
+            updateSummary() {
+                const totalItems = this.items.length;
+                const positiveAdjustments = this.items.filter(item => item.variance > 0).length;
+                const negativeAdjustments = this.items.filter(item => item.variance < 0).length;
+                const totalValueImpact = Math.abs(this.items.reduce((sum, item) => sum + Math.abs(item.totalImpact), 0));
+                const netImpact = this.items.reduce((sum, item) => sum + item.totalImpact, 0);
+
+                document.getElementById('totalItems').textContent = totalItems;
+                document.getElementById('positiveCount').textContent = positiveAdjustments;
+                document.getElementById('negativeCount').textContent = negativeAdjustments;
+                document.getElementById('totalImpact').textContent = `${totalValueImpact.toFixed(2)}`;
+                
+                // Color code the net impact
+                const netImpactElement = document.getElementById('netImpact');
+                netImpactElement.textContent = `${netImpact.toFixed(2)}`;
+                
+                if (netImpact > 0) {
+                    netImpactElement.className = 'text-lg font-bold text-green-600';
+                } else if (netImpact < 0) {
+                    netImpactElement.className = 'text-lg font-bold text-red-600';
+                } else {
+                    netImpactElement.className = 'text-lg font-bold text-gray-800 dark:text-gray-100';
+                }
+            }
+        }
+
+        // Initialize the application when the page loads
+        let adjustmentApp;
+        document.addEventListener('DOMContentLoaded', function() {
+            adjustmentApp = new InventoryAdjustmentApp();
+        });
+    </script>
+</body>
+</html>

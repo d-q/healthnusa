@@ -1,0 +1,519 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.PatientDetail">
+        <div class="flex gap-8">
+            <!-- Left Column - Patient Profile -->
+            <div class="w-1/3">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md h-full transition-colors duration-300">
+                    <div class="flex flex-col items-center">
+                        <img alt="Patient Profile Picture" class="w-40 h-40 rounded-full object-cover shadow-lg mb-4"
+                            t-att-src="state.patient.profileImage" />
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 text-center" t-esc="state.patient.name"/>
+                        <p class="text-custom-blue font-semibold text-base text-center mb-4" t-esc="'MRN: ' + state.patient.mrn"/>
+                        <div class="w-full space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">home</span>
+                                <span t-esc="state.patient.homePhone"/>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">phone</span>
+                                <span t-esc="state.patient.phone"/>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">school</span>
+                                <span t-esc="state.patient.education"/>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">work</span>
+                                <span t-esc="state.patient.occupation"/>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">favorite</span>
+                                <span t-esc="state.patient.maritalStatus"/>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">monitor_heart</span>
+                                <span class="font-medium">Status:</span>
+                                <span
+                                    class="ml-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-semibold px-2 py-1 rounded-full" t-esc="state.patient.status"/>
+                            </div>
+                        </div>
+                        <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6 w-full space-y-3">
+                            <h3 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-2 text-center">Actions</h3>
+                            <button
+                                class="w-full bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center transition-colors duration-200"
+                                type="button" t-on-click="this.onEditPatient">
+                                <span class="material-icons mr-2 text-base">edit</span> Edit Patient
+                            </button>
+                            <button
+                                class="w-full bg-red-500 text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 flex items-center justify-center transition-colors duration-200"
+                                type="button" t-on-click="this.openDeleteModal">
+                                <span class="material-icons mr-2 text-base">delete</span> Delete Patient
+                            </button>
+                            <button
+                                class="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 flex items-center justify-center transition-colors duration-200"
+                                type="button" t-on-click="this.onBackToList">
+                                <span class="material-icons mr-2 text-base">arrow_back</span> Back to List
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Patient Details -->
+            <div class="w-2/3">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md h-full transition-colors duration-300">
+                    <div class="border-b border-gray-200 dark:border-gray-700 mb-6">
+                        <nav aria-label="Tabs" class="-mb-px flex space-x-6 text-sm">
+                            <a class="py-4 text-sm font-semibold flex items-center space-x-2 cursor-pointer transition-all duration-200" 
+                               t-att-class="isTabActive('detail') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'"
+                               href="#" t-on-click.prevent="() => this.onTabClick(null, 'detail')">
+                                <span class="material-icons text-sm">person</span>
+                                <span>Patient Details</span>
+                            </a>
+                            <a class="py-4 text-sm font-semibold flex items-center space-x-2 cursor-pointer transition-all duration-200"
+                               t-att-class="isTabActive('insurance') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'"
+                               href="#" t-on-click.prevent="() => this.onTabClick(null, 'insurance')">
+                                <span class="material-icons text-sm">security</span>
+                                <span>Insurance</span>
+                            </a>
+                            <a class="py-4 text-sm font-semibold flex items-center space-x-2 cursor-pointer transition-all duration-200"
+                               t-att-class="isTabActive('appointments') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'"
+                               href="#" t-on-click.prevent="() => this.onTabClick(null, 'appointments')">
+                                <span class="material-icons text-sm">event_note</span>
+                                <span>Appointments</span>
+                            </a>
+                            <a class="py-4 text-sm font-semibold flex items-center space-x-2 cursor-pointer transition-all duration-200"
+                               t-att-class="isTabActive('prescriptions') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'"
+                               href="#" t-on-click.prevent="() => this.onTabClick(null, 'prescriptions')">
+                                <span class="material-icons text-sm">local_pharmacy</span>
+                                <span>Prescriptions</span>
+                            </a>
+                            <a class="py-4 text-sm font-semibold flex items-center space-x-2 cursor-pointer transition-all duration-200"
+                               t-att-class="isTabActive('billing') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'"
+                               href="#" t-on-click.prevent="() => this.onTabClick(null, 'billing')">
+                                <span class="material-icons text-sm">receipt</span>
+                                <span>Billing History</span>
+                            </a>
+                        </nav>
+                    </div>
+
+                    <!-- Patient Details Tab -->
+                    <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto pr-2" 
+                         t-att-class="isTabActive('detail') ? '' : 'hidden'">
+                        <!-- General Information -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">General Information</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Full Name</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.name"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Medical Record Number</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.mrn"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">National ID</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.nik"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Mother's Name</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.motherName"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Place of Birth</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.birthPlace"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Date of Birth</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.birthDate"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Gender</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.gender"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Religion</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.religion"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Ethnicity</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.ethnicity"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Languages</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.languages"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Information -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Address as Per ID Card</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                                <div class="md:col-span-2">
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Full Address</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.fullAddress"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">RT/RW</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.rtRw"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Village/District</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.village"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Sub-district</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.subDistrict"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">City/Regency</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.city"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Postal Code</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.postalCode"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">State/Province</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.state"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Country</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.country"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current Residence -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Current Residence</h3>
+                            <div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-400 dark:border-blue-600 p-4 rounded-r-lg mb-4">
+                                <p class="text-sm text-blue-800 dark:text-blue-200">Current address is the same as registered address</p>
+                            </div>
+                        </div>
+
+
+                        <!-- Allergy History -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Allergy History</h3>
+                            <div class="space-y-3 text-sm">
+                                <t t-foreach="state.allergies" t-as="allergy" t-key="allergy.id">
+                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <span t-att-class="'material-icons text-' + allergy.iconColor + '-600 dark:text-' + allergy.iconColor + '-400'" t-esc="allergy.icon"/>
+                                            <h4 class="font-semibold text-gray-800 dark:text-gray-100" t-esc="allergy.name"/>
+                                        </div>
+                                        <p class="text-gray-600 dark:text-gray-300 ml-9" t-esc="allergy.reaction"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Important Medical Notes -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Important Medical Notes</h3>
+                            <div class="bg-yellow-50 dark:bg-yellow-900 border-l-4 border-yellow-400 dark:border-yellow-600 p-4 rounded-r-lg">
+                                <p class="text-sm text-yellow-800 dark:text-yellow-200" t-esc="state.medicalNotes"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appointments Tab -->
+                    <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto" 
+                         t-att-class="isTabActive('appointments') ? '' : 'hidden'">
+                        <div class="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 z-10 py-4">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Appointments List</h3>
+                            <div class="flex items-center space-x-2">
+                                <div class="relative">
+                                    <input class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+                                        placeholder="Search appointments..." type="text" />
+                                    <span
+                                        class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                </div>
+                                <button
+                                    class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center transition-colors duration-200"
+                                    t-on-click="this.onCreateAppointment">
+                                    <span class="material-icons mr-2 text-base">add</span> Create Appointment
+                                </button>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pr-2">
+                            <t t-foreach="state.appointments" t-as="appointment" t-key="appointment.id">
+                                <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <p class="font-semibold text-gray-800 dark:text-gray-100" t-esc="appointment.date"/>
+                                        <span t-att-class="'bg-' + appointment.statusColor + '-100 dark:bg-' + appointment.statusColor + '-900 text-' + appointment.statusColor + '-800 dark:text-' + appointment.statusColor + '-200 text-xs font-semibold px-2.5 py-0.5 rounded-full'" t-esc="appointment.status"/>
+                                    </div>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm" t-esc="'Doctor: ' + appointment.doctor"/>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm" t-esc="'Specialization: ' + appointment.specialty"/>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm" t-esc="'Room: ' + appointment.room"/>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm" t-esc="'Notes: ' + appointment.notes"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- Prescriptions Tab -->
+                    <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto"
+                         t-att-class="isTabActive('prescriptions') ? '' : 'hidden'">
+                        <div class="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 z-10 py-4">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Prescriptions List</h3>
+                            <div class="flex items-center space-x-2">
+                                <div class="relative">
+                                    <input class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+                                        placeholder="Search prescriptions..." type="text" />
+                                    <span
+                                        class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                </div>
+                                <button
+                                    class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center transition-colors duration-200"
+                                    t-on-click="this.onCreatePrescription">
+                                    <span class="material-icons mr-2 text-base">add</span> Add Prescription
+                                </button>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pr-2">
+                            <div class="border border-gray-200 dark:border-gray-600 rounded-lg">
+                                <div class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" 
+                                     t-on-click="() => this.togglePrescription('prescription1')">
+                                    <div>
+                                        <p class="font-semibold text-gray-800 dark:text-gray-100" t-esc="'Prescription #' + state.prescriptions[0].number"/>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="'Date: ' + state.prescriptions[0].date + ' - ' + state.prescriptions[0].doctor"/>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <span
+                                            t-att-class="'bg-' + state.prescriptions[0].categoryColor + '-100 dark:bg-' + state.prescriptions[0].categoryColor + '-900 text-' + state.prescriptions[0].categoryColor + '-800 dark:text-' + state.prescriptions[0].categoryColor + '-200 text-xs font-semibold px-2.5 py-0.5 rounded-full'" t-esc="state.prescriptions[0].category"/>
+                                        <span class="material-icons text-gray-600 dark:text-gray-400" t-esc="isPrescriptionExpanded('prescription1') ? 'expand_less' : 'expand_more'"></span>
+                                    </div>
+                                </div>
+                                <div class="p-4 border-t border-gray-200 dark:border-gray-600" 
+                                     t-att-class="isPrescriptionExpanded('prescription1') ? '' : 'hidden'" id="prescription1">
+                                    <h4 class="font-semibold text-sm mb-2 text-gray-700 dark:text-gray-300">Medication Details:</h4>
+                                    <ul class="space-y-3">
+                                        <li class="flex justify-between items-center text-sm">
+                                            <div>
+                                                <p class="font-medium text-gray-800 dark:text-gray-100" t-esc="state.prescriptions[0].medications[0].name"/>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="state.prescriptions[0].medications[0].type"/>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="font-medium text-gray-800 dark:text-gray-100" t-esc="state.prescriptions[0].medications[0].quantity"/>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="state.prescriptions[0].medications[0].dosage"/>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="flex justify-end space-x-2 mt-4">
+                                        <button class="p-1 text-custom-blue hover:text-blue-700 rounded hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors duration-200"><span
+                                                class="material-icons text-base">print</span></button>
+                                        <button class="p-1 text-green-500 hover:text-green-700 rounded hover:bg-green-50 dark:hover:bg-green-900 transition-colors duration-200"><span
+                                                class="material-icons text-base">file_download</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-gray-200 dark:border-gray-600 rounded-lg">
+                                <div class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                                     t-on-click="() => this.togglePrescription('prescription2')">
+                                    <div>
+                                        <p class="font-semibold text-gray-800 dark:text-gray-100" t-esc="'Prescription #' + state.prescriptions[1].number"/>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="'Date: ' + state.prescriptions[1].date + ' - ' + state.prescriptions[1].doctor"/>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <span
+                                            t-att-class="'bg-' + state.prescriptions[1].categoryColor + '-100 dark:bg-' + state.prescriptions[1].categoryColor + '-900 text-' + state.prescriptions[1].categoryColor + '-800 dark:text-' + state.prescriptions[1].categoryColor + '-200 text-xs font-semibold px-2.5 py-0.5 rounded-full'" t-esc="state.prescriptions[1].category"/>
+                                        <span class="material-icons text-gray-600 dark:text-gray-400" t-esc="isPrescriptionExpanded('prescription2') ? 'expand_less' : 'expand_more'"></span>
+                                    </div>
+                                </div>
+                                <div class="p-4 border-t border-gray-200 dark:border-gray-600" 
+                                     t-att-class="isPrescriptionExpanded('prescription2') ? '' : 'hidden'" id="prescription2">
+                                    <h4 class="font-semibold text-sm mb-2 text-gray-700 dark:text-gray-300">Medication Details:</h4>
+                                    <ul class="space-y-3">
+                                        <li class="flex justify-between items-center text-sm">
+                                            <div>
+                                                <p class="font-medium text-gray-800 dark:text-gray-100" t-esc="state.prescriptions[1].medications[0].name"/>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="state.prescriptions[1].medications[0].type"/>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="font-medium text-gray-800 dark:text-gray-100" t-esc="state.prescriptions[1].medications[0].quantity"/>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="state.prescriptions[1].medications[0].dosage"/>
+                                            </div>
+                                        </li>
+                                        <t t-if="state.prescriptions[1].medications.length > 1">
+                                            <li class="flex justify-between items-center text-sm">
+                                                <div>
+                                                    <p class="font-medium text-gray-800 dark:text-gray-100" t-esc="state.prescriptions[1].medications[1] ? state.prescriptions[1].medications[1].name : ''"/>
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="state.prescriptions[1].medications[1] ? state.prescriptions[1].medications[1].type : ''"/>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-medium text-gray-800 dark:text-gray-100" t-esc="state.prescriptions[1].medications[1] ? state.prescriptions[1].medications[1].quantity : ''"/>
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="state.prescriptions[1].medications[1] ? state.prescriptions[1].medications[1].dosage : ''"/>
+                                                </div>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                    <div class="flex justify-end space-x-2 mt-4">
+                                        <button class="p-1 text-custom-blue hover:text-blue-700 rounded hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors duration-200"><span
+                                                class="material-icons text-base">print</span></button>
+                                        <button class="p-1 text-green-500 hover:text-green-700 rounded hover:bg-green-50 dark:hover:bg-green-900 transition-colors duration-200"><span
+                                                class="material-icons text-base">file_download</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing History Tab -->
+                    <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto"
+                         t-att-class="isTabActive('billing') ? '' : 'hidden'">
+                        <div class="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 z-10 py-4">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Billing History</h3>
+                            <div class="flex items-center space-x-2">
+                                <div class="relative">
+                                    <input class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+                                        placeholder="Search billing..." type="text" />
+                                    <span
+                                        class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pr-2">
+                            <t t-foreach="state.billingHistory" t-as="billing" t-key="billing.id">
+                                <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <p class="font-semibold text-gray-800 dark:text-gray-100" t-esc="'Invoice #' + billing.invoiceNumber"/>
+                                        <span t-att-class="'bg-' + billing.statusColor + '-100 dark:bg-' + billing.statusColor + '-900 text-' + billing.statusColor + '-800 dark:text-' + billing.statusColor + '-200 text-xs font-semibold px-2.5 py-0.5 rounded-full'" t-esc="billing.status"/>
+                                    </div>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm" t-esc="'Date: ' + billing.date"/>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm" t-esc="'Service: ' + billing.service"/>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm" t-esc="'Total: ' + billing.total"/>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm" t-esc="'Payment Method: ' + billing.paymentMethod"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- Insurance Tab -->
+                    <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto"
+                         t-att-class="isTabActive('insurance') ? '' : 'hidden'">
+                        <div class="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 z-10 py-4">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Insurance &amp; Guarantors</h3>
+                            <button
+                                class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center transition-colors duration-200"
+                                t-on-click="this.onAddInsurance">
+                                <span class="material-icons mr-2 text-base">add</span> Add Insurance
+                            </button>
+                        </div>
+
+                        <div class="space-y-6 pr-2">
+                            <!-- Health Insurance -->
+                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="material-icons text-blue-600 dark:text-blue-400">verified</span>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-800 dark:text-gray-100">Health Insurance</h4>
+                                            <p class="text-sm text-gray-600 dark:text-gray-300">Primary Insurance Coverage</p>
+                                        </div>
+                                    </div>
+                                    <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Active</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Insurance Provider</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.provider"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Policy Number</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.policyNumber"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Valid Period</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.validPeriod"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Coverage</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.coverage"/>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end mt-4">
+                                    <button
+                                        class="text-custom-blue hover:text-blue-700 text-sm font-medium">Edit</button>
+                                </div>
+                            </div>
+
+                            <!-- Family Guarantor -->
+                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="material-icons text-blue-600 dark:text-blue-400">family_restroom</span>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-800 dark:text-gray-100">Family Guarantor</h4>
+                                            <p class="text-sm text-gray-600 dark:text-gray-300">Emergency Contact &amp; Guarantor</p>
+                                        </div>
+                                    </div>
+                                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">Backup</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Guarantor Name</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.name"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">National ID</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.nationalId"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Phone Number</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.phone"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Relationship</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.relationship"/>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Address</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.address"/>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end mt-4">
+                                    <button
+                                        class="text-custom-blue hover:text-blue-700 text-sm font-medium">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+             t-if="state.showDeleteModal" t-on-click="this.onModalBackdropClick">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6 mx-4 transform transition-all duration-200">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900">
+                        <span class="material-icons text-red-600 dark:text-red-400 text-4xl">warning_amber</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-5">Delete Patient Data</h3>
+                    <p class="text-base text-gray-600 dark:text-gray-300 mt-3">
+                        Are you sure you want to delete patient data for <span class="font-bold" t-esc="state.patient.name"/>?
+                        This action cannot be undone.
+                    </p>
+                </div>
+                <div class="mt-8 flex justify-center gap-4">
+                    <button
+                        class="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200"
+                        type="button" t-on-click="this.closeDeleteModal">
+                        Cancel
+                    </button>
+                    <button
+                        class="w-full bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
+                        type="button" t-on-click="this.confirmDelete">
+                        Yes, Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

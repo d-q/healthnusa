@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mario Hospital Dashboard - Patients</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-custom-gray dark:bg-gray-900 transition-colors duration-300">
+    <div class="flex h-screen">
+        <aside
+            class="sidebar w-64 bg-white dark:bg-gray-800 flex flex-col transition-all duration-300 overflow-hidden shadow-lg border-r border-gray-200 dark:border-gray-700">
+            <div class="p-6 pb-4">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 bg-custom-blue rounded-lg flex-shrink-0 logo"></div>
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-white ml-3 sidebar-text">Mario Hospital</h1>
+                </div>
+            </div>
+
+            <nav class="flex-grow px-4 pb-4">
+                <span
+                    class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text">Menu</span>
+                <div class="grid grid-cols-2 gap-2 mb-6 main-nav">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs sidebar-text">Dashboard</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs sidebar-text">Appointments</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs sidebar-text">Employee</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center active hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs sidebar-text">Patients</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">king_bed</span>
+                        <span class="text-xs sidebar-text">Room</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs sidebar-text">Payment</span>
+                    </a>
+                </div>
+
+                <span
+                    class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text">Appearance</span>
+                <div class="grid grid-cols-2 gap-2 appearance-nav">
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs sidebar-text">Profile</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs sidebar-text">Settings</span>
+                    </a>
+                    <a class="nav-btn rounded-lg text-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs sidebar-text">Support</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="mt-auto p-4 border-t border-gray-200 dark:border-gray-600">
+                <a class="btn-standard rounded-lg text-gray-600 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 group px-4 logout-btn"
+                    href="#">
+                    <span
+                        class="material-icons group-hover:text-red-600 dark:group-hover:text-red-400 flex-shrink-0">logout</span>
+                    <span class="font-medium ml-3 sidebar-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-hidden dark:bg-gray-900 transition-colors duration-300">
+            <!-- Fixed Header -->
+            <header class="flex-shrink-0 p-8 pb-0">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center">
+                        <button onclick="toggleSidebar()"
+                            class="btn-standard bg-white dark:bg-gray-700 rounded-lg shadow mr-4 w-10 transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <span id="menuIcon" class="material-icons text-gray-600 dark:text-gray-300">menu</span>
+                        </button>
+                        <div class="flex items-center space-x-6">
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Patients</h2>
+                            <div class="flex items-center space-x-2">
+                                <a href="#"
+                                    class="btn-standard px-3 text-sm font-medium bg-blue-50 text-custom-blue rounded-lg">All Patients</a>
+                                <a href="#"
+                                    class="btn-standard px-3 text-sm font-medium text-gray-500 hover:bg-blue-50 hover:text-custom-blue rounded-lg transition-all duration-200">In-Patient</a>
+                                <a href="#"
+                                    class="btn-standard px-3 text-sm font-medium text-gray-500 hover:bg-blue-50 hover:text-custom-blue rounded-lg transition-all duration-200">Out-Patient</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="toggleDarkMode()"
+                            class="btn-standard bg-white rounded-lg shadow w-10 dark:bg-gray-800">
+                            <span id="darkModeIcon"
+                                class="material-icons text-gray-600 dark:text-gray-300">dark_mode</span>
+                        </button>
+                        <div
+                            class="btn-standard bg-white dark:bg-gray-700 p-2 rounded-lg shadow transition-colors duration-300 space-x-2">
+                            <img alt="User avatar" class="w-6 h-6 rounded-full"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrZovz1QDBTHqCkUB-RmsZXYNoruOQXxekRWML5ARPVhTAI4y6ZRc3vZPdZOQQ6qEey298UnN23CmSPgh4IGuwzgvv4lPQPftGUX7kcb2Bc-ehKioSZSp_k85Lp6W1oSPXvLaeEesB94MHj9RUCuxQyvo0sK3mpjbjwXpI8fOpIqbOVSr9GFYhN6ytCsvKX1Iy-EbjJNIB6tjD9_tar_17ts1grfVtoUjl1Rc7278U5P-odSVPPRcikFrfvXeav1u_HtACikXTfP0" />
+                            <span class="font-semibold text-gray-700 dark:text-gray-200">Alexa</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Breadcrumb -->
+            <div class="px-8 py-4">
+                <nav class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                    <a href="#" class="flex items-center hover:text-custom-blue transition-colors duration-200">
+                        <span class="material-icons text-base">home</span>
+                    </a>
+                    <span class="material-icons text-xs">chevron_right</span>
+                    <a href="#" class="hover:text-custom-blue transition-colors duration-200">Patients</a>
+                    <span class="material-icons text-xs">chevron_right</span>
+                    <span class="text-gray-800 dark:text-gray-100 font-medium">All Patients</span>
+                </nav>
+            </div>
+
+            <!-- Scrollable Content Area -->
+            <div class="flex-1 overflow-y-auto px-8 pb-8">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow transition-colors duration-300">
+                    <!-- Fixed Controls Section -->
+                    <div
+                        class="sticky top-0 z-10 bg-white dark:bg-gray-800 p-6 rounded-t-2xl border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <button
+                                        class="btn-standard bg-custom-blue hover:bg-blue-600 text-white font-medium px-5 rounded-lg transition-colors duration-200 shadow-sm">
+                                        <span class="material-icons mr-2 text-lg">add</span> Add Patient
+                                    </button>
+                                    <div class="flex flex-col justify-center h-10">
+                                        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 leading-tight">
+                                            All Patients
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center focus-within:ring-2 focus-within:ring-custom-blue border border-gray-300 dark:border-gray-600 rounded-lg transition-colors duration-300 min-w-80 w-96">
+                                <div class="relative flex-1">
+                                    <span
+                                        class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">search</span>
+                                    <input id="searchInput"
+                                        class="pl-10 pr-4 py-2 border-0 rounded-l-lg focus:outline-none focus:ring-0 h-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-colors duration-300 w-full"
+                                        placeholder="Search patients..." type="text" />
+                                </div>
+                                <div class="relative border-l border-gray-300 dark:border-gray-600">
+                                    <button onclick="toggleSearchFilter(this)"
+                                        class="btn-standard px-3 rounded-r-lg bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm text-gray-600 dark:text-gray-300 transition-colors duration-300 focus:outline-none">
+                                        <span class="material-icons text-sm">view_list</span>
+                                    </button>
+                                    <div
+                                        class="search-filter-menu absolute hidden right-0 top-full mt-1 w-56 bg-white dark:bg-gray-700 rounded-md shadow-lg z-20 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-600">
+                                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Search
+                                                in:
+                                            </h3>
+                                        </div>
+                                        <div class="py-2">
+                                            <label
+                                                class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                                <input type="radio" name="searchField" value="all" checked
+                                                    class="mr-3 text-custom-blue">
+                                                <span class="text-sm text-gray-700 dark:text-gray-200">All Fields</span>
+                                            </label>
+                                            <label
+                                                class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                                <input type="radio" name="searchField" value="name"
+                                                    class="mr-3 text-custom-blue">
+                                                <span class="text-sm text-gray-700 dark:text-gray-200">Name</span>
+                                            </label>
+                                            <label
+                                                class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                                <input type="radio" name="searchField" value="id"
+                                                    class="mr-3 text-custom-blue">
+                                                <span class="text-sm text-gray-700 dark:text-gray-200">Patient ID</span>
+                                            </label>
+                                            <label
+                                                class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                                <input type="radio" name="searchField" value="phone"
+                                                    class="mr-3 text-custom-blue">
+                                                <span class="text-sm text-gray-700 dark:text-gray-200">Contact</span>
+                                            </label>
+                                            <label
+                                                class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                                <input type="radio" name="searchField" value="status"
+                                                    class="mr-3 text-custom-blue">
+                                                <span class="text-sm text-gray-700 dark:text-gray-200">Status</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Data Count and Navigation Controls -->
+                            <div class="flex items-center space-x-4">
+                                <div class="text-sm text-gray-600 dark:text-gray-300 font-medium data-count">
+                                    1-10 / 18
+                                </div>
+                                <div
+                                    class="flex items-center bg-gray-100 dark:bg-gray-600 rounded-lg p-1 transition-colors duration-300">
+                                    <button
+                                        class="prev-nav-btn btn-standard rounded-lg w-10 transition-colors duration-300">
+                                        <span class="material-icons">chevron_left</span>
+                                    </button>
+                                    <button
+                                        class="next-nav-btn btn-standard rounded-lg w-10 transition-colors duration-300">
+                                        <span class="material-icons">chevron_right</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Header untuk tabel -->
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-6 gap-4 items-center p-4 bg-gray-100 dark:bg-gray-600 rounded-lg font-semibold text-gray-600 dark:text-gray-300">
+                            <div class="col-span-1 md:col-span-2 flex items-center space-x-4">
+                                <input type="checkbox" id="selectAllCheckbox"
+                                    class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <button
+                                    class="sort-btn flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group"
+                                    data-sort="name">
+                                    <span class="text-sm">Patient Information</span>
+                                    <span
+                                        class="material-icons text-sm text-gray-400 group-hover:text-custom-blue">unfold_more</span>
+                                </button>
+                            </div>
+                            <div class="col-span-1">
+                                <button
+                                    class="sort-btn flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group"
+                                    data-sort="phone">
+                                    <span class="text-sm">Contact</span>
+                                    <span
+                                        class="material-icons text-sm text-gray-400 group-hover:text-custom-blue">unfold_more</span>
+                                </button>
+                            </div>
+                            <div class="col-span-1">
+                                <button
+                                    class="sort-btn flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group"
+                                    data-sort="age">
+                                    <span class="text-sm">Age / Gender</span>
+                                    <span
+                                        class="material-icons text-sm text-gray-400 group-hover:text-custom-blue">unfold_more</span>
+                                </button>
+                            </div>
+                            <div class="col-span-1">
+                                <button
+                                    class="sort-btn flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group"
+                                    data-sort="status">
+                                    <span class="text-sm">Status</span>
+                                    <span
+                                        class="material-icons text-sm text-gray-400 group-hover:text-custom-blue">unfold_more</span>
+                                </button>
+                            </div>
+                            <div class="col-span-1 text-center">
+                                <span class="text-sm">Actions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scrollable Data List Container -->
+                    <div class="p-6 pt-2">
+                        <div class="space-y-2 data-list-container">
+                            <!-- Cards akan ditambahkan di sini oleh JavaScript -->
+                        </div>
+
+                        <!-- Fixed Pagination Container -->
+                        <div class="flex justify-center items-center mt-6">
+                            <div class="flex items-center space-x-1 pagination-buttons">
+                                <!-- Pagination buttons akan di-generate oleh JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ========================================
+        // GLOBAL VARIABLES
+        // ========================================
+        let currentPage = 1;
+        let itemsPerPage = 10;
+        let currentSearchTerm = "";
+        let currentSearchField = "all";
+        let filteredItems = [];
+        let sortField = "";
+        let sortDirection = "asc";
+
+        // ========================================
+        // SAMPLE PATIENT DATA
+        // ========================================
+        const listData = [
+            {
+                id: 1,
+                name: "Sarah Johnson",
+                patientId: "P001",
+                phone: "+123 456 7890",
+                age: 34,
+                gender: "Female",
+                status: "In-Patient",
+                image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 2,
+                name: "Michael Brown",
+                patientId: "P002",
+                phone: "+123 456 7891",
+                age: 42,
+                gender: "Male",
+                status: "Out-Patient",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 3,
+                name: "Emily Davis",
+                patientId: "P003",
+                phone: "+123 456 7892",
+                age: 28,
+                gender: "Female",
+                status: "Discharged",
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b5a0?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 4,
+                name: "James Wilson",
+                patientId: "P004",
+                phone: "+123 456 7893",
+                age: 55,
+                gender: "Male",
+                status: "In-Patient",
+                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 5,
+                name: "Lisa Anderson",
+                patientId: "P005",
+                phone: "+123 456 7894",
+                age: 31,
+                gender: "Female",
+                status: "Emergency",
+                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 6,
+                name: "Robert Taylor",
+                patientId: "P006",
+                phone: "+123 456 7895",
+                age: 67,
+                gender: "Male",
+                status: "Out-Patient",
+                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 7,
+                name: "Maria Garcia",
+                patientId: "P007",
+                phone: "+123 456 7896",
+                age: 39,
+                gender: "Female",
+                status: "In-Patient",
+                image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 8,
+                name: "David Martinez",
+                patientId: "P008",
+                phone: "+123 456 7897",
+                age: 45,
+                gender: "Male",
+                status: "Discharged",
+                image: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 9,
+                name: "Jennifer White",
+                patientId: "P009",
+                phone: "+123 456 7898",
+                age: 29,
+                gender: "Female",
+                status: "Out-Patient",
+                image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 10,
+                name: "Thomas Lee",
+                patientId: "P010",
+                phone: "+123 456 7899",
+                age: 52,
+                gender: "Male",
+                status: "Emergency",
+                image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 11,
+                name: "Amanda Rodriguez",
+                patientId: "P011",
+                phone: "+123 456 7900",
+                age: 26,
+                gender: "Female",
+                status: "In-Patient",
+                image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 12,
+                name: "Christopher Johnson",
+                patientId: "P012",
+                phone: "+123 456 7901",
+                age: 38,
+                gender: "Male",
+                status: "Out-Patient",
+                image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 13,
+                name: "Ashley Thompson",
+                patientId: "P013",
+                phone: "+123 456 7902",
+                age: 33,
+                gender: "Female",
+                status: "Discharged",
+                image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 14,
+                name: "Daniel Clark",
+                patientId: "P014",
+                phone: "+123 456 7903",
+                age: 41,
+                gender: "Male",
+                status: "In-Patient",
+                image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 15,
+                name: "Michelle Lewis",
+                patientId: "P015",
+                phone: "+123 456 7904",
+                age: 35,
+                gender: "Female",
+                status: "Emergency",
+                image: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 16,
+                name: "Kevin Walker",
+                patientId: "P016",
+                phone: "+123 456 7905",
+                age: 49,
+                gender: "Male",
+                status: "Out-Patient",
+                image: "https://images.unsplash.com/photo-1558203728-00f45181dd84?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 17,
+                name: "Stephanie Hall",
+                patientId: "P017",
+                phone: "+123 456 7906",
+                age: 27,
+                gender: "Female",
+                status: "In-Patient",
+                image: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                id: 18,
+                name: "Ryan Young",
+                patientId: "P018",
+                phone: "+123 456 7907",
+                age: 36,
+                gender: "Male",
+                status: "Discharged",
+                image: "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=100&h=100&fit=crop&crop=face"
+            }
+        ];
+
+        // ========================================
+        // DARK MODE FUNCTIONS
+        // ========================================
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const body = document.body;
+            const icon = document.getElementById("darkModeIcon");
+
+            if (html.classList.contains("dark")) {
+                html.classList.remove("dark");
+                body.classList.remove("dark");
+                icon.textContent = "dark_mode";
+                localStorage.setItem("darkMode", "false");
+            } else {
+                html.classList.add("dark");
+                body.classList.add("dark");
+                icon.textContent = "light_mode";
+                localStorage.setItem("darkMode", "true");
+            }
+            
+            forceScrollbarRefresh();
+        }
+
+        function forceScrollbarRefresh() {
+            const container = document.querySelector('.data-list-container');
+            if (container) {
+                const originalDisplay = container.style.display;
+                container.style.display = 'none';
+                container.offsetHeight;
+                container.style.display = originalDisplay || 'block';
+                
+                const originalOverflow = container.style.overflowY;
+                container.style.overflowY = 'hidden';
+                setTimeout(() => {
+                    container.style.overflowY = originalOverflow || 'auto';
+                }, 10);
+            }
+        }
+
+        function initDarkMode() {
+            const savedMode = localStorage.getItem("darkMode");
+            const icon = document.getElementById("darkModeIcon");
+            const html = document.documentElement;
+            const body = document.body;
+
+            if (savedMode === "true") {
+                html.classList.add("dark");
+                body.classList.add("dark");
+                icon.textContent = "light_mode";
+            } else {
+                html.classList.remove("dark");
+                body.classList.remove("dark");
+                icon.textContent = "dark_mode";
+            }
+            
+            setTimeout(forceScrollbarRefresh, 100);
+        }
+
+        // ========================================
+        // SIDEBAR FUNCTIONS
+        // ========================================
+        function toggleSidebar() {
+            const sidebar = document.querySelector(".sidebar");
+            const menuIcon = document.getElementById("menuIcon");
+            const sidebarTexts = document.querySelectorAll(".sidebar-text");
+            const mainNav = document.querySelector(".main-nav");
+            const appearanceNav = document.querySelector(".appearance-nav");
+
+            if (sidebar.classList.contains("w-64")) {
+                sidebar.classList.remove("w-64");
+                sidebar.classList.add("w-20");
+                menuIcon.textContent = "menu_open";
+
+                sidebarTexts.forEach((el) => {
+                    el.style.display = "none";
+                });
+
+                mainNav.classList.remove("grid-cols-2");
+                mainNav.classList.add("grid-cols-1");
+                appearanceNav.classList.remove("grid-cols-2");
+                appearanceNav.classList.add("grid-cols-1");
+
+                const navLinks = sidebar.querySelectorAll("nav a");
+                navLinks.forEach((link) => {
+                    link.classList.remove("p-3");
+                    link.classList.add("p-2");
+                });
+            } else {
+                sidebar.classList.remove("w-20");
+                sidebar.classList.add("w-64");
+                menuIcon.textContent = "menu";
+
+                sidebarTexts.forEach((el) => {
+                    el.style.display = "";
+                });
+
+                mainNav.classList.remove("grid-cols-1");
+                mainNav.classList.add("grid-cols-2");
+                appearanceNav.classList.remove("grid-cols-1");
+                appearanceNav.classList.add("grid-cols-2");
+
+                const navLinks = sidebar.querySelectorAll("nav a");
+                navLinks.forEach((link) => {
+                    link.classList.remove("p-2");
+                    link.classList.add("p-3");
+                });
+            }
+        }
+
+        // ========================================
+        // CHECKBOX FUNCTIONS
+        // ========================================
+        function toggleSelectAll() {
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            const dataCheckboxes = document.querySelectorAll('.data-checkbox');
+            
+            if (selectAllCheckbox.checked) {
+                dataCheckboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+            } else {
+                dataCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            }
+            
+            updateSelectAllState();
+        }
+
+        function updateSelectAllState() {
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            const dataCheckboxes = document.querySelectorAll('.data-checkbox');
+            const checkedBoxes = document.querySelectorAll('.data-checkbox:checked');
+            
+            if (checkedBoxes.length === 0) {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = false;
+            } else if (checkedBoxes.length === dataCheckboxes.length) {
+                selectAllCheckbox.checked = true;
+                selectAllCheckbox.indeterminate = false;
+            } else {
+                selectAllCheckbox.checked = false;
+                selectAllCheckbox.indeterminate = true;
+            }
+        }
+
+        function toggleSearchFilter(button) {
+            const dropdown = button.nextElementSibling;
+            const isVisible = dropdown.classList.contains("show");
+
+            document.querySelectorAll(".search-filter-menu").forEach((menu) => {
+                menu.classList.remove("show");
+            });
+
+            if (!isVisible) {
+                dropdown.classList.add("show");
+            }
+        }
+
+        function toggleDropdown(button) {
+            const dropdown = button.nextElementSibling;
+            const isVisible = dropdown.classList.contains("show");
+
+            document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+                menu.classList.remove("show");
+            });
+
+            if (!isVisible) {
+                dropdown.classList.add("show");
+            }
+        }
+
+        // ========================================
+        // SORTING FUNCTIONS
+        // ========================================
+        function sortData(field) {
+            if (sortField === field) {
+                sortDirection = sortDirection === "asc" ? "desc" : "asc";
+            } else {
+                sortField = field;
+                sortDirection = "asc";
+            }
+            
+            updateSortIcons(field, sortDirection);
+            
+            filteredItems.sort((a, b) => {
+                const dataA = listData[a];
+                const dataB = listData[b];
+                let valueA, valueB;
+                
+                switch(field) {
+                    case 'name':
+                        valueA = dataA.name.toLowerCase();
+                        valueB = dataB.name.toLowerCase();
+                        break;
+                    case 'phone':
+                        valueA = dataA.phone.toLowerCase();
+                        valueB = dataB.phone.toLowerCase();
+                        break;
+                    case 'age':
+                        valueA = dataA.age;
+                        valueB = dataB.age;
+                        break;
+                    case 'status':
+                        const statusPriority = {
+                            'emergency': 1,
+                            'in-patient': 2,
+                            'out-patient': 3,
+                            'discharged': 4
+                        };
+                        valueA = statusPriority[dataA.status.toLowerCase()] || 5;
+                        valueB = statusPriority[dataB.status.toLowerCase()] || 5;
+                        break;
+                    default:
+                        return 0;
+                }
+                
+                if (valueA < valueB) {
+                    return sortDirection === "asc" ? -1 : 1;
+                }
+                if (valueA > valueB) {
+                    return sortDirection === "asc" ? 1 : -1;
+                }
+                return 0;
+            });
+            
+            currentPage = 1;
+            displayCurrentPage();
+            updatePaginationInfo();
+        }
+
+        function updateSortIcons(activeField, direction) {
+            const sortButtons = document.querySelectorAll('.sort-btn');
+            sortButtons.forEach(button => {
+                const icon = button.querySelector('.material-icons');
+                const field = button.getAttribute('data-sort');
+                
+                if (field === activeField) {
+                    button.classList.add('text-custom-blue');
+                    button.classList.remove('text-gray-600', 'dark:text-gray-300');
+                    
+                    if (direction === "asc") {
+                        icon.textContent = "keyboard_arrow_up";
+                        icon.classList.add('text-custom-blue');
+                        icon.classList.remove('text-gray-400');
+                    } else {
+                        icon.textContent = "keyboard_arrow_down";
+                        icon.classList.add('text-custom-blue');
+                        icon.classList.remove('text-gray-400');
+                    }
+                } else {
+                    button.classList.remove('text-custom-blue');
+                    button.classList.add('text-gray-600', 'dark:text-gray-300');
+                    
+                    icon.textContent = "unfold_more";
+                    icon.classList.remove('text-custom-blue');
+                    icon.classList.add('text-gray-400');
+                }
+            });
+        }
+
+        // ========================================
+        // SEARCH FUNCTIONS
+        // ========================================
+        function searchData(searchTerm, searchField) {
+            filteredItems = [];
+            
+            listData.forEach((data, index) => {
+                let shouldShow = false;
+                
+                if (!searchTerm.trim()) {
+                    shouldShow = true;
+                } else {
+                    const searchLower = searchTerm.toLowerCase();
+                    
+                    switch(searchField) {
+                        case 'name':
+                            shouldShow = data.name.toLowerCase().includes(searchLower);
+                            break;
+                        case 'id':
+                            shouldShow = data.patientId.toLowerCase().includes(searchLower);
+                            break;
+                        case 'phone':
+                            shouldShow = data.phone.toLowerCase().includes(searchLower);
+                            break;
+                        case 'status':
+                            shouldShow = data.status.toLowerCase().includes(searchLower);
+                            break;
+                        default:
+                            shouldShow = data.name.toLowerCase().includes(searchLower) ||
+                                        data.patientId.toLowerCase().includes(searchLower) ||
+                                        data.phone.toLowerCase().includes(searchLower) ||
+                                        data.status.toLowerCase().includes(searchLower);
+                    }
+                }
+                
+                if (shouldShow) {
+                    filteredItems.push(index);
+                }
+            });
+            
+            if (sortField) {
+                sortData(sortField);
+            } else {
+                currentPage = 1;
+                displayCurrentPage();
+                updatePaginationInfo();
+            }
+        }
+
+        // ========================================
+        // DATA DISPLAY FUNCTIONS
+        // ========================================
+        function generateDataCard(data) {
+            const statusClass = getStatusClass(data.status);
+            const statusColor = getStatusColor(data.status);
+
+            return `
+                <div class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                    <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                        <input type="checkbox" class="data-checkbox w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" data-id="${data.id}" />
+                        <img alt="${data.name}" class="w-12 h-12 rounded-full" src="${data.image}" />
+                        <div>
+                            <p class="font-bold text-gray-800 dark:text-gray-100">${data.name}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">ID: ${data.patientId}</p>
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Contact</p>
+                        <p class="font-semibold text-gray-800 dark:text-gray-100">${data.phone}</p>
+                    </div>
+                    <div class="col-span-1">
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Age / Gender</p>
+                        <p class="font-semibold text-gray-800 dark:text-gray-100">${data.age} / ${data.gender}</p>
+                    </div>
+                    <div class="col-span-1">
+                        <span class="${statusClass} text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center">
+                            <span class="w-2 h-2 ${statusColor} rounded-full mr-2"></span> ${data.status}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-end space-x-2 col-span-1">
+                        <button class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10">
+                            <span class="material-icons">visibility</span>
+                        </button>
+                        <button class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10">
+                            <span class="material-icons">edit</span>
+                        </button>
+                        <div class="relative">
+                            <button onclick="toggleDropdown(this)" class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300">
+                                <span class="material-icons">more_vert</span>
+                            </button>
+                            <div class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200" href="#">
+                                    <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">local_hospital</span>Medical Records
+                                </a>
+                                <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200" href="#">
+                                    <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print
+                                </a>
+                                <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200" href="#">
+                                    <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export
+                                </a>
+                                <hr class="border-gray-200 dark:border-gray-600 my-1">
+                                <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200" href="#">
+                                    <span class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayCurrentPage() {
+            const container = document.querySelector('.data-list-container');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            
+            container.innerHTML = '';
+            
+            const pageItems = filteredItems.slice(startIndex, endIndex);
+            pageItems.forEach(index => {
+                const data = listData[index];
+                container.innerHTML += generateDataCard(data);
+            });
+            
+            const dataCheckboxes = container.querySelectorAll('.data-checkbox');
+            dataCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateSelectAllState();
+                });
+            });
+            
+            container.scrollTop = 0;
+            updateSelectAllState();
+        }
+
+        // ========================================
+        // HELPER FUNCTIONS
+        // ========================================
+        function getStatusClass(status) {
+            switch(status) {
+                case 'In-Patient': return 'bg-blue-100 text-blue-700';
+                case 'Out-Patient': return 'bg-green-100 text-green-700';
+                case 'Emergency': return 'bg-red-100 text-red-700';
+                case 'Discharged': return 'bg-gray-100 text-gray-700';
+                default: return 'bg-gray-100 text-gray-700';
+            }
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'In-Patient': return 'bg-blue-500';
+                case 'Out-Patient': return 'bg-green-500';
+                case 'Emergency': return 'bg-red-500';
+                case 'Discharged': return 'bg-gray-500';
+                default: return 'bg-gray-500';
+            }
+        }
+
+        // ========================================
+        // PAGINATION FUNCTIONS
+        // ========================================
+        function updatePaginationInfo() {
+            const totalItems = filteredItems.length;
+            const startItem = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+            const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+            
+            const countDisplay = document.querySelector('.data-count');
+            if (countDisplay) {
+                countDisplay.textContent = `${startItem}-${endItem} / ${totalItems}`;
+            }
+            
+            updateNavigationButtons();
+            updatePaginationButtons();
+        }
+
+        function updatePaginationButtons() {
+            const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+            const paginationContainer = document.querySelector('.pagination-buttons');
+            
+            if (!paginationContainer) return;
+            
+            paginationContainer.innerHTML = '';
+            
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'pagination-btn border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300';
+            prevBtn.textContent = 'Previous';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => goToPage(currentPage - 1);
+            if (currentPage === 1) {
+                prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            paginationContainer.appendChild(prevBtn);
+            
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = 'pagination-btn border rounded-lg';
+                pageBtn.textContent = i;
+                pageBtn.onclick = () => goToPage(i);
+                
+                if (i === currentPage) {
+                    pageBtn.classList.add('bg-custom-blue', 'text-white');
+                } else {
+                    pageBtn.classList.add('hover:bg-gray-100', 'dark:hover:bg-gray-600', 'text-gray-600', 'dark:text-gray-300');
+                }
+                
+                paginationContainer.appendChild(pageBtn);
+            }
+            
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'pagination-btn border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300';
+            nextBtn.textContent = 'Next';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => goToPage(currentPage + 1);
+            if (currentPage === totalPages || totalPages === 0) {
+                nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            paginationContainer.appendChild(nextBtn);
+        }
+
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            displayCurrentPage();
+            updatePaginationInfo();
+        }
+
+        function updateNavigationButtons() {
+            const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+            const prevBtn = document.querySelector('.prev-nav-btn');
+            const nextBtn = document.querySelector('.next-nav-btn');
+            
+            if (prevBtn && nextBtn) {
+                prevBtn.className = "prev-nav-btn btn-standard rounded-lg w-10 transition-colors duration-300";
+                nextBtn.className = "next-nav-btn btn-standard rounded-lg w-10 transition-colors duration-300";
+                
+                const prevIcon = prevBtn.querySelector('.material-icons');
+                const nextIcon = nextBtn.querySelector('.material-icons');
+                
+                if (currentPage === 1) {
+                    prevBtn.classList.add('bg-white', 'dark:bg-gray-700', 'cursor-not-allowed', 'opacity-50');
+                    prevBtn.disabled = true;
+                    if (prevIcon) {
+                        prevIcon.className = "material-icons text-gray-400 dark:text-gray-500";
+                    }
+                } else {
+                    prevBtn.classList.add('bg-white', 'dark:bg-gray-700', 'shadow', 'hover:bg-gray-50', 'dark:hover:bg-gray-600', 'cursor-pointer');
+                    prevBtn.disabled = false;
+                    if (prevIcon) {
+                        prevIcon.className = "material-icons text-custom-blue";
+                    }
+                }
+                
+                if (currentPage === totalPages || totalPages === 0) {
+                    nextBtn.classList.add('bg-white', 'dark:bg-gray-700', 'cursor-not-allowed', 'opacity-50');
+                    nextBtn.disabled = true;
+                    if (nextIcon) {
+                        nextIcon.className = "material-icons text-gray-400 dark:text-gray-500";
+                    }
+                } else {
+                    nextBtn.classList.add('bg-white', 'dark:bg-gray-700', 'shadow', 'hover:bg-gray-50', 'dark:hover:bg-gray-600', 'cursor-pointer');
+                    nextBtn.disabled = false;
+                    if (nextIcon) {
+                        nextIcon.className = "material-icons text-custom-blue";
+                    }
+                }
+            }
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                goToPage(currentPage + 1);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                goToPage(currentPage - 1);
+            }
+        }
+
+        // ========================================
+        // EVENT LISTENERS AND INITIALIZATION
+        // ========================================
+        document.addEventListener("click", function (event) {
+            const dropdowns = document.querySelectorAll(".dropdown-menu, .search-filter-menu");
+            const isDropdownButton = event.target.closest('button[onclick*="toggleDropdown"]') ||
+                                    event.target.closest('button[onclick*="toggleSearchFilter"]');
+            const isInsideSearchFilter = event.target.closest(".search-filter-menu");
+
+            if (!isDropdownButton && !isInsideSearchFilter) {
+                dropdowns.forEach((dropdown) => {
+                    dropdown.classList.remove("show");
+                });
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                document.querySelectorAll(".dropdown-menu, .search-filter-menu").forEach((menu) => {
+                    menu.classList.remove("show");
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initDarkMode();
+            
+            filteredItems = Array.from({length: listData.length}, (_, i) => i);
+            
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', toggleSelectAll);
+            }
+            
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    currentSearchTerm = e.target.value;
+                    searchData(currentSearchTerm, currentSearchField);
+                });
+            }
+            
+            const searchFieldRadios = document.querySelectorAll('input[name="searchField"]');
+            searchFieldRadios.forEach(radio => {
+                radio.addEventListener('change', function(e) {
+                    currentSearchField = e.target.value;
+                    searchData(currentSearchTerm, currentSearchField);
+                });
+            });
+            
+            const prevNavBtn = document.querySelector('.prev-nav-btn');
+            const nextNavBtn = document.querySelector('.next-nav-btn');
+            
+            if (prevNavBtn) {
+                prevNavBtn.onclick = prevPage;
+            }
+            if (nextNavBtn) {
+                nextNavBtn.onclick = nextPage;
+            }
+            
+            const sortButtons = document.querySelectorAll('.sort-btn');
+            sortButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const field = this.getAttribute('data-sort');
+                    sortData(field);
+                });
+            });
+            
+            displayCurrentPage();
+            updatePaginationInfo();
+        });
+    </script>
+</body>
+
+</html>

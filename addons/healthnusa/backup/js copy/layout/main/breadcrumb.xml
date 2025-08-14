@@ -1,0 +1,15 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.Breadcrumb">
+        <div class="px-8 py-4">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                <a href="#" class="flex items-center hover:text-custom-blue transition-colors duration-200">
+                    <span class="material-icons text-base">home</span>
+                </a>
+                <span class="material-icons text-xs">chevron_right</span>
+                <a href="#" class="hover:text-custom-blue transition-colors duration-200">Employee</a>
+                <span class="material-icons text-xs">chevron_right</span>
+                <span class="text-gray-800 dark:text-gray-100 font-medium">Doctors</span>
+            </nav>
+        </div>
+    </t>
+</templates>

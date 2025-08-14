@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="healthnusa.Root">
+        <div class="flex h-screen" t-on-click="onDocumentClick">
+            <!-- Sidebar -->
+            <Sidebar isCollapsed="state.isSidebarCollapsed" apps="apps" currentApp="state.currentApp?.id" selectApp.bind="selectApp"/>
+
+            <!-- Main Content -->
+            <main class="flex-1 flex flex-col overflow-hidden dark:bg-gray-900 transition-colors duration-300">
+                <!-- Fixed Header -->
+                <Header state="state" toggleSidebar.bind="toggleSidebar" toggleDarkMode.bind="toggleDarkMode" />
+
+                <!-- Breadcrumb Navigation -->
+                <!-- <Breadcrumb/> -->
+
+                <!-- Scrollable Content Area -->
+                <div class="flex-1 overflow-y-auto px-8 pb-8">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow transition-colors duration-300">
+                        <!-- Fixed Controls Section -->
+                        <t t-if="state.currentRoute" t-component="state.currentRoute.Component" t-props="{ router: router }"/>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,41 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.DoctorNew">
+        <div class="max-w-4xl mx-auto p-6">
+            <!-- Header -->
+            <div class="mb-6">
+                <div class="flex items-center space-x-4 mb-4">
+                    <button t-on-click="cancel" class="flex items-center text-gray-600 hover:text-gray-800">
+                        <span class="material-icons mr-2">arrow_back</span>
+                          Back to Doctors
+                    </button>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Add New Doctor</h1>
+            </div>
+
+            <!-- Form -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Personal Information Section -->
+                    <div class="md:col-span-2">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">Personal Information</h3>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
+                        <input type="text" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter full name" required="true"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address *</label>
+                        <input type="email" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="doctor@example.com" required="true"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> Phone Number * </label>
+                        <input type="tel" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="+62 xxx xxxx xxxx" required="true"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </t>
+</templates>
