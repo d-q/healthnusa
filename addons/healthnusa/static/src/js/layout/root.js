@@ -10,15 +10,17 @@ import { Appointment } from "../pages/appointment/appointment";
 import { Dashboard } from "../pages/dashboard/dashboard";
 
 import { Doctor } from "../pages/doctor/doctor";
-import { DoctorNew } from "../pages/doctor/doctor_form";
+import { DoctorForm } from "../pages/doctor/doctor_form";
 import { DoctorDetail } from "../pages/doctor/doctor_detail";
 
 import { Nurse } from "../pages/nurse/nurse";
 
 import { Patient } from "../pages/patient/patient";
 import { PatientDetail } from "../pages/patient/patient_detail";
+import { PatientForm } from "../pages/patient/patient_form";
 
 import { Payment } from "../pages/payment/payment"
+import { NotFound } from "../pages/error/not_found";
 import { Profile } from "../pages/profile/profile";
 import { Room } from "../pages/room/room";
 import { Staff } from "../pages/staff/staff";
@@ -35,18 +37,20 @@ export class Root extends Component {
         Dashboard,
 
         Doctor,
-        DoctorNew,
+        DoctorForm,
         DoctorDetail,
 
         Nurse,
         Patient,
         PatientDetail,
+        PatientForm,
 
         Payment,
         Profile,
         Room,
         Staff,
         Settings,
+        NotFound,
     }
 
     setup() {
@@ -67,14 +71,14 @@ export class Root extends Component {
             {
                 path: '/doctor/new',
                 id: "doctor-new",
-                Component: DoctorNew,
+                Component: DoctorForm,
                 parent: 'doctor',
                 showBackButton: true
             },
             {
                 path: '/doctor/edit',
                 id: "doctor-edit",
-                Component: DoctorNew,
+                Component: DoctorForm,
                 parent: 'doctor',
                 showBackButton: true
             },
@@ -92,10 +96,31 @@ export class Root extends Component {
                 parent: 'patient',
                 showBackButton: true
             },
+            {
+                path: '/patient/new',
+                id: "patient-new",
+                Component: PatientForm,
+                parent: 'patient',
+                showBackButton: true
+            },
+            {
+                path: '/patient/edit',
+                id: "patient-edit",
+                Component: PatientForm,
+                parent: 'patient',
+                showBackButton: true
+            },
         ];
 
         this.registerRoutes();
         this.initializeRouteMappings();
+        
+        // Register 404 route
+        this.router.registerNotFound({
+            id: "not-found",
+            name: "Page Not Found",
+            Component: NotFound
+        });
 
         this.state = useState({
             currentApp: null,

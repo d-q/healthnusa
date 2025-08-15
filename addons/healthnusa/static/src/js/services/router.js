@@ -19,6 +19,10 @@ export class Router {
         }
     }
 
+    registerNotFound(component) {
+        this.notFoundRoute = component;
+    }
+
     navigate(path) {
         if (path === '/dashboard') {
             const fullPath = '/emr';
@@ -36,10 +40,18 @@ export class Router {
     }
 
     handleRoute(path = window.location.pathname) {
-        const route = this.routes.get(path) || this.routes.get('/emr');
+        const route = this.routes.get(path);
+        
         if (route && route !== this.currentRoute) {
             this.currentRoute = route;
             this.notifyListeners(route);
+        } else if (!route) {
+            // Route not found - use 404 route or fallback to dashboard
+            const notFoundRoute = this.notFoundRoute || this.routes.get('/emr');
+            if (notFoundRoute !== this.currentRoute) {
+                this.currentRoute = notFoundRoute;
+                this.notifyListeners(notFoundRoute);
+            }
         }
     }
 

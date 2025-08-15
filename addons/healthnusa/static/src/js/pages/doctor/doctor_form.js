@@ -2,8 +2,8 @@
 
 import { Component, useState, onMounted } from "@odoo/owl";
 
-export class DoctorNew extends Component {
-    static template = "healthnusa.DoctorNew";
+export class DoctorForm extends Component {
+    static template = "healthnusa.DoctorForm";
 
     detectMode() {
         // Check URL, element ID, or props to determine mode

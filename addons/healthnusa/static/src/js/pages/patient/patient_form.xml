@@ -1,0 +1,624 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.PatientForm">
+        <div class="flex gap-8">
+            <!-- Left Column - Profile &amp; Basic Info -->
+            <div class="w-1/3">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <!-- Profile Photo Section -->
+                    <div class="flex flex-col items-center mb-6">
+                        <div class="relative mb-4">
+                            <div class="w-36 h-36 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
+                                <img t-if="state.patient.profileImage" t-att-src="state.patient.profileImage" class="w-full h-full object-cover" alt="Profile Preview"/>
+                                <span t-if="!state.patient.profileImage" class="material-icons text-6xl text-gray-400 dark:text-gray-300">person</span>
+                            </div>
+                            <input type="file" id="profile-photo" accept="image/*" class="hidden" t-on-change="onPhotoChange"/>
+                            <label for="profile-photo" class="absolute bottom-0 right-0 bg-custom-blue p-2 rounded-full text-white cursor-pointer hover:bg-blue-600 transition-colors duration-200">
+                                <span class="material-icons text-base">edit</span>
+                            </label>
+                        </div>
+
+                        <input type="text" t-model="state.patient.name" class="text-xl font-bold text-gray-800 dark:text-gray-100 text-center border-b border-transparent focus:border-gray-300 bg-transparent outline-none" placeholder="Full Patient Name"/>
+                        <input type="text" t-model="state.patient.mrn" class="text-custom-blue text-center border-b border-transparent focus:border-gray-300 bg-transparent mt-1 outline-none" placeholder="MRN (Auto Generate)" readonly="readonly"/>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="w-full space-y-4 text-sm">
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">category</span>
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Patient Identity Type</label>
+                                <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" t-model="state.patientIdentityType">
+                                    <option value="general">General Patient Identity</option>
+                                    <option value="unknown">Unknown Patient Identity</option>
+                                    <option value="newborn">Newborn Baby Identity</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">home</span>
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Home Phone Number</label>
+                                <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="tel" t-model="state.patient.homePhone" placeholder="Enter home phone number"/>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">contact_phone</span>
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mobile Phone Number <span class="text-red-500">*</span></label>
+                                <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="tel" t-model="state.patient.phone" placeholder="Enter mobile phone number" required="required"/>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">school</span>
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Education</label>
+                                <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" t-model="state.patient.education" placeholder="Enter education level"/>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">work</span>
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Occupation</label>
+                                <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" t-model="state.patient.occupation" placeholder="Enter occupation"/>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">business_center</span>
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Other Occupation</label>
+                                <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" t-model="state.patient.otherOccupation" placeholder="Enter other occupation"/>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">favorite</span>
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Marital Status</label>
+                                <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" t-model="state.patient.maritalStatus">
+                                    <option value="">Select Status</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">monitor_heart</span>
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Patient Status</label>
+                                <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" t-model="state.patient.status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                    <option value="Suspend">Suspended</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="w-full mt-8">
+                        <p class="text-gray-600 dark:text-gray-400 font-semibold mb-2">Actions</p>
+                        <button type="submit" t-on-click="onSave" class="w-full bg-custom-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">
+                            Save Patient Data
+                        </button>
+                        <button type="button" t-on-click="onCancel" class="w-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-500 mt-2 transition duration-300">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Detailed Information -->
+            <div class="w-2/3">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md transition-colors duration-300">
+                    <!-- Tab Navigation -->
+                    <div class="border-b border-gray-200 dark:border-gray-700">
+                        <nav class="flex space-x-8 px-6">
+                            <a class="py-4 text-sm font-semibold flex items-center cursor-pointer transition-all duration-200" t-att-class="isTabActive('detail-pasien') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'" href="#" t-on-click.prevent="() => this.onTabClick(null, 'detail-pasien')">
+                                <span class="material-icons mr-2 text-sm">person</span>
+                                <span>Patient Details</span>
+                            </a>
+                            <a class="py-4 text-sm font-semibold flex items-center cursor-pointer transition-all duration-200" t-att-class="isTabActive('insurance') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'" href="#" t-on-click.prevent="() => this.onTabClick(null, 'insurance')">
+                                <span class="material-icons mr-2 text-sm">security</span>
+                                <span>Insurance</span>
+                            </a>
+                            <a class="py-4 text-sm font-semibold flex items-center cursor-pointer transition-all duration-200" t-att-class="isTabActive('appointments') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'" href="#" t-on-click.prevent="() => this.onTabClick(null, 'appointments')">
+                                <span class="material-icons mr-2 text-sm">event_note</span>
+                                <span>Appointments</span>
+                            </a>
+                            <a class="py-4 text-sm font-semibold flex items-center cursor-pointer transition-all duration-200" t-att-class="isTabActive('prescriptions') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'" href="#" t-on-click.prevent="() => this.onTabClick(null, 'prescriptions')">
+                                <span class="material-icons mr-2 text-sm">local_pharmacy</span>
+                                <span>Prescriptions</span>
+                            </a>
+                            <a class="py-4 text-sm font-semibold flex items-center cursor-pointer transition-all duration-200" t-att-class="isTabActive('billing') ? 'text-custom-blue border-b-2 border-custom-blue' : 'text-gray-500 dark:text-gray-400 hover:text-custom-blue hover:border-custom-blue border-b-2 border-transparent'" href="#" t-on-click.prevent="() => this.onTabClick(null, 'billing')">
+                                <span class="material-icons mr-2 text-sm">receipt</span>
+                                <span>Billing History</span>
+                            </a>
+                        </nav>
+                    </div>
+
+                    <div class="p-6 space-y-8">
+                        <!-- Detail Pasien Tab Content -->
+                        <div t-if="state.activeTab === 'detail-pasien'">
+
+                            <!-- General Patient Section -->
+                            <div t-if="state.patientIdentityType === 'general'" class="space-y-8">
+                                <!-- General Patient Identity -->
+                                <div class="space-y-6">
+                                    <div class="flex items-center mb-6">
+                                        <span class="material-icons text-custom-blue mr-3">person</span>
+                                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">General Patient Identity</h3>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="full_name">Full Name <span class="required">*</span>
+                                            </label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="full_name" type="text" t-model="state.patient.name" required="required"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="medical_record_number">Medical Record Number</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="medical_record_number" type="text" t-model="state.patient.mrn"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="nik">National Identity Number (NIK) <span class="required">*</span>
+                                            </label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="nik" type="text" maxlength="16" t-model="state.patient.nik" required="required"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="other_identity_number">Other Identity Number</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="other_identity_number" type="text" t-model="state.patient.otherIdentity"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="mother_full_name">Mother's Full Name <span class="required">*</span>
+                                            </label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="mother_full_name" type="text" t-model="state.patient.motherName" required="required"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="place_of_birth">Place of Birth <span class="required">*</span>
+                                            </label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="place_of_birth" type="text" t-model="state.patient.birthPlace" required="required"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="date_of_birth">Date of Birth <span class="required">*</span>
+                                            </label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="date_of_birth" type="date" t-model="state.patient.birthDate" required="required"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="gender">Gender <span class="required">*</span>
+                                            </label>
+                                            <select class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="gender" t-model="state.patient.gender" required="required">
+                                                <option value="">Select Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="religion">Religion</label>
+                                            <select class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="religion" t-model="state.patient.religion">
+                                                <option value="">Select Religion</option>
+                                                <option value="Islam">Islam</option>
+                                                <option value="Christianity">Christianity</option>
+                                                <option value="Catholicism">Catholicism</option>
+                                                <option value="Hinduism">Hinduism</option>
+                                                <option value="Buddhism">Buddhism</option>
+                                                <option value="Confucianism">Confucianism</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="other_religion">Other Religion</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="other_religion" type="text" t-model="state.patient.otherReligion"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="ethnicity">Ethnicity</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="ethnicity" type="text" t-model="state.patient.ethnicity"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="language_proficiency">Language Proficiency</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="language_proficiency" type="text" t-model="state.patient.languages"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Address from ID/Residence -->
+                                <div class="space-y-6">
+                                    <div class="flex items-center mb-6">
+                                        <span class="material-icons text-custom-blue mr-3">location_on</span>
+                                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Address from ID/Residence</h3>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        <div class="lg:col-span-3">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="full_address_id">Full Address (ID Card) <span class="required">*</span>
+                                            </label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="full_address_id" rows="3" t-model="state.address.fullAddress" required="required"></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="rt_id">Neighborhood / RT (ID Card)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="rt_id" type="text" t-model="state.address.rt"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="rw_id">Community Unit / RW (ID Card)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="rw_id" type="text" t-model="state.address.rw"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="village_id">Village/Sub-district (ID Card)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="village_id" type="text" t-model="state.address.village"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="district_id">District (ID Card)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="district_id" type="text" t-model="state.address.subDistrict"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="city_id">City/Regency (ID Card) <span class="required">*</span>
+                                            </label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="city_id" type="text" t-model="state.address.city" required="required"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="postal_code_id">Postal Code (ID Card)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="postal_code_id" type="text" t-model="state.address.postalCode"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="province_id">Province (ID Card) <span class="required">*</span>
+                                            </label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="province_id" type="text" t-model="state.address.state" required="required"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="country_id">Country (ID Card)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="country_id" type="text" t-model="state.address.country" value="Indonesia"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Current Residence/Domicile -->
+                                <div class="space-y-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <div class="flex items-center">
+                                            <span class="material-icons text-custom-blue mr-3">home</span>
+                                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Current Residence/Domicile</h3>
+                                        </div>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" t-model="state.sameAsIdAddress" class="mr-2 rounded focus:ring-custom-blue text-custom-blue"/>
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">Same as ID Address</span>
+                                        </label>
+                                    </div>
+                                    <div t-if="!state.sameAsIdAddress" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        <div class="lg:col-span-3">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="current_address">Current Address (Domicile)</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="current_address" rows="3" t-model="state.currentAddress.fullAddress"></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="rt_domicile">Neighborhood / RT (Domicile)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="rt_domicile" type="text" t-model="state.currentAddress.rt"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="rw_domicile">Community Unit / RW (Domicile)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="rw_domicile" type="text" t-model="state.currentAddress.rw"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="village_domicile">Village/Sub-district (Domicile)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="village_domicile" type="text" t-model="state.currentAddress.village"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="district_domicile">District (Domicile)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="district_domicile" type="text" t-model="state.currentAddress.subDistrict"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="city_domicile">City/Regency (Domicile)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="city_domicile" type="text" t-model="state.currentAddress.city"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="postal_code_domicile">Postal Code (Domicile)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="postal_code_domicile" type="text" t-model="state.currentAddress.postalCode"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="province_domicile">Province (Domicile)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="province_domicile" type="text" t-model="state.currentAddress.state"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="country_domicile">Country (Domicile)</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="country_domicile" type="text" t-model="state.currentAddress.country" value="Indonesia"/>
+                                        </div>
+                                    </div>
+
+                                    <div t-if="state.sameAsIdAddress" class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 dark:border-blue-600 p-4 rounded-r-lg">
+                                        <p class="text-sm text-blue-800 dark:text-blue-200">Current address will use the same ID card address</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Unknown Patient Section -->
+                            <div t-if="state.patientIdentityType === 'unknown'" class="space-y-6">
+                                <div class="flex items-center mb-6">
+                                    <span class="material-icons text-custom-blue mr-3">help_outline</span>
+                                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Unknown Patient Identity</h3>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="estimated_age">Estimated Age</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="estimated_age" type="number" t-model="state.unknownPatient.estimatedAge"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="location_found">Location Found</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="location_found" type="text" t-model="state.unknownPatient.locationFound"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="date_found">Date Found</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="date_found" type="date" t-model="state.unknownPatient.dateFound"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="responsible_person_name">Responsible Person's Name</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="responsible_person_name" type="text" t-model="state.unknownPatient.responsiblePersonName"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="responsible_person_mobile">Responsible Person's Mobile Number</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="responsible_person_mobile" type="tel" t-model="state.unknownPatient.responsiblePersonMobile"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="relationship_to_patient">Relationship to Patient</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="relationship_to_patient" type="text" t-model="state.unknownPatient.relationshipToPatient"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="other_relationship">Other Relationship</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="other_relationship" type="text" t-model="state.unknownPatient.otherRelationship"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="patient_companion_name">Patient Companion's Name</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="patient_companion_name" type="text" t-model="state.unknownPatient.companionName"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="patient_companion_mobile">Patient Companion's Mobile Number</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="patient_companion_mobile" type="tel" t-model="state.unknownPatient.companionMobile"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Newborn Baby Section -->
+                            <div t-if="state.patientIdentityType === 'newborn'" class="space-y-6">
+                                <div class="flex items-center mb-6">
+                                    <span class="material-icons text-custom-blue mr-3">child_care</span>
+                                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Newborn Baby Identity</h3>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="baby_name">Baby's Name</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="baby_name" type="text" t-model="state.newbornPatient.babyName"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="mother_nik">Mother's National Identity Number (NIK)</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="mother_nik" type="text" t-model="state.newbornPatient.motherNik"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="baby_medical_record">Baby's Medical Record Number</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="baby_medical_record" type="text" t-model="state.newbornPatient.babyMedicalRecord"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="baby_dob">Baby's Date of Birth</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="baby_dob" type="date" t-model="state.newbornPatient.babyDateOfBirth"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="baby_tob">Baby's Time of Birth (HH:MM:SS)</label>
+                                        <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="baby_tob" step="1" type="time" t-model="state.newbornPatient.babyTimeOfBirth"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="baby_gender">Baby's Gender</label>
+                                        <select class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" id="baby_gender" t-model="state.newbornPatient.babyGender">
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Insurance Tab Content -->
+                        <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto"
+                             t-att-class="isTabActive('insurance') ? '' : 'hidden'">
+                            <div class="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 z-10 py-4">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Insurance &amp; Guarantors</h3>
+                                <button
+                                    class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center transition-colors duration-200"
+                                    t-on-click="this.onToggleInsuranceForm">
+                                    <span class="material-icons mr-2 text-base" t-esc="state.showInsuranceForm ? 'remove' : 'add'"></span>
+                                    <span t-esc="state.showInsuranceForm ? 'Cancel' : 'Add Insurance'"></span>
+                                </button>
+                            </div>
+
+                            <!-- Insurance Form -->
+                            <div t-if="state.showInsuranceForm" class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-6">
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-6">Add New Insurance</h4>
+                                
+                                <div class="space-y-6">
+                                    <!-- Insurance Type -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Insurance Type</label>
+                                        <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" t-model="state.newInsurance.type">
+                                            <option value="primary">Primary Insurance</option>
+                                            <option value="secondary">Secondary Insurance</option>
+                                            <option value="guarantor">Guarantor Only</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Insurance Details -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Insurance Provider <span class="text-red-500">*</span></label>
+                                            <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" t-model="state.newInsurance.provider" placeholder="e.g., BPJS Kesehatan"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Policy Number <span class="text-red-500">*</span></label>
+                                            <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" t-model="state.newInsurance.policyNumber" placeholder="Policy number"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Valid From</label>
+                                            <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="date" t-model="state.newInsurance.validFrom"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Valid To</label>
+                                            <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="date" t-model="state.newInsurance.validTo"/>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Coverage Details</label>
+                                        <textarea class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" rows="3" t-model="state.newInsurance.coverage" placeholder="Coverage description"></textarea>
+                                    </div>
+
+                                    <!-- Guarantor Information -->
+                                    <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+                                        <h5 class="text-md font-semibold text-gray-800 dark:text-gray-100 mb-4">Guarantor Information (Optional)</h5>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Guarantor Name</label>
+                                                <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" t-model="state.newInsurance.guarantorName" placeholder="Full name"/>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">National ID</label>
+                                                <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" t-model="state.newInsurance.guarantorId" placeholder="16-digit ID number"/>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number</label>
+                                                <input class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="tel" t-model="state.newInsurance.guarantorPhone" placeholder="+62812345678"/>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Relationship</label>
+                                                <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" t-model="state.newInsurance.guarantorRelationship">
+                                                    <option value="">Select relationship</option>
+                                                    <option value="Father">Father</option>
+                                                    <option value="Mother">Mother</option>
+                                                    <option value="Spouse">Spouse</option>
+                                                    <option value="Sibling">Sibling</option>
+                                                    <option value="Child">Child</option>
+                                                    <option value="Guardian">Guardian</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Address</label>
+                                            <textarea class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" rows="3" t-model="state.newInsurance.guarantorAddress" placeholder="Full address"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!-- Form Actions -->
+                                    <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                        <button t-on-click="this.onCancelInsuranceForm" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-600 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors">
+                                            Cancel
+                                        </button>
+                                        <button t-on-click="this.onSaveInsurance" class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-blue-600 transition-colors">
+                                            Save Insurance
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Insurance Records -->
+                            <div class="space-y-6 pr-2">
+                                <div t-foreach="state.insuranceRecords" t-as="record" t-key="record.id" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <span class="material-icons text-blue-600 dark:text-blue-400" t-esc="record.type === 'primary' ? 'verified' : record.type === 'secondary' ? 'verified_user' : 'family_restroom'"></span>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800 dark:text-gray-100" t-esc="record.type === 'primary' ? 'Primary Insurance' : record.type === 'secondary' ? 'Secondary Insurance' : 'Guarantor Insurance'"></h4>
+                                                <p class="text-sm text-gray-600 dark:text-gray-300" t-esc="record.provider"/>
+                                            </div>
+                                        </div>
+                                        <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Active</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">Insurance Provider</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="record.provider"/>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">Policy Number</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="record.policyNumber"/>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">Valid Period</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="record.validPeriod"/>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">Coverage</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="record.coverage"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Show guarantor info if available -->
+                                    <div t-if="record.guarantor" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Guarantor Information</h5>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                            <div>
+                                                <p class="font-semibold text-gray-600 dark:text-gray-400">Guarantor Name</p>
+                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.name"/>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-gray-600 dark:text-gray-400">National ID</p>
+                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.nationalId"/>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-gray-600 dark:text-gray-400">Phone Number</p>
+                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.phone"/>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-gray-600 dark:text-gray-400">Relationship</p>
+                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.relationship"/>
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <p class="font-semibold text-gray-600 dark:text-gray-400">Address</p>
+                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.address"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex justify-end mt-4">
+                                        <button t-on-click="() => this.onEditInsurance(record)" class="text-custom-blue hover:text-blue-700 text-sm font-medium mr-3">Edit</button>
+                                        <button t-on-click="() => this.onDeleteInsurance(record)" class="text-red-600 hover:text-red-700 text-sm font-medium">Delete</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Empty state when no records -->
+                                <div t-if="!state.insuranceRecords.length" class="text-center py-12">
+                                    <span class="material-icons text-6xl text-gray-400 dark:text-gray-300 mb-4">security</span>
+                                    <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">No Insurance Records</h3>
+                                    <p class="text-gray-500 dark:text-gray-400">Click "Add Insurance" to add a new insurance record</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Appointments Tab Content -->
+                        <div t-if="state.activeTab === 'appointments'">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-6xl text-gray-400 dark:text-gray-300 mb-4">event_note</span>
+                                <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Appointments</h3>
+                                <p class="text-gray-500 dark:text-gray-400">Patient appointments and scheduling will be implemented here</p>
+                            </div>
+                        </div>
+
+                        <!-- Prescriptions Tab Content -->
+                        <div t-if="state.activeTab === 'prescriptions'">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-6xl text-gray-400 dark:text-gray-300 mb-4">local_pharmacy</span>
+                                <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Prescriptions</h3>
+                                <p class="text-gray-500 dark:text-gray-400">Patient prescriptions and medications will be implemented here</p>
+                            </div>
+                        </div>
+
+                        <!-- Billing History Tab Content -->
+                        <div t-if="state.activeTab === 'billing'">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-6xl text-gray-400 dark:text-gray-300 mb-4">receipt</span>
+                                <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Billing History</h3>
+                                <p class="text-gray-500 dark:text-gray-400">Patient billing history and payment records will be implemented here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </t>
+</templates>

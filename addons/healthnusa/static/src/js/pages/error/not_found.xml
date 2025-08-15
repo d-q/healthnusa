@@ -1,0 +1,58 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.NotFound">
+        <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+            <div class="max-w-lg w-full text-center">
+                <!-- 404 Icon -->
+                <div class="mb-8">
+                    <span class="material-icons text-8xl text-gray-400 dark:text-gray-500">error_outline</span>
+                </div>
+                
+                <!-- Error Message -->
+                <h1 class="text-6xl font-bold text-gray-900 dark:text-gray-100 mb-4">404</h1>
+                <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4">Page Not Found</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-2">
+                    The page you're looking for doesn't exist.
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-500 mb-8">
+                    Path: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded" t-esc="invalidPath"/>
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="space-y-3 mb-8">
+                    <button t-on-click="goHome" class="w-full bg-custom-blue hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">
+                        <span class="material-icons mr-2">home</span>
+                        Go to Dashboard
+                    </button>
+                    <button t-on-click="goBack" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">
+                        <span class="material-icons mr-2">arrow_back</span>
+                        Go Back
+                    </button>
+                </div>
+
+                <!-- Suggested Routes -->
+                <div t-if="suggestedRoutes.length > 0" class="border-t border-gray-200 dark:border-gray-700 pt-6">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Maybe you're looking for:</h3>
+                    <div class="space-y-2">
+                        <t t-foreach="suggestedRoutes" t-as="route" t-key="route.id">
+                            <button t-on-click="() => this.navigateToSuggestion(route.id)" class="block w-full text-custom-blue hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 py-2 px-4 rounded-lg transition-colors duration-200">
+                                <t t-esc="route.name"/>
+                            </button>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="mt-8 text-sm text-gray-500 dark:text-gray-400">
+                    <p>Quick access:</p>
+                    <div class="flex flex-wrap justify-center gap-4 mt-2">
+                        <button t-on-click="() => this.navigateToSuggestion('doctor')" class="hover:text-custom-blue transition-colors duration-200">Doctors</button>
+                        <button t-on-click="() => this.navigateToSuggestion('patient')" class="hover:text-custom-blue transition-colors duration-200">Patients</button>
+                        <button t-on-click="() => this.navigateToSuggestion('appointment')" class="hover:text-custom-blue transition-colors duration-200">Appointments</button>
+                        <button t-on-click="() => this.navigateToSuggestion('payment')" class="hover:text-custom-blue transition-colors duration-200">Payments</button>
+                        <button t-on-click="() => this.navigateToSuggestion('room')" class="hover:text-custom-blue transition-colors duration-200">Rooms</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
