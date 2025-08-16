@@ -6,7 +6,8 @@ export class Inventory extends Component {
     static template = "healthnusa.Inventory";
     static props = {
         router: { type: Object, optional: false },
-        selectApp: { type: Function, optional: false }
+        selectApp: { type: Function, optional: false },
+        globalState: { type: Object, optional: true }
     };
 
     setup() {
@@ -130,7 +131,6 @@ export class Inventory extends Component {
                     image: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=100&h=100&fit=crop'
                 }
             ],
-            selectedCategory: 'All Products',
             searchQuery: '',
             searchField: 'all',
             showSearchOptions: false,
@@ -147,20 +147,18 @@ export class Inventory extends Component {
         });
     }
 
-    // Category filter methods
-    onCategoryChange(category) {
-        this.state.selectedCategory = category;
+    getSelectedCategory() {
+        // Get from global state if available, otherwise default to 'Medicines'
+        return this.props.globalState?.inventorySelectedCategory || 'Medicines';
     }
 
     get allFilteredProducts() {
         let filtered = this.state.products;
         
-        // Filter by category
-        if (this.state.selectedCategory !== 'All Products') {
-            filtered = filtered.filter(product => 
-                product.category === this.state.selectedCategory.replace(' Equipment', '')
-            );
-        }
+        // Filter by category - get from global state
+        const selectedCategory = this.getSelectedCategory();
+        // No longer filtering by category as we're showing all products in each category view
+        // The categories now represent different views rather than product filters
 
         // Filter by search query
         if (this.state.searchQuery.trim()) {
@@ -453,5 +451,11 @@ export class Inventory extends Component {
         this.state.searchQuery = '';
         this.state.searchField = 'all';
         this.state.showSearchOptions = false;
+    }
+
+    // Category filter methods - called from header
+    onCategoryChange(category) {
+        // This will be called from the global component
+        // The filtering will use the global state via getSelectedCategory()
     }
 }

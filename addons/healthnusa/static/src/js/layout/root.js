@@ -128,7 +128,8 @@ export class Root extends Component {
             isDarkMode: false,
             isSidebarCollapsed: false,
             showBackButton: false,
-            previousApp: null
+            previousApp: null,
+            inventorySelectedCategory: 'Medicines'
         });
 
         // Listen to route changes
@@ -151,6 +152,7 @@ export class Root extends Component {
 
         // Bind methods to preserve context
         this.selectApp = this.selectApp.bind(this);
+        this.onInventoryCategoryChange = this.onInventoryCategoryChange.bind(this);
 
         onMounted(() => {
             this.router.handleRoute();
@@ -240,6 +242,21 @@ export class Root extends Component {
 
     toggleSidebar() {
         this.state.isSidebarCollapsed = !this.state.isSidebarCollapsed;
+    }
+
+    onInventoryCategoryChange(category) {
+        this.state.inventorySelectedCategory = category;
+        
+        // Find the inventory component instance and update its state
+        const currentComponent = this.currentComponent;
+        if (currentComponent && currentComponent.onCategoryChange) {
+            currentComponent.onCategoryChange(category);
+        }
+    }
+
+    get currentComponent() {
+        // This will be set by the template when rendering the current component
+        return this._currentComponentRef?.component;
     }
 
     onDocumentClick(event) {

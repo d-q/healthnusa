@@ -70,25 +70,6 @@
                     </div>
                 </div>
 
-                <!-- Category Submenu -->
-                <div class="flex items-center space-x-2 mb-6">
-                    <button 
-                        t-on-click="() => this.onCategoryChange('All Products')" 
-                        t-att-class="state.selectedCategory === 'All Products' ? 'btn-standard px-3 text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-custom-blue dark:text-blue-300 rounded-lg transition-all duration-200' : 'btn-standard px-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-custom-blue dark:hover:text-blue-300 rounded-lg transition-all duration-200'">
-                        All Products
-                    </button>
-                    <button 
-                        t-on-click="() => this.onCategoryChange('Medical Equipment')" 
-                        t-att-class="state.selectedCategory === 'Medical Equipment' ? 'btn-standard px-3 text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-custom-blue dark:text-blue-300 rounded-lg transition-all duration-200' : 'btn-standard px-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-custom-blue dark:hover:text-blue-300 rounded-lg transition-all duration-200'">
-                        Medical Equipment
-                    </button>
-                    <button 
-                        t-on-click="() => this.onCategoryChange('Medicines')" 
-                        t-att-class="state.selectedCategory === 'Medicines' ? 'btn-standard px-3 text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-custom-blue dark:text-blue-300 rounded-lg transition-all duration-200' : 'btn-standard px-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-custom-blue dark:hover:text-blue-300 rounded-lg transition-all duration-200'">
-                        Medicines
-                    </button>
-                </div>
-
                 <!-- Table Header -->
                 <div class="grid grid-cols-1 md:grid-cols-6 gap-4 items-center p-4 bg-gray-100 dark:bg-gray-600 rounded-lg font-semibold text-gray-600 dark:text-gray-300">
                     <div class="col-span-1 md:col-span-2 flex items-center space-x-4">
