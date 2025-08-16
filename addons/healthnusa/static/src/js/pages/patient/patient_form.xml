@@ -99,7 +99,8 @@
                     <div class="w-full mt-8">
                         <p class="text-gray-600 dark:text-gray-400 font-semibold mb-2">Actions</p>
                         <button type="submit" t-on-click="onSave" class="w-full bg-custom-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">
-                            Save Patient Data
+                            <span t-if="currentMode === 'edit'">Update Patient Data</span>
+                            <span t-if="currentMode === 'create'">Save Patient Data</span>
                         </button>
                         <button type="button" t-on-click="onCancel" class="w-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-500 mt-2 transition duration-300">
                             Cancel
@@ -514,15 +515,15 @@
                                 </div>
                             </div>
 
-                            <!-- Insurance Records -->
                             <div class="space-y-6 pr-2">
-                                <div t-foreach="state.insuranceRecords" t-as="record" t-key="record.id" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <!-- Health Insurance -->
+                                <div t-if="state.insurance.primary" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                                     <div class="flex items-start justify-between mb-3">
                                         <div class="flex items-center space-x-3">
-                                            <span class="material-icons text-blue-600 dark:text-blue-400" t-esc="record.type === 'primary' ? 'verified' : record.type === 'secondary' ? 'verified_user' : 'family_restroom'"></span>
+                                            <span class="material-icons text-blue-600 dark:text-blue-400">verified</span>
                                             <div>
-                                                <h4 class="font-semibold text-gray-800 dark:text-gray-100" t-esc="record.type === 'primary' ? 'Primary Insurance' : record.type === 'secondary' ? 'Secondary Insurance' : 'Guarantor Insurance'"></h4>
-                                                <p class="text-sm text-gray-600 dark:text-gray-300" t-esc="record.provider"/>
+                                                <h4 class="font-semibold text-gray-800 dark:text-gray-100">Health Insurance</h4>
+                                                <p class="text-sm text-gray-600 dark:text-gray-300">Primary Insurance Coverage</p>
                                             </div>
                                         </div>
                                         <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Active</span>
@@ -530,60 +531,68 @@
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                         <div>
                                             <p class="font-semibold text-gray-600 dark:text-gray-400">Insurance Provider</p>
-                                            <p class="text-gray-800 dark:text-gray-100" t-esc="record.provider"/>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.provider"/>
                                         </div>
                                         <div>
                                             <p class="font-semibold text-gray-600 dark:text-gray-400">Policy Number</p>
-                                            <p class="text-gray-800 dark:text-gray-100" t-esc="record.policyNumber"/>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.policyNumber"/>
                                         </div>
                                         <div>
                                             <p class="font-semibold text-gray-600 dark:text-gray-400">Valid Period</p>
-                                            <p class="text-gray-800 dark:text-gray-100" t-esc="record.validPeriod"/>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.validPeriod"/>
                                         </div>
                                         <div>
                                             <p class="font-semibold text-gray-600 dark:text-gray-400">Coverage</p>
-                                            <p class="text-gray-800 dark:text-gray-100" t-esc="record.coverage"/>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.coverage"/>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Show guarantor info if available -->
-                                    <div t-if="record.guarantor" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
-                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Guarantor Information</h5>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                            <div>
-                                                <p class="font-semibold text-gray-600 dark:text-gray-400">Guarantor Name</p>
-                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.name"/>
-                                            </div>
-                                            <div>
-                                                <p class="font-semibold text-gray-600 dark:text-gray-400">National ID</p>
-                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.nationalId"/>
-                                            </div>
-                                            <div>
-                                                <p class="font-semibold text-gray-600 dark:text-gray-400">Phone Number</p>
-                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.phone"/>
-                                            </div>
-                                            <div>
-                                                <p class="font-semibold text-gray-600 dark:text-gray-400">Relationship</p>
-                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.relationship"/>
-                                            </div>
-                                            <div class="md:col-span-2">
-                                                <p class="font-semibold text-gray-600 dark:text-gray-400">Address</p>
-                                                <p class="text-gray-800 dark:text-gray-100" t-esc="record.guarantor.address"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
                                     <div class="flex justify-end mt-4">
-                                        <button t-on-click="() => this.onEditInsurance(record)" class="text-custom-blue hover:text-blue-700 text-sm font-medium mr-3">Edit</button>
-                                        <button t-on-click="() => this.onDeleteInsurance(record)" class="text-red-600 hover:text-red-700 text-sm font-medium">Delete</button>
+                                        <button t-on-click="this.onEditInsurance" class="text-custom-blue hover:text-blue-700 text-sm font-medium mr-3">Edit</button>
+                                        <button t-on-click="this.onDeleteInsurance" class="text-red-600 hover:text-red-700 text-sm font-medium">Delete</button>
                                     </div>
                                 </div>
-                                
-                                <!-- Empty state when no records -->
-                                <div t-if="!state.insuranceRecords.length" class="text-center py-12">
+
+                                <!-- Family Guarantor -->
+                                <div t-if="state.insurance.guarantor" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <span class="material-icons text-blue-600 dark:text-blue-400">family_restroom</span>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800 dark:text-gray-100">Family Guarantor</h4>
+                                                <p class="text-sm text-gray-600 dark:text-gray-300">Emergency Contact &amp; Guarantor</p>
+                                            </div>
+                                        </div>
+                                        <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">Backup</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">Guarantor Name</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.name"/>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">National ID</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.nationalId"/>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">Phone Number</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.phone"/>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">Relationship</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.relationship"/>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400">Address</p>
+                                            <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.address"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Empty state when no insurance -->
+                                <div t-if="!state.insurance.primary" class="text-center py-12">
                                     <span class="material-icons text-6xl text-gray-400 dark:text-gray-300 mb-4">security</span>
                                     <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">No Insurance Records</h3>
-                                    <p class="text-gray-500 dark:text-gray-400">Click "Add Insurance" to add a new insurance record</p>
+                                    <p class="text-gray-500 dark:text-gray-400">Click "Add Insurance" to add insurance information</p>
                                 </div>
                             </div>
                         </div>

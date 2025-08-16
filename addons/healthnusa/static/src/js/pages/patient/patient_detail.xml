@@ -11,30 +11,60 @@
                         <p class="text-custom-blue font-semibold text-base text-center mb-4" t-esc="'MRN: ' + state.patient.mrn"/>
                         <div class="w-full space-y-3 text-sm text-gray-700 dark:text-gray-300">
                             <div class="flex items-center">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">badge</span>
+                                <div>
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">Patient Identity Type:</div>
+                                    <span t-esc="state.patientIdentityType || '-'"/>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
                                 <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">home</span>
-                                <span t-esc="state.patient.homePhone"/>
+                                <div>
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">Home Phone Number:</div>
+                                    <span t-esc="state.patient.homePhone || '-'"/>
+                                </div>
                             </div>
                             <div class="flex items-center">
                                 <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">phone</span>
-                                <span t-esc="state.patient.phone"/>
+                                <div>
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">Mobile Phone Number:</div>
+                                    <span t-esc="state.patient.phone || '-'"/>
+                                </div>
                             </div>
                             <div class="flex items-center">
                                 <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">school</span>
-                                <span t-esc="state.patient.education"/>
+                                <div>
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">Education:</div>
+                                    <span t-esc="state.patient.education || '-'"/>
+                                </div>
                             </div>
                             <div class="flex items-center">
                                 <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">work</span>
-                                <span t-esc="state.patient.occupation"/>
+                                <div>
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">Occupation:</div>
+                                    <span t-esc="state.patient.occupation || '-'"/>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">business</span>
+                                <div>
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">Other Occupation:</div>
+                                    <span t-esc="state.patient.otherOccupation || '-'"/>
+                                </div>
                             </div>
                             <div class="flex items-center">
                                 <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">favorite</span>
-                                <span t-esc="state.patient.maritalStatus"/>
+                                <div>
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">Marital Status:</div>
+                                    <span t-esc="state.patient.maritalStatus || '-'"/>
+                                </div>
                             </div>
                             <div class="flex items-center">
                                 <span class="material-icons text-gray-500 dark:text-gray-400 mr-3">monitor_heart</span>
-                                <span class="font-medium">Status:</span>
-                                <span
-                                    class="ml-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-semibold px-2 py-1 rounded-full" t-esc="state.patient.status"/>
+                                <div>
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">Patient Status:</div>
+                                    <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-semibold px-2 py-1 rounded-full" t-esc="state.patient.status || '-'"/>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6 w-full space-y-3">
@@ -98,124 +128,214 @@
                     </div>
 
                     <!-- Patient Details Tab -->
-                    <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto pr-2" 
+                    <div class="text-gray-700 dark:text-gray-300" 
                          t-att-class="isTabActive('detail') ? '' : 'hidden'">
-                        <!-- General Information -->
+                        
+                        <!-- General Patient Identity -->
                         <div class="mb-8">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">General Information</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                            <div class="flex items-center mb-4">
+                                <span class="material-icons text-blue-600 dark:text-blue-400 mr-2">person</span>
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">General Patient Identity</h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 text-sm">
                                 <div>
                                     <p class="font-semibold text-gray-600 dark:text-gray-400">Full Name</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.name"/>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.name || '-'"/>
                                 </div>
                                 <div>
                                     <p class="font-semibold text-gray-600 dark:text-gray-400">Medical Record Number</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.mrn"/>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.mrn || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">National ID</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.nik"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">National Identity Number (NIK)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.nik || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Mother's Name</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.motherName"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Other Identity Number</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.otherIdentity || '-'"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Mother's Full Name</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.motherName || '-'"/>
                                 </div>
                                 <div>
                                     <p class="font-semibold text-gray-600 dark:text-gray-400">Place of Birth</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.birthPlace"/>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.birthPlace || '-'"/>
                                 </div>
                                 <div>
                                     <p class="font-semibold text-gray-600 dark:text-gray-400">Date of Birth</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.birthDate"/>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.birthDate || '-'"/>
                                 </div>
                                 <div>
                                     <p class="font-semibold text-gray-600 dark:text-gray-400">Gender</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.gender"/>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.gender || '-'"/>
                                 </div>
                                 <div>
                                     <p class="font-semibold text-gray-600 dark:text-gray-400">Religion</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.religion"/>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.religion || '-'"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Other Religion</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.otherReligion || '-'"/>
                                 </div>
                                 <div>
                                     <p class="font-semibold text-gray-600 dark:text-gray-400">Ethnicity</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.ethnicity"/>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.ethnicity || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Languages</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.languages"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Language Proficiency</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.patient.languages || '-'"/>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Address Information -->
+                        <!-- Address from ID/Residence -->
                         <div class="mb-8">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Address as Per ID Card</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
-                                <div class="md:col-span-2">
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Full Address</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.fullAddress"/>
+                            <div class="flex items-center mb-4">
+                                <span class="material-icons text-blue-600 dark:text-blue-400 mr-2">location_on</span>
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Address from ID/Residence</h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 text-sm">
+                                <div class="md:col-span-3">
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Full Address (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.fullAddress || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">RT/RW</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.rtRw"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Neighborhood / RT (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.rt || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Village/District</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.village"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Community Unit / RW (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.rw || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Sub-district</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.subDistrict"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Village/Sub-district (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.village || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">City/Regency</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.city"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">District (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.subDistrict || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Postal Code</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.postalCode"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">City/Regency (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.city || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">State/Province</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.state"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Postal Code (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.postalCode || '-'"/>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Country</p>
-                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.country"/>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Province (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.state || '-'"/>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-600 dark:text-gray-400">Country (ID Card)</p>
+                                    <p class="text-gray-800 dark:text-gray-100" t-esc="state.address.country || '-'"/>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Current Residence -->
+                        <!-- Current Residence/Domicile -->
                         <div class="mb-8">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Current Residence</h3>
+                            <div class="flex items-center mb-4">
+                                <span class="material-icons text-blue-600 dark:text-blue-400 mr-2">home</span>
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Alamat Domisili Saat Ini</h3>
+                            </div>
                             <div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-400 dark:border-blue-600 p-4 rounded-r-lg mb-4">
-                                <p class="text-sm text-blue-800 dark:text-blue-200">Current address is the same as registered address</p>
+                                <p class="text-sm text-blue-800 dark:text-blue-200">Alamat domisili sama dengan alamat KTP</p>
                             </div>
                         </div>
 
 
-                        <!-- Allergy History -->
-                        <div class="mb-8">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Allergy History</h3>
-                            <div class="space-y-3 text-sm">
-                                <t t-foreach="state.allergies" t-as="allergy" t-key="allergy.id">
-                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                        <div class="flex items-center space-x-3 mb-2">
-                                            <span t-att-class="'material-icons text-' + allergy.iconColor + '-600 dark:text-' + allergy.iconColor + '-400'" t-esc="allergy.icon"/>
-                                            <h4 class="font-semibold text-gray-800 dark:text-gray-100" t-esc="allergy.name"/>
+                    </div>
+
+                    <!-- Insurance Tab -->
+                    <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto"
+                         t-att-class="isTabActive('insurance') ? '' : 'hidden'">
+                        <div class="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 z-10 py-4">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Insurance &amp; Guarantors</h3>
+                            <button
+                                class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center transition-colors duration-200"
+                                t-on-click="this.onAddInsurance">
+                                <span class="material-icons mr-2 text-base">add</span> Add Insurance
+                            </button>
+                        </div>
+
+                        <div class="space-y-6 pr-2">
+                            <!-- Health Insurance -->
+                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="material-icons text-blue-600 dark:text-blue-400">verified</span>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-800 dark:text-gray-100">Health Insurance</h4>
+                                            <p class="text-sm text-gray-600 dark:text-gray-300">Primary Insurance Coverage</p>
                                         </div>
-                                        <p class="text-gray-600 dark:text-gray-300 ml-9" t-esc="allergy.reaction"/>
                                     </div>
-                                </t>
+                                    <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Active</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Insurance Provider</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.provider || '-'"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Policy Number</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.policyNumber || '-'"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Valid Period</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.validPeriod || '-'"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Coverage</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.coverage || '-'"/>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end mt-4">
+                                    <button
+                                        class="text-custom-blue hover:text-blue-700 text-sm font-medium">Edit</button>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Important Medical Notes -->
-                        <div class="mb-8">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Important Medical Notes</h3>
-                            <div class="bg-yellow-50 dark:bg-yellow-900 border-l-4 border-yellow-400 dark:border-yellow-600 p-4 rounded-r-lg">
-                                <p class="text-sm text-yellow-800 dark:text-yellow-200" t-esc="state.medicalNotes"/>
+                            <!-- Family Guarantor -->
+                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="material-icons text-blue-600 dark:text-blue-400">family_restroom</span>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-800 dark:text-gray-100">Family Guarantor</h4>
+                                            <p class="text-sm text-gray-600 dark:text-gray-300">Emergency Contact &amp; Guarantor</p>
+                                        </div>
+                                    </div>
+                                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">Backup</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Guarantor Name</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.name || '-'"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">National ID</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.nationalId || '-'"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Phone Number</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.phone || '-'"/>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Relationship</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.relationship || '-'"/>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Address</p>
+                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.address || '-'"/>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end mt-4">
+                                    <button
+                                        class="text-custom-blue hover:text-blue-700 text-sm font-medium">Edit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -393,96 +513,6 @@
                         </div>
                     </div>
 
-                    <!-- Insurance Tab -->
-                    <div class="text-gray-700 dark:text-gray-300 max-h-[calc(100vh-250px)] overflow-y-auto"
-                         t-att-class="isTabActive('insurance') ? '' : 'hidden'">
-                        <div class="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 z-10 py-4">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Insurance &amp; Guarantors</h3>
-                            <button
-                                class="bg-custom-blue text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue flex items-center justify-center transition-colors duration-200"
-                                t-on-click="this.onAddInsurance">
-                                <span class="material-icons mr-2 text-base">add</span> Add Insurance
-                            </button>
-                        </div>
-
-                        <div class="space-y-6 pr-2">
-                            <!-- Health Insurance -->
-                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                <div class="flex items-start justify-between mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <span class="material-icons text-blue-600 dark:text-blue-400">verified</span>
-                                        <div>
-                                            <h4 class="font-semibold text-gray-800 dark:text-gray-100">Health Insurance</h4>
-                                            <p class="text-sm text-gray-600 dark:text-gray-300">Primary Insurance Coverage</p>
-                                        </div>
-                                    </div>
-                                    <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">Active</span>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Insurance Provider</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.provider"/>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Policy Number</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.policyNumber"/>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Valid Period</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.validPeriod"/>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Coverage</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.primary.coverage"/>
-                                    </div>
-                                </div>
-                                <div class="flex justify-end mt-4">
-                                    <button
-                                        class="text-custom-blue hover:text-blue-700 text-sm font-medium">Edit</button>
-                                </div>
-                            </div>
-
-                            <!-- Family Guarantor -->
-                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                <div class="flex items-start justify-between mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <span class="material-icons text-blue-600 dark:text-blue-400">family_restroom</span>
-                                        <div>
-                                            <h4 class="font-semibold text-gray-800 dark:text-gray-100">Family Guarantor</h4>
-                                            <p class="text-sm text-gray-600 dark:text-gray-300">Emergency Contact &amp; Guarantor</p>
-                                        </div>
-                                    </div>
-                                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">Backup</span>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Guarantor Name</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.name"/>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">National ID</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.nationalId"/>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Phone Number</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.phone"/>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Relationship</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.relationship"/>
-                                    </div>
-                                    <div class="md:col-span-2">
-                                        <p class="font-semibold text-gray-600 dark:text-gray-400">Address</p>
-                                        <p class="text-gray-800 dark:text-gray-100" t-esc="state.insurance.guarantor.address"/>
-                                    </div>
-                                </div>
-                                <div class="flex justify-end mt-4">
-                                    <button
-                                        class="text-custom-blue hover:text-blue-700 text-sm font-medium">Edit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

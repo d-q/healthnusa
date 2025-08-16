@@ -22,7 +22,7 @@ import { PatientForm } from "../pages/patient/patient_form";
 import { Payment } from "../pages/payment/payment"
 import { NotFound } from "../pages/error/not_found";
 import { Profile } from "../pages/profile/profile";
-import { Room } from "../pages/room/room";
+import { Inventory } from "../pages/inventory/inventory";
 import { Staff } from "../pages/staff/staff";
 import { Settings } from "../pages/settings/settings";
 
@@ -47,7 +47,7 @@ export class Root extends Component {
 
         Payment,
         Profile,
-        Room,
+        Inventory,
         Staff,
         Settings,
         NotFound,
@@ -62,7 +62,7 @@ export class Root extends Component {
             { id: "doctor", icon: "badge", name: "Doctor", Component: Doctor, category: "Service" },
             { id: "patient", icon: "personal_injury", name: "Patient", Component: Patient, category: "Service" },
             { id: "payment", icon: "payments", name: "Payment", Component: Payment, category: "Service" },
-            { id: "room", icon: "king_bed", name: "Room", Component: Room, category: "Service" },
+            { id: "inventory", icon: "inventory_2", name: "Inventory", Component: Inventory, category: "Service" },
             { id: "profile", icon: "person", name: "Profile", Component: Profile, category: "Menu" },
             { id: "settings", icon: "settings", name: "Settings", Component: Settings, category: "Menu" },
         ];

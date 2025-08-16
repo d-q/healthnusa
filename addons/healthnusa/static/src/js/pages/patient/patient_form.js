@@ -16,10 +16,22 @@ export class PatientForm extends Component {
         this.mode = this.props.mode || 'create';
         this.patientId = this.props.patientId;
 
+        // Determine mode based on current route
+        const currentPath = window.location.pathname;
+        const isNewPatient = currentPath.includes('/patient/new');
+        const isEditPatient = currentPath.includes('/patient/edit');
+        
+        // Set mode based on route
+        if (isNewPatient) {
+            this.mode = 'create';
+        } else if (isEditPatient) {
+            this.mode = 'edit';
+        }
+
         this.state = useState({
             patient: {
                 name: '',
-                mrn: this.generateMRN(),
+                mrn: isNewPatient ? this.generateMRN() : '',
                 nik: '',
                 title: '',
                 otherIdentity: '',
@@ -108,14 +120,23 @@ export class PatientForm extends Component {
                 babyTimeOfBirth: '',
                 babyGender: ''
             },
-            insuranceRecords: []
+            insurance: {
+                primary: null,
+                guarantor: null
+            }
         });
 
         onMounted(() => {
-            if (this.mode === 'edit' && this.patientId) {
+            if (this.mode === 'edit') {
                 this.loadPatientData();
+            } else if (this.mode === 'create') {
+                this.initializeNewPatientForm();
             }
         });
+    }
+
+    get currentMode() {
+        return this.mode;
     }
 
     get formTitle() {
@@ -127,6 +148,95 @@ export class PatientForm extends Component {
         const timestamp = Date.now().toString().slice(-6);
         const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
         return `${prefix}${timestamp}${random}`;
+    }
+
+    initializeNewPatientForm() {
+        // Ensure all fields are empty for new patient form
+        Object.assign(this.state.patient, {
+            name: '',
+            mrn: this.generateMRN(),
+            nik: '',
+            title: '',
+            otherIdentity: '',
+            motherName: '',
+            birthPlace: '',
+            birthDate: '',
+            gender: '',
+            religion: '',
+            otherReligion: '',
+            ethnicity: '',
+            languages: '',
+            nationality: '',
+            bloodType: '',
+            maritalStatus: '',
+            education: '',
+            occupation: '',
+            otherOccupation: '',
+            phone: '',
+            homePhone: '',
+            email: '',
+            emergencyContactName: '',
+            emergencyContactPhone: '',
+            emergencyContactRelationship: '',
+            status: 'Active',
+            profileImage: ''
+        });
+
+        Object.assign(this.state.address, {
+            fullAddress: '',
+            rt: '',
+            rw: '',
+            village: '',
+            subDistrict: '',
+            city: '',
+            state: '',
+            postalCode: '',
+            country: 'Indonesia'
+        });
+
+        Object.assign(this.state.currentAddress, {
+            fullAddress: '',
+            rt: '',
+            rw: '',
+            village: '',
+            subDistrict: '',
+            city: '',
+            state: '',
+            postalCode: '',
+            country: 'Indonesia'
+        });
+
+        this.state.allergies = [];
+        this.state.medicalNotes = '';
+        this.state.sameAsIdAddress = true;
+        this.state.patientIdentityType = 'general';
+        this.state.activeTab = 'detail-pasien';
+        this.state.errors = {};
+        this.state.insurance.primary = null;
+        this.state.insurance.guarantor = null;
+
+        // Reset unknown patient data
+        Object.assign(this.state.unknownPatient, {
+            estimatedAge: '',
+            locationFound: '',
+            dateFound: '',
+            responsiblePersonName: '',
+            responsiblePersonMobile: '',
+            relationshipToPatient: '',
+            otherRelationship: '',
+            companionName: '',
+            companionMobile: ''
+        });
+
+        // Reset newborn patient data
+        Object.assign(this.state.newbornPatient, {
+            babyName: '',
+            motherNik: '',
+            babyMedicalRecord: '',
+            babyDateOfBirth: '',
+            babyTimeOfBirth: '',
+            babyGender: ''
+        });
     }
 
     async loadPatientData() {
@@ -440,10 +550,8 @@ export class PatientForm extends Component {
             return;
         }
 
-        // Create new insurance record
-        const newRecord = {
-            id: Date.now(), // Simple ID generation
-            type: this.state.newInsurance.type,
+        // Save insurance data
+        this.state.insurance.primary = {
             provider: this.state.newInsurance.provider,
             policyNumber: this.state.newInsurance.policyNumber,
             validPeriod: this.state.newInsurance.validFrom && this.state.newInsurance.validTo 
@@ -452,9 +560,9 @@ export class PatientForm extends Component {
             coverage: this.state.newInsurance.coverage || 'Not specified'
         };
 
-        // Add guarantor if provided
+        // Save guarantor if provided
         if (this.state.newInsurance.guarantorName) {
-            newRecord.guarantor = {
+            this.state.insurance.guarantor = {
                 name: this.state.newInsurance.guarantorName,
                 nationalId: this.state.newInsurance.guarantorId,
                 phone: this.state.newInsurance.guarantorPhone,
@@ -463,37 +571,35 @@ export class PatientForm extends Component {
             };
         }
 
-        // Add to the beginning of the array (top of the list)
-        this.state.insuranceRecords.unshift(newRecord);
-
         this.state.showInsuranceForm = false;
     }
 
-    onEditInsurance(record) {
-        // Populate form with existing record data
-        this.state.newInsurance = {
-            type: record.type,
-            provider: record.provider,
-            policyNumber: record.policyNumber,
-            validFrom: record.validPeriod.split(' - ')[0] || '',
-            validTo: record.validPeriod.split(' - ')[1] || '',
-            coverage: record.coverage,
-            guarantorName: record.guarantor?.name || '',
-            guarantorId: record.guarantor?.nationalId || '',
-            guarantorPhone: record.guarantor?.phone || '',
-            guarantorRelationship: record.guarantor?.relationship || '',
-            guarantorAddress: record.guarantor?.address || ''
-        };
-        
-        // Remove the old record and show form for editing
-        this.onDeleteInsurance(record);
-        this.state.showInsuranceForm = true;
+    onEditInsurance() {
+        // Populate form with existing insurance data
+        if (this.state.insurance.primary) {
+            this.state.newInsurance = {
+                type: 'primary',
+                provider: this.state.insurance.primary.provider,
+                policyNumber: this.state.insurance.primary.policyNumber,
+                validFrom: this.state.insurance.primary.validPeriod.split(' - ')[0] || '',
+                validTo: this.state.insurance.primary.validPeriod.split(' - ')[1] || '',
+                coverage: this.state.insurance.primary.coverage,
+                guarantorName: this.state.insurance.guarantor?.name || '',
+                guarantorId: this.state.insurance.guarantor?.nationalId || '',
+                guarantorPhone: this.state.insurance.guarantor?.phone || '',
+                guarantorRelationship: this.state.insurance.guarantor?.relationship || '',
+                guarantorAddress: this.state.insurance.guarantor?.address || ''
+            };
+            
+            // Clear existing data for editing
+            this.state.insurance.primary = null;
+            this.state.insurance.guarantor = null;
+            this.state.showInsuranceForm = true;
+        }
     }
 
-    onDeleteInsurance(record) {
-        const index = this.state.insuranceRecords.findIndex(r => r.id === record.id);
-        if (index > -1) {
-            this.state.insuranceRecords.splice(index, 1);
-        }
+    onDeleteInsurance() {
+        this.state.insurance.primary = null;
+        this.state.insurance.guarantor = null;
     }
 }
