@@ -1,0 +1,348 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.Supplies">
+        <!-- Main Content -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow transition-colors duration-300">
+            <div class="sticky top-0 z-10 bg-white dark:bg-gray-800 p-6 rounded-t-2xl border-b border-gray-200 dark:border-gray-700">
+                <!-- Top Controls Row -->
+                <div class="flex justify-between items-center mb-6">
+                    <!-- Left Side - Add Button -->
+                    <div class="flex items-center">
+                        <button t-on-click="addNewSupply" class="btn-standard bg-custom-blue hover:bg-blue-600 text-white font-medium px-5 rounded-lg transition-colors duration-200 shadow-sm">
+                            <span class="material-icons mr-2 text-lg">add</span> Add Supply
+                        </button>
+                    </div>
+
+                    <!-- Center - Search Bar -->
+                    <div class="flex items-center focus-within:ring-2 focus-within:ring-custom-blue border border-gray-300 dark:border-gray-600 rounded-lg transition-colors duration-300 min-w-80 w-96">
+                        <div class="relative flex-1">
+                            <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">search</span>
+                            <input t-on-input="onSearchChange" class="pl-10 pr-4 py-2 border-0 rounded-l-lg focus:outline-none focus:ring-0 h-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-colors duration-300 w-full" placeholder="Search supplies..." type="text" t-model="state.searchQuery" />
+                        </div>
+                        <div class="relative border-l border-gray-300 dark:border-gray-600">
+                            <button t-on-click="toggleSearchOptions" class="btn-standard px-3 rounded-r-lg bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm text-gray-600 dark:text-gray-300 transition-colors duration-300 focus:outline-none">
+                                <span class="material-icons text-sm">view_list</span>
+                            </button>
+
+                            <!-- Search Filter Dropdown -->
+                            <div t-if="state.showSearchOptions" class="search-filter-menu absolute right-0 top-full mt-1 w-56 bg-white dark:bg-gray-700 rounded-md shadow-lg z-20 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-600">
+                                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Search in:</h3>
+                                </div>
+                                <div class="py-2">
+                                    <label class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                        <input type="radio" name="searchField" value="all" t-model="state.searchField" class="mr-3 text-custom-blue"/>
+                                        <span class="text-sm text-gray-700 dark:text-gray-200">All Fields</span>
+                                    </label>
+                                    <label class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                        <input type="radio" name="searchField" value="name" t-model="state.searchField" class="mr-3 text-custom-blue"/>
+                                        <span class="text-sm text-gray-700 dark:text-gray-200">Name</span>
+                                    </label>
+                                    <label class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                        <input type="radio" name="searchField" value="code" t-model="state.searchField" class="mr-3 text-custom-blue"/>
+                                        <span class="text-sm text-gray-700 dark:text-gray-200">Code</span>
+                                    </label>
+                                    <label class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                        <input type="radio" name="searchField" value="category" t-model="state.searchField" class="mr-3 text-custom-blue"/>
+                                        <span class="text-sm text-gray-700 dark:text-gray-200">Category</span>
+                                    </label>
+                                    <label class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200">
+                                        <input type="radio" name="searchField" value="status" t-model="state.searchField" class="mr-3 text-custom-blue"/>
+                                        <span class="text-sm text-gray-700 dark:text-gray-200">Status</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side - Data Count and Navigation Controls -->
+                    <div class="flex items-center space-x-4">
+                        <div class="text-sm text-gray-600 dark:text-gray-300 font-medium">
+                            <t t-esc="paginationInfo"/>
+                        </div>
+                        <div class="flex items-center bg-gray-100 dark:bg-gray-600 rounded-lg p-1 transition-colors duration-300">
+                            <button t-on-click="prevPage" class="btn-standard rounded-lg w-10 transition-colors duration-300" t-att-class="getPrevButtonClass()" t-att-disabled="state.currentPage === 1">
+                                <span class="material-icons" t-att-class="getPrevIconClass()">chevron_left</span>
+                            </button>
+                            <button t-on-click="nextPage" class="btn-standard rounded-lg w-10 transition-colors duration-300" t-att-class="getNextButtonClass()" t-att-disabled="state.currentPage === totalPages || totalPages === 0">
+                                <span class="material-icons" t-att-class="getNextIconClass()">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Header -->
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-4 items-center p-4 bg-gray-100 dark:bg-gray-600 rounded-lg font-semibold text-gray-600 dark:text-gray-300">
+                    <div class="col-span-1 md:col-span-2 flex items-center space-x-4">
+                        <input type="checkbox" class="w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        <button t-on-click="() => this.sortData('name')" class="sort-btn flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group">
+                            <span class="text-sm">Supply Information</span>
+                            <span class="material-icons text-sm" t-esc="getSortIcon('name')"></span>
+                        </button>
+                    </div>
+                    <div class="col-span-1">
+                        <button t-on-click="() => this.sortData('vendor')" class="sort-btn flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group">
+                            <span class="text-sm">Vendor</span>
+                            <span class="material-icons text-sm" t-esc="getSortIcon('vendor')"></span>
+                        </button>
+                    </div>
+                    <div class="col-span-1">
+                        <button t-on-click="() => this.sortData('price')" class="sort-btn flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group">
+                            <span class="text-sm">Price / Stock</span>
+                            <span class="material-icons text-sm" t-esc="getSortIcon('price')"></span>
+                        </button>
+                    </div>
+                    <div class="col-span-1">
+                        <button t-on-click="() => this.sortData('status')" class="sort-btn flex items-center space-x-1 hover:text-custom-blue transition-colors duration-200 group">
+                            <span class="text-sm">Status</span>
+                            <span class="material-icons text-sm" t-esc="getSortIcon('status')"></span>
+                        </button>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <span class="text-sm">Actions</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable Data List Container -->
+            <div class="p-6 pt-2">
+                <div class="space-y-2 data-list-container">
+
+                    <!-- Loop through current page data -->
+                    <t t-foreach="filteredSupplies" t-as="supply" t-key="supply.id">
+                        <div class="p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-lg dark:shadow-gray-600/50 hover:shadow-xl dark:hover:shadow-gray-500/50 transition-shadow duration-200 grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+
+                            <!-- Supply Information Column -->
+                            <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
+                                <input type="checkbox" class="data-checkbox w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" t-att-data-id="supply.id" />
+                                <img t-att-alt="supply.name" class="w-12 h-12 rounded-full" t-att-src="supply.image" />
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100" t-esc="supply.name"></p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">SKU: <t t-esc="supply.sku"/></p>
+                                </div>
+                            </div>
+
+                            <!-- Vendor Column -->
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Vendor</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100" t-esc="supply.vendor"></p>
+                            </div>
+
+                            <!-- Price/Stock Column -->
+                            <div class="col-span-1">
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Price / Stock</p>
+                                <p class="font-semibold text-gray-800 dark:text-gray-100">$<t t-esc="supply.price.toFixed(2)"/></p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400"><t t-esc="supply.stock"/> units</p>
+                            </div>
+
+                            <!-- Status Column -->
+                            <div class="col-span-1">
+                                <span class="text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center" t-att-class="getStatusClass(supply.status)">
+                                    <span class="w-2 h-2 rounded-full mr-2" t-att-class="getStatusColor(supply.status)"></span>
+                                    <t t-esc="supply.status"/>
+                                </span>
+                            </div>
+
+                            <!-- Actions Column -->
+                            <div class="flex items-center justify-end space-x-2 col-span-1">
+                                <button t-on-click="() => this.toggleSupplyDetails(supply.id)" class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10" title="View Details">
+                                    <span class="material-icons" t-esc="isSupplyExpanded(supply.id) ? 'visibility_off' : 'visibility'"></span>
+                                </button>
+                                <button t-on-click="() => this.editSupply(supply.id)" class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10" title="Edit">
+                                    <span class="material-icons">edit</span>
+                                </button>
+                                <div class="relative">
+                                    <button t-on-click="toggleActionMenu" class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300" title="More Actions">
+                                        <span class="material-icons">more_vert</span>
+                                    </button>
+
+                                    <!-- Dropdown Menu for Actions -->
+                                    <div class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200" href="#">
+                                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">print</span>Print
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200" href="#">
+                                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200" href="#">
+                                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive
+                                        </a>
+                                        <hr class="border-gray-200 dark:border-gray-600 my-1"/>
+                                        <a t-on-click="() => this.deleteSupply(supply.id)" class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200 cursor-pointer">
+                                            <span class="material-icons text-red-500 dark:text-red-400 mr-3 text-base">delete_outline</span>Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expandable Detail Section -->
+                        <div t-if="isSupplyExpanded(supply.id)" class="mt-2 p-6 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 transition-colors duration-300">
+                            <div class="flex gap-6">
+                                <!-- Supply Image Section -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-40 h-40 bg-gray-200 dark:bg-gray-600 rounded-lg border-2 border-custom-blue overflow-hidden flex items-center justify-center shadow-sm">
+                                        <img t-att-src="supply.image" t-att-alt="supply.name" class="w-full h-full object-cover"/>
+                                    </div>
+                                    <div class="text-center mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                        Supply Image
+                                    </div>
+                                    <div class="mt-2">
+                                        <button class="text-custom-blue text-sm hover:text-blue-600 flex items-center transition-colors">
+                                            <span class="material-icons text-sm mr-1">add</span>Add image
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Form Fields Section -->
+                                <div class="flex-1">
+                                    <!-- First Row: Supply Name, Price, Category -->
+                                    <div class="grid grid-cols-3 gap-6 mb-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Supply Name</label>
+                                            <input type="text" 
+                                                   t-att-value="supply.fullName" 
+                                                   t-att-disabled="!isSupplyEditing(supply.id)"
+                                                   t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                   t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'fullName', ev.target.value)"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Price</label>
+                                            <div class="flex items-center space-x-2">
+                                                <input type="number" 
+                                                       t-att-value="supply.price" 
+                                                       t-att-disabled="!isSupplyEditing(supply.id)"
+                                                       t-att-class="'w-24 p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                       t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'price', parseFloat(ev.target.value))"/>
+                                                <span class="text-green-600 dark:text-green-400 text-sm font-medium bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded">
+                                                    <t t-esc="calculateProfitMargin(supply)"/>%
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Category</label>
+                                            <select t-att-disabled="!isSupplyEditing(supply.id)"
+                                                    t-att-value="supply.category"
+                                                    t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                    t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'category', ev.target.value)">
+                                                <option value="Medical Equipment">Medical Equipment</option>
+                                                <option value="Disposables">Disposables</option>
+                                                <option value="Consumables">Consumables</option>
+                                                <option value="Office Supplies">Office Supplies</option>
+                                                <option value="Maintenance">Maintenance</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Second Row: SKU, Stock, Cost, Vendor -->
+                                    <div class="grid grid-cols-4 gap-4 mb-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">SKU</label>
+                                            <input type="text" 
+                                                   t-att-value="supply.sku" 
+                                                   t-att-disabled="!isSupplyEditing(supply.id)"
+                                                   t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                   t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'sku', ev.target.value)"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Stock</label>
+                                            <input type="number" 
+                                                   t-att-value="supply.stock" 
+                                                   t-att-disabled="!isSupplyEditing(supply.id)"
+                                                   t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                   t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'stock', parseInt(ev.target.value))"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Cost</label>
+                                            <input type="number" 
+                                                   t-att-value="supply.cost" 
+                                                   t-att-disabled="!isSupplyEditing(supply.id)"
+                                                   t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                   t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'cost', parseFloat(ev.target.value))"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Vendor</label>
+                                            <input type="text" 
+                                                   t-att-value="supply.vendor" 
+                                                   t-att-disabled="!isSupplyEditing(supply.id)"
+                                                   t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                   t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'vendor', ev.target.value)"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Third Row: Expiry Date, Barcode, Status -->
+                                    <div class="grid grid-cols-3 gap-6 mb-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Expiry Date</label>
+                                            <input type="date" 
+                                                   t-att-value="supply.expiryDate" 
+                                                   t-att-disabled="!isSupplyEditing(supply.id)"
+                                                   t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                   t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'expiryDate', ev.target.value)"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Barcode</label>
+                                            <input type="text" 
+                                                   t-att-value="supply.barcode" 
+                                                   t-att-disabled="!isSupplyEditing(supply.id)"
+                                                   t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                   t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'barcode', ev.target.value)"/>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Status</label>
+                                            <select t-att-disabled="!isSupplyEditing(supply.id)"
+                                                    t-att-value="supply.status"
+                                                    t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                    t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'status', ev.target.value)">
+                                                <option t-att-selected="supply.status === 'In-Stock'" value="In-Stock">In-Stock</option>
+                                                <option t-att-selected="supply.status === 'Low-Stock'" value="Low-Stock">Low-Stock</option>
+                                                <option t-att-selected="supply.status === 'Out-of-Stock'" value="Out-of-Stock">Out-of-Stock</option>
+                                                <option t-att-selected="supply.status === 'Emergency'" value="Emergency">Emergency</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Description -->
+                                    <div class="mb-6">
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Description</label>
+                                        <textarea t-att-disabled="!isSupplyEditing(supply.id)"
+                                                  t-att-value="supply.description"
+                                                  t-att-class="'w-full p-3 border rounded-lg text-sm transition-colors ' + (isSupplyEditing(supply.id) ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm hover:border-gray-400 dark:hover:border-gray-500' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed')"
+                                                  rows="3"
+                                                  t-on-change="(ev) => this.onSupplyFieldChange(supply.id, 'description', ev.target.value)"></textarea>
+                                    </div>
+
+                                    <!-- Save and Cancel Buttons -->
+                                    <div class="flex justify-end items-center space-x-3 pt-4 border-t border-gray-200 dark:border-gray-600">
+                                        <button t-on-click="() => this.cancelEdit(supply.id)" class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 transition-colors duration-200">
+                                            <span class="material-icons text-lg mr-2">close</span>
+                                            <span class="text-sm font-medium" t-esc="isSupplyEditing(supply.id) ? 'Cancel' : 'Close'"/>
+                                        </button>
+                                        <button t-on-click="() => this.saveSupply(supply.id)" 
+                                                t-att-class="'flex items-center px-3 py-2 text-white rounded-lg transition-colors duration-200 ' + (isSupplyEditing(supply.id) ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700')">
+                                            <span class="material-icons text-lg mr-2" t-esc="isSupplyEditing(supply.id) ? 'save' : 'edit'"/>
+                                            <span class="text-sm font-medium" t-esc="isSupplyEditing(supply.id) ? 'Save' : 'Update'"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <!-- Empty State - No Data Found -->
+                    <div t-if="filteredSupplies.length === 0" class="text-center py-12">
+                        <div class="text-gray-400 dark:text-gray-500 text-lg mb-4">
+                            <span class="material-icons text-6xl opacity-50">search_off</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-2">No supplies found</h3>
+                        <p class="text-gray-500 dark:text-gray-400">
+                            <span t-if="state.searchQuery">No supplies match your search criteria for "<t t-esc="state.searchQuery"/>".
+                            </span>
+                            <span t-else="">Try adjusting your search terms or filters.</span>
+                        </p>
+                        <button t-if="state.searchQuery" t-on-click="clearSearch" class="mt-4 btn-standard bg-custom-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200">Clear Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

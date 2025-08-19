@@ -1,0 +1,320 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.StaffForm">
+        <div class="flex gap-8">
+            <div class="w-1/3">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center transition-colors duration-300">
+                    <div class="relative mb-4">
+                        <!-- Show image if exists, otherwise show person icon -->
+                        <div t-if="state.staff.image" class="w-36 h-36 rounded-full overflow-hidden">
+                            <img alt="Staff profile picture" class="w-full h-full object-cover" t-att-src="state.staff.image" />
+                        </div>
+                        <div t-else="" class="w-36 h-36 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
+                            <span class="material-icons text-gray-400 dark:text-gray-300" style="font-size: 4rem;">person</span>
+                        </div>
+                        <label class="absolute bottom-0 right-0 bg-blue-500 p-2 rounded-full text-white hover:bg-blue-600 transition-colors duration-200 cursor-pointer">
+                            <span class="material-icons text-base">edit</span>
+                            <input type="file" accept="image/*" t-on-change="onImageUpload" class="hidden"/>
+                        </label>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100" t-esc="state.staff.name"></h2>
+                    <p class="text-blue-500 mb-6" t-esc="departmentDisplay"></p>
+                    <div class="w-full space-y-4 text-sm">
+                        <!-- Employment Information -->
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">badge</span>
+                                <div class="w-full">
+                                    <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Employee ID</p>
+                                    <div class="flex space-x-2">
+                                        <input class="flex-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                               type="text" 
+                                               t-att-value="state.staff.employeeId"
+                                               t-on-input="(e) => onInputChange('employeeId', e)"
+                                               placeholder="EMP-YYYY-XXX"/>
+                                        <button t-if="!isEditMode" t-on-click="generateEmployeeId" 
+                                                class="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200">
+                                            <span class="material-icons text-sm">refresh</span>
+                                        </button>
+                                    </div>
+                                    <p t-if="state.errors.employeeId" class="mt-1 text-sm text-red-600 dark:text-red-400" t-esc="state.errors.employeeId"></p>
+                                </div>
+                                    </div>
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">domain</span>
+                                <div class="w-full">
+                                    <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Department</p>
+                                    <div class="relative">
+                                        <select class="w-full p-2 pr-8 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none"
+                                                t-att-value="state.staff.department"
+                                                t-on-change="(e) => onSelectChange('department', e)">
+                                            <option value="">Select Department</option>
+                                            <t t-foreach="state.departmentOptions" t-as="option" t-key="option.value">
+                                                <option t-att-value="option.value" t-esc="option.label"></option>
+                                            </t>
+                                        </select>
+                                        <span class="material-icons absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 text-sm pointer-events-none">expand_more</span>
+                                    </div>
+                                    <p t-if="state.errors.department" class="mt-1 text-sm text-red-600 dark:text-red-400" t-esc="state.errors.department"></p>
+                                </div>
+                                    </div>
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">person_outline</span>
+                                <div class="w-full">
+                                    <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Role</p>
+                                    <div class="relative">
+                                        <select class="w-full p-2 pr-8 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none"
+                                                t-att-value="state.staff.role"
+                                                t-on-change="(e) => onSelectChange('role', e)">
+                                            <option value="">Select Role</option>
+                                            <t t-foreach="state.roleOptions" t-as="option" t-key="option.value">
+                                                <option t-att-value="option.value" t-esc="option.label"></option>
+                                            </t>
+                                        </select>
+                                        <span class="material-icons absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 text-sm pointer-events-none">expand_more</span>
+                                    </div>
+                                    <p t-if="state.errors.role" class="mt-1 text-sm text-red-600 dark:text-red-400" t-esc="state.errors.role"></p>
+                                </div>
+                                    </div>
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">supervisor_account</span>
+                                <div class="w-full">
+                                    <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Supervisor</p>
+                                    <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                           type="text" 
+                                           t-att-value="state.staff.supervisor"
+                                           t-on-input="(e) => onInputChange('supervisor', e)"
+                                           placeholder="Enter supervisor name" />
+                                </div>
+                                    </div>
+                            <div class="flex items-start">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">work_outline</span>
+                                <div class="w-full">
+                                    <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Duty Status</p>
+                                    <div class="relative">
+                                        <select class="w-full p-2 pr-8 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none"
+                                                t-att-value="state.staff.dutyStatus"
+                                                t-on-change="(e) => onSelectChange('dutyStatus', e)">
+                                            <t t-foreach="state.dutyStatusOptions" t-as="option" t-key="option.value">
+                                                <option t-att-value="option.value" t-esc="option.label"></option>
+                                            </t>
+                                        </select>
+                                        <span class="material-icons absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 text-sm pointer-events-none">expand_more</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="w-full mt-8">
+                        <p class="text-gray-600 dark:text-gray-300 font-semibold mb-2">Actions</p>
+                        <button t-on-click="saveStaff" t-att-disabled="state.isSubmitting" class="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">
+                            <span t-if="state.isSubmitting" class="material-icons animate-spin mr-2 text-sm">refresh</span>
+                            <span t-if="isEditMode">Update Staff</span>
+                            <span t-else="">Save Staff</span>
+                        </button>
+                        <button t-on-click="goBack" class="w-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 py-3 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-500 mt-2 transition duration-300">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-2/3">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md transition-colors duration-300">
+                    <div class="p-6">
+                        <!-- Staff Details -->
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Personal Information</h3>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Full Name</label>
+                                    <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                           type="text" 
+                                           t-att-value="state.staff.name"
+                                           t-on-input="(e) => onInputChange('name', e)"
+                                           placeholder="Enter full name" />
+                                    <p t-if="state.errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400" t-esc="state.errors.name"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Gender</label>
+                                    <select class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                            t-att-value="state.staff.gender"
+                                            t-on-change="(e) => onSelectChange('gender', e)">
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <p t-if="state.errors.gender" class="mt-1 text-sm text-red-600 dark:text-red-400" t-esc="state.errors.gender"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Date of Birth</label>
+                                    <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                           type="date" 
+                                           t-att-value="state.staff.dateOfBirth"
+                                           t-on-input="(e) => onInputChange('dateOfBirth', e)" />
+                                    <p t-if="state.errors.dateOfBirth" class="mt-1 text-sm text-red-600 dark:text-red-400" t-esc="state.errors.dateOfBirth"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Phone</label>
+                                    <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                           type="tel" 
+                                           t-att-value="state.staff.phone"
+                                           t-on-input="(e) => onInputChange('phone', e)"
+                                           placeholder="+123 456 7890" />
+                                    <p t-if="state.errors.phone" class="mt-1 text-sm text-red-600 dark:text-red-400" t-esc="state.errors.phone"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Email</label>
+                                    <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                           type="email" 
+                                           t-att-value="state.staff.email"
+                                           t-on-input="(e) => onInputChange('email', e)"
+                                           placeholder="staff@hospital.com" />
+                                    <p t-if="state.errors.email" class="mt-1 text-sm text-red-600 dark:text-red-400" t-esc="state.errors.email"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Hire Date</label>
+                                    <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                           type="date" 
+                                           t-att-value="state.staff.hireDate"
+                                           t-on-input="(e) => onInputChange('hireDate', e)" />
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Address</label>
+                                    <textarea class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                              rows="3" 
+                                              t-att-value="state.staff.address"
+                                              t-on-input="(e) => onInputChange('address', e)"
+                                              placeholder="Enter full address"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Emergency Contact -->
+                            <div class="mt-8">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Emergency Contact</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Contact Name</label>
+                                        <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                               type="text" 
+                                               t-att-value="state.staff.emergencyContactName"
+                                               t-on-input="(e) => onInputChange('emergencyContactName', e)"
+                                               placeholder="Enter contact name"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Contact Phone</label>
+                                        <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                               type="tel" 
+                                               t-att-value="state.staff.emergencyContactPhone"
+                                               t-on-input="(e) => onInputChange('emergencyContactPhone', e)"
+                                               placeholder="+123 456 7890"/>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Relationship</label>
+                                        <input class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" 
+                                               type="text" 
+                                               t-att-value="state.staff.emergencyContactRelation"
+                                               t-on-input="(e) => onInputChange('emergencyContactRelation', e)"
+                                               placeholder="e.g., Spouse, Parent, Sibling"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mt-8 mb-4">Educational Background</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <thead class="text-xs text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-700">
+                                        <tr>
+                                            <th class="px-6 py-3" scope="col">Degree</th>
+                                            <th class="px-6 py-3" scope="col">Institution</th>
+                                            <th class="px-6 py-3" scope="col">Year</th>
+                                            <th class="px-6 py-3 text-right" scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="state.staff.education" t-as="edu" t-key="edu.id">
+                                            <tr class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700" t-att-data-id="edu.id">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">
+                                                    <input t-if="this.isEditingEducation(edu.id)" t-att-value="edu.degree" t-on-input="(e) => this.updateEducationField(edu.id, 'degree', e.target.value)" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" />
+                                                    <span t-else="" t-esc="edu.degree"></span>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <input t-if="this.isEditingEducation(edu.id)" t-att-value="edu.institution" t-on-input="(e) => this.updateEducationField(edu.id, 'institution', e.target.value)" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" />
+                                                    <span t-else="" t-esc="edu.institution"></span>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <input t-if="this.isEditingEducation(edu.id)" t-att-value="edu.period" t-on-input="(e) => this.updateEducationField(edu.id, 'period', e.target.value)" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" />
+                                                    <span t-else="" t-esc="edu.period"></span>
+                                                </td>
+                                                <td class="px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button t-if="this.isEditingEducation(edu.id)" class="text-blue-600 hover:text-blue-800" t-on-click="() => this.saveEducationRow(edu.id)">
+                                                            <span class="material-icons">save</span>
+                                                        </button>
+                                                        <button t-else="" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" t-on-click="() => this.editEducationRow(edu.id)">
+                                                            <span class="material-icons">edit</span>
+                                                        </button>
+                                                        <button t-att-class="this.isEditingEducation(edu.id) ? 'text-red-600 hover:text-red-800' : 'text-red-500 hover:text-red-700'" t-on-click="() => this.deleteEducationRow(edu.id)">
+                                                            <span class="material-icons">delete</span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="mt-4 text-blue-500 hover:text-blue-700 font-semibold" t-on-click="addEducationRow">+ Add Education</button>
+
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mt-8 mb-4">Work Experience</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <thead class="text-xs text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-700">
+                                        <tr>
+                                            <th class="px-6 py-3" scope="col">Position</th>
+                                            <th class="px-6 py-3" scope="col">Institution</th>
+                                            <th class="px-6 py-3" scope="col">Period</th>
+                                            <th class="px-6 py-3 text-right" scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="state.staff.experience" t-as="exp" t-key="exp.id">
+                                            <tr class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700" t-att-data-id="exp.id">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">
+                                                    <input t-if="this.isEditingExperience(exp.id)" t-att-value="exp.position" t-on-input="(e) => this.updateExperienceField(exp.id, 'position', e.target.value)" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" />
+                                                    <span t-else="" t-esc="exp.position"></span>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <input t-if="this.isEditingExperience(exp.id)" t-att-value="exp.institution" t-on-input="(e) => this.updateExperienceField(exp.id, 'institution', e.target.value)" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" />
+                                                    <span t-else="" t-esc="exp.institution"></span>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <input t-if="this.isEditingExperience(exp.id)" t-att-value="exp.period" t-on-input="(e) => this.updateExperienceField(exp.id, 'period', e.target.value)" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" type="text" />
+                                                    <span t-else="" t-esc="exp.period"></span>
+                                                </td>
+                                                <td class="px-6 py-4 text-right">
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button t-if="this.isEditingExperience(exp.id)" class="text-blue-600 hover:text-blue-800" t-on-click="() => this.saveExperienceRow(exp.id)">
+                                                            <span class="material-icons">save</span>
+                                                        </button>
+                                                        <button t-else="" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" t-on-click="() => this.editExperienceRow(exp.id)">
+                                                            <span class="material-icons">edit</span>
+                                                        </button>
+                                                        <button t-att-class="this.isEditingExperience(exp.id) ? 'text-red-600 hover:text-red-800' : 'text-red-500 hover:text-red-700'" t-on-click="() => this.deleteExperienceRow(exp.id)">
+                                                            <span class="material-icons">delete</span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="mt-4 text-blue-500 hover:text-blue-700 font-semibold" t-on-click="addExperienceRow">+ Add Experience</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

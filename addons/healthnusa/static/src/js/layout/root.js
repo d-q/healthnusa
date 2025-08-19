@@ -6,24 +6,31 @@ import { Header } from "./main/header";
 import { Breadcrumb } from "./main/breadcrumb";
 import { Router } from "../services/router";
 
-import { Appointment } from "../pages/appointment/appointment";
+import { Appointment } from "../pages/service/appointment/appointment";
 import { Dashboard } from "../pages/dashboard/dashboard";
 
-import { Doctor } from "../pages/doctor/doctor";
-import { DoctorForm } from "../pages/doctor/doctor_form";
-import { DoctorDetail } from "../pages/doctor/doctor_detail";
+import { Doctor } from "../pages/employee/doctor/doctor";
+import { DoctorForm } from "../pages/employee/doctor/doctor_form";
+import { DoctorDetail } from "../pages/employee/doctor/doctor_detail";
 
-import { Nurse } from "../pages/nurse/nurse";
+import { Nurse } from "../pages/employee/nurse/nurse";
 
-import { Patient } from "../pages/patient/patient";
-import { PatientDetail } from "../pages/patient/patient_detail";
-import { PatientForm } from "../pages/patient/patient_form";
+import { Patient } from "../pages/service/patient/patient";
+import { PatientDetail } from "../pages/service/patient/patient_detail";
+import { PatientForm } from "../pages/service/patient/patient_form";
 
-import { Payment } from "../pages/payment/payment"
+import { Payment } from "../pages/service/payment/payment"
 import { NotFound } from "../pages/error/not_found";
 import { Profile } from "../pages/profile/profile";
-import { Inventory } from "../pages/inventory/inventory";
-import { Staff } from "../pages/staff/staff";
+import { Medicines } from "../pages/inventory/medicines/medicines";
+import { Services } from "../pages/inventory/services/services";
+import { Supplies } from "../pages/inventory/supplies/supplies";
+import { Adjustment } from "../pages/inventory/adjustment/adjustment";
+import { AdjustmentForm } from "../pages/inventory/adjustment/adjustment_form";
+import { AdjustmentDetail } from "../pages/inventory/adjustment/adjustment_detail";
+import { Staff } from "../pages/employee/staff/staff";
+import { StaffDetail } from "../pages/employee/staff/staff_detail";
+import { StaffForm } from "../pages/employee/staff/staff_form";
 import { Settings } from "../pages/settings/settings";
 
 export class Root extends Component {
@@ -47,8 +54,15 @@ export class Root extends Component {
 
         Payment,
         Profile,
-        Inventory,
+        Medicines,
+        Services,
+        Supplies,
+        Adjustment,
+        AdjustmentForm,
+        AdjustmentDetail,
         Staff,
+        StaffDetail,
+        StaffForm,
         Settings,
         NotFound,
     }
@@ -59,12 +73,19 @@ export class Root extends Component {
         this.apps = [
             { id: "dashboard", icon: "dashboard", name: "Dashboard", Component: Dashboard, category: "Service" },
             { id: "appointment", icon: "event_note", name: "Appointment", Component: Appointment, category: "Service" },
-            { id: "doctor", icon: "badge", name: "Doctor", Component: Doctor, category: "Service" },
             { id: "patient", icon: "personal_injury", name: "Patient", Component: Patient, category: "Service" },
             { id: "payment", icon: "payments", name: "Payment", Component: Payment, category: "Service" },
-            { id: "inventory", icon: "inventory_2", name: "Inventory", Component: Inventory, category: "Service" },
-            { id: "profile", icon: "person", name: "Profile", Component: Profile, category: "Menu" },
-            { id: "settings", icon: "settings", name: "Settings", Component: Settings, category: "Menu" },
+            
+            { id: "doctor", icon: "assignment_ind", name: "Doctor", Component: Doctor, category: "Employee" },
+            { id: "staff", icon: "badge", name: "Staff", Component: Staff, category: "Employee" },
+
+            { id: "medicines", icon: "vaccines", name: "Medicines", Component: Medicines, category: "Inventory" },
+            { id: "services", icon: "medical_services", name: "Services", Component: Services, category: "Inventory" },
+            { id: "supplies", icon: "inventory_2", name: "Supplies", Component: Supplies, category: "Inventory" },
+            { id: "adjustment", icon: "tune", name: "Adjustment", Component: Adjustment, category: "Inventory" },
+            
+            { id: "profile", icon: "person", name: "Profile", Component: Profile, category: "Account" },
+            { id: "settings", icon: "settings", name: "Settings", Component: Settings, category: "Account" },
         ];
 
         this.subRoutes = [
@@ -110,6 +131,48 @@ export class Root extends Component {
                 parent: 'patient',
                 showBackButton: true
             },
+            {
+                path: '/staff/detail',
+                id: "staff-detail",
+                Component: StaffDetail,
+                parent: 'staff',
+                showBackButton: true
+            },
+            {
+                path: '/staff/new',
+                id: "staff-new",
+                Component: StaffForm,
+                parent: 'staff',
+                showBackButton: true
+            },
+            {
+                path: '/staff/edit',
+                id: "staff-edit",
+                Component: StaffForm,
+                parent: 'staff',
+                showBackButton: true
+            },
+            {
+                path: '/adjustment/new',
+                id: "adjustment-new",
+                Component: AdjustmentForm,
+                parent: 'adjustment',
+                showBackButton: true
+            },
+            {
+                path: '/adjustment/edit',
+                id: "adjustment-edit",
+                Component: AdjustmentForm,
+                parent: 'adjustment',
+                showBackButton: true
+            },
+            {
+                path: '/adjustment/detail',
+                id: "adjustment-detail",
+                Component: AdjustmentDetail,
+                parent: 'adjustment',
+                showBackButton: true
+            },
         ];
 
         this.registerRoutes();
@@ -129,7 +192,6 @@ export class Root extends Component {
             isSidebarCollapsed: false,
             showBackButton: false,
             previousApp: null,
-            inventorySelectedCategory: 'Medicines'
         });
 
         // Listen to route changes
@@ -152,7 +214,6 @@ export class Root extends Component {
 
         // Bind methods to preserve context
         this.selectApp = this.selectApp.bind(this);
-        this.onInventoryCategoryChange = this.onInventoryCategoryChange.bind(this);
 
         onMounted(() => {
             this.router.handleRoute();
@@ -244,20 +305,6 @@ export class Root extends Component {
         this.state.isSidebarCollapsed = !this.state.isSidebarCollapsed;
     }
 
-    onInventoryCategoryChange(category) {
-        this.state.inventorySelectedCategory = category;
-        
-        // Find the inventory component instance and update its state
-        const currentComponent = this.currentComponent;
-        if (currentComponent && currentComponent.onCategoryChange) {
-            currentComponent.onCategoryChange(category);
-        }
-    }
-
-    get currentComponent() {
-        // This will be set by the template when rendering the current component
-        return this._currentComponentRef?.component;
-    }
 
     onDocumentClick(event) {
         // Don't close if clicking on a dropdown button

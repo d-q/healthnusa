@@ -9,7 +9,6 @@ export class Header extends Component {
         toggleSidebar: Function,
         toggleDarkMode: Function,
         selectApp: Function,
-        onInventoryCategoryChange: Function,
     };
 
     get state() {
@@ -38,9 +37,5 @@ export class Header extends Component {
             // Default fallback - go to dashboard or first available app
             this.props.selectApp('dashboard');
         }
-    }
-
-    onInventoryCategoryChange(category) {
-        this.props.onInventoryCategoryChange(category);
     }
 }

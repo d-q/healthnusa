@@ -1,0 +1,173 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.StaffDetail">
+        <div class="flex gap-8">
+            <!-- Left Column - Staff Profile -->
+            <div class="w-1/3">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow transition-colors duration-300 flex flex-col items-center">
+                    <div class="relative mb-4">
+                        <img alt="Staff profile picture" class="w-36 h-36 rounded-full object-cover" t-att-src="state.staff.profileImage" />
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100" t-esc="state.staff.name"/>
+                    <p class="text-custom-blue mb-6" t-esc="state.staff.role"/>
+                    <div class="w-full space-y-4 text-sm">
+                        <div class="flex items-start">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">badge</span>
+                            <div class="w-full">
+                                <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Employee ID</p>
+                                <p class="font-bold text-gray-800 dark:text-gray-100" t-esc="state.staff.employeeId"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">domain</span>
+                            <div class="w-full">
+                                <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Department</p>
+                                <p class="font-bold text-gray-800 dark:text-gray-100" t-esc="state.staff.department"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">person_outline</span>
+                            <div class="w-full">
+                                <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Role</p>
+                                <p class="font-bold text-gray-800 dark:text-gray-100" t-esc="state.staff.role"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">supervisor_account</span>
+                            <div class="w-full">
+                                <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Supervisor</p>
+                                <p class="font-bold text-gray-800 dark:text-gray-100" t-esc="state.staff.supervisor"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start pt-2">
+                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 mt-1">work_outline</span>
+                            <div class="w-full">
+                                <p class="text-gray-600 dark:text-gray-300 mb-2 font-medium">Duty Status</p>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium" t-att-class="getDutyStatusClass(state.staff.dutyStatus)">
+                                    <span class="w-2 h-2 rounded-full mr-2" t-att-class="getDutyStatusColor(state.staff.dutyStatus)"></span>
+                                    <t t-esc="state.staff.dutyStatus"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full mt-8 space-y-2">
+                        <button t-on-click="editStaff" t-att-class="getEditButtonClass()" class="w-full py-3 rounded-lg font-semibold transition duration-300 flex items-center justify-center space-x-2">
+                            <span class="material-icons">edit</span>
+                            <span>Edit Staff Details</span>
+                        </button>
+                        <button t-on-click="deleteStaff" t-att-class="getDeleteButtonClass()" class="w-full py-3 rounded-lg font-semibold transition duration-300 flex items-center justify-center space-x-2">
+                            <span class="material-icons">delete</span>
+                            <span>Delete Staff</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="w-2/3">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md transition-colors duration-300">
+                    <div class="p-6">
+                        <!-- Personal Information -->
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Personal Information</h3>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Full Name</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.name"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Gender</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.gender"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Date of Birth</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.dateOfBirth"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Phone</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.phone"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Email</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.email"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Hire Date</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.hireDate"></p>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Address</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.address"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Emergency Contact -->
+                        <div class="mt-8">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Emergency Contact</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Contact Name</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.emergencyContactName"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Contact Phone</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.emergencyContactPhone"></p>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm text-gray-500 dark:text-gray-400 mb-1">Relationship</label>
+                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="state.staff.emergencyContactRelation"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Educational Background -->
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mt-8 mb-4">Educational Background</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3" scope="col">Degree</th>
+                                        <th class="px-6 py-3" scope="col">Institution</th>
+                                        <th class="px-6 py-3" scope="col">Year</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="state.staff.education" t-as="edu" t-key="edu.id">
+                                        <tr class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100" t-esc="edu.degree"></td>
+                                            <td class="px-6 py-4" t-esc="edu.institution"></td>
+                                            <td class="px-6 py-4" t-esc="edu.period"></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Work Experience -->
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 mt-8 mb-4">Work Experience</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3" scope="col">Position</th>
+                                        <th class="px-6 py-3" scope="col">Institution</th>
+                                        <th class="px-6 py-3" scope="col">Period</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="state.staff.experience" t-as="exp" t-key="exp.id">
+                                        <tr class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100" t-esc="exp.position"></td>
+                                            <td class="px-6 py-4" t-esc="exp.institution"></td>
+                                            <td class="px-6 py-4" t-esc="exp.period"></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

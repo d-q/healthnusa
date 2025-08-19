@@ -8,12 +8,12 @@
             <!-- Main Content -->
             <main class="flex-1 flex flex-col overflow-hidden dark:bg-gray-900 transition-colors duration-300">
                 <!-- Fixed Header -->
-                <Header state="state" toggleSidebar.bind="toggleSidebar" toggleDarkMode.bind="toggleDarkMode" selectApp.bind="selectApp" onInventoryCategoryChange.bind="onInventoryCategoryChange" />
+                <Header state="state" toggleSidebar.bind="toggleSidebar" toggleDarkMode.bind="toggleDarkMode" selectApp.bind="selectApp" />
 
                 <!-- Scrollable Content Area -->
                 <div class="flex-1 overflow-y-auto data-list-container px-8 pb-8">
                     <!-- Fixed Controls Section -->
-                    <t t-if="state.currentRoute" t-component="state.currentRoute.Component" t-props="{ router: router, selectApp: selectApp, globalState: state }"/>
+                    <t t-if="state.currentRoute" t-component="state.currentRoute.Component" t-props="{ router: router, selectApp: selectApp }"/>
                 </div>
 
             </main>
