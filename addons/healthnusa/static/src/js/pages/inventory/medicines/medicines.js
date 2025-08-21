@@ -31,8 +31,7 @@ export class Medicines extends Component {
                     country: 'United States',
                     vendor: '+123 456 7890',
                     expDate: '03/2024',
-                    tags: ['monitor', 'blood', 'pressure'],
-                    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=100&h=100&fit=crop'
+                    tags: ['monitor', 'blood', 'pressure']
                 },
                 {
                     id: 2,
@@ -50,8 +49,7 @@ export class Medicines extends Component {
                     country: 'Germany',
                     vendor: '+123 456 7891',
                     expDate: '05/2024',
-                    tags: ['surgical', 'scissors', 'tools'],
-                    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=100&h=100&fit=crop'
+                    tags: ['surgical', 'scissors', 'tools']
                 },
                 {
                     id: 3,
@@ -69,8 +67,7 @@ export class Medicines extends Component {
                     country: 'Japan',
                     vendor: '+123 456 7892',
                     expDate: '12/2025',
-                    tags: ['ecg', 'diagnostics', 'heart'],
-                    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=100&h=100&fit=crop'
+                    tags: ['ecg', 'diagnostics', 'heart']
                 },
                 {
                     id: 4,
@@ -88,8 +85,7 @@ export class Medicines extends Component {
                     country: 'China',
                     vendor: '+123 456 7893',
                     expDate: '06/2025',
-                    tags: ['disposable', 'syringes', 'sterile'],
-                    image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=100&h=100&fit=crop'
+                    tags: ['disposable', 'syringes', 'sterile']
                 },
                 {
                     id: 5,
@@ -107,8 +103,7 @@ export class Medicines extends Component {
                     country: 'South Korea',
                     vendor: '+123 456 7894',
                     expDate: '08/2026',
-                    tags: ['ultrasound', 'imaging', 'portable'],
-                    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=100&h=100&fit=crop'
+                    tags: ['ultrasound', 'imaging', 'portable']
                 },
                 {
                     id: 6,
@@ -126,8 +121,7 @@ export class Medicines extends Component {
                     country: 'USA',
                     vendor: '+123 456 7895',
                     expDate: '12/2024',
-                    tags: ['stethoscope', 'examination', 'cardiology'],
-                    image: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=100&h=100&fit=crop'
+                    tags: ['stethoscope', 'examination', 'cardiology']
                 }
             ],
             searchQuery: '',
@@ -296,8 +290,7 @@ export class Medicines extends Component {
             country: '',
             vendor: '',
             expDate: '',
-            tags: [],
-            image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=100&h=100&fit=crop'
+            tags: []
         };
 
         this.state.products.unshift(newProduct);

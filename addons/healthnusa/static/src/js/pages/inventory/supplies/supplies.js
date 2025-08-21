@@ -28,8 +28,7 @@ export class Supplies extends Component {
                     vendor: 'MedSupply Corp',
                     expiryDate: '2025-12-31',
                     barcode: '1234567890123',
-                    description: 'High-quality disposable surgical gloves for medical procedures',
-                    image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=100&h=100&fit=crop'
+                    description: 'High-quality disposable surgical gloves for medical procedures'
                 },
                 {
                     id: 2,
@@ -44,8 +43,7 @@ export class Supplies extends Component {
                     vendor: 'HealthCare Solutions',
                     expiryDate: '2025-06-30',
                     barcode: '2345678901234',
-                    description: '3-layer disposable face masks for infection control',
-                    image: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=100&h=100&fit=crop'
+                    description: '3-layer disposable face masks for infection control'
                 },
                 {
                     id: 3,
@@ -60,8 +58,7 @@ export class Supplies extends Component {
                     vendor: 'MediTech Supply',
                     expiryDate: '2026-03-15',
                     barcode: '3456789012345',
-                    description: 'Sterile disposable syringes for medical injections',
-                    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=100&h=100&fit=crop'
+                    description: 'Sterile disposable syringes for medical injections'
                 },
                 {
                     id: 4,
@@ -76,8 +73,7 @@ export class Supplies extends Component {
                     vendor: 'WoundCare Plus',
                     expiryDate: '2027-01-20',
                     barcode: '4567890123456',
-                    description: 'Elastic bandages for wound care and support',
-                    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=100&h=100&fit=crop'
+                    description: 'Elastic bandages for wound care and support'
                 },
                 {
                     id: 5,
@@ -92,8 +88,7 @@ export class Supplies extends Component {
                     vendor: 'TempCheck Ltd',
                     expiryDate: '2028-05-10',
                     barcode: '5678901234567',
-                    description: 'Digital thermometers for accurate temperature measurement',
-                    image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=100&h=100&fit=crop'
+                    description: 'Digital thermometers for accurate temperature measurement'
                 },
                 {
                     id: 6,
@@ -108,8 +103,7 @@ export class Supplies extends Component {
                     vendor: 'CleanMed Supply',
                     expiryDate: '2025-09-30',
                     barcode: '6789012345678',
-                    description: 'Alcohol prep swabs for skin disinfection',
-                    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop'
+                    description: 'Alcohol prep swabs for skin disinfection'
                 }
             ],
             searchQuery: '',
@@ -273,8 +267,7 @@ export class Supplies extends Component {
             vendor: '',
             expiryDate: '',
             barcode: '',
-            description: 'New supply item description',
-            image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=100&h=100&fit=crop'
+            description: 'New supply item description'
         };
 
         this.state.supplies.unshift(newSupply);

@@ -114,7 +114,6 @@
                             <!-- Service Information Column -->
                             <div class="flex items-center space-x-4 col-span-1 md:col-span-2">
                                 <input type="checkbox" class="data-checkbox w-4 h-4 text-custom-blue bg-gray-100 border-gray-300 rounded focus:ring-custom-blue dark:focus:ring-custom-blue dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" t-att-data-id="service.id" />
-                                <img t-att-alt="service.name" class="w-12 h-12 rounded-full" t-att-src="service.image" />
                                 <div>
                                     <p class="font-bold text-gray-800 dark:text-gray-100" t-esc="service.name"></p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">Code: <t t-esc="service.code"/></p>
@@ -178,21 +177,6 @@
                         <!-- Expandable Detail Section -->
                         <div t-if="isServiceExpanded(service.id)" class="mt-2 p-6 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 transition-colors duration-300">
                             <div class="flex gap-6">
-                                <!-- Service Image Section -->
-                                <div class="flex-shrink-0">
-                                    <div class="w-40 h-40 bg-gray-200 dark:bg-gray-600 rounded-lg border-2 border-custom-blue overflow-hidden flex items-center justify-center shadow-sm">
-                                        <img t-att-src="service.image" t-att-alt="service.name" class="w-full h-full object-cover"/>
-                                    </div>
-                                    <div class="text-center mt-2 text-sm text-gray-600 dark:text-gray-400">
-                                        Service Icon
-                                    </div>
-                                    <div class="mt-2">
-                                        <button class="text-custom-blue text-sm hover:text-blue-600 flex items-center transition-colors">
-                                            <span class="material-icons text-sm mr-1">add</span>Add image
-                                        </button>
-                                    </div>
-                                </div>
-
                                 <!-- Form Fields Section -->
                                 <div class="flex-1">
                                     <!-- First Row: Service Name, Price, Category -->

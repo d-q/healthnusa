@@ -28,8 +28,7 @@ export class Services extends Component {
                     department: 'General Medicine',
                     description: 'Comprehensive general medical consultation and examination',
                     requirements: 'Valid ID, Insurance Card',
-                    provider: 'Dr. John Smith',
-                    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=100&h=100&fit=crop'
+                    provider: 'Dr. John Smith'
                 },
                 {
                     id: 2,
@@ -44,8 +43,7 @@ export class Services extends Component {
                     department: 'Laboratory',
                     description: 'Complete blood count including hemoglobin, hematocrit, white blood cells',
                     requirements: 'Fasting 8-12 hours',
-                    provider: 'Lab Technician',
-                    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=100&h=100&fit=crop'
+                    provider: 'Lab Technician'
                 },
                 {
                     id: 3,
@@ -60,8 +58,7 @@ export class Services extends Component {
                     department: 'Radiology',
                     description: 'Digital chest X-ray for lung and heart examination',
                     requirements: 'Remove metal objects, loose clothing',
-                    provider: 'Radiology Technician',
-                    image: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=100&h=100&fit=crop'
+                    provider: 'Radiology Technician'
                 },
                 {
                     id: 4,
@@ -76,8 +73,7 @@ export class Services extends Component {
                     department: 'Cardiology',
                     description: 'Heart rhythm and electrical activity monitoring',
                     requirements: 'Avoid caffeine 2 hours before test',
-                    provider: 'Cardiac Technician',
-                    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=100&h=100&fit=crop'
+                    provider: 'Cardiac Technician'
                 },
                 {
                     id: 5,
@@ -92,8 +88,7 @@ export class Services extends Component {
                     department: 'Radiology',
                     description: 'Ultrasound examination of abdominal organs',
                     requirements: 'Fasting 6 hours, full bladder',
-                    provider: 'Sonographer',
-                    image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=100&h=100&fit=crop'
+                    provider: 'Sonographer'
                 },
                 {
                     id: 6,
@@ -108,8 +103,7 @@ export class Services extends Component {
                     department: 'Physical Therapy',
                     description: 'Therapeutic exercises and rehabilitation treatment',
                     requirements: 'Comfortable clothing, doctor referral',
-                    provider: 'Physical Therapist',
-                    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop'
+                    provider: 'Physical Therapist'
                 }
             ],
             searchQuery: '',
@@ -273,8 +267,7 @@ export class Services extends Component {
             department: 'General',
             description: 'New service description',
             requirements: '',
-            provider: '',
-            image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=100&h=100&fit=crop'
+            provider: ''
         };
 
         this.state.services.unshift(newService);

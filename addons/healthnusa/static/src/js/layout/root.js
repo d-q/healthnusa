@@ -19,7 +19,9 @@ import { Patient } from "../pages/service/patient/patient";
 import { PatientDetail } from "../pages/service/patient/patient_detail";
 import { PatientForm } from "../pages/service/patient/patient_form";
 
-import { Payment } from "../pages/service/payment/payment"
+import { Invoices } from "../pages/service/invoices/invoices"
+import { InvoiceForm } from "../pages/service/invoices/invoice_form";
+import { InvoiceDetail } from "../pages/service/invoices/invoice_detail";
 import { NotFound } from "../pages/error/not_found";
 import { Profile } from "../pages/profile/profile";
 import { Medicines } from "../pages/inventory/medicines/medicines";
@@ -52,7 +54,9 @@ export class Root extends Component {
         PatientDetail,
         PatientForm,
 
-        Payment,
+        Invoices,
+        InvoiceForm,
+        InvoiceDetail,
         Profile,
         Medicines,
         Services,
@@ -74,7 +78,7 @@ export class Root extends Component {
             { id: "dashboard", icon: "dashboard", name: "Dashboard", Component: Dashboard, category: "Service" },
             { id: "appointment", icon: "event_note", name: "Appointment", Component: Appointment, category: "Service" },
             { id: "patient", icon: "personal_injury", name: "Patient", Component: Patient, category: "Service" },
-            { id: "payment", icon: "payments", name: "Payment", Component: Payment, category: "Service" },
+            { id: "invoices", icon: "payments", name: "Invoices", Component: Invoices, category: "Service" },
             
             { id: "doctor", icon: "assignment_ind", name: "Doctor", Component: Doctor, category: "Employee" },
             { id: "staff", icon: "badge", name: "Staff", Component: Staff, category: "Employee" },
@@ -171,6 +175,27 @@ export class Root extends Component {
                 id: "adjustment-detail",
                 Component: AdjustmentDetail,
                 parent: 'adjustment',
+                showBackButton: true
+            },
+            {
+                path: '/invoices/new',
+                id: "invoice-new",
+                Component: InvoiceForm,
+                parent: 'invoices',
+                showBackButton: true
+            },
+            {
+                path: '/invoices/edit',
+                id: "invoice-edit",
+                Component: InvoiceForm,
+                parent: 'invoices',
+                showBackButton: true
+            },
+            {
+                path: '/invoices/detail',
+                id: "invoice-detail",
+                Component: InvoiceDetail,
+                parent: 'invoices',
                 showBackButton: true
             },
         ];
