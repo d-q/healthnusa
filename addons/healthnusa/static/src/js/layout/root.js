@@ -22,6 +22,10 @@ import { PatientForm } from "../pages/service/patient/patient_form";
 import { Invoices } from "../pages/service/invoices/invoices"
 import { InvoiceForm } from "../pages/service/invoices/invoice_form";
 import { InvoiceDetail } from "../pages/service/invoices/invoice_detail";
+
+import { Bills } from "../pages/service/bill/bill";
+import { BillForm } from "../pages/service/bill/bill_form";
+import { BillDetail } from "../pages/service/bill/bill_detail";
 import { NotFound } from "../pages/error/not_found";
 import { Profile } from "../pages/profile/profile";
 import { Medicines } from "../pages/inventory/medicines/medicines";
@@ -30,6 +34,10 @@ import { Supplies } from "../pages/inventory/supplies/supplies";
 import { Adjustment } from "../pages/inventory/adjustment/adjustment";
 import { AdjustmentForm } from "../pages/inventory/adjustment/adjustment_form";
 import { AdjustmentDetail } from "../pages/inventory/adjustment/adjustment_detail";
+
+import { Purchase } from "../pages/inventory/purchase/purchase";
+import { PurchaseForm } from "../pages/inventory/purchase/purchase_form";
+import { PurchaseDetail } from "../pages/inventory/purchase/purchase_detail";
 import { Staff } from "../pages/employee/staff/staff";
 import { StaffDetail } from "../pages/employee/staff/staff_detail";
 import { StaffForm } from "../pages/employee/staff/staff_form";
@@ -57,6 +65,10 @@ export class Root extends Component {
         Invoices,
         InvoiceForm,
         InvoiceDetail,
+        
+        Bills,
+        BillForm,
+        BillDetail,
         Profile,
         Medicines,
         Services,
@@ -64,6 +76,10 @@ export class Root extends Component {
         Adjustment,
         AdjustmentForm,
         AdjustmentDetail,
+        
+        Purchase,
+        PurchaseForm,
+        PurchaseDetail,
         Staff,
         StaffDetail,
         StaffForm,
@@ -79,6 +95,7 @@ export class Root extends Component {
             { id: "appointment", icon: "event_note", name: "Appointment", Component: Appointment, category: "Service" },
             { id: "patient", icon: "personal_injury", name: "Patient", Component: Patient, category: "Service" },
             { id: "invoices", icon: "payments", name: "Invoices", Component: Invoices, category: "Service" },
+            { id: "bills", icon: "receipt_long", name: "Bills", Component: Bills, category: "Service" },
             
             { id: "doctor", icon: "assignment_ind", name: "Doctor", Component: Doctor, category: "Employee" },
             { id: "staff", icon: "badge", name: "Staff", Component: Staff, category: "Employee" },
@@ -87,6 +104,7 @@ export class Root extends Component {
             { id: "services", icon: "medical_services", name: "Services", Component: Services, category: "Inventory" },
             { id: "supplies", icon: "inventory_2", name: "Supplies", Component: Supplies, category: "Inventory" },
             { id: "adjustment", icon: "tune", name: "Adjustment", Component: Adjustment, category: "Inventory" },
+            { id: "purchase", icon: "shopping_cart", name: "Purchase", Component: Purchase, category: "Inventory" },
             
             { id: "profile", icon: "person", name: "Profile", Component: Profile, category: "Account" },
             { id: "settings", icon: "settings", name: "Settings", Component: Settings, category: "Account" },
@@ -178,6 +196,27 @@ export class Root extends Component {
                 showBackButton: true
             },
             {
+                path: '/purchase/new',
+                id: "purchase-new",
+                Component: PurchaseForm,
+                parent: 'purchase',
+                showBackButton: true
+            },
+            {
+                path: '/purchase/edit',
+                id: "purchase-edit",
+                Component: PurchaseForm,
+                parent: 'purchase',
+                showBackButton: true
+            },
+            {
+                path: '/purchase/detail',
+                id: "purchase-detail",
+                Component: PurchaseDetail,
+                parent: 'purchase',
+                showBackButton: true
+            },
+            {
                 path: '/invoices/new',
                 id: "invoice-new",
                 Component: InvoiceForm,
@@ -196,6 +235,27 @@ export class Root extends Component {
                 id: "invoice-detail",
                 Component: InvoiceDetail,
                 parent: 'invoices',
+                showBackButton: true
+            },
+            {
+                path: '/bills/new',
+                id: "bill-new",
+                Component: BillForm,
+                parent: 'bills',
+                showBackButton: true
+            },
+            {
+                path: '/bills/edit',
+                id: "bill-edit",
+                Component: BillForm,
+                parent: 'bills',
+                showBackButton: true
+            },
+            {
+                path: '/bills/detail',
+                id: "bill-detail",
+                Component: BillDetail,
+                parent: 'bills',
                 showBackButton: true
             },
         ];

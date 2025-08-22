@@ -1,0 +1,226 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.BillForm">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow transition-colors duration-300">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button t-on-click="goBack" class="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
+                            <span class="material-icons text-gray-600 dark:text-gray-300">arrow_back</span>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                <t t-if="state.isEdit">Edit Bill</t>
+                                <t t-else="">Create Bill</t>
+                            </h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                <t t-if="state.isEdit">Update existing patient bill</t>
+                                <t t-else="">Create new patient bill</t>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                        <span class="material-icons text-gray-600 dark:text-gray-300 text-sm">receipt</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200" t-esc="state.billId"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Content -->
+            <div class="p-8">
+                <!-- Invoice Header -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
+                    <!-- Invoice Info -->
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Bill Details</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Bill ID</label>
+                                    <input type="text" t-att-value="state.billId || ''" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" readonly="readonly"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Bill Date</label>
+                                    <input type="date" t-att-value="state.date || ''" t-on-change="(ev) => this.onFieldChange('date', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Due Date</label>
+                                    <input type="date" t-att-value="state.dueDate || ''" t-on-change="(ev) => this.onFieldChange('dueDate', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Bill Type</label>
+                                    <select t-att-value="state.billType || ''" t-on-change="(ev) => this.onFieldChange('billType', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <t t-foreach="billTypes" t-as="type" t-key="type">
+                                            <option t-att-value="type" t-esc="type"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Patient &amp; Medical Info</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Patient</label>
+                                    <select t-att-value="state.patient || ''" t-on-change="(ev) => this.onPatientChange(ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Patient</option>
+                                        <t t-foreach="patients" t-as="patient" t-key="patient.id">
+                                            <option t-att-value="patient.name" t-esc="patient.name + ' (' + patient.id + ')'"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Patient ID</label>
+                                    <input type="text" t-att-value="state.patientId || ''" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" readonly="readonly"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medical Details -->
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Medical Details</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Doctor</label>
+                                    <select t-att-value="state.doctor || ''" t-on-change="(ev) => this.onFieldChange('doctor', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Doctor</option>
+                                        <t t-foreach="doctors" t-as="doctor" t-key="doctor">
+                                            <option t-att-value="doctor" t-esc="doctor"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Department</label>
+                                    <select t-att-value="state.department || ''" t-on-change="(ev) => this.onFieldChange('department', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Department</option>
+                                        <t t-foreach="departments" t-as="dept" t-key="dept">
+                                            <option t-att-value="dept" t-esc="dept"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Payment Method</label>
+                                    <select t-att-value="state.paymentMethod || ''" t-on-change="(ev) => this.onFieldChange('paymentMethod', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <t t-foreach="paymentMethods" t-as="method" t-key="method">
+                                            <option t-att-value="method" t-esc="method"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Items Section -->
+                <div class="border-t border-gray-200 dark:border-gray-600 pt-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Services &amp; Items</h3>
+                        <button t-on-click="() => this.addService()" class="text-blue-600 hover:text-blue-700 font-medium flex items-center">
+                            <span class="material-icons mr-1">add</span>
+                            <span>Add Service</span>
+                        </button>
+                    </div>
+
+                    <!-- Items Table -->
+                    <div class="overflow-hidden border border-gray-200 dark:border-gray-600 rounded-lg">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service Code</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Quantity</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">On Hand</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Unit Price</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                                <t t-foreach="state.services || []" t-as="service" t-key="service.id">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400" t-esc="service_index + 1"></td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" t-att-value="service.serviceCode" t-on-change="(ev) => this.updateServiceField(service.id, 'serviceCode', ev.target.value)" placeholder="Service code" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" t-att-value="service.description" t-on-change="(ev) => this.updateServiceField(service.id, 'description', ev.target.value)" placeholder="Service description" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <input type="number" t-att-value="service.quantity" t-on-change="(ev) => this.updateServiceField(service.id, 'quantity', parseInt(ev.target.value) || 0)" min="1" class="w-20 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm text-center"/>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <span t-att-class="'text-sm font-medium ' + ((service.quantity || 0) > (service.onHand || 0) ? 'text-red-600 dark:text-red-400' : 'text-gray-800 dark:text-gray-100')" t-esc="service.onHand || 0"></span>
+                                        </td>
+                                        <td class="px-4 py-3 text-right">
+                                            <input type="number" t-att-value="service.unitPrice" t-on-change="(ev) => this.updateServiceField(service.id, 'unitPrice', parseFloat(ev.target.value) || 0)" min="0" step="0.01" class="w-24 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm text-right"/>
+                                        </td>
+                                        <td class="px-4 py-3 text-right">
+                                            <span class="text-sm font-semibold text-gray-800 dark:text-gray-100" t-esc="formatCurrency(service.totalPrice)"></span>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button t-on-click="() => this.removeService(service.id)" class="text-red-500 hover:text-red-700 transition-colors">
+                                                <span class="material-icons text-lg">delete</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Notes and Summary -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-200 dark:border-gray-600">
+                    <!-- Notes -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Notes</label>
+                        <textarea rows="6" t-att-value="state.notes || ''" t-on-change="(ev) => this.onFieldChange('notes', ev.target.value)" placeholder="Additional notes or comments..." class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+
+                    <!-- Summary -->
+                    <div>
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Bill Summary</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Total Items:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="totalServices"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Subtotal:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="formatCurrency(subtotal)"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Tax (10%):</span>
+                                    <span class="font-medium text-orange-600" t-esc="formatCurrency(taxAmount)"></span>
+                                </div>
+                                <div class="border-t border-gray-300 dark:border-gray-500 pt-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-lg font-bold text-gray-800 dark:text-gray-100">Total Amount:</span>
+                                        <span class="text-lg font-bold text-green-600" t-esc="formatCurrency(totalAmount)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <button t-on-click="saveDraft" class="px-6 py-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+                        Save Draft
+                    </button>
+                    <button t-on-click="submitBill" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                        <span t-if="state.isEdit">Update Bill</span>
+                        <span t-else="">Create Bill</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

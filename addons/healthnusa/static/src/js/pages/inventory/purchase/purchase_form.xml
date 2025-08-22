@@ -1,0 +1,230 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.PurchaseForm">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow transition-colors duration-300">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button t-on-click="goBack" class="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
+                            <span class="material-icons text-gray-600 dark:text-gray-300">arrow_back</span>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Purchase Order</h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Create new purchase order</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                        <span class="material-icons text-gray-600 dark:text-gray-300 text-sm">shopping_cart</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200" t-esc="state.purchaseId"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Content -->
+            <div class="p-8">
+                <!-- Purchase Header -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
+                    <!-- Purchase Info -->
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Purchase Details</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Adjustment ID</label>
+                                    <input type="text" t-att-value="state.purchaseId" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" readonly="readonly"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Date</label>
+                                    <input type="date" t-att-value="state.date" t-on-change="(ev) => this.onFieldChange('date', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Location &amp; Department</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Department</label>
+                                    <select t-att-value="state.supplier" t-on-change="(ev) => this.onFieldChange('supplier', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Department</option>
+                                        <t t-foreach="suppliers" t-as="dept" t-key="dept">
+                                            <option t-att-value="dept" t-att-selected="state.supplier === dept" t-esc="dept"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Storage Location</label>
+                                    <select t-att-value="state.deliveryLocation" t-on-change="(ev) => this.onFieldChange('deliveryLocation', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Storage Location</option>
+                                        <t t-foreach="deliveryLocations" t-as="location" t-key="location">
+                                            <option t-att-value="location" t-att-selected="state.deliveryLocation === location" t-esc="location"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Adjustment Reason & Authority -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Adjustment Authorization</h3>
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Adjustment Type</label>
+                                <select t-att-value="state.purchaseType" t-on-change="(ev) => this.onFieldChange('purchaseType', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <t t-foreach="purchaseTypes" t-as="type" t-key="type">
+                                        <option t-att-value="type" t-att-selected="state.purchaseType === type" t-esc="type"></option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Authorized By</label>
+                                <select t-att-value="state.approvedBy" t-on-change="(ev) => this.onFieldChange('approvedBy', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Select Authorized Person</option>
+                                    <t t-foreach="approvalPersons" t-as="person" t-key="person">
+                                        <option t-att-value="person" t-att-selected="state.approvedBy === person" t-esc="person"></option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Reference Number</label>
+                                <input type="text" t-att-value="state.referenceNumber" t-on-change="(ev) => this.onFieldChange('referenceNumber', ev.target.value)" placeholder="PO#, Invoice#, etc." class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information Toggle -->
+                        <button t-on-click="toggleAdditionalFields" class="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center mb-4">
+                            <span>Show additional information</span>
+                            <span class="material-icons text-sm ml-1" t-esc="state.showAdditionalFields ? 'expand_less' : 'expand_more'"></span>
+                        </button>
+
+                        <!-- Additional Fields -->
+                        <div t-if="state.showAdditionalFields" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Cost Center</label>
+                                <input type="text" t-att-value="state.costCenter" t-on-change="(ev) => this.onFieldChange('costCenter', ev.target.value)" placeholder="Cost center code" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Batch/Lot Tracking</label>
+                                <select t-att-value="state.terms" t-on-change="(ev) => this.onFieldChange('terms', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="Enable batch tracking">Enable batch tracking</option>
+                                    <option value="Skip batch tracking">Skip batch tracking</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items Section -->
+                <div class="border-t border-gray-200 dark:border-gray-600 pt-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Inventory Items</h3>
+                        <button t-on-click="() => this.addItem()" class="text-blue-600 hover:text-blue-700 font-medium flex items-center">
+                            <span class="material-icons mr-1">add</span>
+                            <span>Add Item</span>
+                        </button>
+                    </div>
+
+                    <!-- Items Table -->
+                    <div class="overflow-hidden border border-gray-200 dark:border-gray-600 rounded-lg">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Item Code</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Quantity</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Unit Price</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Price</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Unit Cost</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Impact</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                                <t t-foreach="state.items" t-as="item" t-key="item.id">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400" t-esc="item_index + 1"></td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" t-att-value="item.itemCode" t-on-change="(ev) => this.updateItemField(item.id, 'itemCode', ev.target.value)" placeholder="Item code" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" t-att-value="item.description" t-on-change="(ev) => this.updateItemField(item.id, 'description', ev.target.value)" placeholder="Item description" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" t-att-value="item.quantity" t-on-change="(ev) => this.updateItemField(item.id, 'quantity', parseInt(ev.target.value) || 0)" min="0" class="w-20 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" t-att-value="item.quantity" t-on-change="(ev) => this.updateItemField(item.id, 'quantity', parseInt(ev.target.value) || 0)" min="0" class="w-20 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" t-att-value="item.unitPrice" t-on-change="(ev) => this.updateItemField(item.id, 'unitPrice', parseFloat(ev.target.value) || 0)" min="0" step="0.01" class="w-20 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm font-medium" t-esc="formatCurrency(item.totalPrice)"></td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button t-on-click="() => this.removeItem(item.id)" class="text-red-500 hover:text-red-700 transition-colors">
+                                                <span class="material-icons text-lg">delete</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Notes and Summary -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-200 dark:border-gray-600">
+                    <!-- Notes -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Adjustment Notes</label>
+                        <textarea rows="6" t-att-value="state.notes" t-on-change="(ev) => this.onFieldChange('notes', ev.target.value)" placeholder="Detailed explanation of the inventory adjustment, including any relevant circumstances or findings..." class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+
+                    <!-- Summary -->
+                    <div>
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Adjustment Summary</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Total Items:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="totalItems"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Positive Adjustments:</span>
+                                    <span class="font-medium text-green-600" t-esc="totalQuantity"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Negative Adjustments:</span>
+                                    <span class="font-medium text-red-600" t-esc="totalItems"></span>
+                                </div>
+                                <div class="border-t border-gray-300 dark:border-gray-500 pt-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600 dark:text-gray-300">Total Value Impact:</span>
+                                        <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="formatCurrency(subtotal)"></span>
+                                    </div>
+                                </div>
+                                <div class="border-t border-gray-300 dark:border-gray-500 pt-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-lg font-bold text-gray-800 dark:text-gray-100">Net Financial Impact:</span>
+                                        <span t-att-class="getTotalAmountClass()" t-esc="formatCurrency(totalAmount)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <button t-on-click="saveDraft" class="px-6 py-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+                        Save Draft
+                    </button>
+                    <button t-on-click="submitPurchase" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                        Submit Adjustment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

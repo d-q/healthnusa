@@ -11,7 +11,7 @@
             </div>
 
             <!-- Sidebar Navigation -->
-            <nav class="flex-grow px-4 pb-4">
+            <nav class="flex-grow px-4 pb-4 sidebar-nav-container">
                 <t t-foreach="['Service', 'Employee', 'Inventory', 'Account']" t-as="category" t-key="category">
                     <span class="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase mb-3 tracking-wider block sidebar-text" t-att-style="textDisplayStyle" t-out="category"/>
                     <div class="grid gap-2 mb-6 main-nav" t-att-class="mainNavClass">

@@ -235,19 +235,27 @@ header .btn-standard:not(.bg-blue-50):hover {
 
 /* CSS Variables for scrollbar colors */
 :root {
-    --scrollbar-track: #f8fafc;
+    --scrollbar-track: transparent;
     --scrollbar-thumb: #cbd5e1;
     --scrollbar-thumb-hover: #94a3b8;
-    --scrollbar-track-border: #e2e8f0;
+    --scrollbar-track-border: transparent;
     --scrollbar-thumb-border: #94a3b8;
 }
 
 .dark {
-    --scrollbar-track: #374151;
+    --scrollbar-track: transparent;
     --scrollbar-thumb: #6b7280;
     --scrollbar-thumb-hover: #9ca3af;
-    --scrollbar-track-border: #4b5563;
+    --scrollbar-track-border: transparent;
     --scrollbar-thumb-border: #9ca3af;
+}
+
+/* Sidebar Navigation Container - Scrollable */
+.sidebar-nav-container {
+    max-height: 100%; /* Full height untuk area scroll */
+    overflow-y: auto; /* Scroll vertikal jika konten melebihi max-height */
+    overflow-x: hidden; /* Hide horizontal scroll */
+    padding-right: 4px; /* Space for scrollbar */
 }
 
 /* Data List Container - Scrollable (Generic for any data type) */
@@ -258,15 +266,78 @@ header .btn-standard:not(.bg-blue-50):hover {
     padding-right: 4px; /* Space for scrollbar */
 }
 
-/* Force scrollbar styling with high specificity */
+/* Force scrollbar styling with high specificity for sidebar */
+html .sidebar-nav-container::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+html .sidebar-nav-container::-webkit-scrollbar-track {
+    background: transparent !important;
+    border-radius: 4px !important;
+    border: none !important;
+}
+
+html .sidebar-nav-container::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb) !important;
+    border-radius: 4px !important;
+    border: 1px solid var(--scrollbar-thumb-border) !important;
+}
+
+html .sidebar-nav-container::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover) !important;
+}
+
+/* Alternative approach - direct dark mode styling for sidebar */
+html.dark .sidebar-nav-container::-webkit-scrollbar-track {
+    background: transparent !important;
+    border: none !important;
+}
+
+html.dark .sidebar-nav-container::-webkit-scrollbar-thumb {
+    background: #6b7280 !important;
+    border: 1px solid #9ca3af !important;
+}
+
+html.dark .sidebar-nav-container::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af !important;
+}
+
+/* Firefox scrollbar styling for sidebar */
+html .sidebar-nav-container {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--scrollbar-thumb) transparent !important;
+}
+
+/* Force Firefox dark mode for sidebar */
+html.dark .sidebar-nav-container {
+    scrollbar-color: #6b7280 transparent !important;
+}
+
+/* Additional fallback for stubborn browsers - sidebar */
+body.dark .sidebar-nav-container::-webkit-scrollbar-track,
+.dark body .sidebar-nav-container::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+body.dark .sidebar-nav-container::-webkit-scrollbar-thumb,
+.dark body .sidebar-nav-container::-webkit-scrollbar-thumb {
+    background: #6b7280 !important;
+}
+
+/* Smooth scrolling for sidebar */
+.sidebar-nav-container {
+    scroll-behavior: smooth;
+}
+
+/* Force scrollbar styling with high specificity for data list */
 html .data-list-container::-webkit-scrollbar {
     width: 8px !important;
 }
 
 html .data-list-container::-webkit-scrollbar-track {
-    background: var(--scrollbar-track) !important;
+    background: transparent !important;
     border-radius: 4px !important;
-    border: 1px solid var(--scrollbar-track-border) !important;
+    border: none !important;
 }
 
 html .data-list-container::-webkit-scrollbar-thumb {
@@ -281,8 +352,8 @@ html .data-list-container::-webkit-scrollbar-thumb:hover {
 
 /* Alternative approach - direct dark mode styling with maximum specificity */
 html.dark .data-list-container::-webkit-scrollbar-track {
-    background: #374151 !important;
-    border: 1px solid #4b5563 !important;
+    background: transparent !important;
+    border: none !important;
 }
 
 html.dark .data-list-container::-webkit-scrollbar-thumb {
@@ -297,18 +368,18 @@ html.dark .data-list-container::-webkit-scrollbar-thumb:hover {
 /* Firefox scrollbar styling */
 html .data-list-container {
     scrollbar-width: thin !important;
-    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track) !important;
+    scrollbar-color: var(--scrollbar-thumb) transparent !important;
 }
 
 /* Force Firefox dark mode */
 html.dark .data-list-container {
-    scrollbar-color: #6b7280 #374151 !important;
+    scrollbar-color: #6b7280 transparent !important;
 }
 
 /* Additional fallback for stubborn browsers */
 body.dark .data-list-container::-webkit-scrollbar-track,
 .dark body .data-list-container::-webkit-scrollbar-track {
-    background: #374151 !important;
+    background: transparent !important;
 }
 
 body.dark .data-list-container::-webkit-scrollbar-thumb,
