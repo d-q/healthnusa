@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Demo Doctors -->
+        <record id="demo_doctor_1" model="hr.employee">
+            <field name="name">Dr. John Smith</field>
+            <field name="is_doctor" eval="True"/>
+            <field name="email">john.smith@healthnusa.com</field>
+            <field name="phone">+62 21 1234 5671</field>
+            <field name="mobile">+62 812 3456 7891</field>
+            <field name="specialty_id" ref="specialty_cardiology"/>
+            <field name="duty_status">on_duty</field>
+            <field name="gender">male</field>
+            <field name="birth_date">1980-03-15</field>
+            <field name="str_number">1234567890123456</field>
+            <field name="sip_number">SIP.001/DU/X/2023</field>
+            <field name="street">Jl. Sudirman No. 123</field>
+            <field name="city">Jakarta</field>
+            <field name="zip">12190</field>
+        </record>
+
+        <record id="demo_doctor_2" model="hr.employee">
+            <field name="name">Dr. Sarah Johnson</field>
+            <field name="is_doctor" eval="True"/>
+            <field name="email">sarah.johnson@healthnusa.com</field>
+            <field name="phone">+62 21 1234 5672</field>
+            <field name="mobile">+62 812 3456 7892</field>
+            <field name="specialty_id" ref="specialty_pediatrics"/>
+            <field name="duty_status">on_duty</field>
+            <field name="gender">female</field>
+            <field name="birth_date">1985-07-22</field>
+            <field name="str_number">1234567890123457</field>
+            <field name="sip_number">SIP.002/DU/X/2023</field>
+            <field name="street">Jl. Thamrin No. 456</field>
+            <field name="city">Jakarta</field>
+            <field name="zip">10230</field>
+        </record>
+
+        <record id="demo_doctor_3" model="hr.employee">
+            <field name="name">Dr. Michael Lee</field>
+            <field name="is_doctor" eval="True"/>
+            <field name="email">michael.lee@healthnusa.com</field>
+            <field name="phone">+62 21 1234 5673</field>
+            <field name="mobile">+62 812 3456 7893</field>
+            <field name="specialty_id" ref="specialty_neurology"/>
+            <field name="duty_status">off_duty</field>
+            <field name="gender">male</field>
+            <field name="birth_date">1978-11-08</field>
+            <field name="str_number">1234567890123458</field>
+            <field name="sip_number">SIP.003/DU/X/2023</field>
+            <field name="street">Jl. Kuningan No. 789</field>
+            <field name="city">Jakarta</field>
+            <field name="zip">12950</field>
+        </record>
+
+        <!-- Demo Education Records -->
+        <record id="demo_education_1" model="healthnusa.doctor.education">
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="degree">Dokter Spesialis Jantung</field>
+            <field name="institution">Universitas Indonesia</field>
+            <field name="field_of_study">Kardiologi</field>
+            <field name="start_year">2010</field>
+            <field name="graduation_year">2014</field>
+            <field name="gpa">3.8</field>
+        </record>
+
+        <record id="demo_education_2" model="healthnusa.doctor.education">
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="degree">Dokter Umum</field>
+            <field name="institution">Universitas Gadjah Mada</field>
+            <field name="field_of_study">Kedokteran</field>
+            <field name="start_year">2004</field>
+            <field name="graduation_year">2010</field>
+            <field name="gpa">3.7</field>
+        </record>
+
+        <!-- Demo Experience Records -->
+        <record id="demo_experience_1" model="healthnusa.doctor.experience">
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="position">Dokter Spesialis Jantung Senior</field>
+            <field name="institution">HealthNusa Hospital</field>
+            <field name="start_date">2020-01-01</field>
+            <field name="is_current" eval="True"/>
+            <field name="department">Cardiology</field>
+            <field name="responsibilities">Lead cardiologist, patient consultation, surgical procedures</field>
+        </record>
+
+        <record id="demo_experience_2" model="healthnusa.doctor.experience">
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="position">Dokter Spesialis Jantung</field>
+            <field name="institution">RS Siloam</field>
+            <field name="start_date">2014-06-01</field>
+            <field name="end_date">2019-12-31</field>
+            <field name="is_current" eval="False"/>
+            <field name="department">Cardiology</field>
+            <field name="responsibilities">Patient consultation, cardiac catheterization, emergency care</field>
+        </record>
+
+        <!-- Demo Schedule Records -->
+        <record id="demo_schedule_1" model="healthnusa.doctor.schedule">
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="day_of_week">monday</field>
+            <field name="start_time">8.0</field>
+            <field name="end_time">17.0</field>
+            <field name="notes">Regular consultation hours</field>
+        </record>
+
+        <record id="demo_schedule_2" model="healthnusa.doctor.schedule">
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="day_of_week">tuesday</field>
+            <field name="start_time">8.0</field>
+            <field name="end_time">12.0</field>
+            <field name="notes">Morning shift only</field>
+        </record>
+
+        <record id="demo_schedule_3" model="healthnusa.doctor.schedule">
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="day_of_week">wednesday</field>
+            <field name="start_time">13.0</field>
+            <field name="end_time">20.0</field>
+            <field name="notes">Afternoon to evening shift</field>
+        </record>
+
+        <record id="demo_schedule_4" model="healthnusa.doctor.schedule">
+            <field name="doctor_id" ref="demo_doctor_2"/>
+            <field name="day_of_week">monday</field>
+            <field name="start_time">9.0</field>
+            <field name="end_time">16.0</field>
+            <field name="notes">Pediatric consultation</field>
+        </record>
+
+        <record id="demo_schedule_5" model="healthnusa.doctor.schedule">
+            <field name="doctor_id" ref="demo_doctor_2"/>
+            <field name="day_of_week">wednesday</field>
+            <field name="start_time">10.0</field>
+            <field name="end_time">15.0</field>
+            <field name="notes">Children vaccination schedule</field>
+        </record>
+
+        <record id="demo_schedule_6" model="healthnusa.doctor.schedule">
+            <field name="doctor_id" ref="demo_doctor_2"/>
+            <field name="day_of_week">friday</field>
+            <field name="start_time">8.0</field>
+            <field name="end_time">14.0</field>
+            <field name="notes">Emergency pediatric care</field>
+        </record>
+
+    </data>
+</odoo>

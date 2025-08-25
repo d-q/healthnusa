@@ -6,7 +6,7 @@ import { Header } from "./main/header";
 import { Breadcrumb } from "./main/breadcrumb";
 import { Router } from "../services/router";
 
-import { Appointment } from "../pages/service/appointment/appointment";
+import { Admission } from "../pages/service/admission/admission";
 import { Dashboard } from "../pages/dashboard/dashboard";
 
 import { Doctor } from "../pages/employee/doctor/doctor";
@@ -50,7 +50,7 @@ export class Root extends Component {
         Breadcrumb,
         Header,
 
-        Appointment,
+        Admission,
         Dashboard,
 
         Doctor,
@@ -92,7 +92,7 @@ export class Root extends Component {
 
         this.apps = [
             { id: "dashboard", icon: "dashboard", name: "Dashboard", Component: Dashboard, category: "Service" },
-            { id: "appointment", icon: "event_note", name: "Appointment", Component: Appointment, category: "Service" },
+            { id: "admission", icon: "event_note", name: "Admission", Component: Admission, category: "Service" },
             { id: "patient", icon: "personal_injury", name: "Patient", Component: Patient, category: "Service" },
             { id: "invoices", icon: "payments", name: "Invoices", Component: Invoices, category: "Service" },
             { id: "bills", icon: "receipt_long", name: "Bills", Component: Bills, category: "Service" },

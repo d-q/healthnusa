@@ -19,6 +19,21 @@ export class Patient extends Component {
             sortField: "",
             sortDirection: "asc",
             filteredItems: [],
+            showAdmissionModal: false,
+            selectedPatientId: null,
+            admissionForm: {
+                admission_date: new Date().toISOString().split('T')[0],
+                admission_time: new Date().toTimeString().split(' ')[0].slice(0, 5),
+                department: "",
+                doctor: "",
+                room_number: "",
+                bed_number: "",
+                admission_type: "Outpatient",
+                insurance: "",
+                chief_complaint: "",
+                diagnosis: "",
+                notes: ""
+            }
         })
 
         // Sample patient data
@@ -406,5 +421,45 @@ export class Patient extends Component {
     editPatient(patientId) {
         // Add your edit logic here
         this.props.selectApp('patient-edit');
+    }
+
+    showAdmissionForm(patientId) {
+        this.state.selectedPatientId = patientId;
+        this.state.showAdmissionModal = true;
+        // Reset form
+        this.state.admissionForm = {
+            admission_date: new Date().toISOString().split('T')[0],
+            admission_time: new Date().toTimeString().split(' ')[0].slice(0, 5),
+            department: "",
+            doctor: "",
+            room_number: "",
+            bed_number: "",
+            admission_type: "Outpatient",
+            insurance: "",
+            chief_complaint: "",
+            diagnosis: "",
+            notes: ""
+        };
+    }
+
+    closeAdmissionModal() {
+        this.state.showAdmissionModal = false;
+        this.state.selectedPatientId = null;
+    }
+
+    onAdmissionFormChange(field, value) {
+        this.state.admissionForm[field] = value;
+    }
+
+    submitAdmissionForm() {
+        const patient = this.patientsData.find(p => p.id === this.state.selectedPatientId);
+        console.log('Submitting admission for:', patient?.name, this.state.admissionForm);
+        // TODO: Implement actual submission logic
+        alert(`Admission created successfully for ${patient?.name}`);
+        this.closeAdmissionModal();
+    }
+
+    get selectedPatient() {
+        return this.patientsData.find(p => p.id === this.state.selectedPatientId);
     }
 }

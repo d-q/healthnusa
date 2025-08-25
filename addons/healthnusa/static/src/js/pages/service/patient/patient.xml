@@ -150,6 +150,9 @@
                                 <button t-on-click="() => this.editPatient(patient.id)" class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10" title="Edit">
                                     <span class="material-icons">edit</span>
                                 </button>
+                                <button t-on-click="() => this.showAdmissionForm(patient.id)" class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 hover:text-custom-blue w-10" title="Admission">
+                                    <span class="material-icons">local_hospital</span>
+                                </button>
                                 <div class="relative">
                                     <button t-on-click="toggleActionMenu" class="btn-standard rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-200 w-10 transition-colors duration-300" title="More Actions">
                                         <span class="material-icons">more_vert</span>
@@ -162,9 +165,6 @@
                                         </a>
                                         <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200" href="#">
                                             <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">file_download</span>Export
-                                        </a>
-                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 h-10 transition-colors duration-200" href="#">
-                                            <span class="material-icons text-gray-500 dark:text-gray-400 mr-3 text-base">archive</span>Archive
                                         </a>
                                         <hr class="border-gray-200 dark:border-gray-600 my-1"/>
                                         <a class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-10 transition-colors duration-200" href="#">
@@ -223,6 +223,194 @@
                 <!-- Pagination Info for Empty Results -->
                 <div t-if="state.filteredItems.length === 0 and !state.currentSearchTerm" class="text-center py-6">
                     <p class="text-gray-500 dark:text-gray-400 text-sm">No data available. Please add some patients to get started.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admission Modal -->
+        <div t-if="state.showAdmissionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Patient Admission</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" t-if="selectedPatient">
+                            <t t-esc="selectedPatient.name"/> (MRN: <t t-esc="selectedPatient.medical_record_number"/>)
+                        </p>
+                    </div>
+                    <button t-on-click="closeAdmissionModal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <form class="p-6 space-y-6">
+                    <!-- Date and Time Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Date</label>
+                            <input 
+                                type="date" 
+                                t-att-value="state.admissionForm.admission_date"
+                                t-on-change="(e) => this.onAdmissionFormChange('admission_date', e.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                required="true"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Time</label>
+                            <input 
+                                type="time" 
+                                t-att-value="state.admissionForm.admission_time"
+                                t-on-change="(e) => this.onAdmissionFormChange('admission_time', e.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                required="true"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Department and Doctor Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Department</label>
+                            <select 
+                                t-att-value="state.admissionForm.department"
+                                t-on-change="(e) => this.onAdmissionFormChange('department', e.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                required="true"
+                            >
+                                <option value="">Select Department</option>
+                                <option value="Emergency">Emergency</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="Internal Medicine">Internal Medicine</option>
+                                <option value="Surgery">Surgery</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Attending Doctor</label>
+                            <input 
+                                type="text" 
+                                t-att-value="state.admissionForm.doctor"
+                                t-on-input="(e) => this.onAdmissionFormChange('doctor', e.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                placeholder="Dr. Smith"
+                                required="true"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Room and Bed Row - Only show for Inpatient and Emergency -->
+                    <div t-if="state.admissionForm.admission_type === 'Inpatient' || state.admissionForm.admission_type === 'Emergency'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Room Number</label>
+                            <input 
+                                type="text" 
+                                t-att-value="state.admissionForm.room_number"
+                                t-on-input="(e) => this.onAdmissionFormChange('room_number', e.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                placeholder="101A"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bed Number</label>
+                            <input 
+                                type="text" 
+                                t-att-value="state.admissionForm.bed_number"
+                                t-on-input="(e) => this.onAdmissionFormChange('bed_number', e.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                placeholder="1"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Admission Type and Insurance Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Type</label>
+                            <select 
+                                t-att-value="state.admissionForm.admission_type"
+                                t-on-change="(e) => this.onAdmissionFormChange('admission_type', e.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                            >
+                                <option value="Outpatient">Outpatient</option>
+                                <option value="Inpatient">Inpatient</option>
+                                <option value="Emergency">Emergency</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Insurance</label>
+                            <select 
+                                t-att-value="state.admissionForm.insurance"
+                                t-on-change="(e) => this.onAdmissionFormChange('insurance', e.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                required="true"
+                            >
+                                <option value="">Select Insurance</option>
+                                <option value="BPJS Kesehatan">BPJS Kesehatan</option>
+                                <option value="BPJS Ketenagakerjaan">BPJS Ketenagakerjaan</option>
+                                <option value="Private Insurance">Private Insurance</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Company Insurance">Company Insurance</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Chief Complaint -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Chief Complaint</label>
+                        <textarea 
+                            t-att-value="state.admissionForm.chief_complaint"
+                            t-on-input="(e) => this.onAdmissionFormChange('chief_complaint', e.target.value)"
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                            rows="3"
+                            placeholder="Patient's primary complaint..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Diagnosis -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Initial Diagnosis</label>
+                        <textarea 
+                            t-att-value="state.admissionForm.diagnosis"
+                            t-on-input="(e) => this.onAdmissionFormChange('diagnosis', e.target.value)"
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                            rows="3"
+                            placeholder="Initial diagnosis or suspected condition..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Notes -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Additional Notes</label>
+                        <textarea 
+                            t-att-value="state.admissionForm.notes"
+                            t-on-input="(e) => this.onAdmissionFormChange('notes', e.target.value)"
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                            rows="3"
+                            placeholder="Any additional notes or special instructions..."
+                        ></textarea>
+                    </div>
+                </form>
+
+                <!-- Modal Footer -->
+                <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
+                    <button 
+                        t-on-click="closeAdmissionModal" 
+                        type="button" 
+                        class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200"
+                    >
+                        Cancel
+                    </button>
+                    <button 
+                        t-on-click="submitAdmissionForm" 
+                        type="button" 
+                        class="px-4 py-2 text-sm font-medium text-white bg-custom-blue hover:bg-blue-600 rounded-lg transition-colors duration-200"
+                    >
+                        Create Admission
+                    </button>
                 </div>
             </div>
         </div>

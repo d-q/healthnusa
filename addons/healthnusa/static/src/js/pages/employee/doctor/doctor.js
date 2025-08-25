@@ -1,6 +1,7 @@
 /** @odoo-module **/
 
-import { Component, useState } from "@odoo/owl";
+import { Component, useState, onWillStart } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
 
 export class Doctor extends Component {
     static template = "healthnusa.Doctor";
@@ -10,6 +11,7 @@ export class Doctor extends Component {
     };
 
     setup() {
+        this.orm = useService("orm");
         this.router = this.props.router;
         this.state = useState({
             currentSearchTerm: "",
@@ -21,138 +23,201 @@ export class Doctor extends Component {
             filteredItems: [],
         })
 
-        // Sample data
-        this.doctorsData = [
-            {
-                id: 1,
-                name: "Dr. John Smith",
-                specialty: "Heart Specialist",
-                phone: "+123 456 7890",
-                gender: "Male",
-                status: "Available",
-                image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 2,
-                name: "Dr. Sarah Johnson",
-                specialty: "Lungs Specialist",
-                phone: "+123 456 7891",
-                gender: "Female",
-                status: "Not Available",
-                image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 3,
-                name: "Dr. Michael Lee",
-                specialty: "Dental Specialist",
-                phone: "+123 456 7892",
-                gender: "Male",
-                status: "Available",
-                image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 4,
-                name: "Dr. Emily White",
-                specialty: "Brain Specialist",
-                phone: "+123 456 7893",
-                gender: "Female",
-                status: "Available",
-                image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 5,
-                name: "Dr. Robert Chen",
-                specialty: "Orthopedic Surgeon",
-                phone: "+123 456 7894",
-                gender: "Male",
-                status: "Available",
-                image: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 6,
-                name: "Dr. Maria Rodriguez",
-                specialty: "Pediatrician",
-                phone: "+123 456 7895",
-                gender: "Female",
-                status: "On Break",
-                image: "https://images.unsplash.com/photo-1594824717593-c4fe35e55a4c?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 7,
-                name: "Dr. James Wilson",
-                specialty: "Dermatologist",
-                phone: "+123 456 7896",
-                gender: "Male",
-                status: "Available",
-                image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 8,
-                name: "Dr. Lisa Park",
-                specialty: "Gynecologist",
-                phone: "+123 456 7897",
-                gender: "Female",
-                status: "Not Available",
-                image: "https://images.unsplash.com/photo-1588667055777-8ee4d0fa8e30?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 9,
-                name: "Dr. Ahmed Hassan",
-                specialty: "Ophthalmologist",
-                phone: "+123 456 7898",
-                gender: "Male",
-                status: "Available",
-                image: "https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 10,
-                name: "Dr. Anna Thompson",
-                specialty: "Psychiatrist",
-                phone: "+123 456 7899",
-                gender: "Female",
-                status: "On Break",
-                image: "https://images.unsplash.com/photo-1582046916606-44e3d4e83e6b?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 11,
-                name: "Dr. David Kumar",
-                specialty: "Anesthesiologist",
-                phone: "+123 456 7900",
-                gender: "Male",
-                status: "Available",
-                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 12,
-                name: "Dr. Rachel Green",
-                specialty: "Radiologist",
-                phone: "+123 456 7901",
-                gender: "Female",
-                status: "In Surgery",
-                image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 13,
-                name: "Dr. Marcus Williams",
-                specialty: "Urologist",
-                phone: "+123 456 7902",
-                gender: "Male",
-                status: "Available",
-                image: "https://images.unsplash.com/photo-1584467735871-8e679ba3922b?w=100&h=100&fit=crop&crop=face"
-            },
-            {
-                id: 14,
-                name: "Dr. Sophie Martinez",
-                specialty: "Endocrinologist",
-                phone: "+123 456 7903",
-                gender: "Female",
-                status: "Not Available",
-                image: "https://images.unsplash.com/photo-1594824717593-c4fe35e55a4c?w=100&h=100&fit=crop&crop=face"
-            }
-        ];
 
-        // Initialize filtered items
-        this.state.filteredItems = this.doctorsData;
+        onWillStart(async () => {
+            const employees = await this.orm.searchRead(
+                "hr.employee",
+                [["is_doctor", "=", true]],
+                [
+                    "id",
+                    "name",
+                    "specialty_id",
+                    "work_phone",
+                    "gender",
+                    "duty_status",
+                    "image_1920",
+                ]
+            );
+            // Convert employees to a list of dictionaries and log it
+            this.employeeList = employees.map(emp => ({
+                id: emp.id,
+                name: emp.name,
+                specialty: emp.specialty_id[1],
+                phone: emp.work_phone,
+                gender: (() => {
+                    switch (emp.gender) {
+                        case "male":
+                            return "Male";
+                        case "female":
+                            return "Female";
+                        case "other":
+                            return "Other";
+                        default:
+                            return "";
+                    }
+                })(),
+                status: (() => {
+                    switch (emp.duty_status) {
+                        case "on_duty":
+                            return "On Duty";
+                        case "on_call":
+                            return "On Call";
+                        case "off_duty":
+                            return "Off Duty";
+                        case "leave":
+                            return "On Leave";
+                        default:
+                            return emp.duty_status || "";
+                    }
+                })(),
+                image: `/web/image?model=hr.employee&id=${emp.id}&field=image_1920`,
+            }));
+
+            console.log(" employees >>>> ")
+            console.log(employees)
+            console.log(" employeeList >>>> ")
+            console.log(this.employeeList)
+
+            // Initialize filtered items
+            this.state.filteredItems = this.employeeList;
+        });
+
+        // Sample data
+        // this.doctorsData = [
+        //     {
+        //         id: 1,
+        //         name: "Dr. John Smith",
+        //         specialty: "Heart Specialist",
+        //         phone: "+123 456 7890",
+        //         gender: "Male",
+        //         status: "Available",
+        //         image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 2,
+        //         name: "Dr. Sarah Johnson",
+        //         specialty: "Lungs Specialist",
+        //         phone: "+123 456 7891",
+        //         gender: "Female",
+        //         status: "Not Available",
+        //         image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 3,
+        //         name: "Dr. Michael Lee",
+        //         specialty: "Dental Specialist",
+        //         phone: "+123 456 7892",
+        //         gender: "Male",
+        //         status: "Available",
+        //         image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 4,
+        //         name: "Dr. Emily White",
+        //         specialty: "Brain Specialist",
+        //         phone: "+123 456 7893",
+        //         gender: "Female",
+        //         status: "Available",
+        //         image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 5,
+        //         name: "Dr. Robert Chen",
+        //         specialty: "Orthopedic Surgeon",
+        //         phone: "+123 456 7894",
+        //         gender: "Male",
+        //         status: "Available",
+        //         image: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 6,
+        //         name: "Dr. Maria Rodriguez",
+        //         specialty: "Pediatrician",
+        //         phone: "+123 456 7895",
+        //         gender: "Female",
+        //         status: "On Break",
+        //         image: "https://images.unsplash.com/photo-1594824717593-c4fe35e55a4c?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 7,
+        //         name: "Dr. James Wilson",
+        //         specialty: "Dermatologist",
+        //         phone: "+123 456 7896",
+        //         gender: "Male",
+        //         status: "Available",
+        //         image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 8,
+        //         name: "Dr. Lisa Park",
+        //         specialty: "Gynecologist",
+        //         phone: "+123 456 7897",
+        //         gender: "Female",
+        //         status: "Not Available",
+        //         image: "https://images.unsplash.com/photo-1588667055777-8ee4d0fa8e30?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 9,
+        //         name: "Dr. Ahmed Hassan",
+        //         specialty: "Ophthalmologist",
+        //         phone: "+123 456 7898",
+        //         gender: "Male",
+        //         status: "Available",
+        //         image: "https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 10,
+        //         name: "Dr. Anna Thompson",
+        //         specialty: "Psychiatrist",
+        //         phone: "+123 456 7899",
+        //         gender: "Female",
+        //         status: "On Break",
+        //         image: "https://images.unsplash.com/photo-1582046916606-44e3d4e83e6b?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 11,
+        //         name: "Dr. David Kumar",
+        //         specialty: "Anesthesiologist",
+        //         phone: "+123 456 7900",
+        //         gender: "Male",
+        //         status: "Available",
+        //         image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 12,
+        //         name: "Dr. Rachel Green",
+        //         specialty: "Radiologist",
+        //         phone: "+123 456 7901",
+        //         gender: "Female",
+        //         status: "In Surgery",
+        //         image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 13,
+        //         name: "Dr. Marcus Williams",
+        //         specialty: "Urologist",
+        //         phone: "+123 456 7902",
+        //         gender: "Male",
+        //         status: "Available",
+        //         image: "https://images.unsplash.com/photo-1584467735871-8e679ba3922b?w=100&h=100&fit=crop&crop=face"
+        //     },
+        //     {
+        //         id: 14,
+        //         name: "Dr. Sophie Martinez",
+        //         specialty: "Endocrinologist",
+        //         phone: "+123 456 7903",
+        //         gender: "Female",
+        //         status: "Not Available",
+        //         image: "https://images.unsplash.com/photo-1594824717593-c4fe35e55a4c?w=100&h=100&fit=crop&crop=face"
+        //     }
+        // ];
+
+
+        // console.log(" employeeList >>>> ")
+        // console.log(this.employeeList)
+
+        // // Initialize filtered items
+        // this.state.filteredItems = this.employeeList;
     }
 
     addNewDoctor() {
@@ -330,14 +395,14 @@ export class Doctor extends Component {
     getStatusClass(status) {
         const baseClasses = "text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center";
         switch (status) {
-            case 'Available':
-                return `${baseClasses} bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300`;
-            case 'Not Available':
-                return `${baseClasses} bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300`;
-            case 'On Break':
-                return `${baseClasses} bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300`;
-            case 'In Surgery':
+            case 'On Duty':
                 return `${baseClasses} bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300`;
+            case 'Off Duty':
+                return `${baseClasses} bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300`;
+            case 'On Call':
+                return `${baseClasses} bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300`;
+            case 'On Leave':
+                return `${baseClasses} bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300`;
             default:
                 return `${baseClasses} bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300`;
         }
@@ -345,14 +410,14 @@ export class Doctor extends Component {
 
     getStatusColor(status) {
         switch (status) {
-            case 'Available':
-                return 'bg-green-500';
-            case 'Not Available':
-                return 'bg-red-500';
-            case 'On Break':
-                return 'bg-yellow-500';
-            case 'In Surgery':
+            case 'On Duty':
                 return 'bg-blue-500';
+            case 'Off Duty':
+                return 'bg-red-500';
+            case 'On Call':
+                return 'bg-green-500';
+            case 'On Leave':
+                return 'bg-yellow-500';
             default:
                 return 'bg-gray-500';
         }
@@ -382,7 +447,7 @@ export class Doctor extends Component {
         document.querySelectorAll('.dropdown-menu').forEach(menu => {
             menu.classList.add('hidden');
         });
-        
+
         // Find the dropdown menu relative to the clicked button
         const button = event.currentTarget;
         const dropdown = button.nextElementSibling;
@@ -394,7 +459,7 @@ export class Doctor extends Component {
     viewDoctor(doctorId) {
         this.props.selectApp('doctor-detail');
     }
-    
+
     editDoctor(doctorId) {
         // Add your edit logic here
         this.props.selectApp('doctor-edit');

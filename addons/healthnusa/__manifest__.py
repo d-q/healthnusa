@@ -4,7 +4,15 @@
     'category': 'healthnusa',
     'depends': ['base','web', 'hr'],
     'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'views/doctor_views.xml',
+        'views/document_views.xml',
+        'views/schedule_views.xml',
+        'views/specialty_views.xml',
         'views/templates.xml',
+        'views/menu_views.xml',
+        'data/specialty_data.xml',
     ],
     # 'demo': [
     #     'demo/demo_data.xml',

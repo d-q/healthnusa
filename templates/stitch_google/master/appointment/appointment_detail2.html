@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Patient Profile - healthnusa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-custom-blue {
+            background-color: #4A90E2;
+        }
+        .text-custom-blue {
+            color: #4A90E2;
+        }
+        .bg-custom-gray {
+            background-color: #F7F8FA;
+        }
+        aside nav a.active,
+        aside nav a:hover {
+            background-color: #E9F2FE;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        aside nav a.active .material-icons,
+        aside nav a:hover .material-icons {
+            color: #4A90E2;
+        }
+        aside nav a {
+            color: #A0AEC0;
+        }
+        aside nav a .material-icons {
+            color: #A0AEC0;
+        }
+        .material-icons.md-30 {
+            font-size: 30px;
+        }
+        :root {
+            --primary-blue: #4A90E2;
+            --blue-50: #F0F6FF;
+            --blue-100: #E0E9FF;
+            --blue-200: #BED0FF;
+            --blue-300: #93B0FF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --green-50: #F0FDF4;
+            --green-800: #166534;
+            --yellow-50: #FEFCE8;
+            --yellow-800: #854D0E;
+            --purple-50: #FAF5FF;
+            --purple-800: #6B21A8;
+            --red-50: #FEF2F2;
+            --red-800: #991B1B;
+            --teal-50: #F0FDFA;
+            --teal-700: #0F766E;
+            --orange-50: #FFF7ED;
+            --orange-700: #C2410C;
+        }
+        .icon {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Enhanced Patient Selection Styles */
+        .patient-item.active {
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
+        }
+        
+        .patient-item:hover {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body class="bg-custom-gray">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white flex flex-col p-6">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-custom-blue rounded-lg mr-3"></div>
+                <h1 class="text-xl font-bold text-gray-800">healthnusa</h1>
+            </div>
+            <nav class="flex-grow">
+                <span class="text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Service</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">dashboard</span>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center active" href="#">
+                        <span class="material-icons md-30">event_note</span>
+                        <span class="text-xs mt-1">Appointments</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">people</span>
+                        <span class="text-xs mt-1">Doctors</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">person_add</span>
+                        <span class="text-xs mt-1">Add Patient</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">medication</span>
+                        <span class="sidebar-text text-xs mt-1">Prescriptions</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">camera_alt</span>
+                        <span class="sidebar-text text-xs mt-1">Radiology</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">science</span>
+                        <span class="sidebar-text text-xs mt-1">Lab Results</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="text-xs mt-1">Payment</span>
+                    </a>
+                </div>
+                <span
+                    class="sidebar-section-title text-gray-400 text-xs font-semibold uppercase mb-2 tracking-wider">Office</span>
+                <div class="grid grid-cols-2 gap-2 mt-2 mb-6">
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">groups</span>
+                        <span class="sidebar-text text-xs mt-1">Staff</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">inventory</span>
+                        <span class="sidebar-text text-xs mt-1">Inventory</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">payment</span>
+                        <span class="sidebar-text text-xs mt-1">Accounting</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">receipt_long</span>
+                        <span class="sidebar-text text-xs mt-1">Invoices</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">account_balance</span>
+                        <span class="sidebar-text text-xs mt-1">Insurance</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-3 rounded-lg text-center hover:bg-gray-50"
+                        href="#">
+                        <span class="material-icons md-30">analytics</span>
+                        <span class="sidebar-text text-xs mt-1">Reports</span>
+                    </a>
+                </div>
+                <span
+                    class="text-gray-400 text-xs font-semibold uppercase pt-6 mb-2 tracking-wider block">Account</span>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">person</span>
+                        <span class="text-xs mt-1">Profile</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">settings</span>
+                        <span class="text-xs mt-1">Settings</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center p-2 rounded-lg text-center" href="#">
+                        <span class="material-icons md-30">help_outline</span>
+                        <span class="text-xs mt-1">Support</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto">
+                <a class="flex items-center py-3 px-4 rounded-lg text-red-500" href="#">
+                    <span class="material-icons mr-3">logout</span> Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <!-- Header -->
+            <header class="flex justify-between items-center mb-8">
+                <div class="flex items-center space-x-4">
+                    <button class="menu-toggle p-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
+                        onclick="toggleSidebar()">
+                        <span class="material-icons text-gray-600">menu</span>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-800">Patient Profile</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 bg-white rounded-lg shadow">
+                        <span class="material-icons text-gray-600">dark_mode</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="User avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiri3a6ED25vF7lzVZ-nJ6ve_iS-xexp41q1sR3_-unUTDtDRUlNDB5XusFaH3a7BK2LpZ6eYxl-JVdAvvXdxWZYdeWctpFtmB308-RSjKk3zCMAzv_DnNqhAf_g_n39X_tMS-Z27o1QcHNHFt_RQI1JexXeey3mgem3wkHxgKySMfYxjdbN0B75P99D-sT3iCtKZ1fs-P-jYirBewB6t1oJSWIk0KrhBE2Z0D7dbBqAwqz2_mUhsun_8tUK7A4iK_oLgXgQEUD8E" />
+                        <span class="font-semibold text-gray-700">Dr. Alexa</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Patient Profile Content -->
+            <div class="flex flex-wrap lg:flex-nowrap gap-6">
+                <div class="w-full lg:w-[30%]">
+                    <div class="bg-white p-6 rounded-xl shadow-sm h-full flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="font-bold text-[var(--gray-800)] text-lg">Patient List</h2>
+                        </div>
+                        <div class="mb-4">
+                            <div class="relative">
+                                <span class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">search</span>
+                                <input id="patient-search-input" type="text" placeholder="Search name, ID, phone, or city..." 
+                                    class="w-full pl-10 pr-10 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                    oninput="searchPatients(this.value)" 
+                                    onkeyup="handleSearchKeyup(event)"
+                                    autocomplete="off">
+                                <button id="clear-search-btn" 
+                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors hidden"
+                                    onclick="clearSearch()" title="Clear search">
+                                    <span class="material-icons text-lg">close</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex-grow overflow-y-auto -mr-3 pr-3 bg-[var(--gray-50)] rounded-lg p-3 h-[800px]">
+                            <div id="patient-list" class="space-y-3 text-sm">
+                                <!-- Patient list will be rendered by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full lg:w-[70%] space-y-6">
+                    <!-- Patient Profile Card -->
+                    <div id="patient-profile-card" class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex flex-col sm:flex-row items-start">
+                            <!-- Patient Photo and Name Section -->
+                            <div class="w-full sm:w-1/3 text-center sm:text-left mb-6 sm:mb-0 sm:pr-6 flex flex-col items-center">
+                                <!-- Patient Photo -->
+                                <img id="patient-photo" alt="Patient profile picture"
+                                    class="w-28 h-28 rounded-full mb-4 object-cover"
+                                    src="https://raw.githubusercontent.com/odoo/odoo/refs/heads/18.0/addons/hr/static/img/employee_hne-image.jpg" />
+                                <!-- Patient Name -->
+                                <h1 id="patient-name-display" class="text-2xl font-bold text-[var(--gray-800)]">Abigail Peterson</h1>
+
+                                <!-- Action Buttons -->
+                                <div class="mt-4 flex w-full justify-center space-x-2">
+                                    <button id="btn-profile"
+                                        class="flex items-center justify-center bg-custom-blue text-white rounded-lg h-10 w-10 hover:bg-blue-600">
+                                        <span class="material-icons text-lg">person</span>
+                                    </button>
+                                    <button id="btn-edit"
+                                        class="flex items-center justify-center bg-yellow-500 text-white rounded-lg h-10 w-10 hover:bg-yellow-600">
+                                        <span class="material-icons text-lg">edit</span>
+                                    </button>
+                                    <button id="btn-print"
+                                        class="flex items-center justify-center bg-gray-500 text-white rounded-lg h-10 w-10 hover:bg-gray-600">
+                                        <span class="material-icons text-lg">print</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Patient Details Grid -->
+                            <div id="patient-details-grid" class="w-full sm:w-2/3 sm:pl-6 grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-6 text-sm">
+                                <!-- Gender -->
+                                <div id="gender-field">
+                                    <p class="text-[var(--gray-500)]">Gender</p>
+                                    <div class="flex items-center space-x-2">
+                                        <p id="patient-gender-value" class="font-medium text-[var(--gray-800)]">Female</p>
+                                        <span id="gender-badge" class="bg-[var(--orange-50)] text-[var(--orange-700)] text-xs font-semibold px-2 py-0.5 rounded-full">Ny</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Birthday -->
+                                <div id="birthday-field">
+                                    <p class="text-[var(--gray-500)]">Birthday</p>
+                                    <div class="flex items-center space-x-2">
+                                        <p id="patient-birthday-value" class="font-medium text-[var(--gray-800)]">Oct. 25, 1992</p>
+                                        <span id="age-badge" class="bg-[var(--teal-50)] text-[var(--teal-700)] text-xs font-semibold px-2 py-0.5 rounded-full">31</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Phone Number -->
+                                <div id="phone-field">
+                                    <p class="text-[var(--gray-500)]">Phone number</p>
+                                    <p id="patient-phone-value" class="font-medium text-[var(--gray-800)]">(555)-233-3393</p>
+                                </div>
+                                
+                                <!-- Address -->
+                                <div id="address-field">
+                                    <p class="text-[var(--gray-500)]">Address</p>
+                                    <p id="patient-address-value" class="font-medium text-[var(--gray-800)]">250 Executive Park Blvd, Suite 3400 San Francisco CA 94134</p>
+                                </div>
+                                
+                                <!-- City -->
+                                <div id="city-field">
+                                    <p class="text-[var(--gray-500)]">City</p>
+                                    <p id="patient-city-value" class="font-medium text-[var(--gray-800)]">San Francisco</p>
+                                </div>
+                                
+                                <!-- ZIP Code -->
+                                <div id="zipcode-field">
+                                    <p class="text-[var(--gray-500)]">ZIP Code</p>
+                                    <p id="patient-zipcode-value" class="font-medium text-[var(--gray-800)]">94134</p>
+                                </div>
+                                
+                                <!-- Registration Date -->
+                                <div id="registration-field">
+                                    <p class="text-[var(--gray-500)]">Registration date</p>
+                                    <p id="patient-registration-value" class="font-medium text-[var(--gray-800)]">Oct. 25, 1998</p>
+                                </div>
+                                
+                                <!-- Member Status -->
+                                <div id="member-status-field">
+                                    <p class="text-[var(--gray-500)]">Member status</p>
+                                    <p id="patient-member-status-value" class="font-medium text-[var(--gray-800)]">Active member</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Patient Notes Section -->
+                        <div id="patient-notes-section" class="mt-6 border-t border-[var(--gray-200)] pt-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 id="notes-title" class="font-bold text-[var(--gray-800)] text-lg">Notes</h2>
+                            </div>
+                            <div id="notes-content" class="bg-[var(--blue-50)] p-4 rounded-lg mb-4">
+                                <div id="notes-text" class="list-disc list-inside text-sm text-[var(--gray-700)] space-y-2">
+                                    <p>Patient complains of abdominal pain, refuses to be explained about the procedures to be performed, and appears restless. Patient also refuses to cooperate with nurses.</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-end items-center">
+                                <button id="edit-note-btn"
+                                    class="bg-custom-blue text-white rounded-lg py-2 px-4 text-sm font-semibold hover:bg-blue-700 h-10" onclick="toggleEditNote()">Edit
+                                    note</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+                            <div
+                                class="flex space-x-1 border border-[var(--gray-200)] rounded-lg p-1 mb-4 sm:mb-0 flex-wrap">
+                                <button id="tab-assessment"
+                                    class="px-3 py-1.5 text-sm font-medium text-white bg-custom-blue rounded-md" onclick="switchTab('assessment')">Assessment</button>
+                                <button id="tab-tindakan"
+                                    class="px-3 py-1.5 text-sm font-medium text-white bg-custom-blue rounded-md" onclick="switchTab('tindakan')">Treatment</button>
+                                <button id="tab-laboratorium"
+                                    class="px-3 py-1.5 text-sm font-medium text-white bg-custom-blue rounded-md" onclick="switchTab('laboratorium')">Laboratory</button>
+                                <button id="tab-radiologi"
+                                    class="px-3 py-1.5 text-sm font-medium text-white bg-custom-blue rounded-md" onclick="switchTab('radiologi')">Radiology</button>
+                            </div>
+                        </div>
+                        <div class="bg-[var(--gray-50)] rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 id="tab-title" class="font-bold text-lg text-[var(--gray-800)]">Assessment List</h2>
+                                <button
+                                    class="bg-custom-blue text-white rounded-lg py-2 px-4 text-sm font-semibold hover:bg-blue-700 flex items-center h-10">
+                                    <span class="material-icons text-lg mr-1">add</span> Add
+                                </button>
+                            </div>
+                            <div id="tab-content" class="h-96 overflow-y-auto pr-2">
+                                <!-- Content will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Patient data
+        const patients = [
+            {
+                name: "Abigail Peterson",
+                id: "P001",
+                age: 31,
+                gender: "Female",
+                birthday: "Oct. 25, 1992",
+                phone: "(555)-233-3393",
+                address: "250 Executive Park Blvd, Suite 3400\nSan Francisco CA 94134",
+                city: "San Francisco",
+                zip: "94134",
+                registrationDate: "Oct. 25, 1998",
+                memberStatus: "Active member",
+                photo: "https://raw.githubusercontent.com/odoo/odoo/refs/heads/18.0/addons/hr/static/img/employee_hne-image.jpg",
+                notes: "Patient complains of abdominal pain, refuses to be explained about the procedures to be performed, and appears restless. Patient also refuses to cooperate with nurses."
+            },
+            {
+                name: "Michael Johnson",
+                id: "P002",
+                age: 45,
+                gender: "Male",
+                birthday: "Mar. 15, 1979",
+                phone: "(555)-123-4567",
+                address: "1234 Oak Street\nLos Angeles CA 90210",
+                city: "Los Angeles",
+                zip: "90210",
+                registrationDate: "Jan. 10, 2020",
+                memberStatus: "Active member",
+                photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
+                notes: "Patient has a history of hypertension and diabetes. Requires routine monitoring of blood pressure and blood sugar. Patient is cooperative and compliant with treatment."
+            },
+            {
+                name: "Sarah Williams",
+                id: "P003",
+                age: 28,
+                gender: "Female",
+                birthday: "Jul. 8, 1996",
+                phone: "(555)-987-6543",
+                address: "789 Pine Avenue\nNew York NY 10001",
+                city: "New York",
+                zip: "10001",
+                registrationDate: "Mar. 20, 2021",
+                memberStatus: "Pending review",
+                photo: "https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=200&h=200&fit=crop&crop=face",
+                notes: "New patient with seasonal allergy complaints. Currently under evaluation to determine specific allergens. Recommended to avoid known allergy triggers."
+            },
+            {
+                name: "David Brown",
+                id: "P004",
+                age: 52,
+                gender: "Male",
+                birthday: "Dec. 3, 1971",
+                phone: "(555)-456-7890",
+                address: "456 Elm Street\nChicago IL 60601",
+                city: "Chicago",
+                zip: "60601",
+                registrationDate: "Sep. 5, 2019",
+                memberStatus: "Active member",
+                photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
+                notes: "Patient with a history of coronary heart disease. Already underwent bypass surgery 2 years ago. Stable condition with routine medication. Regular check-ups every 3 months."
+            },
+            {
+                name: "Emma Davis",
+                id: "P005",
+                age: 34,
+                gender: "Female",
+                birthday: "Apr. 22, 1990",
+                phone: "(555)-321-0987",
+                address: "321 Maple Drive\nMiami FL 33101",
+                city: "Miami",
+                zip: "33101",
+                registrationDate: "Nov. 12, 2020",
+                memberStatus: "Active member",
+                photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face",
+                notes: "Second trimester pregnant patient. Pregnancy progressing normally without complications. Regular prenatal check-ups monthly. Recommended to take prenatal vitamins."
+            },
+            {
+                name: "James Wilson",
+                id: "P006",
+                age: 29,
+                gender: "Male",
+                birthday: "Aug. 17, 1995",
+                phone: "(555)-654-3210",
+                address: "654 Cedar Lane\nSeattle WA 98101",
+                city: "Seattle",
+                zip: "98101",
+                registrationDate: "Feb. 28, 2022",
+                memberStatus: "Inactive",
+                photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face",
+                notes: "Patient with history of sports injury to right knee. Already underwent physiotherapy for 6 months. Condition improving but still requires routine follow-up."
+            },
+            {
+                name: "Lisa Garcia",
+                id: "P007",
+                age: 37,
+                gender: "Female",
+                birthday: "Jan. 5, 1987",
+                phone: "(555)-789-0123",
+                address: "987 Birch Road\nHouston TX 77001",
+                city: "Houston",
+                zip: "77001",
+                registrationDate: "Jun. 15, 2021",
+                memberStatus: "Active member",
+                photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop&crop=face",
+                notes: "Patient with history of chronic migraines. Preventive treatment showing good results. Attack frequency reduced from 3x per week to 1x per month."
+            },
+            {
+                name: "Robert Martinez",
+                id: "P008",
+                age: 41,
+                gender: "Male",
+                birthday: "May. 30, 1983",
+                phone: "(555)-012-3456",
+                address: "012 Spruce Street\nPhoenix AZ 85001",
+                city: "Phoenix",
+                zip: "85001",
+                registrationDate: "Aug. 7, 2020",
+                memberStatus: "Pending review",
+                photo: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=200&h=200&fit=crop&crop=face",
+                notes: "Patient with history of bronchial asthma. Using rescue and controller inhalers. Condition well controlled, but needs to avoid asthma triggers like dust and cigarette smoke."
+            }
+        ];
+
+        function selectPatientFromList(index) {
+            // This function handles selection from the rendered list (including filtered results)
+            selectPatient(index);
+            
+            // Re-render the current list to update the visual selection
+            const searchInput = document.getElementById('patient-search-input');
+            const searchQuery = searchInput.value;
+            
+            if (searchQuery.trim() === '') {
+                renderPatientList(patients);
+            } else {
+                searchPatients(searchQuery);
+            }
+        }
+
+        function selectPatient(index) {
+            // Update current patient index for note editing
+            currentPatientIndex = index;
+
+            // If currently editing, cancel edit mode
+            if (isEditingNote) {
+                cancelEditNote();
+            }
+
+            // Update patient data in the main section
+            const patient = patients[index];
+            updatePatientData(patient);
+        }
+
+        function updatePatientData(patient) {
+            // Update profile image
+            const profileImg = document.getElementById('patient-photo');
+            if (profileImg) {
+                profileImg.src = patient.photo;
+                profileImg.alt = patient.name + ' profile picture';
+            }
+
+            // Update patient name
+            const nameElement = document.getElementById('patient-name-display');
+            if (nameElement) {
+                nameElement.textContent = patient.name;
+            }
+
+            // Update patient details using IDs
+            const elements = {
+                gender: document.getElementById('patient-gender-value'),
+                birthday: document.getElementById('patient-birthday-value'),
+                age: document.getElementById('age-badge'),
+                phone: document.getElementById('patient-phone-value'),
+                address: document.getElementById('patient-address-value'),
+                city: document.getElementById('patient-city-value'),
+                zipcode: document.getElementById('patient-zipcode-value'),
+                registration: document.getElementById('patient-registration-value'),
+                memberStatus: document.getElementById('patient-member-status-value')
+            };
+
+            // Update values
+            if (elements.gender) elements.gender.textContent = patient.gender;
+            if (elements.birthday) elements.birthday.textContent = patient.birthday;
+            if (elements.age) elements.age.textContent = patient.age.toString();
+            if (elements.phone) elements.phone.textContent = patient.phone;
+            if (elements.address) elements.address.textContent = patient.address;
+            if (elements.city) elements.city.textContent = patient.city;
+            if (elements.zipcode) elements.zipcode.textContent = patient.zip;
+            if (elements.registration) elements.registration.textContent = patient.registrationDate;
+            if (elements.memberStatus) elements.memberStatus.textContent = patient.memberStatus;
+
+            // Update gender badge
+            const genderBadge = document.getElementById('gender-badge');
+            if (genderBadge) {
+                genderBadge.textContent = patient.gender === 'Female' ? 'Ny' : 'Tn';
+            }
+
+            // Update notes
+            const notesText = document.getElementById('notes-text');
+            if (notesText) {
+                notesText.innerHTML = `<p>${patient.notes}</p>`;
+            }
+        }
+
+        function toggleSidebar() {
+            // Function to toggle sidebar visibility on mobile
+            console.log('Toggle sidebar');
+        }
+
+        // Note editing functionality
+        let isEditingNote = false;
+        let currentPatientIndex = 0;
+
+        function toggleEditNote() {
+            const notesText = document.getElementById('notes-text');
+            const editBtn = document.getElementById('edit-note-btn');
+            
+            if (!isEditingNote) {
+                // Switch to edit mode
+                const currentText = patients[currentPatientIndex].notes;
+                notesText.innerHTML = `
+                    <textarea id="note-textarea" 
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none" 
+                        rows="4" 
+                        placeholder="Enter patient notes...">${currentText}</textarea>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="saveNote()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 flex items-center">
+                            <span class="material-icons text-sm mr-1">check</span> Save
+                        </button>
+                        <button onclick="cancelEditNote()" class="bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-600 flex items-center">
+                            <span class="material-icons text-sm mr-1">close</span> Cancel
+                        </button>
+                    </div>
+                `;
+                
+                editBtn.textContent = 'Cancel edit';
+                editBtn.classList.remove('bg-custom-blue', 'hover:bg-blue-700');
+                editBtn.classList.add('bg-gray-500', 'hover:bg-gray-600');
+                isEditingNote = true;
+                
+                // Focus on textarea
+                document.getElementById('note-textarea').focus();
+            } else {
+                cancelEditNote();
+            }
+        }
+
+        function saveNote() {
+            const textarea = document.getElementById('note-textarea');
+            const newNote = textarea.value.trim();
+            
+            if (newNote) {
+                // Update the patient data
+                patients[currentPatientIndex].notes = newNote;
+                
+                // Update the display
+                const notesText = document.getElementById('notes-text');
+                notesText.innerHTML = `<p>${newNote}</p>`;
+                
+                // Reset edit button
+                const editBtn = document.getElementById('edit-note-btn');
+                editBtn.textContent = 'Edit note';
+                editBtn.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+                editBtn.classList.add('bg-custom-blue', 'hover:bg-blue-700');
+                isEditingNote = false;
+                
+                // Show success message
+                showNotification('Notes saved successfully!', 'success');
+            } else {
+                showNotification('Notes cannot be empty!', 'error');
+            }
+        }
+
+        function cancelEditNote() {
+            // Restore original note
+            const notesText = document.getElementById('notes-text');
+            notesText.innerHTML = `<p>${patients[currentPatientIndex].notes}</p>`;
+            
+            // Reset edit button
+            const editBtn = document.getElementById('edit-note-btn');
+            editBtn.textContent = 'Edit note';
+            editBtn.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+            editBtn.classList.add('bg-custom-blue', 'hover:bg-blue-700');
+            isEditingNote = false;
+        }
+
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white font-semibold z-50 transform transition-all duration-300 translate-x-full`;
+            
+            if (type === 'success') {
+                notification.classList.add('bg-green-600');
+            } else if (type === 'error') {
+                notification.classList.add('bg-red-600');
+            }
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <span class="material-icons text-sm mr-2">${type === 'success' ? 'check_circle' : 'error'}</span>
+                    ${message}
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Tab functionality
+        let currentTab = 'assessment';
+
+        const tabData = {
+            assessment: {
+                title: 'Assessment List',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                                <div>
+                                    <p class="font-bold text-[var(--gray-800)]">23 Aug'24</p>
+                                    <p class="text-sm text-[var(--gray-500)]">09:00 AM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Diagnosis</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Gastritis Akut</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Doctor</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Dr. Sarah Wilson</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">ICD-10</p>
+                                    <p class="font-medium text-[var(--gray-800)]">K29.1</p>
+                                </div>
+                                <div class="flex items-center justify-start text-custom-blue cursor-pointer">
+                                    <span class="material-icons text-xl">note_add</span>
+                                    <span class="ml-2 text-sm font-medium">Detail</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-blue-50 rounded-lg">
+                                <p class="text-sm text-gray-700"><strong>Keluhan:</strong> Nyeri ulu hati, mual, muntah</p>
+                                <p class="text-sm text-gray-700 mt-1"><strong>Pemeriksaan:</strong> TD 120/80, Nadi 88x/mnt, RR 20x/mnt, Suhu 37.2°C</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                                <div>
+                                    <p class="font-bold text-[var(--gray-800)]">20 Aug'24</p>
+                                    <p class="text-sm text-[var(--gray-500)]">14:30 PM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Diagnosis</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Hipertensi Grade 1</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Doctor</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Dr. Michael Chen</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">ICD-10</p>
+                                    <p class="font-medium text-[var(--gray-800)]">I10</p>
+                                </div>
+                                <div class="flex items-center justify-start text-custom-blue cursor-pointer">
+                                    <span class="material-icons text-xl">note_add</span>
+                                    <span class="ml-2 text-sm font-medium">Detail</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-blue-50 rounded-lg">
+                                <p class="text-sm text-gray-700"><strong>Keluhan:</strong> Sakit kepala, pusing, leher tegang</p>
+                                <p class="text-sm text-gray-700 mt-1"><strong>Pemeriksaan:</strong> TD 150/90, Nadi 92x/mnt, BMI 27.5</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            tindakan: {
+                title: 'Treatment History',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                                <div>
+                                    <p class="font-bold text-[var(--gray-800)]">23 Aug'24</p>
+                                    <p class="text-sm text-[var(--gray-500)]">10:15 AM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Tindakan</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Pemasangan Infus</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Petugas</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Ns. Maria Santos</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Status</p>
+                                    <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">Selesai</span>
+                                </div>
+                                <div class="flex items-center justify-start text-custom-blue cursor-pointer">
+                                    <span class="material-icons text-xl">visibility</span>
+                                    <span class="ml-2 text-sm font-medium">Lihat</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-purple-50 rounded-lg">
+                                <p class="text-sm text-gray-700"><strong>Detail:</strong> Infus RL 500cc, kecepatan 20 tpm</p>
+                                <p class="text-sm text-gray-700 mt-1"><strong>Lokasi:</strong> Dorsal manus kanan, menggunakan abbocath 22G</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                                <div>
+                                    <p class="font-bold text-[var(--gray-800)]">20 Aug'24</p>
+                                    <p class="text-sm text-[var(--gray-500)]">15:00 PM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Tindakan</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Injeksi IM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Petugas</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Ns. Lisa Wong</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Status</p>
+                                    <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">Selesai</span>
+                                </div>
+                                <div class="flex items-center justify-start text-custom-blue cursor-pointer">
+                                    <span class="material-icons text-xl">visibility</span>
+                                    <span class="ml-2 text-sm font-medium">Lihat</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-purple-50 rounded-lg">
+                                <p class="text-sm text-gray-700"><strong>Obat:</strong> Antrain 1 ampul (250mg)</p>
+                                <p class="text-sm text-gray-700 mt-1"><strong>Lokasi:</strong> Gluteus kanan, teknik Z-track</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            laboratorium: {
+                title: 'Laboratory Results',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                                <div>
+                                    <p class="font-bold text-[var(--gray-800)]">22 Aug'24</p>
+                                    <p class="text-sm text-[var(--gray-500)]">08:00 AM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Pemeriksaan</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Darah Lengkap</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Teknisi</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Ahmad Laborant</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Status</p>
+                                    <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">Selesai</span>
+                                </div>
+                                <div class="flex items-center justify-start text-custom-blue cursor-pointer">
+                                    <span class="material-icons text-xl">print</span>
+                                    <span class="ml-2 text-sm font-medium">Print</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-yellow-50 rounded-lg">
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p><strong>Hemoglobin:</strong> 12.5 g/dL <span class="text-green-600">(Normal)</span></p>
+                                        <p><strong>Leukosit:</strong> 8,500 /uL <span class="text-green-600">(Normal)</span></p>
+                                        <p><strong>Trombosit:</strong> 280,000 /uL <span class="text-green-600">(Normal)</span></p>
+                                    </div>
+                                    <div>
+                                        <p><strong>Hematokrit:</strong> 38% <span class="text-green-600">(Normal)</span></p>
+                                        <p><strong>LED:</strong> 15 mm/jam <span class="text-green-600">(Normal)</span></p>
+                                        <p><strong>Diff Count:</strong> Dalam batas normal</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                                <div>
+                                    <p class="font-bold text-[var(--gray-800)]">18 Aug'24</p>
+                                    <p class="text-sm text-[var(--gray-500)]">07:30 AM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Pemeriksaan</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Gula Darah Puasa</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Teknisi</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Sari Laborant</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Status</p>
+                                    <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">Selesai</span>
+                                </div>
+                                <div class="flex items-center justify-start text-custom-blue cursor-pointer">
+                                    <span class="material-icons text-xl">print</span>
+                                    <span class="ml-2 text-sm font-medium">Print</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-yellow-50 rounded-lg">
+                                <div class="text-sm">
+                                    <p><strong>Glukosa Puasa:</strong> 95 mg/dL <span class="text-green-600">(Normal: 70-100 mg/dL)</span></p>
+                                    <p class="mt-2 text-gray-600"><strong>Interpretasi:</strong> Kadar gula darah puasa dalam batas normal</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            radiologi: {
+                title: 'Radiology Results',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                                <div>
+                                    <p class="font-bold text-[var(--gray-800)]">21 Aug'24</p>
+                                    <p class="text-sm text-[var(--gray-500)]">11:00 AM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Pemeriksaan</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Foto Thorax PA</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Radiografer</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Budi Radiologi</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Status</p>
+                                    <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">Selesai</span>
+                                </div>
+                                <div class="flex items-center justify-start text-custom-blue cursor-pointer">
+                                    <span class="material-icons text-xl">image</span>
+                                    <span class="ml-2 text-sm font-medium">Lihat</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-red-50 rounded-lg">
+                                <div class="text-sm">
+                                    <p><strong>Teknik:</strong> Foto thorax PA, inspirasi penuh</p>
+                                    <p><strong>Kesan:</strong></p>
+                                    <ul class="list-disc list-inside mt-1 ml-4">
+                                        <li>Cor dalam batas normal</li>
+                                        <li>Pulmo: tidak tampak infiltrat atau konsolidasi</li>
+                                        <li>Sinus costophrenicus kanan dan kiri tajam</li>
+                                        <li>Tulang-tulang intak</li>
+                                    </ul>
+                                    <p class="mt-2 font-medium text-green-700">Kesimpulan: Foto thorax dalam batas normal</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                                <div>
+                                    <p class="font-bold text-[var(--gray-800)]">15 Aug'24</p>
+                                    <p class="text-sm text-[var(--gray-500)]">14:00 PM</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Pemeriksaan</p>
+                                    <p class="font-medium text-[var(--gray-800)]">USG Abdomen</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Dokter</p>
+                                    <p class="font-medium text-[var(--gray-800)]">Dr. Radiologi Sp.Rad</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[var(--gray-500)]">Status</p>
+                                    <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">Selesai</span>
+                                </div>
+                                <div class="flex items-center justify-start text-custom-blue cursor-pointer">
+                                    <span class="material-icons text-xl">image</span>
+                                    <span class="ml-2 text-sm font-medium">Lihat</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-red-50 rounded-lg">
+                                <div class="text-sm">
+                                    <p><strong>Persiapan:</strong> Puasa 6 jam sebelum pemeriksaan</p>
+                                    <p><strong>Hasil:</strong></p>
+                                    <ul class="list-disc list-inside mt-1 ml-4">
+                                        <li>Hepar: ukuran normal, echostruktur homogen</li>
+                                        <li>Kandung empedu: dinding tidak menebal, tidak tampak batu</li>
+                                        <li>Pankreas: tidak tampak kelainan</li>
+                                        <li>Ginjal kanan-kiri: ukuran dan echogenitas normal</li>
+                                        <li>Vesica urinaria: dalam batas normal</li>
+                                    </ul>
+                                    <p class="mt-2 font-medium text-green-700">Kesimpulan: USG abdomen dalam batas normal</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function switchTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                if (tab.id.startsWith('tab-')) {
+                    tab.classList.remove('text-white', 'bg-custom-blue');
+                    tab.classList.add('text-[var(--gray-600)]');
+                }
+            });
+
+            // Add active class to selected tab
+            const selectedTab = document.getElementById(`tab-${tabName}`);
+            selectedTab.classList.remove('text-[var(--gray-600)]');
+            selectedTab.classList.add('text-white', 'bg-custom-blue');
+
+            // Update content
+            const titleElement = document.getElementById('tab-title');
+            const contentElement = document.getElementById('tab-content');
+            
+            titleElement.textContent = tabData[tabName].title;
+            contentElement.innerHTML = tabData[tabName].content;
+            
+            currentTab = tabName;
+        }
+
+        // Patient search functionality
+        function searchPatients(searchQuery) {
+            const query = searchQuery.toLowerCase().trim();
+            const clearBtn = document.getElementById('clear-search-btn');
+            
+            // Show/hide clear button
+            if (query === '') {
+                clearBtn.classList.add('hidden');
+                renderPatientList(patients);
+                return;
+            } else {
+                clearBtn.classList.remove('hidden');
+            }
+            
+            // Filter patients based on search query
+            const filteredPatients = patients.filter(patient => {
+                return (
+                    patient.name.toLowerCase().includes(query) ||
+                    patient.id.toLowerCase().includes(query) ||
+                    patient.phone.toLowerCase().includes(query) ||
+                    patient.city.toLowerCase().includes(query) ||
+                    patient.memberStatus.toLowerCase().includes(query)
+                );
+            });
+            
+            renderPatientList(filteredPatients);
+        }
+
+        function handleSearchKeyup(event) {
+            // Clear search on Escape key
+            if (event.key === 'Escape') {
+                clearSearch();
+            }
+        }
+
+        function renderPatientList(patientArray) {
+            const patientList = document.getElementById('patient-list');
+            
+            if (patientArray.length === 0) {
+                patientList.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="text-gray-400 mb-2">
+                            <span class="material-icons text-4xl">search_off</span>
+                        </div>
+                        <p class="text-gray-500 text-sm">No patients found</p>
+                        <p class="text-gray-400 text-xs mt-1">Try using different keywords</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            patientArray.forEach((patient, index) => {
+                // Find original index in the main patients array
+                const originalIndex = patients.findIndex(p => p.id === patient.id);
+                const isActive = originalIndex === currentPatientIndex;
+                
+                // Determine status badge color
+                let statusClass = 'bg-[var(--green-50)] text-[var(--green-800)]';
+                if (patient.memberStatus.toLowerCase().includes('pending')) {
+                    statusClass = 'bg-[var(--yellow-50)] text-[var(--yellow-800)]';
+                } else if (patient.memberStatus.toLowerCase().includes('inactive')) {
+                    statusClass = 'bg-[var(--red-50)] text-[var(--red-800)]';
+                }
+                
+                html += `
+                    <div class="patient-item ${isActive ? 'bg-blue-50 p-4 rounded-lg shadow-lg border-2 border-custom-blue hover:shadow-xl transition-all cursor-pointer active' : 'bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all cursor-pointer'}" 
+                         onclick="selectPatientFromList(${originalIndex})" 
+                         data-patient-id="${patient.id}">
+                        <div class="flex items-center space-x-3">
+                            <img src="${patient.photo}" 
+                                alt="Patient" class="w-10 h-10 rounded-full object-cover ${isActive ? 'border-2 border-custom-blue' : 'border border-gray-200'}">
+                            <div class="flex-grow">
+                                <h4 class="font-semibold ${isActive ? 'text-custom-blue' : 'text-[var(--gray-800)]'}">${patient.name}</h4>
+                                <p class="${isActive ? 'text-blue-600' : 'text-[var(--gray-500)]'} text-xs">ID: ${patient.id} • ${patient.age} years</p>
+                                <p class="${isActive ? 'text-blue-500' : 'text-[var(--gray-600)]'} text-xs mt-1">Last visit: 23 Aug 2024</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="${statusClass} text-xs font-semibold px-2 py-1 rounded-full">${patient.memberStatus.includes('Active') ? 'Active' : patient.memberStatus.includes('Pending') ? 'Pending' : 'Inactive'}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            patientList.innerHTML = html;
+        }
+
+        function clearSearch() {
+            const searchInput = document.getElementById('patient-search-input');
+            const clearBtn = document.getElementById('clear-search-btn');
+            
+            searchInput.value = '';
+            clearBtn.classList.add('hidden');
+            renderPatientList(patients);
+            searchInput.focus(); // Keep focus on search input
+        }
+
+        // Initialize with first patient selected
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPatientList(patients); // Render initial patient list
+            selectPatient(0);
+            switchTab('assessment'); // Initialize with assessment tab
+        });
+    </script>
+</body>
+
+</html>
