@@ -195,7 +195,7 @@
                                     <span class="material-icons text-lg mr-1">add</span> Add
                                 </button>
                             </div>
-                            <div class="h-96 overflow-y-auto pr-2">
+                            <div class="h-[800px] overflow-y-auto pr-2">
                                 <t t-if="state.currentTab === 'assessment'" t-call="healthnusa.AdmissionAssessment"/>
                                 <t t-if="state.currentTab === 'treatment'" t-call="healthnusa.AdmissionTreatment"/>
                                 <t t-if="state.currentTab === 'laboratory'" t-call="healthnusa.AdmissionLaboratory"/>
@@ -428,11 +428,7 @@
     <t t-name="healthnusa.AdmissionAssessment">
         <div class="space-y-4">
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
-                    <div>
-                        <p class="font-bold text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.admission_date"></p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400" t-esc="selectedAdmission.admission_time"></p>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.diagnosis.split(',')[0]"></p>
@@ -446,22 +442,22 @@
                         <p class="font-medium text-gray-900 dark:text-gray-100">K29.1</p>
                     </div>
                     <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">note_add</span>
+                        <span class="material-icons text-xl">visibility</span>
                         <span class="ml-2 text-sm font-medium">Detail</span>
                     </div>
                 </div>
                 <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Keluhan:</strong> <t t-esc="selectedAdmission.chief_complaint"/></p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Pemeriksaan:</strong> TD 120/80, Nadi 88x/mnt, RR 20x/mnt, Suhu 37.2°C</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> <t t-esc="selectedAdmission.chief_complaint"/></p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> BP 120/80, HR 88bpm, RR 20bpm, Temp 37.2°C</p>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm"><t t-esc="selectedAdmission.admission_date"/>, <t t-esc="selectedAdmission.admission_time"/></p>
                 </div>
             </div>
             
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
-                    <div>
-                        <p class="font-bold text-gray-900 dark:text-gray-100">20 Aug'24</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">14:30 PM</p>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">Hipertensi Grade 1</p>
@@ -475,13 +471,133 @@
                         <p class="font-medium text-gray-900 dark:text-gray-100">I10</p>
                     </div>
                     <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">note_add</span>
+                        <span class="material-icons text-xl">visibility</span>
                         <span class="ml-2 text-sm font-medium">Detail</span>
                     </div>
                 </div>
                 <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Keluhan:</strong> Sakit kepala, pusing, leher tegang</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Pemeriksaan:</strong> TD 150/90, Nadi 92x/mnt, BMI 27.5</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Headache, dizziness, neck stiffness</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> BP 150/90, HR 92bpm, BMI 27.5</p>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">20 Aug'24, 14:30 PM</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Diabetes Mellitus Type 2</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.doctor"></p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">E11.9</p>
+                    </div>
+                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                        <span class="material-icons text-xl">visibility</span>
+                        <span class="ml-2 text-sm font-medium">Detail</span>
+                    </div>
+                </div>
+                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Polyuria, polydipsia, weight loss</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> RBS 280 mg/dL, HbA1c 9.2%, BP 140/90</p>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">19 Aug'24, 16:45 PM</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Pneumonia Community Acquired</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Michael Chen</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">J18.9</p>
+                    </div>
+                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                        <span class="material-icons text-xl">visibility</span>
+                        <span class="ml-2 text-sm font-medium">Detail</span>
+                    </div>
+                </div>
+                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Productive cough, high fever, shortness of breath</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> Temp 39°C, RR 28bpm, O2 Sat 94%</p>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">18 Aug'24, 09:30 AM</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Fracture Closed Radius</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Emily Davis</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">S52.9</p>
+                    </div>
+                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                        <span class="material-icons text-xl">visibility</span>
+                        <span class="ml-2 text-sm font-medium">Detail</span>
+                    </div>
+                </div>
+                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Severe pain in right arm after fall</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> Distal radius deformity, swelling (+)</p>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">17 Aug'24, 13:15 PM</p>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Acute Bronchitis</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Lisa Thompson</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">J20.9</p>
+                    </div>
+                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                        <span class="material-icons text-xl">visibility</span>
+                        <span class="ml-2 text-sm font-medium">Detail</span>
+                    </div>
+                </div>
+                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Prolonged dry cough, itchy throat</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> Temp 37.5°C, fine wet rales (+)</p>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">16 Aug'24, 11:00 AM</p>
                 </div>
             </div>
         </div>
@@ -491,60 +607,60 @@
     <t t-name="healthnusa.AdmissionTreatment">
         <div class="space-y-4">
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div>
-                        <p class="font-bold text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.admission_date"></p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">10:15 AM</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Procedure</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">IV Insertion</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Tindakan</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Pemasangan Infus</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Petugas</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Staff</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">Ns. Maria Santos</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Selesai</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
                     </div>
                     <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
                         <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">Lihat</span>
+                        <span class="ml-2 text-sm font-medium">View</span>
                     </div>
                 </div>
                 <div class="mt-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Detail:</strong> Infus RL 500cc, kecepatan 20 tpm</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Lokasi:</strong> Dorsal manus kanan, menggunakan abbocath 22G</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Details:</strong> RL IV 500cc, rate 20 drops/min</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Location:</strong> Right hand dorsum, using 22G cannula</p>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm"><t t-esc="selectedAdmission.admission_date"/>, 10:15 AM</p>
                 </div>
             </div>
             
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div>
-                        <p class="font-bold text-gray-900 dark:text-gray-100">20 Aug'24</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">15:00 PM</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Procedure</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">IM Injection</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Tindakan</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Injeksi IM</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Petugas</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Staff</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">Ns. Lisa Wong</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Selesai</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
                     </div>
                     <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
                         <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">Lihat</span>
+                        <span class="ml-2 text-sm font-medium">View</span>
                     </div>
                 </div>
                 <div class="mt-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Obat:</strong> Antrain 1 ampul (250mg)</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Lokasi:</strong> Gluteus kanan, teknik Z-track</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Medication:</strong> Antrain 1 ampule (250mg)</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Location:</strong> Right gluteus, Z-track technique</p>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">20 Aug'24, 15:00 PM</p>
                 </div>
             </div>
         </div>
@@ -554,22 +670,18 @@
     <t t-name="healthnusa.AdmissionLaboratory">
         <div class="space-y-4">
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div>
-                        <p class="font-bold text-gray-900 dark:text-gray-100">22 Aug'24</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">08:00 AM</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Complete Blood Count</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Pemeriksaan</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Darah Lengkap</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Teknisi</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Technician</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">Ahmad Laborant</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Selesai</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
                     </div>
                     <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
                         <span class="material-icons text-xl">print</span>
@@ -590,25 +702,25 @@
                         </div>
                     </div>
                 </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">22 Aug'24, 08:00 AM</p>
+                </div>
             </div>
             
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div>
-                        <p class="font-bold text-gray-900 dark:text-gray-100">18 Aug'24</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">07:30 AM</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">Fasting Blood Sugar</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Pemeriksaan</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Gula Darah Puasa</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Teknisi</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Technician</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">Sari Laborant</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Selesai</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
                     </div>
                     <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
                         <span class="material-icons text-xl">print</span>
@@ -618,8 +730,12 @@
                 <div class="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
                     <div class="text-sm">
                         <p class="text-gray-800 dark:text-gray-200"><strong>Glukosa Puasa:</strong> 95 mg/dL <span class="text-green-600 dark:text-green-400">(Normal: 70-100 mg/dL)</span></p>
-                        <p class="mt-2 text-gray-700 dark:text-gray-300"><strong>Interpretasi:</strong> Kadar gula darah puasa dalam batas normal</p>
+                        <p class="mt-2 text-gray-700 dark:text-gray-300"><strong>Interpretation:</strong> Fasting blood sugar level within normal limits</p>
                     </div>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">18 Aug'24, 07:30 AM</p>
                 </div>
             </div>
         </div>
@@ -629,79 +745,79 @@
     <t t-name="healthnusa.AdmissionRadiology">
         <div class="space-y-4">
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div>
-                        <p class="font-bold text-gray-900 dark:text-gray-100">21 Aug'24</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">11:00 AM</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Pemeriksaan</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">Foto Thorax PA</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Radiografer</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Radiographer</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">Budi Radiologi</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Selesai</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
                     </div>
                     <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
                         <span class="material-icons text-xl">image</span>
-                        <span class="ml-2 text-sm font-medium">Lihat</span>
+                        <span class="ml-2 text-sm font-medium">View</span>
                     </div>
                 </div>
                 <div class="mt-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
                     <div class="text-sm">
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Teknik:</strong> Foto thorax PA, inspirasi penuh</p>
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Kesan:</strong></p>
+                        <p class="text-gray-800 dark:text-gray-200"><strong>Technique:</strong> PA chest X-ray, full inspiration</p>
+                        <p class="text-gray-800 dark:text-gray-200"><strong>Impression:</strong></p>
                         <ul class="list-disc list-inside mt-1 ml-4">
-                            <li class="text-gray-800 dark:text-gray-200">Cor dalam batas normal</li>
-                            <li class="text-gray-800 dark:text-gray-200">Pulmo: tidak tampak infiltrat atau konsolidasi</li>
-                            <li class="text-gray-800 dark:text-gray-200">Sinus costophrenicus kanan dan kiri tajam</li>
-                            <li class="text-gray-800 dark:text-gray-200">Tulang-tulang intak</li>
+                            <li class="text-gray-800 dark:text-gray-200">Heart within normal limits</li>
+                            <li class="text-gray-800 dark:text-gray-200">Lungs: no infiltrate or consolidation seen</li>
+                            <li class="text-gray-800 dark:text-gray-200">Right and left costophrenic angles sharp</li>
+                            <li class="text-gray-800 dark:text-gray-200">Bones intact</li>
                         </ul>
-                        <p class="mt-2 font-medium text-green-700 dark:text-green-400">Kesimpulan: Foto thorax dalam batas normal</p>
+                        <p class="mt-2 font-medium text-green-700 dark:text-green-400">Conclusion: Chest X-ray within normal limits</p>
                     </div>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">21 Aug'24, 11:00 AM</p>
                 </div>
             </div>
             
             <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div>
-                        <p class="font-bold text-gray-900 dark:text-gray-100">15 Aug'24</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">14:00 PM</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Pemeriksaan</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">USG Abdomen</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Dokter</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
                         <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Radiologi Sp.Rad</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Selesai</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
                     </div>
                     <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
                         <span class="material-icons text-xl">image</span>
-                        <span class="ml-2 text-sm font-medium">Lihat</span>
+                        <span class="ml-2 text-sm font-medium">View</span>
                     </div>
                 </div>
                 <div class="mt-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
                     <div class="text-sm">
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Persiapan:</strong> Puasa 6 jam sebelum pemeriksaan</p>
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Hasil:</strong></p>
+                        <p class="text-gray-800 dark:text-gray-200"><strong>Preparation:</strong> 6 hours fasting before examination</p>
+                        <p class="text-gray-800 dark:text-gray-200"><strong>Results:</strong></p>
                         <ul class="list-disc list-inside mt-1 ml-4">
-                            <li class="text-gray-800 dark:text-gray-200">Hepar: ukuran normal, echostruktur homogen</li>
-                            <li class="text-gray-800 dark:text-gray-200">Kandung empedu: dinding tidak menebal, tidak tampak batu</li>
-                            <li class="text-gray-800 dark:text-gray-200">Pankreas: tidak tampak kelainan</li>
-                            <li class="text-gray-800 dark:text-gray-200">Ginjal kanan-kiri: ukuran dan echogenitas normal</li>
-                            <li class="text-gray-800 dark:text-gray-200">Vesica urinaria: dalam batas normal</li>
+                            <li class="text-gray-800 dark:text-gray-200">Liver: normal size, homogeneous echostructure</li>
+                            <li class="text-gray-800 dark:text-gray-200">Gallbladder: wall not thickened, no stones seen</li>
+                            <li class="text-gray-800 dark:text-gray-200">Pancreas: no abnormalities seen</li>
+                            <li class="text-gray-800 dark:text-gray-200">Right-left kidneys: normal size and echogenicity</li>
+                            <li class="text-gray-800 dark:text-gray-200">Bladder: within normal limits</li>
                         </ul>
-                        <p class="mt-2 font-medium text-green-700 dark:text-green-400">Kesimpulan: USG abdomen dalam batas normal</p>
+                        <p class="mt-2 font-medium text-green-700 dark:text-green-400">Conclusion: Abdominal ultrasound within normal limits</p>
                     </div>
+                </div>
+                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                    <span class="material-icons text-sm mr-1">schedule</span>
+                    <p class="text-sm">15 Aug'24, 14:00 PM</p>
                 </div>
             </div>
         </div>
