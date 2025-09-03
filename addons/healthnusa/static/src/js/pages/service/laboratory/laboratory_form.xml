@@ -1,0 +1,233 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.LaboratoryForm">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow transition-colors duration-300">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button t-on-click="goBack" class="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
+                            <span class="material-icons text-gray-600 dark:text-gray-300">arrow_back</span>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                <t t-if="state.isEdit">Edit Laboratory Test</t>
+                                <t t-else="">Create Laboratory Test</t>
+                            </h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                <t t-if="state.isEdit">Update existing laboratory test</t>
+                                <t t-else="">Create new laboratory test</t>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                        <span class="material-icons text-gray-600 dark:text-gray-300 text-sm">science</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200" t-esc="state.labNumber"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Content -->
+            <div class="p-8">
+                <!-- Test Header -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
+                    <!-- Test Info -->
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Laboratory Test Details</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Lab Number</label>
+                                    <input type="text" t-att-value="state.labNumber || ''" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" readonly="readonly"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Test Date</label>
+                                    <input type="date" t-att-value="state.testDate || ''" t-on-change="(ev) => this.onFieldChange('testDate', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Collection Date</label>
+                                    <input type="datetime-local" t-att-value="state.collectionDate || ''" t-on-change="(ev) => this.onFieldChange('collectionDate', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Test Type</label>
+                                    <select t-att-value="state.testType || ''" t-on-change="(ev) => this.onFieldChange('testType', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Test Type</option>
+                                        <t t-foreach="testTypes" t-as="type" t-key="type">
+                                            <option t-att-value="type" t-esc="type"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Patient &amp; Test Info</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Patient</label>
+                                    <select t-att-value="state.patient || ''" t-on-change="(ev) => this.onPatientChange(ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Patient</option>
+                                        <t t-foreach="patients" t-as="patient" t-key="patient.id">
+                                            <option t-att-value="patient.name" t-esc="patient.name + ' (' + patient.id + ')'"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Patient ID</label>
+                                    <input type="text" t-att-value="state.patientId || ''" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" readonly="readonly"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Details -->
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Test Details</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Technician</label>
+                                    <select t-att-value="state.technician || ''" t-on-change="(ev) => this.onFieldChange('technician', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Technician</option>
+                                        <t t-foreach="technicians" t-as="tech" t-key="tech">
+                                            <option t-att-value="tech" t-esc="tech"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Specimen Type</label>
+                                    <select t-att-value="state.specimenType || ''" t-on-change="(ev) => this.onFieldChange('specimenType', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Specimen Type</option>
+                                        <t t-foreach="specimenTypes" t-as="specimen" t-key="specimen">
+                                            <option t-att-value="specimen" t-esc="specimen"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Priority</label>
+                                    <select t-att-value="state.priority || ''" t-on-change="(ev) => this.onFieldChange('priority', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Priority</option>
+                                        <t t-foreach="priorities" t-as="priority" t-key="priority">
+                                            <option t-att-value="priority" t-esc="priority"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Status</label>
+                                    <select t-att-value="state.status || ''" t-on-change="(ev) => this.onFieldChange('status', ev.target.value)" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select Status</option>
+                                        <t t-foreach="labStatuses" t-as="status" t-key="status">
+                                            <option t-att-value="status" t-esc="status"></option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tests Section -->
+                <div class="border-t border-gray-200 dark:border-gray-600 pt-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Laboratory Tests &amp; Procedures</h3>
+                        <button t-on-click="() => this.addTest()" class="text-blue-600 hover:text-blue-700 font-medium flex items-center">
+                            <span class="material-icons mr-1">add</span>
+                            <span>Add Test</span>
+                        </button>
+                    </div>
+
+                    <!-- Tests Table -->
+                    <div class="overflow-hidden border border-gray-200 dark:border-gray-600 rounded-lg">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Test Code</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Test Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Normal Range</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Result</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Unit Price</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                                <t t-foreach="state.tests || []" t-as="test" t-key="test.id">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400" t-esc="test_index + 1"></td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" t-att-value="test.testCode" t-on-change="(ev) => this.updateTestField(test.id, 'testCode', ev.target.value)" placeholder="Test code" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" t-att-value="test.testName" t-on-change="(ev) => this.updateTestField(test.id, 'testName', ev.target.value)" placeholder="Test name" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" t-att-value="test.normalRange" t-on-change="(ev) => this.updateTestField(test.id, 'normalRange', ev.target.value)" placeholder="Normal range" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm"/>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <input type="text" t-att-value="test.result" t-on-change="(ev) => this.updateTestField(test.id, 'result', ev.target.value)" placeholder="Result" class="w-20 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm text-center"/>
+                                        </td>
+                                        <td class="px-4 py-3 text-right">
+                                            <input type="number" t-att-value="test.unitPrice" t-on-change="(ev) => this.updateTestField(test.id, 'unitPrice', parseFloat(ev.target.value) || 0)" min="0" step="0.01" class="w-24 p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm text-right"/>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button t-on-click="() => this.removeTest(test.id)" class="text-red-500 hover:text-red-700 transition-colors">
+                                                <span class="material-icons text-lg">delete</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Notes and Summary -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-200 dark:border-gray-600">
+                    <!-- Notes -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Test Notes</label>
+                        <textarea rows="6" t-att-value="state.notes || ''" t-on-change="(ev) => this.onFieldChange('notes', ev.target.value)" placeholder="Additional notes or comments..." class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+
+                    <!-- Summary -->
+                    <div>
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Test Summary</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Total Tests:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="totalTests"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Subtotal:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="formatCurrency(subtotal)"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-300">Tax (10%):</span>
+                                    <span class="font-medium text-orange-600" t-esc="formatCurrency(taxAmount)"></span>
+                                </div>
+                                <div class="border-t border-gray-300 dark:border-gray-500 pt-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-lg font-bold text-gray-800 dark:text-gray-100">Total Cost:</span>
+                                        <span class="text-lg font-bold text-green-600" t-esc="formatCurrency(totalAmount)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <button t-on-click="saveDraft" class="px-6 py-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+                        Save Draft
+                    </button>
+                    <button t-on-click="submitTest" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                        <span t-if="state.isEdit">Update Laboratory Test</span>
+                        <span t-else="">Create Laboratory Test</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

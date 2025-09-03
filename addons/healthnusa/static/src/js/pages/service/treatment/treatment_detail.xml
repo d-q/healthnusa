@@ -1,0 +1,202 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.TreatmentDetail">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow transition-colors duration-300">
+            <!-- Loading State -->
+            <div t-if="state.loading" class="p-8 text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p class="text-gray-600 dark:text-gray-400">Loading treatment details...</p>
+            </div>
+
+            <!-- Content -->
+            <div t-if="!state.loading and state.treatment" class="h-full">
+                <!-- Header -->
+                <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <button t-on-click="goBack" class="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
+                                <span class="material-icons text-gray-600 dark:text-gray-300">arrow_back</span>
+                            </button>
+                            <div>
+                                <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Treatment Detail</h2>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">View treatment details</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-lg">
+                                <span class="material-icons text-gray-600 dark:text-gray-300 text-sm">receipt</span>
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200" t-esc="state.treatment.treatmentId"></span>
+                            </div>
+                            <span class="text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center" t-att-class="getStatusClass(state.treatment.status)">
+                                <span class="w-2 h-2 rounded-full mr-2" t-att-class="getStatusColor(state.treatment.status)"></span>
+                                <t t-esc="state.treatment.status"/>
+                            </span>
+                            <button t-on-click="editTreatment" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                                <span class="material-icons mr-2 text-sm">edit</span>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Content - Following exact adjustment_detail layout -->
+                <div class="p-8">
+                    <!-- Invoice Header -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
+                        <!-- Invoice Info -->
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Treatment Details</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Treatment ID</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="state.treatment.treatmentId"></p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Date</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="formatDate(state.treatment.date)"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Patient &amp; Treatment Info</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Patient</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="state.treatment.patient"></p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Patient ID</label>
+                                        <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="state.treatment.patientId"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Invoice Authority & Medical Details -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Treatment Authorization</h3>
+                            <div class="space-y-4 mb-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Treatment Type</label>
+                                    <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="state.treatment.treatmentType"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Doctor</label>
+                                    <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="state.treatment.doctor"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Department</label>
+                                    <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="state.treatment.department"></p>
+                                </div>
+                            </div>
+
+                            <!-- Additional Information Toggle -->
+                            <div class="text-blue-600 text-sm font-medium flex items-center mb-4">
+                                <span>Additional information</span>
+                                <span class="material-icons text-sm ml-1">expand_less</span>
+                            </div>
+
+                            <!-- Additional Fields -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Follow-up Date</label>
+                                    <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="formatDate(state.treatment.followupDate)"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Duration</label>
+                                    <p class="text-gray-800 dark:text-gray-100 font-medium" t-esc="state.treatment.duration"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Procedures Section -->
+                    <div class="border-t border-gray-200 dark:border-gray-600 pt-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Treatment Procedures &amp; Items</h3>
+                        </div>
+
+                        <!-- Procedures Table -->
+                        <div class="overflow-hidden border border-gray-200 dark:border-gray-600 rounded-lg">
+                            <table class="w-full">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Procedure Code</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Quantity</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Unit Price</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                                    <t t-foreach="state.treatment.procedures" t-as="procedure" t-key="procedure.id">
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                            <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400" t-esc="procedure_index + 1"></td>
+                                            <td class="px-4 py-3 text-sm font-medium text-gray-800 dark:text-gray-100" t-esc="procedure.procedureCode"></td>
+                                            <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-100" t-esc="procedure.description"></td>
+                                            <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-100" t-esc="procedure.quantity"></td>
+                                            <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-100" t-esc="formatCurrency(procedure.unitPrice)"></td>
+                                            <td class="px-4 py-3 text-sm font-medium text-gray-800 dark:text-gray-100" t-esc="formatCurrency(procedure.totalPrice)"></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Notes and Summary -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 pt-8 border-t border-gray-200 dark:border-gray-600">
+                        <!-- Notes -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Treatment Notes</label>
+                            <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                <p class="text-gray-800 dark:text-gray-100 leading-relaxed" t-esc="state.treatment.notes"></p>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div>
+                            <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Treatment Summary</h4>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600 dark:text-gray-300">Total Procedures:</span>
+                                        <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="totalProcedures"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600 dark:text-gray-300">Subtotal:</span>
+                                        <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="formatCurrency(subtotal)"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600 dark:text-gray-300">Tax (10%):</span>
+                                        <span class="font-medium text-gray-800 dark:text-gray-100" t-esc="formatCurrency(taxAmount)"></span>
+                                    </div>
+                                    <div class="border-t border-gray-300 dark:border-gray-500 pt-3">
+                                        <div class="flex justify-between">
+                                            <span class="text-lg font-bold text-gray-800 dark:text-gray-100">Total Cost:</span>
+                                            <span class="text-lg font-bold text-green-600 dark:text-green-400" t-esc="formatCurrency(totalAmount)"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                        <button t-on-click="printTreatment" class="px-6 py-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+                            <span class="material-icons mr-2 text-sm">print</span>
+                            Print
+                        </button>
+                        <button t-on-click="downloadTreatment" class="px-6 py-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+                            <span class="material-icons mr-2 text-sm">file_download</span>
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

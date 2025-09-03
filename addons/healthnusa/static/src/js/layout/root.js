@@ -29,6 +29,18 @@ import { InvoiceDetail } from "../pages/service/invoices/invoice_detail";
 import { Bills } from "../pages/service/bill/bill";
 import { BillForm } from "../pages/service/bill/bill_form";
 import { BillDetail } from "../pages/service/bill/bill_detail";
+
+import { Treatments } from "../pages/service/treatment/treatment";
+import { TreatmentForm } from "../pages/service/treatment/treatment_form";
+import { TreatmentDetail } from "../pages/service/treatment/treatment_detail";
+
+import { Laboratories } from "../pages/service/laboratory/laboratory";
+import { LaboratoryForm } from "../pages/service/laboratory/laboratory_form";
+import { LaboratoryDetail } from "../pages/service/laboratory/laboratory_detail";
+
+import { Radiologies } from "../pages/service/radiology/radiology";
+import { RadiologyForm } from "../pages/service/radiology/radiology_form";
+import { RadiologyDetail } from "../pages/service/radiology/radiology_detail";
 import { NotFound } from "../pages/error/not_found";
 import { Profile } from "../pages/profile/profile";
 import { Medicines } from "../pages/inventory/medicines/medicines";
@@ -75,6 +87,18 @@ export class Root extends Component {
         Bills,
         BillForm,
         BillDetail,
+        
+        Treatments,
+        TreatmentForm,
+        TreatmentDetail,
+        
+        Laboratories,
+        LaboratoryForm,
+        LaboratoryDetail,
+        
+        Radiologies,
+        RadiologyForm,
+        RadiologyDetail,
         Profile,
         Medicines,
         Services,
@@ -97,22 +121,25 @@ export class Root extends Component {
         this.router = new Router();
 
         this.apps = [
-            { id: "dashboard", icon: "dashboard", name: "Dashboard", Component: Dashboard, category: "Service" },
+            { id: "patient", icon: "personal_injury", name: "Patient", Component: Patient, category: "Service" },
             { id: "admission", icon: "event_note", name: "Admission", Component: Admission, category: "Service" },
             { id: "assessment", icon: "assignment", name: "Assessment", Component: Assessment, category: "Service" },
-            { id: "patient", icon: "personal_injury", name: "Patient", Component: Patient, category: "Service" },
-            { id: "invoices", icon: "payments", name: "Invoices", Component: Invoices, category: "Service" },
+            { id: "treatments", icon: "medical_information", name: "Treatments", Component: Treatments, category: "Service" },
+            { id: "laboratories", icon: "science", name: "Laboratory", Component: Laboratories, category: "Service" },
+            { id: "radiologies", icon: "camera", name: "Radiology", Component: Radiologies, category: "Service" },
             { id: "bills", icon: "receipt_long", name: "Bills", Component: Bills, category: "Service" },
+            { id: "invoices", icon: "payments", name: "Invoices", Component: Invoices, category: "Service" },
             
             { id: "doctor", icon: "assignment_ind", name: "Doctor", Component: Doctor, category: "Employee" },
             { id: "staff", icon: "badge", name: "Staff", Component: Staff, category: "Employee" },
-
+            
             { id: "medicines", icon: "vaccines", name: "Medicines", Component: Medicines, category: "Inventory" },
             { id: "services", icon: "medical_services", name: "Services", Component: Services, category: "Inventory" },
             { id: "supplies", icon: "inventory_2", name: "Supplies", Component: Supplies, category: "Inventory" },
             { id: "adjustment", icon: "tune", name: "Adjustment", Component: Adjustment, category: "Inventory" },
             { id: "purchase", icon: "shopping_cart", name: "Purchase", Component: Purchase, category: "Inventory" },
             
+            { id: "dashboard", icon: "dashboard", name: "Dashboard", Component: Dashboard, category: "Account" },
             { id: "profile", icon: "person", name: "Profile", Component: Profile, category: "Account" },
             { id: "settings", icon: "settings", name: "Settings", Component: Settings, category: "Account" },
         ];
@@ -284,6 +311,69 @@ export class Root extends Component {
                 id: "bill-detail",
                 Component: BillDetail,
                 parent: 'bills',
+                showBackButton: true
+            },
+            {
+                path: '/treatments/new',
+                id: "treatment-new",
+                Component: TreatmentForm,
+                parent: 'treatments',
+                showBackButton: true
+            },
+            {
+                path: '/treatments/edit',
+                id: "treatment-edit",
+                Component: TreatmentForm,
+                parent: 'treatments',
+                showBackButton: true
+            },
+            {
+                path: '/treatments/detail',
+                id: "treatment-detail",
+                Component: TreatmentDetail,
+                parent: 'treatments',
+                showBackButton: true
+            },
+            {
+                path: '/laboratories/new',
+                id: "laboratory-new",
+                Component: LaboratoryForm,
+                parent: 'laboratories',
+                showBackButton: true
+            },
+            {
+                path: '/laboratories/edit',
+                id: "laboratory-edit",
+                Component: LaboratoryForm,
+                parent: 'laboratories',
+                showBackButton: true
+            },
+            {
+                path: '/laboratories/detail',
+                id: "laboratory-detail",
+                Component: LaboratoryDetail,
+                parent: 'laboratories',
+                showBackButton: true
+            },
+            {
+                path: '/radiologies/new',
+                id: "radiology-new",
+                Component: RadiologyForm,
+                parent: 'radiologies',
+                showBackButton: true
+            },
+            {
+                path: '/radiologies/edit',
+                id: "radiology-edit",
+                Component: RadiologyForm,
+                parent: 'radiologies',
+                showBackButton: true
+            },
+            {
+                path: '/radiologies/detail',
+                id: "radiology-detail",
+                Component: RadiologyDetail,
+                parent: 'radiologies',
                 showBackButton: true
             },
         ];

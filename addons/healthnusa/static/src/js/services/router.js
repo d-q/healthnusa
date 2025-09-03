@@ -11,7 +11,7 @@ export class Router {
     }
 
     register(path, component) {
-        if (path === '/dashboard') {
+        if (path === '/patient') {
             this.routes.set('/emr', component);
         } else {
             const fullPath = this.baseUrl + path;
@@ -24,7 +24,7 @@ export class Router {
     }
 
     navigate(path) {
-        if (path === '/dashboard') {
+        if (path === '/patient') {
             const fullPath = '/emr';
             if (fullPath !== window.location.pathname) {
                 window.history.pushState(null, '', fullPath);
