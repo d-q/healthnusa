@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Patient Profile - healthnusa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-custom-blue {
+            background-color: #4A90E2;
+        }
+        .text-custom-blue {
+            color: #4A90E2;
+        }
+        .bg-custom-gray {
+            background-color: #F7F8FA;
+        }
+        aside nav a.active,
+        aside nav a:hover {
+            background-color: #E9F2FE;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        aside nav a.active .material-icons,
+        aside nav a:hover .material-icons {
+            color: #4A90E2;
+        }
+        aside nav a {
+            color: #A0AEC0;
+        }
+        aside nav a .material-icons {
+            color: #A0AEC0;
+        }
+        .material-icons.md-30 {
+            font-size: 30px;
+        }
+        :root {
+            --primary-blue: #4A90E2;
+            --blue-50: #F0F6FF;
+            --blue-100: #E0E9FF;
+            --blue-200: #BED0FF;
+            --blue-300: #93B0FF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --green-50: #F0FDF4;
+            --green-800: #166534;
+            --yellow-50: #FEFCE8;
+            --yellow-800: #854D0E;
+            --purple-50: #FAF5FF;
+            --purple-800: #6B21A8;
+            --red-50: #FEF2F2;
+            --red-800: #991B1B;
+            --teal-50: #F0FDFA;
+            --teal-700: #0F766E;
+            --orange-50: #FFF7ED;
+            --orange-700: #C2410C;
+        }
+        .icon {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        .anatomy-container {
+            position: relative;
+            display: inline-block;
+        }
+        .anatomy-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #EAB308;
+            border: 3px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+        .anatomy-marker:hover {
+            background-color: #CA8A04;
+            transform: scale(1.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        .anatomy-marker.saved {
+            background-color: #EF4444;
+        }
+        .anatomy-marker.saved:hover {
+            background-color: #DC2626;
+        }
+        .marker-note {
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 12px;
+            min-width: 150px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 10;
+            display: none;
+        }
+        .marker-note.active {
+            display: block;
+        }
+        
+        /* Navbar Styles */
+        .form-navbar .nav-item {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .form-navbar .nav-item:hover {
+            background-color: #f3f4f6;
+        }
+        .form-navbar .nav-item.active {
+            background-color: #4A90E2;
+            color: white;
+        }
+        
+        /* Form Section Styles */
+        .form-section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .form-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="bg-custom-gray">
+    <div class="min-h-screen p-8">
+
+            <!-- Patient Profile Content -->
+            <div class="flex flex-wrap lg:flex-nowrap gap-6">
+                <div class="w-full lg:w-[65%] space-y-6">
+                    <!-- Patient Info Bar -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-16 h-16 bg-custom-blue rounded-full flex items-center justify-center">
+                                    <span class="material-icons text-white text-2xl">person</span>
+                                </div>
+                                <div>
+                                    <h2 class="text-xl font-bold text-gray-800">Abigail Peterson</h2>
+                                    <p class="text-sm text-gray-500">ID: MRN123456</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                    Inpatient
+                                </div>
+                                <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                                    Class 1
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="bg-gray-50 p-4 rounded border-l-3 border-gray-400">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="material-icons text-gray-500 text-sm">person</span>
+                                    <p class="text-xs text-gray-600">Gender</p>
+                                </div>
+                                <p class="font-medium text-gray-900">Female</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded border-l-3 border-gray-400">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="material-icons text-gray-500 text-sm">cake</span>
+                                    <p class="text-xs text-gray-600">Birthday</p>
+                                </div>
+                                <p class="font-medium text-gray-900">Oct. 25, 1992</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded border-l-3 border-gray-400">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="material-icons text-gray-500 text-sm">schedule</span>
+                                    <p class="text-xs text-gray-600">Age</p>
+                                </div>
+                                <p class="font-medium text-gray-900">31 years</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded border-l-3 border-gray-400">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="material-icons text-gray-500 text-sm">phone</span>
+                                    <p class="text-xs text-gray-600">Phone</p>
+                                </div>
+                                <p class="font-medium text-gray-900">+1 (555) 123-4567</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded border-l-3 border-gray-400">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="material-icons text-gray-500 text-sm">location_on</span>
+                                    <p class="text-xs text-gray-600">City</p>
+                                </div>
+                                <p class="font-medium text-gray-900">San Francisco</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded border-l-3 border-gray-400">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="material-icons text-gray-500 text-sm">local_post_office</span>
+                                    <p class="text-xs text-gray-600">ZIP Code</p>
+                                </div>
+                                <p class="font-medium text-gray-900">94134</p>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded border-l-3 border-gray-400 md:col-span-2">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="material-icons text-gray-500 text-sm">home</span>
+                                    <p class="text-xs text-gray-600">Address</p>
+                                </div>
+                                <p class="font-medium text-gray-900">250 Executive Park Blvd, Suite 3400<br>San Francisco, CA 94134</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded border-l-3 border-gray-400">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="material-icons text-gray-500 text-sm">event</span>
+                                    <p class="text-xs text-gray-600">Registered</p>
+                                </div>
+                                <p class="font-medium text-gray-900">Oct. 25, 1998</p>
+                            </div>
+
+                        </div>
+
+                        <div class="border-t pt-4 mt-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="material-icons text-gray-400 text-sm">warning</span>
+                                        <span class="text-sm font-medium text-gray-700">Allergies:</span>
+                                        <span
+                                            class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">Penicillin</span>
+                                        <span
+                                            class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">Seafood</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                    <span class="material-icons text-sm">access_time</span>
+                                    <span>Last updated: 11 Jul 2025, 14:30</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Navigation Bar -->
+                    <div class="form-navbar bg-white border border-gray-200 rounded-lg shadow-sm">
+                        <div class="flex">
+                            <div class="nav-item active flex items-center space-x-2 px-6 py-3 rounded-l-lg border-r border-gray-200"
+                                data-form="general-form">
+                                <span class="material-icons">assignment</span>
+                                <span class="font-medium">General</span>
+                            </div>
+                            <div class="nav-item flex items-center space-x-2 px-6 py-3 border-r border-gray-200"
+                                data-form="specialist-form">
+                                <span class="material-icons">medical_services</span>
+                                <span class="font-medium">Examination</span>
+                            </div>
+                            <div class="nav-item flex items-center space-x-2 px-6 py-3 border-r border-gray-200"
+                                data-form="medication-form">
+                                <span class="material-icons">medication</span>
+                                <span class="font-medium">Medication</span>
+                            </div>
+                            <div class="nav-item flex items-center space-x-2 px-6 py-3 rounded-r-lg"
+                                data-form="instruction-form">
+                                <span class="material-icons">task_alt</span>
+                                <span class="font-medium">Instructions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-md">
+                        <form class="space-y-8">
+                            <!-- FORMULIR UMUM SECTION -->
+                            <div class="form-section active" id="general-form-section">
+                                <!-- Anamnesis -->
+                                <div class="space-y-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Anamnesis</h3>
+                                    <div class="grid grid-cols-1 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700" for="chief_complaint">Chief
+                                                Complaint</label>
+                                            <textarea
+                                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                id="chief_complaint" rows="3"
+                                                placeholder="Describe the patient's main complaint..."></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700" for="present_illness">Present
+                                                Illness History</label>
+                                            <textarea
+                                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                id="present_illness" rows="4"
+                                                placeholder="Current illness history..."></textarea>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="past_medical_history">Past Medical History</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="past_medical_history" rows="3"
+                                                    placeholder="Previous medical history..."></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="family_history">Family Medical History</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="family_history" rows="3"
+                                                    placeholder="Family medical history..."></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="allergy_history">Allergy History</label>
+                                                <input
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="allergy_history" type="text"
+                                                    placeholder="Food, drugs, or other allergens" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="social_history">Social History</label>
+                                                <input
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="social_history" type="text"
+                                                    placeholder="Smoking, alcohol, drugs, etc." />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Physical Examination -->
+                                <div class="space-y-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Physical Examination</h3>
+
+                                    <!-- Gambar Anatomi -->
+                                    <div class="space-y-4">
+                                        <h4 class="text-md font-medium text-gray-700">Body Anatomy Image</h4>
+                                        <div class="bg-gray-50 p-6 rounded-lg">
+                                            <div class="flex gap-6 h-[600px]">
+                                                <div class="w-1/2 anatomy-container flex-shrink-0">
+                                                    <img src="https://i.pinimg.com/736x/f2/83/23/f283232af4526c45a089481c2cf6f4bc.jpg"
+                                                        alt="Human Body Anatomy"
+                                                        class="w-full h-full object-contain border rounded-lg">
+
+                                                    <!-- Example markers - dapat ditambahkan dengan JavaScript -->
+                                                    <div class="anatomy-marker saved" style="top: 20%; left: 50%;" data-note="1"
+                                                        data-saved="true">
+                                                        <div class="marker-note" style="top: -40px; left: -75px;">
+                                                            <strong>Marker 1:</strong><br>
+                                                            <span class="text-xs">Chest pain</span>
+                                                            <div class="mt-2 flex justify-end space-x-1">
+                                                                <button onclick="editMarkerNote(1)"
+                                                                    class="text-xs bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">Edit</button>
+                                                                <button onclick="deleteMarker(1)"
+                                                                    class="text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="anatomy-marker saved" style="top: 40%; left: 30%;" data-note="2"
+                                                        data-saved="true">
+                                                        <div class="marker-note" style="top: -40px; left: -75px;">
+                                                            <strong>Marker 2:</strong><br>
+                                                            <span class="text-xs">Pembengkakan pada lengan kiri</span>
+                                                            <div class="mt-2 flex justify-end space-x-1">
+                                                                <button onclick="editMarkerNote(2)"
+                                                                    class="text-xs bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">Edit</button>
+                                                                <button onclick="deleteMarker(2)"
+                                                                    class="text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="w-1/2 flex flex-col space-y-4 overflow-hidden">
+                                                    <div>
+                                                        <button type="button"
+                                                            class="bg-custom-blue text-white py-2 px-4 rounded-lg text-sm"
+                                                            onclick="addMarker()">
+                                                            <span class="material-icons text-sm align-middle mr-1">info</span>
+                                                            How to Add Markers
+                                                        </button>
+                                                        <p class="text-xs text-gray-500 mt-2">
+                                                            <span
+                                                                class="material-icons text-xs align-middle mr-1">touch_app</span>
+                                                            Click directly on the anatomy image to add new markers
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="flex-1 flex flex-col min-h-0">
+                                                        <h5 class="text-sm font-medium text-gray-700 mb-3">Marker List</h5>
+                                                        <div class="flex-1 overflow-y-auto space-y-2 pr-2" id="marker-list">
+                                                            <div class="bg-white p-3 rounded border border-gray-200"
+                                                                data-marker-id="1">
+                                                                <div class="flex items-start space-x-2">
+                                                                    <div
+                                                                        class="w-3 h-3 bg-red-500 rounded-full mt-1 flex-shrink-0">
+                                                                    </div>
+                                                                    <div class="flex-1">
+                                                                        <p class="text-sm font-medium text-gray-700">Marker 1
+                                                                        </p>
+                                                                        <p class="text-xs text-gray-500">Chest pain
+                                                                        </p>
+                                                                    </div>
+                                                                    <button class="text-red-500 hover:text-red-700 text-xs"
+                                                                        onclick="deleteMarker(1)">
+                                                                        <span class="material-icons text-sm">delete</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bg-white p-3 rounded border border-gray-200"
+                                                                data-marker-id="2">
+                                                                <div class="flex items-start space-x-2">
+                                                                    <div
+                                                                        class="w-3 h-3 bg-red-500 rounded-full mt-1 flex-shrink-0">
+                                                                    </div>
+                                                                    <div class="flex-1">
+                                                                        <p class="text-sm font-medium text-gray-700">Marker 2
+                                                                        </p>
+                                                                        <p class="text-xs text-gray-500">Pembengkakan pada
+                                                                            lengan kiri</p>
+                                                                    </div>
+                                                                    <button class="text-red-500 hover:text-red-700 text-xs"
+                                                                        onclick="deleteMarker(2)">
+                                                                        <span class="material-icons text-sm">delete</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bg-white p-3 rounded border border-gray-200"
+                                                                data-marker-id="3">
+                                                                <div class="flex items-start space-x-2">
+                                                                    <div
+                                                                        class="w-3 h-3 bg-red-500 rounded-full mt-1 flex-shrink-0">
+                                                                    </div>
+                                                                    <div class="flex-1">
+                                                                        <p class="text-sm font-medium text-gray-700">Marker 3
+                                                                        </p>
+                                                                        <p class="text-xs text-gray-500">Ruam pada kulit perut
+                                                                            bagian bawah</p>
+                                                                    </div>
+                                                                    <button class="text-red-500 hover:text-red-700 text-xs"
+                                                                        onclick="deleteMarker(3)">
+                                                                        <span class="material-icons text-sm">delete</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bg-white p-3 rounded border border-gray-200"
+                                                                data-marker-id="4">
+                                                                <div class="flex items-start space-x-2">
+                                                                    <div
+                                                                        class="w-3 h-3 bg-red-500 rounded-full mt-1 flex-shrink-0">
+                                                                    </div>
+                                                                    <div class="flex-1">
+                                                                        <p class="text-sm font-medium text-gray-700">Marker 4
+                                                                        </p>
+                                                                        <p class="text-xs text-gray-500">Benjolan di bagian
+                                                                            leher</p>
+                                                                    </div>
+                                                                    <button class="text-red-500 hover:text-red-700 text-xs"
+                                                                        onclick="deleteMarker(4)">
+                                                                        <span class="material-icons text-sm">delete</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bg-white p-3 rounded border border-gray-200"
+                                                                data-marker-id="5">
+                                                                <div class="flex items-start space-x-2">
+                                                                    <div
+                                                                        class="w-3 h-3 bg-red-500 rounded-full mt-1 flex-shrink-0">
+                                                                    </div>
+                                                                    <div class="flex-1">
+                                                                        <p class="text-sm font-medium text-gray-700">Marker 5
+                                                                        </p>
+                                                                        <p class="text-xs text-gray-500">Luka pada kaki kanan
+                                                                        </p>
+                                                                    </div>
+                                                                    <button class="text-red-500 hover:text-red-700 text-xs"
+                                                                        onclick="deleteMarker(5)">
+                                                                        <span class="material-icons text-sm">delete</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bg-white p-3 rounded border border-gray-200"
+                                                                data-marker-id="6">
+                                                                <div class="flex items-start space-x-2">
+                                                                    <div
+                                                                        class="w-3 h-3 bg-red-500 rounded-full mt-1 flex-shrink-0">
+                                                                    </div>
+                                                                    <div class="flex-1">
+                                                                        <p class="text-sm font-medium text-gray-700">Marker 6
+                                                                        </p>
+                                                                        <p class="text-xs text-gray-500">Memar pada punggung
+                                                                            bagian atas</p>
+                                                                    </div>
+                                                                    <button class="text-red-500 hover:text-red-700 text-xs"
+                                                                        onclick="deleteMarker(6)">
+                                                                        <span class="material-icons text-sm">delete</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="space-y-3 flex-shrink-0">
+                                                        <h5 class="text-sm font-medium text-gray-700">Catatan Physical Examination
+                                                        </h5>
+                                                        <textarea
+                                                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm"
+                                                            rows="4"
+                                                            placeholder="General physical examination notes..."></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- General Condition -->
+                                    <div class="space-y-4">
+                                        <h4 class="text-md font-medium text-gray-700">General Condition</h4>
+
+                                        <!-- Consciousness Level -->
+                                        <div class="bg-gray-50 p-4 rounded-lg">
+                                            <h5 class="text-sm font-medium text-gray-700 mb-3">Consciousness Level</h5>
+                                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                                <label class="flex items-center space-x-2">
+                                                    <input type="radio" name="consciousness" value="compos_mentis"
+                                                        class="form-radio text-custom-blue">
+                                                    <span class="text-sm">Compos Mentis</span>
+                                                </label>
+                                                <label class="flex items-center space-x-2">
+                                                    <input type="radio" name="consciousness" value="somnolen"
+                                                        class="form-radio text-custom-blue">
+                                                    <span class="text-sm">Somnolen</span>
+                                                </label>
+                                                <label class="flex items-center space-x-2">
+                                                    <input type="radio" name="consciousness" value="stupor"
+                                                        class="form-radio text-custom-blue">
+                                                    <span class="text-sm">Stupor</span>
+                                                </label>
+                                                <label class="flex items-center space-x-2">
+                                                    <input type="radio" name="consciousness" value="coma"
+                                                        class="form-radio text-custom-blue">
+                                                    <span class="text-sm">Coma</span>
+                                                </label>
+                                            </div>
+                                            <div class="mt-3">
+                                                <label class="block text-sm font-medium text-gray-700" for="gcs_score">GCS
+                                                    Score</label>
+                                                <div class="grid grid-cols-3 gap-2 mt-1">
+                                                    <div>
+                                                        <label class="text-xs text-gray-500">E (Eye)</label>
+                                                        <select class="block w-full rounded-lg border-gray-300 text-sm">
+                                                            <option value="4">4 - Spontan</option>
+                                                            <option value="3">3 - Suara</option>
+                                                            <option value="2">2 - Nyeri</option>
+                                                            <option value="1">1 - Tidak ada</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label class="text-xs text-gray-500">V (Verbal)</label>
+                                                        <select class="block w-full rounded-lg border-gray-300 text-sm">
+                                                            <option value="5">5 - Orientasi baik</option>
+                                                            <option value="4">4 - Bingung</option>
+                                                            <option value="3">3 - Kata tidak tepat</option>
+                                                            <option value="2">2 - Suara tidak jelas</option>
+                                                            <option value="1">1 - Tidak ada</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label class="text-xs text-gray-500">M (Motor)</label>
+                                                        <select class="block w-full rounded-lg border-gray-300 text-sm">
+                                                            <option value="6">6 - Mengikuti perintah</option>
+                                                            <option value="5">5 - Melokalisir nyeri</option>
+                                                            <option value="4">4 - Menarik/fleksi normal</option>
+                                                            <option value="3">3 - Fleksi abnormal</option>
+                                                            <option value="2">2 - Ekstensi abnormal</option>
+                                                            <option value="1">1 - Tidak ada</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Vital Signs -->
+                                        <div class="bg-gray-50 p-4 rounded-lg">
+                                            <h5 class="text-sm font-medium text-gray-700 mb-3">Vital Signs</h5>
+                                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700"
+                                                        for="blood_pressure">Blood Pressure</label>
+                                                    <div class="flex space-x-1 mt-1">
+                                                        <input
+                                                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                            type="number" placeholder="120" />
+                                                        <span class="flex items-center text-gray-500">/</span>
+                                                        <input
+                                                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                            type="number" placeholder="80" />
+                                                        <span class="flex items-center text-xs text-gray-500">mmHg</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700"
+                                                        for="heart_rate">Heart Rate</label>
+                                                    <div class="flex space-x-1 mt-1">
+                                                        <input
+                                                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                            type="number" placeholder="80" />
+                                                        <span class="flex items-center text-xs text-gray-500">bpm</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700"
+                                                        for="respiratory_rate">Respiratory Rate</label>
+                                                    <div class="flex space-x-1 mt-1">
+                                                        <input
+                                                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                            type="number" placeholder="20" />
+                                                        <span class="flex items-center text-xs text-gray-500">x/min</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700"
+                                                        for="temperature">Temperature</label>
+                                                    <div class="flex space-x-1 mt-1">
+                                                        <input
+                                                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                            type="number" step="0.1" placeholder="36.5" />
+                                                        <span class="flex items-center text-xs text-gray-500">°C</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700"
+                                                        for="oxygen_saturation">Oxygen Saturation</label>
+                                                    <div class="flex space-x-1 mt-1">
+                                                        <input
+                                                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                            type="number" placeholder="98" />
+                                                        <span class="flex items-center text-xs text-gray-500">%</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700"
+                                                        for="pain_scale">Pain Scale</label>
+                                                    <select
+                                                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm">
+                                                        <option value="">Select Scale</option>
+                                                        <option value="0">0 - Tidak nyeri</option>
+                                                        <option value="1">1 - Minimal pain</option>
+                                                        <option value="2">2 - Mild pain</option>
+                                                        <option value="3">3 - Moderate pain</option>
+                                                        <option value="4">4 - Moderate-severe</option>
+                                                        <option value="5">5 - Severe pain</option>
+                                                        <option value="6">6 - Severe pain</option>
+                                                        <option value="7">7 - Very severe</option>
+                                                        <option value="8">8 - Very severe</option>
+                                                        <option value="9">9 - Unbearable</option>
+                                                        <option value="10">10 - Worst pain</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700" for="height">Height</label>
+                                                    <div class="flex space-x-1 mt-1">
+                                                        <input
+                                                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                            type="number" placeholder="170" />
+                                                        <span class="flex items-center text-xs text-gray-500">cm</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700" for="weight">Weight</label>
+                                                    <div class="flex space-x-1 mt-1">
+                                                        <input
+                                                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                            type="number" step="0.1" placeholder="70" />
+                                                        <span class="flex items-center text-xs text-gray-500">kg</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Psychological, Social Economic, Spiritual Examination -->
+                                <div class="space-y-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Pemeriksaan Psikologis, Sosial
+                                        Ekonomi, Spiritual</h3>
+                                    <div class="grid grid-cols-1 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700"
+                                                for="psychological_status">Psychological Status</label>
+                                            <textarea
+                                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                id="psychological_status" rows="3"
+                                                placeholder="Mental condition, emotions, patient behavior..."></textarea>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="social_economic_status">Social Economic Status</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="social_economic_status" rows="3"
+                                                    placeholder="Social economic condition, occupation, income..."></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="spiritual_status">Spiritual Status</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="spiritual_status" rows="3"
+                                                    placeholder="Spiritual needs, beliefs, spiritual support..."></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700" for="risk_factors">Risk
+                                                    Factors</label>
+                                                <select
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="risk_factors">
+                                                    <option>Select Risk</option>
+                                                    <option>Low Risk</option>
+                                                    <option>Moderate Risk</option>
+                                                    <option>High Risk</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="support_system">Support System</label>
+                                                <input
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="support_system" type="text" placeholder="Family, friends, community" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="coping_mechanism">Coping Mechanism</label>
+                                                <input
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="coping_mechanism" type="text" placeholder="Ways to handle problems" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PEMERIKSAAN SPESIALISTIK SECTION -->
+                            <div class="form-section" id="specialist-form-section">
+                                <!-- Care Plan -->
+                                <div class="space-y-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Care Plan</h3>
+                                    <div class="grid grid-cols-1 gap-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700" for="care_level">Tingkat
+                                                    Perawatan</label>
+                                                <select
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="care_level">
+                                                    <option>Select Care Level</option>
+                                                    <option>Rawat Jalan</option>
+                                                    <option>Inpatient</option>
+                                                    <option>Rawat Intensif (ICU)</option>
+                                                    <option>Rawat Khusus</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="estimated_los">Estimated Length of Stay</label>
+                                                <div class="flex space-x-2 mt-1">
+                                                    <input
+                                                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                        type="number" placeholder="7" />
+                                                    <select
+                                                        class="block rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm">
+                                                        <option>Hari</option>
+                                                        <option>Minggu</option>
+                                                        <option>Bulan</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700" for="treatment_goals">Treatment
+                                                Goals</label>
+                                            <textarea
+                                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                id="treatment_goals" rows="3"
+                                                placeholder="Targets to be achieved from treatment..."></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700" for="care_plan">Care
+                                                Plan</label>
+                                            <textarea
+                                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                id="care_plan" rows="4"
+                                                placeholder="Detailed plan for patient care..."></textarea>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="monitoring_plan">Monitoring Plan</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="monitoring_plan" rows="3"
+                                                    placeholder="Parameters to be monitored..."></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="discharge_criteria">Discharge Criteria</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="discharge_criteria" rows="3"
+                                                    placeholder="Conditions to be met for discharge..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Diagnosis -->
+                                <div class="space-y-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Diagnosis</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-md font-medium text-gray-700">Diagnosis List</h4>
+                                            <button type="button" class="bg-custom-blue text-white py-2 px-4 rounded-lg text-sm"
+                                                onclick="addDiagnosis()">
+                                                <span class="material-icons text-sm align-middle mr-1">add</span>
+                                                Add Diagnosis
+                                            </button>
+                                        </div>
+                                        <div class="border rounded-lg overflow-hidden">
+                                            <table class="min-w-full divide-y divide-gray-200">
+                                                <thead class="bg-gray-50">
+                                                    <tr>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Type</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            ICD-10 Code</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Description</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Date</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Status</th>
+                                                        <th class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white divide-y divide-gray-200" id="diagnosis-list">
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Primary
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">J44.1</td>
+                                                        <td class="px-6 py-4 text-sm text-gray-900">Chronic obstructive
+                                                            pulmonary disease with acute exacerbation</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11/07/2025
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Active
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                            <a class="text-custom-blue hover:text-blue-700 mr-2"
+                                                                href="#">Edit</a>
+                                                            <a class="text-red-600 hover:text-red-800" href="#">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Secondary
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">E11.9</td>
+                                                        <td class="px-6 py-4 text-sm text-gray-900">Type 2 diabetes mellitus
+                                                            without complications</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11/07/2025
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600">Monitoring
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                            <a class="text-custom-blue hover:text-blue-700 mr-2"
+                                                                href="#">Edit</a>
+                                                            <a class="text-red-600 hover:text-red-800" href="#">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="grid grid-cols-1 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="differential_diagnosis">Differential Diagnosis</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="differential_diagnosis" rows="3"
+                                                    placeholder="List of other possible diagnoses..."></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="clinical_impression">Clinical Impression</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="clinical_impression" rows="3"
+                                                    placeholder="Overall clinical impression..."></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="prognosis">Prognosis</label>
+                                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-1">
+                                                    <select
+                                                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm">
+                                                        <option>Select Prognosis</option>
+                                                        <option>Good</option>
+                                                        <option>Fair</option>
+                                                        <option>Poor</option>
+                                                        <option>Dubia ad Bonam</option>
+                                                        <option>Dubia ad Malam</option>
+                                                    </select>
+                                                    <input
+                                                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                        type="text" placeholder="Estimated recovery time" />
+                                                    <textarea
+                                                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                        rows="1" placeholder="Prognosis notes..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIWAYAT PENGGUNAAN OBAT SECTION -->
+                            <div class="form-section" id="medication-form-section">
+                                <!-- Medication -->
+                                <div class="space-y-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Medication</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-md font-medium text-gray-700">Current Medications List
+                                            </h4>
+                                            <button type="button" class="bg-custom-blue text-white py-2 px-4 rounded-lg text-sm"
+                                                onclick="addMedication()">
+                                                <span class="material-icons text-sm align-middle mr-1">add</span>
+                                                Add Medication
+                                            </button>
+                                        </div>
+                                        <div class="border rounded-lg overflow-hidden">
+                                            <table class="min-w-full divide-y divide-gray-200">
+                                                <thead class="bg-gray-50">
+                                                    <tr>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Medication Name</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Dosage</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Frequency</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Route</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Start Date</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Status</th>
+                                                        <th class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white divide-y divide-gray-200" id="medication-list">
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                            Paracetamol</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">500mg</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3x daily
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Oral</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10/07/2025
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Active
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                            <a class="text-custom-blue hover:text-blue-700 mr-2"
+                                                                href="#">Edit</a>
+                                                            <a class="text-red-600 hover:text-red-800" href="#">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="medication_allergy">Drug Allergies</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="medication_allergy" rows="3"
+                                                    placeholder="List of drugs causing allergies..."></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="adverse_reactions">Adverse Drug Reactions</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="adverse_reactions" rows="3"
+                                                    placeholder="Side effects experienced..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- INSTRUKSI MEDIK DAN KEPERAWATAN SECTION -->
+                            <div class="form-section" id="instruction-form-section">
+                                <!-- Instructions -->
+                                <div class="space-y-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Instruksi Medical dan
+                                        Nursing</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-md font-medium text-gray-700">Instructions List</h4>
+                                            <button type="button" class="bg-custom-blue text-white py-2 px-4 rounded-lg text-sm"
+                                                onclick="addInstruction()">
+                                                <span class="material-icons text-sm align-middle mr-1">add</span>
+                                                Add Instruction
+                                            </button>
+                                        </div>
+                                        <div class="border rounded-lg overflow-hidden">
+                                            <table class="min-w-full divide-y divide-gray-200">
+                                                <thead class="bg-gray-50">
+                                                    <tr>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Date</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Type</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Instruksi</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Staff</th>
+                                                        <th
+                                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Status</th>
+                                                        <th class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white divide-y divide-gray-200" id="instruction-list">
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11/07/2025
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Medical</td>
+                                                        <td class="px-6 py-4 text-sm text-gray-900">Administer oxygen 2L/min via
+                                                            nasal cannula</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Dr. Alexa
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Active
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                            <a class="text-custom-blue hover:text-blue-700 mr-2"
+                                                                href="#">Edit</a>
+                                                            <a class="text-red-600 hover:text-red-800" href="#">Complete</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11/07/2025
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                            Nursing</td>
+                                                        <td class="px-6 py-4 text-sm text-gray-900">Monitor vital signs every 4
+                                                            hours</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ns. Sarah
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-600">In
+                                                            Progress</td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                            <a class="text-custom-blue hover:text-blue-700 mr-2"
+                                                                href="#">Edit</a>
+                                                            <a class="text-red-600 hover:text-red-800" href="#">Complete</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="special_instructions">Special Instructions</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="special_instructions" rows="4"
+                                                    placeholder="Special instructions for patient..."></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700"
+                                                    for="precautions">Precautions</label>
+                                                <textarea
+                                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm"
+                                                    id="precautions" rows="4"
+                                                    placeholder="Precautions to be taken..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="flex justify-end space-x-4 pt-4 border-t mt-8">
+                                <button
+                                    class="py-2 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                    type="button">
+                                    Cancel
+                                </button>
+                                <button
+                                    class="py-2 px-4 border border-custom-blue rounded-lg text-sm font-medium text-custom-blue hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue"
+                                    type="button">
+                                    Save as Draft
+                                </button>
+                                <button
+                                    class="bg-custom-blue text-white py-2 px-6 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue"
+                                    type="submit">
+                                    Save Assessment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="w-full lg:w-[35%]">
+                    <div class="bg-white p-6 rounded-xl shadow-sm h-full flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="font-bold text-[var(--gray-800)] text-lg">Visit History</h2>
+                        </div>
+                        <div class="flex-grow overflow-y-auto -mr-3 pr-3 bg-[var(--gray-50)] rounded-lg p-3 h-[900px]">
+                            <div class="space-y-4 text-sm relative">
+                                <div class="absolute left-4 top-1 bottom-0 w-0.5 bg-custom-blue"></div>
+                                <div class="relative pl-8">
+                                    <div
+                                        class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-[var(--gray-50)]">
+                                    </div>
+                                    <h3 class="font-medium text-[var(--gray-600)] mb-2">12 June 2024 - General Clinic
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-[var(--blue-50)] p-3 rounded-lg">
+                                            <p class="font-bold text-sm text-[var(--gray-800)] mb-2">Assessment</p>
+                                            <table class="w-full text-left text-[var(--gray-700)]">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">History:</td>
+                                                        <td class="py-0.5 text-left">Patient has productive cough for 3 days,
+                                                            fever,
+                                                            runny nose.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Examination:</td>
+                                                        <td class="py-0.5 text-left">BP 120/80, Pulse 88, RR 20, Temp
+                                                            37.8°C,
+                                                            Rhonchi++.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Diagnosis:</td>
+                                                        <td class="py-0.5 text-left">Acute Bronchitis</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="bg-[var(--green-50)] p-3 rounded-lg">
+                                            <p class="font-bold text-sm text-[var(--green-800)] mb-2">Prescription</p>
+                                            <table class="w-full text-left text-[var(--gray-700)]">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="py-0.5">- Ambroxol syr</td>
+                                                        <td class="py-0.5 font-medium text-left">3x1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="py-0.5">- Paracetamol 500mg</td>
+                                                        <td class="py-0.5 font-medium text-left">3x3</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="py-0.5">- Cetirizine 10mg</td>
+                                                        <td class="py-0.5 font-medium text-left">1x1 tab</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div
+                                        class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-[var(--gray-50)]">
+                                    </div>
+                                    <h3 class="font-medium text-[var(--gray-600)] mb-2">10 May 2024 - Laboratory</h3>
+                                    <div class="bg-[var(--yellow-50)] p-3 rounded-lg">
+                                        <p class="font-bold text-sm text-[var(--yellow-800)] mb-2">Laboratory Test</p>
+                                        <table class="w-full text-left text-[var(--gray-700)]">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="py-0.5" colspan="2">Complete Blood Count:</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pl-2 py-0.5">- Hb:</td>
+                                                    <td class="font-medium text-left py-0.5">13.5 g/dL</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pl-2 py-0.5">- WBC:</td>
+                                                    <td class="font-medium text-left py-0.5">11.000 /uL</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pl-2 py-0.5">- Platelets:</td>
+                                                    <td class="font-medium text-left py-0.5">280.000 /uL</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pl-2 py-0.5">- ESR:</td>
+                                                    <td class="font-medium text-left py-0.5">25 mm/hr</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-2 text-left" colspan="2">Impression: Leukocytosis</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div
+                                        class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-[var(--gray-50)]">
+                                    </div>
+                                    <h3 class="font-medium text-[var(--gray-600)] mb-2">2 April 2024 - Dental Clinic
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-[var(--blue-50)] p-3 rounded-lg">
+                                            <p class="font-bold text-sm text-[var(--gray-800)] mb-2">Assessment</p>
+                                            <table class="w-full text-left text-[var(--gray-700)]">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">History:</td>
+                                                        <td class="py-0.5 text-left">Lower right molar pain for 1
+                                                            week.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Examination:</td>
+                                                        <td class="py-0.5 text-left">Deep caries tooth 46, non-vital.
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Diagnosis:</td>
+                                                        <td class="py-0.5 text-left">Irreversible pulpitis</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="bg-[var(--purple-50)] p-3 rounded-lg">
+                                            <p class="font-bold text-sm text-[var(--purple-800)] mb-2">Treatment</p>
+                                            <table class="w-full text-left text-[var(--gray-700)]">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Treatment:</td>
+                                                        <td class="py-0.5 text-left">RCT phase 1 tooth 46</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div
+                                        class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-[var(--gray-50)]">
+                                    </div>
+                                    <h3 class="font-medium text-[var(--gray-600)] mb-2">15 March 2024 - Radiology</h3>
+                                    <div class="bg-[var(--red-50)] p-3 rounded-lg">
+                                        <p class="font-bold text-sm text-[var(--red-800)] mb-2">Radiology Results</p>
+                                        <table class="w-full text-left text-[var(--gray-700)]">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">X-Ray:</td>
+                                                    <td class="py-0.5 text-left">Periapical Tooth 46</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Result:</td>
+                                                    <td class="py-0.5 text-left">Radiolucency in crown &amp; periapical area.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Impression:</td>
+                                                    <td class="py-0.5 text-left">Caries &amp; Abscess</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div
+                                        class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-[var(--gray-50)]">
+                                    </div>
+                                    <h3 class="font-medium text-[var(--gray-600)] mb-2">1 February 2024 - ENT Clinic
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-[var(--blue-50)] p-3 rounded-lg">
+                                            <p class="font-bold text-sm text-[var(--gray-800)] mb-2">Assessment</p>
+                                            <table class="w-full text-left text-[var(--gray-700)]">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">History:</td>
+                                                        <td class="py-0.5 text-left">Left ear pain, decreased
+                                                            hearing.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Examination:</td>
+                                                        <td class="py-0.5 text-left">Tympanic membrane hyperemic, bulging.
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Diagnosis:</td>
+                                                        <td class="py-0.5 text-left">Acute Otitis Media</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="bg-[var(--green-50)] p-3 rounded-lg">
+                                            <p class="font-bold text-sm text-[var(--green-800)] mb-2">Prescription</p>
+                                            <table class="w-full text-left text-[var(--gray-700)]">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="py-0.5">- Amoxicillin 500mg</td>
+                                                        <td class="py-0.5 font-medium text-left">3x1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="py-0.5">- Ibuprofen 400mg</td>
+                                                        <td class="py-0.5 font-medium text-left">3x1</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <!-- Load External JavaScript -->
+    <script src="form_assesment_view.js"></script>
+</body>
+
+</html>

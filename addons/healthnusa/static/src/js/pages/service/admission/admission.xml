@@ -1,825 +1,763 @@
 <templates xml:space="preserve">
     <t t-name="healthnusa.Admission">
-        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg transition-colors duration-300">
-            <!-- Admission Management Content -->
-            <div class="flex flex-wrap lg:flex-nowrap gap-6 p-6">
-                <div class="w-full lg:w-[30%]">
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm h-full flex flex-col border border-gray-200 dark:border-gray-700">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="font-bold text-gray-900 dark:text-gray-100 text-lg">Admission List</h2>
-                        </div>
-                        <div class="mb-4">
-                            <div class="relative">
-                                <span class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 text-lg">search</span>
-                                <input t-on-input="searchAdmissions" type="text" placeholder="Search name, ID, department..." 
-                                    class="w-full pl-10 pr-10 py-2 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
-                                    t-att-value="state.searchTerm"
-                                    autocomplete="off"/>
-                                <button t-if="state.searchTerm" 
-                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                                    t-on-click="clearSearch" title="Clear search">
-                                    <span class="material-icons text-lg">close</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex-grow overflow-y-auto -mr-3 pr-3 bg-gray-50 dark:bg-gray-700 rounded-lg p-3 h-[800px] border border-gray-200 dark:border-gray-600">
-                            <div class="space-y-3 text-sm">
-                                <t t-foreach="filteredAdmissions" t-as="admission" t-key="admission.id">
-                                    <div t-att-class="getAdmissionItemClass(admission)" 
-                                         t-on-click="() => this.selectAdmission(admission)" 
-                                         t-att-data-admission-id="admission.id">
-                                        <div class="flex items-center space-x-3">
-                                            <img t-att-src="admission.patient_image" 
-                                                alt="Patient" t-att-class="getPatientImageClass(admission)"/>
-                                            <div class="flex-grow">
-                                                <h4 t-att-class="getPatientNameClass(admission)" t-esc="admission.patient_name"></h4>
-                                                <p t-att-class="getAdmissionInfoClass(admission)">ID: <t t-esc="admission.admission_id"/> • <t t-esc="admission.admission_type"/></p>
-                                                <p t-att-class="getAdmissionDateClass(admission)"><t t-esc="admission.department"/> • <t t-esc="admission.admission_date"/></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </t>
-                                
-                                <!-- Empty State -->
-                                <div t-if="filteredAdmissions.length === 0" class="text-center py-8">
-                                    <div class="text-gray-400 mb-2">
-                                        <span class="material-icons text-4xl">local_hospital</span>
-                                    </div>
-                                    <p class="text-gray-500 text-sm">No admissions found</p>
-                                    <p class="text-gray-400 text-xs mt-1" t-if="state.searchTerm">Try using different keywords</p>
-                                    <p class="text-gray-400 text-xs mt-1" t-else="">Create a new admission to get started</p>
-                                </div>
-                            </div>
+        <!-- Admission Management Content -->
+        <div class="flex flex-wrap lg:flex-nowrap gap-6">
+            <div class="w-full lg:w-[30%]">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm h-full flex flex-col border border-gray-200 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="font-bold text-gray-900 dark:text-gray-100 text-lg">Admission List</h2>
+                    </div>
+                    <div class="mb-4">
+                        <div class="relative">
+                            <span class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 text-lg">search</span>
+                            <input t-on-input="searchAdmissions" type="text" placeholder="Search name, ID, department..." class="w-full pl-10 pr-10 py-2 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400" t-att-value="state.searchTerm" autocomplete="off"/>
+                            <button t-if="state.searchTerm" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" t-on-click="clearSearch" title="Clear search">
+                                <span class="material-icons text-lg">close</span>
+                            </button>
                         </div>
                     </div>
-                </div>
-                
-                <div class="w-full lg:w-[70%] space-y-6">
-                    <!-- Admission Profile Card -->
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                        <div class="flex flex-col sm:flex-row items-start">
-                            <!-- Patient Photo and Name Section -->
-                            <div class="w-full sm:w-1/3 text-center sm:text-left mb-6 sm:mb-0 sm:pr-6 flex flex-col items-center">
-                                <!-- Patient Photo -->
-                                <img t-att-alt="selectedAdmission.patient_name + ' profile picture'"
-                                    class="w-28 h-28 rounded-full mb-4 object-cover border-4 border-gray-200 dark:border-gray-600"
-                                    t-att-src="selectedAdmission.patient_image" />
-                                <!-- Patient Name -->
-                                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.patient_name"></h1>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">MRN: <t t-esc="selectedAdmission.mrn"/></p>
+                    <div class="flex-grow overflow-y-auto -mr-3 pr-3 bg-gray-50 dark:bg-gray-700 rounded-lg p-3 h-[800px] border border-gray-200 dark:border-gray-600">
+                        <div class="space-y-3 text-sm">
+                            <t t-foreach="filteredAdmissions" t-as="admission" t-key="admission.id">
+                                <div t-att-class="getAdmissionItemClass(admission)" t-on-click="() => this.selectAdmission(admission)" t-att-data-admission-id="admission.id">
+                                    <div class="flex items-center space-x-3">
+                                        <img t-att-src="admission.patient_image" alt="Patient" t-att-class="getPatientImageClass(admission)"/>
+                                        <div class="flex-grow">
+                                            <h4 t-att-class="getPatientNameClass(admission)" t-esc="admission.patient_name"></h4>
+                                            <p t-att-class="getAdmissionInfoClass(admission)">ID: <t t-esc="admission.admission_id"/>
+ •                                            <t t-esc="admission.admission_type"/>
+                                        </p>
+                                        <p t-att-class="getAdmissionDateClass(admission)">
+                                            <t t-esc="admission.department"/>
+ •                                            <t t-esc="admission.admission_date"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
 
-                                <!-- Action Buttons -->
-                                <div class="mt-4 flex w-full justify-center space-x-2">
-                                    <button t-on-click="viewAdmissionDetails"
-                                        class="flex items-center justify-center bg-custom-blue hover:bg-blue-600 text-white rounded-lg h-10 w-10 transition-colors">
-                                        <span class="material-icons text-lg">visibility</span>
-                                    </button>
-                                    <button t-on-click="editAdmission"
-                                        class="flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg h-10 w-10 transition-colors">
-                                        <span class="material-icons text-lg">edit</span>
-                                    </button>
-                                    <button t-on-click="printAdmission"
-                                        class="flex items-center justify-center bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-500 text-white rounded-lg h-10 w-10 transition-colors">
-                                        <span class="material-icons text-lg">print</span>
-                                    </button>
-                                </div>
+                        <!-- Empty State -->
+                        <div t-if="filteredAdmissions.length === 0" class="text-center py-8">
+                            <div class="text-gray-400 mb-2">
+                                <span class="material-icons text-4xl">local_hospital</span>
                             </div>
-                            
-                            <!-- Patient Details Grid -->
-                            <div class="w-full sm:w-2/3 sm:pl-6 grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-6 text-sm">
-                                <!-- Gender -->
-                                <div>
-                                    <p class="text-gray-600 dark:text-gray-400">Gender</p>
-                                    <div class="flex items-center space-x-2">
-                                        <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.gender"></p>
-                                        <span class="bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-400 text-xs font-semibold px-2 py-0.5 rounded-full border border-teal-200 dark:border-teal-700" t-esc="selectedAdmission.title"></span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Birthday -->
-                                <div>
-                                    <p class="text-gray-600 dark:text-gray-400">Birthday</p>
-                                    <div class="flex items-center space-x-2">
-                                        <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.birthday"></p>
-                                        <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-700" t-esc="selectedAdmission.age"></span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Phone number -->
-                                <div>
-                                    <p class="text-gray-600 dark:text-gray-400">Phone number</p>
-                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.phone"></p>
-                                </div>
-                                
-                                <!-- Address -->
-                                <div>
-                                    <p class="text-gray-600 dark:text-gray-400">Address</p>
-                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.address"></p>
-                                </div>
-                                
-                                <!-- City -->
-                                <div>
-                                    <p class="text-gray-600 dark:text-gray-400">City</p>
-                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.city"></p>
-                                </div>
-                                
-                                <!-- ZIP Code -->
-                                <div>
-                                    <p class="text-gray-600 dark:text-gray-400">ZIP Code</p>
-                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.zip_code"></p>
-                                </div>
-                                
-                                <!-- Registration date -->
-                                <div>
-                                    <p class="text-gray-600 dark:text-gray-400">Registration date</p>
-                                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.registration_date"></p>
-                                </div>
-                                
-                                <!-- Member status -->
-                                <div>
-                                    <p class="text-gray-600 dark:text-gray-400">Member status</p>
-                                    <span t-att-class="getDetailStatusClass(selectedAdmission.member_status)" t-esc="selectedAdmission.member_status"></span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Admission Notes Section -->
-                        <div id="admission-notes-section" class="mt-6 border-t border-gray-200 dark:border-gray-600 pt-6">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 id="notes-title" class="font-bold text-gray-900 dark:text-gray-100 text-lg">Notes</h2>
-                            </div>
-                            <div t-if="!state.isEditingNotes" id="notes-content" class="mb-4">
-                                <div id="notes-text" class="w-full h-32 p-3 text-sm text-gray-800 dark:text-gray-200 space-y-2 bg-gray-100 dark:bg-gray-600 rounded-lg">
-                                    <p t-esc="selectedAdmission.notes"></p>
-                                </div>
-                            </div>
-                            <div t-if="state.isEditingNotes" class="mb-4">
-                                <textarea 
-                                    id="noteTextarea"
-                                    class="w-full h-32 p-3 border border-gray-300 dark:border-gray-600 rounded-lg resize-none focus:ring-2 focus:ring-custom-blue focus:border-custom-blue text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400" 
-                                    placeholder="Enter admission notes..."
-                                    t-att-value="state.editingNotesText"
-                                    t-on-input="(ev) => onNotesChange(ev.target.value)"
-                                ></textarea>
-                            </div>
-                            <div class="flex justify-end items-center">
-                                <button id="edit-note-btn"
-                                    class="bg-custom-blue hover:bg-blue-700 text-white rounded-lg py-2 px-4 text-sm font-semibold h-10 transition-colors" 
-                                    t-on-click="state.isEditingNotes ? saveNotes : toggleEditNotes">
-                                    <t t-if="!state.isEditingNotes">Edit note</t>
-                                    <t t-if="state.isEditingNotes">Save note</t>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Admission Records Tabs -->
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-                            <div class="flex space-x-1 border border-gray-200 dark:border-gray-600 rounded-lg p-1 mb-4 sm:mb-0 flex-wrap">
-                                <button t-att-class="getTabClass('assessment')"
-                                    t-on-click="() => this.switchTab('assessment')">Assessment</button>
-                                <button t-att-class="getTabClass('treatment')"
-                                    t-on-click="() => this.switchTab('treatment')">Treatment</button>
-                                <button t-att-class="getTabClass('laboratory')"
-                                    t-on-click="() => this.switchTab('laboratory')">Laboratory</button>
-                                <button t-att-class="getTabClass('radiology')"
-                                    t-on-click="() => this.switchTab('radiology')">Radiology</button>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 class="font-bold text-lg text-gray-900 dark:text-gray-100" t-esc="currentTabTitle"></h2>
-                                <button t-if="currentTab !== 'discharge'"
-                                    class="bg-custom-blue hover:bg-blue-700 text-white rounded-lg py-2 px-4 text-sm font-semibold flex items-center h-10 transition-colors">
-                                    <span class="material-icons text-lg mr-1">add</span> Add
-                                </button>
-                            </div>
-                            <div class="h-[800px] overflow-y-auto pr-2">
-                                <t t-if="state.currentTab === 'assessment'" t-call="healthnusa.AdmissionAssessment"/>
-                                <t t-if="state.currentTab === 'treatment'" t-call="healthnusa.AdmissionTreatment"/>
-                                <t t-if="state.currentTab === 'laboratory'" t-call="healthnusa.AdmissionLaboratory"/>
-                                <t t-if="state.currentTab === 'radiology'" t-call="healthnusa.AdmissionRadiology"/>
-                            </div>
+                            <p class="text-gray-500 text-sm">No admissions found</p>
+                            <p class="text-gray-400 text-xs mt-1" t-if="state.searchTerm">Try using different keywords</p>
+                            <p class="text-gray-400 text-xs mt-1" t-else="">Create a new admission to get started</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- New Admission Modal -->
-        <div t-if="state.showAdmissionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-                <!-- Modal Header -->
-                <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">New Patient Admission</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Fill in the admission details below</p>
+        <div class="w-full lg:w-[70%] space-y-6">
+            <!-- Admission Profile Card -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="flex flex-col sm:flex-row items-start">
+                    <!-- Patient Photo and Name Section -->
+                    <div class="w-full sm:w-1/3 text-center sm:text-left mb-6 sm:mb-0 sm:pr-6 flex flex-col items-center">
+                        <!-- Patient Photo -->
+                        <img t-att-alt="selectedAdmission.patient_name + ' profile picture'" class="w-28 h-28 rounded-full mb-4 object-cover border-4 border-gray-200 dark:border-gray-600" t-att-src="selectedAdmission.patient_image" />
+                        <!-- Patient Name -->
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.patient_name"></h1>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">MRN: <t t-esc="selectedAdmission.mrn"/>
+                        </p>
+
+                        <!-- Action Buttons -->
+                        <div class="mt-4 flex w-full justify-center space-x-2">
+                            <button t-on-click="viewAdmissionDetails" class="flex items-center justify-center bg-custom-blue hover:bg-blue-600 text-white rounded-lg h-10 w-10 transition-colors">
+                                <span class="material-icons text-lg">visibility</span>
+                            </button>
+                            <button t-on-click="editAdmission" class="flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg h-10 w-10 transition-colors">
+                                <span class="material-icons text-lg">edit</span>
+                            </button>
+                            <button t-on-click="printAdmission" class="flex items-center justify-center bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-500 text-white rounded-lg h-10 w-10 transition-colors">
+                                <span class="material-icons text-lg">print</span>
+                            </button>
+                        </div>
                     </div>
-                    <button t-on-click="closeAdmissionModal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                        <span class="material-icons">close</span>
-                    </button>
+
+                    <!-- Patient Details Grid -->
+                    <div class="w-full sm:w-2/3 sm:pl-6 grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-6 text-sm">
+                        <!-- Gender -->
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400">Gender</p>
+                            <div class="flex items-center space-x-2">
+                                <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.gender"></p>
+                                <span class="bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-400 text-xs font-semibold px-2 py-0.5 rounded-full border border-teal-200 dark:border-teal-700" t-esc="selectedAdmission.title"></span>
+                            </div>
+                        </div>
+
+                        <!-- Birthday -->
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400">Birthday</p>
+                            <div class="flex items-center space-x-2">
+                                <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.birthday"></p>
+                                <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-700" t-esc="selectedAdmission.age"></span>
+                            </div>
+                        </div>
+
+                        <!-- Phone number -->
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400">Phone number</p>
+                            <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.phone"></p>
+                        </div>
+
+                        <!-- Address -->
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400">Address</p>
+                            <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.address"></p>
+                        </div>
+
+                        <!-- City -->
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400">City</p>
+                            <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.city"></p>
+                        </div>
+
+                        <!-- ZIP Code -->
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400">ZIP Code</p>
+                            <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.zip_code"></p>
+                        </div>
+
+                        <!-- Registration date -->
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400">Registration date</p>
+                            <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.registration_date"></p>
+                        </div>
+
+                        <!-- Member status -->
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400">Member status</p>
+                            <span t-att-class="getDetailStatusClass(selectedAdmission.member_status)" t-esc="selectedAdmission.member_status"></span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Modal Body -->
-                <form class="p-6 space-y-6">
-                    <!-- Patient Selection -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Patient</label>
-                            <select 
-                                t-att-value="state.admissionForm.patient_id"
-                                t-on-change="(e) => this.onAdmissionFormChange('patient_id', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                required="true"
-                            >
-                                <option value="">Choose a patient</option>
-                                <option value="P001">John Anderson (MRN001)</option>
-                                <option value="P002">Sarah Johnson (MRN002)</option>
-                                <option value="P003">Michael Chen (MRN003)</option>
-                                <option value="P004">Emily Davis (MRN004)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission ID</label>
-                            <input 
-                                type="text" 
-                                t-att-value="state.admissionForm.admission_id"
-                                t-on-input="(e) => this.onAdmissionFormChange('admission_id', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                placeholder="Auto-generated"
-                                readonly="true"
-                            />
+                <!-- Admission Notes Section -->
+                <div id="admission-notes-section" class="mt-6 border-t border-gray-200 dark:border-gray-600 pt-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 id="notes-title" class="font-bold text-gray-900 dark:text-gray-100 text-lg">Notes</h2>
+                    </div>
+                    <div t-if="!state.isEditingNotes" id="notes-content" class="mb-4">
+                        <div id="notes-text" class="w-full h-32 p-3 text-sm text-gray-800 dark:text-gray-200 space-y-2 bg-gray-100 dark:bg-gray-600 rounded-lg">
+                            <p t-esc="selectedAdmission.notes"></p>
                         </div>
                     </div>
-
-                    <!-- Date and Time Row -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Date</label>
-                            <input 
-                                type="date" 
-                                t-att-value="state.admissionForm.admission_date"
-                                t-on-change="(e) => this.onAdmissionFormChange('admission_date', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                required="true"
-                            />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Time</label>
-                            <input 
-                                type="time" 
-                                t-att-value="state.admissionForm.admission_time"
-                                t-on-change="(e) => this.onAdmissionFormChange('admission_time', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                required="true"
-                            />
-                        </div>
+                    <div t-if="state.isEditingNotes" class="mb-4">
+                        <textarea id="noteTextarea" class="w-full h-32 p-3 border border-gray-300 dark:border-gray-600 rounded-lg resize-none focus:ring-2 focus:ring-custom-blue focus:border-custom-blue text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400" placeholder="Enter admission notes..." t-att-value="state.editingNotesText" t-on-input="(ev) => onNotesChange(ev.target.value)"></textarea>
                     </div>
-
-                    <!-- Department and Doctor Row -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Department</label>
-                            <select 
-                                t-att-value="state.admissionForm.department"
-                                t-on-change="(e) => this.onAdmissionFormChange('department', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                required="true"
-                            >
-                                <option value="">Select Department</option>
-                                <option value="Emergency">Emergency</option>
-                                <option value="Cardiology">Cardiology</option>
-                                <option value="Neurology">Neurology</option>
-                                <option value="Orthopedics">Orthopedics</option>
-                                <option value="Pediatrics">Pediatrics</option>
-                                <option value="Internal Medicine">Internal Medicine</option>
-                                <option value="Surgery">Surgery</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Attending Doctor</label>
-                            <input 
-                                type="text" 
-                                t-att-value="state.admissionForm.doctor"
-                                t-on-input="(e) => this.onAdmissionFormChange('doctor', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                placeholder="Dr. Smith"
-                                required="true"
-                            />
-                        </div>
+                    <div class="flex justify-end items-center">
+                        <button id="edit-note-btn" class="bg-custom-blue hover:bg-blue-700 text-white rounded-lg py-2 px-4 text-sm font-semibold h-10 transition-colors" t-on-click="state.isEditingNotes ? saveNotes : toggleEditNotes">
+                            <t t-if="!state.isEditingNotes">Edit note</t>
+                            <t t-if="state.isEditingNotes">Save note</t>
+                        </button>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Admission Type and Insurance Row -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Type</label>
-                            <select 
-                                t-att-value="state.admissionForm.admission_type"
-                                t-on-change="(e) => this.onAdmissionFormChange('admission_type', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                            >
-                                <option value="Outpatient">Outpatient</option>
-                                <option value="Inpatient">Inpatient</option>
-                                <option value="Emergency">Emergency</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Insurance</label>
-                            <select 
-                                t-att-value="state.admissionForm.insurance"
-                                t-on-change="(e) => this.onAdmissionFormChange('insurance', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                required="true"
-                            >
-                                <option value="">Select Insurance</option>
-                                <option value="BPJS Kesehatan">BPJS Kesehatan</option>
-                                <option value="BPJS Ketenagakerjaan">BPJS Ketenagakerjaan</option>
-                                <option value="Private Insurance">Private Insurance</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Company Insurance">Company Insurance</option>
-                            </select>
-                        </div>
+            <!-- Admission Records Tabs -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+                    <div class="flex space-x-1 border border-gray-200 dark:border-gray-600 rounded-lg p-1 mb-4 sm:mb-0 flex-wrap">
+                        <button t-att-class="getTabClass('assessment')" t-on-click="() => this.switchTab('assessment')">Assessment</button>
+                        <button t-att-class="getTabClass('treatment')" t-on-click="() => this.switchTab('treatment')">Treatment</button>
+                        <button t-att-class="getTabClass('laboratory')" t-on-click="() => this.switchTab('laboratory')">Laboratory</button>
+                        <button t-att-class="getTabClass('radiology')" t-on-click="() => this.switchTab('radiology')">Radiology</button>
                     </div>
-
-                    <!-- Room and Bed Row - Only show for Inpatient and Emergency -->
-                    <div t-if="state.admissionForm.admission_type === 'Inpatient' || state.admissionForm.admission_type === 'Emergency'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Room Number</label>
-                            <input 
-                                type="text" 
-                                t-att-value="state.admissionForm.room_number"
-                                t-on-input="(e) => this.onAdmissionFormChange('room_number', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                placeholder="101A"
-                            />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bed Number</label>
-                            <input 
-                                type="text" 
-                                t-att-value="state.admissionForm.bed_number"
-                                t-on-input="(e) => this.onAdmissionFormChange('bed_number', e.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                                placeholder="1"
-                            />
-                        </div>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="font-bold text-lg text-gray-900 dark:text-gray-100" t-esc="currentTabTitle"></h2>
+                        <button t-if="currentTab !== 'discharge'" class="bg-custom-blue hover:bg-blue-700 text-white rounded-lg py-2 px-4 text-sm font-semibold flex items-center h-10 transition-colors">
+                            <span class="material-icons text-lg mr-1">add</span> Add
+                        </button>
                     </div>
+                    <div class="h-[800px] overflow-y-auto pr-2">
+                        <t t-if="state.currentTab === 'assessment'" t-call="healthnusa.AdmissionAssessment"/>
+                        <t t-if="state.currentTab === 'treatment'" t-call="healthnusa.AdmissionTreatment"/>
+                        <t t-if="state.currentTab === 'laboratory'" t-call="healthnusa.AdmissionLaboratory"/>
+                        <t t-if="state.currentTab === 'radiology'" t-call="healthnusa.AdmissionRadiology"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <!-- Chief Complaint -->
+    <!-- New Admission Modal -->
+    <div t-if="state.showAdmissionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">New Patient Admission</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Fill in the admission details below</p>
+                </div>
+                <button t-on-click="closeAdmissionModal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <form class="p-6 space-y-6">
+                <!-- Patient Selection -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Chief Complaint</label>
-                        <textarea 
-                            t-att-value="state.admissionForm.chief_complaint"
-                            t-on-input="(e) => this.onAdmissionFormChange('chief_complaint', e.target.value)"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                            rows="3"
-                            placeholder="Patient's primary complaint..."
-                        ></textarea>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Patient</label>
+                        <select t-att-value="state.admissionForm.patient_id" t-on-change="(e) => this.onAdmissionFormChange('patient_id', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" required="true">
+                            <option value="">Choose a patient</option>
+                            <option value="P001">John Anderson (MRN001)</option>
+                            <option value="P002">Sarah Johnson (MRN002)</option>
+                            <option value="P003">Michael Chen (MRN003)</option>
+                            <option value="P004">Emily Davis (MRN004)</option>
+                        </select>
                     </div>
-
-                    <!-- Diagnosis -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Initial Diagnosis</label>
-                        <textarea 
-                            t-att-value="state.admissionForm.diagnosis"
-                            t-on-input="(e) => this.onAdmissionFormChange('diagnosis', e.target.value)"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                            rows="3"
-                            placeholder="Initial diagnosis or suspected condition..."
-                        ></textarea>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission ID</label>
+                        <input type="text" t-att-value="state.admissionForm.admission_id" t-on-input="(e) => this.onAdmissionFormChange('admission_id', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" placeholder="Auto-generated" readonly="true" />
                     </div>
+                </div>
 
-                    <!-- Notes -->
+                <!-- Date and Time Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Additional Notes</label>
-                        <textarea 
-                            t-att-value="state.admissionForm.notes"
-                            t-on-input="(e) => this.onAdmissionFormChange('notes', e.target.value)"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                            rows="3"
-                            placeholder="Any additional notes or special instructions..."
-                        ></textarea>
-                    </div>                        
-                </form>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Date</label>
+                        <input type="date" t-att-value="state.admissionForm.admission_date" t-on-change="(e) => this.onAdmissionFormChange('admission_date', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" required="true" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Time</label>
+                        <input type="time" t-att-value="state.admissionForm.admission_time" t-on-change="(e) => this.onAdmissionFormChange('admission_time', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" required="true" />
+                    </div>
+                </div>
 
-                <!-- Modal Footer -->
-                <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
-                    <button 
-                        t-on-click="closeAdmissionModal" 
-                        type="button" 
-                        class="px-6 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200"
-                    >
+                <!-- Department and Doctor Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Department</label>
+                        <select t-att-value="state.admissionForm.department" t-on-change="(e) => this.onAdmissionFormChange('department', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" required="true">
+                            <option value="">Select Department</option>
+                            <option value="Emergency">Emergency</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Internal Medicine">Internal Medicine</option>
+                            <option value="Surgery">Surgery</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Attending Doctor</label>
+                        <input type="text" t-att-value="state.admissionForm.doctor" t-on-input="(e) => this.onAdmissionFormChange('doctor', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" placeholder="Dr. Smith" required="true" />
+                    </div>
+                </div>
+
+                <!-- Admission Type and Insurance Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Admission Type</label>
+                        <select t-att-value="state.admissionForm.admission_type" t-on-change="(e) => this.onAdmissionFormChange('admission_type', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+                            <option value="Outpatient">Outpatient</option>
+                            <option value="Inpatient">Inpatient</option>
+                            <option value="Emergency">Emergency</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Insurance</label>
+                        <select t-att-value="state.admissionForm.insurance" t-on-change="(e) => this.onAdmissionFormChange('insurance', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" required="true">
+                            <option value="">Select Insurance</option>
+                            <option value="BPJS Kesehatan">BPJS Kesehatan</option>
+                            <option value="BPJS Ketenagakerjaan">BPJS Ketenagakerjaan</option>
+                            <option value="Private Insurance">Private Insurance</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Company Insurance">Company Insurance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Room and Bed Row - Only show for Inpatient and Emergency -->
+                <div t-if="state.admissionForm.admission_type === 'Inpatient' || state.admissionForm.admission_type === 'Emergency'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Room Number</label>
+                        <input type="text" t-att-value="state.admissionForm.room_number" t-on-input="(e) => this.onAdmissionFormChange('room_number', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" placeholder="101A" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bed Number</label>
+                        <input type="text" t-att-value="state.admissionForm.bed_number" t-on-input="(e) => this.onAdmissionFormChange('bed_number', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" placeholder="1" />
+                    </div>
+                </div>
+
+                <!-- Chief Complaint -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Chief Complaint</label>
+                    <textarea t-att-value="state.admissionForm.chief_complaint" t-on-input="(e) => this.onAdmissionFormChange('chief_complaint', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" rows="3" placeholder="Patient's primary complaint..."></textarea>
+                </div>
+
+                <!-- Diagnosis -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Initial Diagnosis</label>
+                    <textarea t-att-value="state.admissionForm.diagnosis" t-on-input="(e) => this.onAdmissionFormChange('diagnosis', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" rows="3" placeholder="Initial diagnosis or suspected condition..."></textarea>
+                </div>
+
+                <!-- Notes -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Additional Notes</label>
+                    <textarea t-att-value="state.admissionForm.notes" t-on-input="(e) => this.onAdmissionFormChange('notes', e.target.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-custom-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" rows="3" placeholder="Any additional notes or special instructions..."></textarea>
+                </div>
+            </form>
+
+            <!-- Modal Footer -->
+            <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
+                <button t-on-click="closeAdmissionModal" type="button" class="px-6 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200">
                         Cancel
-                    </button>
-                    <button 
-                        t-on-click="submitAdmissionForm" 
-                        type="button" 
-                        class="px-6 py-2 text-sm font-medium text-white bg-custom-blue hover:bg-blue-600 rounded-lg transition-colors duration-200"
-                    >
+                </button>
+                <button t-on-click="submitAdmissionForm" type="button" class="px-6 py-2 text-sm font-medium text-white bg-custom-blue hover:bg-blue-600 rounded-lg transition-colors duration-200">
                         Create Admission
-                    </button>
-                </div>
+                </button>
             </div>
         </div>
-    </t>
+    </div>
+</t>
 
-    <!-- Assessment Tab Template -->
-    <t t-name="healthnusa.AdmissionAssessment">
-        <div class="space-y-4">
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.diagnosis.split(',')[0]"></p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.doctor"></p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">K29.1</p>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">Detail</span>
-                    </div>
+<!-- Assessment Tab Template -->
+<t t-name="healthnusa.AdmissionAssessment">
+    <div class="space-y-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.diagnosis.split(',')[0]"></p>
                 </div>
-                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> <t t-esc="selectedAdmission.chief_complaint"/></p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> BP 120/80, HR 88bpm, RR 20bpm, Temp 37.2°C</p>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.doctor"></p>
                 </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm"><t t-esc="selectedAdmission.admission_date"/>, <t t-esc="selectedAdmission.admission_time"/></p>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">K29.1</p>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">visibility</span>
+                    <span class="ml-2 text-sm font-medium">Detail</span>
                 </div>
             </div>
-            
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Hipertensi Grade 1</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.doctor"></p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">I10</p>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">Detail</span>
-                    </div>
-                </div>
-                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Headache, dizziness, neck stiffness</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> BP 150/90, HR 92bpm, BMI 27.5</p>
-                </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">20 Aug'24, 14:30 PM</p>
-                </div>
+            <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p class="text-sm text-gray-800 dark:text-gray-200">
+                    <strong>Chief Complaint:</strong>
+                    <t t-esc="selectedAdmission.chief_complaint"/>
+                </p>
+                <p class="text-sm text-gray-800 dark:text-gray-200 mt-1">
+                    <strong>Examination:</strong> BP 120/80, HR 88bpm, RR 20bpm, Temp 37.2°C</p>
             </div>
-            
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Diabetes Mellitus Type 2</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.doctor"></p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">E11.9</p>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">Detail</span>
-                    </div>
-                </div>
-                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Polyuria, polydipsia, weight loss</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> RBS 280 mg/dL, HbA1c 9.2%, BP 140/90</p>
-                </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">19 Aug'24, 16:45 PM</p>
-                </div>
-            </div>
-            
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Pneumonia Community Acquired</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Michael Chen</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">J18.9</p>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">Detail</span>
-                    </div>
-                </div>
-                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Productive cough, high fever, shortness of breath</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> Temp 39°C, RR 28bpm, O2 Sat 94%</p>
-                </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">18 Aug'24, 09:30 AM</p>
-                </div>
-            </div>
-            
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Fracture Closed Radius</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Emily Davis</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">S52.9</p>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">Detail</span>
-                    </div>
-                </div>
-                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Severe pain in right arm after fall</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> Distal radius deformity, swelling (+)</p>
-                </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">17 Aug'24, 13:15 PM</p>
-                </div>
-            </div>
-            
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Acute Bronchitis</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Lisa Thompson</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">J20.9</p>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">Detail</span>
-                    </div>
-                </div>
-                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Chief Complaint:</strong> Prolonged dry cough, itchy throat</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Examination:</strong> Temp 37.5°C, fine wet rales (+)</p>
-                </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">16 Aug'24, 11:00 AM</p>
-                </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">
+                    <t t-esc="selectedAdmission.admission_date"/>
+,                    <t t-esc="selectedAdmission.admission_time"/>
+                </p>
             </div>
         </div>
-    </t>
 
-    <!-- Treatment Tab Template -->
-    <t t-name="healthnusa.AdmissionTreatment">
-        <div class="space-y-4">
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Procedure</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">IV Insertion</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Staff</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Ns. Maria Santos</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">View</span>
-                    </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Hipertensi Grade 1</p>
                 </div>
-                <div class="mt-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Details:</strong> RL IV 500cc, rate 20 drops/min</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Location:</strong> Right hand dorsum, using 22G cannula</p>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.doctor"></p>
                 </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm"><t t-esc="selectedAdmission.admission_date"/>, 10:15 AM</p>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">I10</p>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">visibility</span>
+                    <span class="ml-2 text-sm font-medium">Detail</span>
                 </div>
             </div>
-            
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Procedure</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">IM Injection</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Staff</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Ns. Lisa Wong</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">visibility</span>
-                        <span class="ml-2 text-sm font-medium">View</span>
-                    </div>
-                </div>
-                <div class="mt-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
-                    <p class="text-sm text-gray-800 dark:text-gray-200"><strong>Medication:</strong> Antrain 1 ampule (250mg)</p>
-                    <p class="text-sm text-gray-800 dark:text-gray-200 mt-1"><strong>Location:</strong> Right gluteus, Z-track technique</p>
-                </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">20 Aug'24, 15:00 PM</p>
-                </div>
+            <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p class="text-sm text-gray-800 dark:text-gray-200">
+                    <strong>Chief Complaint:</strong> Headache, dizziness, neck stiffness</p>
+                <p class="text-sm text-gray-800 dark:text-gray-200 mt-1">
+                    <strong>Examination:</strong> BP 150/90, HR 92bpm, BMI 27.5</p>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">20 Aug'24, 14:30 PM</p>
             </div>
         </div>
-    </t>
 
-    <!-- Laboratory Tab Template -->
-    <t t-name="healthnusa.AdmissionLaboratory">
-        <div class="space-y-4">
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Complete Blood Count</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Technician</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Ahmad Laborant</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">print</span>
-                        <span class="ml-2 text-sm font-medium">Print</span>
-                    </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Diabetes Mellitus Type 2</p>
                 </div>
-                <div class="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                            <p class="text-gray-800 dark:text-gray-200"><strong>Hemoglobin:</strong> 12.5 g/dL <span class="text-green-600 dark:text-green-400">(Normal)</span></p>
-                            <p class="text-gray-800 dark:text-gray-200"><strong>Leukosit:</strong> 8,500 /uL <span class="text-green-600 dark:text-green-400">(Normal)</span></p>
-                            <p class="text-gray-800 dark:text-gray-200"><strong>Trombosit:</strong> 280,000 /uL <span class="text-green-600 dark:text-green-400">(Normal)</span></p>
-                        </div>
-                        <div>
-                            <p class="text-gray-800 dark:text-gray-200"><strong>Hematokrit:</strong> 38% <span class="text-green-600 dark:text-green-400">(Normal)</span></p>
-                            <p class="text-gray-800 dark:text-gray-200"><strong>LED:</strong> 15 mm/jam <span class="text-green-600 dark:text-green-400">(Normal)</span></p>
-                            <p class="text-gray-800 dark:text-gray-200"><strong>Diff Count:</strong> Dalam batas normal</p>
-                        </div>
-                    </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100" t-esc="selectedAdmission.doctor"></p>
                 </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">22 Aug'24, 08:00 AM</p>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">E11.9</p>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">visibility</span>
+                    <span class="ml-2 text-sm font-medium">Detail</span>
                 </div>
             </div>
-            
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Fasting Blood Sugar</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Technician</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Sari Laborant</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">print</span>
-                        <span class="ml-2 text-sm font-medium">Print</span>
-                    </div>
-                </div>
-                <div class="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
-                    <div class="text-sm">
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Glukosa Puasa:</strong> 95 mg/dL <span class="text-green-600 dark:text-green-400">(Normal: 70-100 mg/dL)</span></p>
-                        <p class="mt-2 text-gray-700 dark:text-gray-300"><strong>Interpretation:</strong> Fasting blood sugar level within normal limits</p>
-                    </div>
-                </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">18 Aug'24, 07:30 AM</p>
-                </div>
+            <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p class="text-sm text-gray-800 dark:text-gray-200">
+                    <strong>Chief Complaint:</strong> Polyuria, polydipsia, weight loss</p>
+                <p class="text-sm text-gray-800 dark:text-gray-200 mt-1">
+                    <strong>Examination:</strong> RBS 280 mg/dL, HbA1c 9.2%, BP 140/90</p>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">19 Aug'24, 16:45 PM</p>
             </div>
         </div>
-    </t>
 
-    <!-- Radiology Tab Template -->
-    <t t-name="healthnusa.AdmissionRadiology">
-        <div class="space-y-4">
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Foto Thorax PA</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Radiographer</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Budi Radiologi</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">image</span>
-                        <span class="ml-2 text-sm font-medium">View</span>
-                    </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Pneumonia Community Acquired</p>
                 </div>
-                <div class="mt-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-                    <div class="text-sm">
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Technique:</strong> PA chest X-ray, full inspiration</p>
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Impression:</strong></p>
-                        <ul class="list-disc list-inside mt-1 ml-4">
-                            <li class="text-gray-800 dark:text-gray-200">Heart within normal limits</li>
-                            <li class="text-gray-800 dark:text-gray-200">Lungs: no infiltrate or consolidation seen</li>
-                            <li class="text-gray-800 dark:text-gray-200">Right and left costophrenic angles sharp</li>
-                            <li class="text-gray-800 dark:text-gray-200">Bones intact</li>
-                        </ul>
-                        <p class="mt-2 font-medium text-green-700 dark:text-green-400">Conclusion: Chest X-ray within normal limits</p>
-                    </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Michael Chen</p>
                 </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">21 Aug'24, 11:00 AM</p>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">J18.9</p>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">visibility</span>
+                    <span class="ml-2 text-sm font-medium">Detail</span>
                 </div>
             </div>
-            
-            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">USG Abdomen</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
-                        <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Radiologi Sp.Rad</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
-                    </div>
-                    <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
-                        <span class="material-icons text-xl">image</span>
-                        <span class="ml-2 text-sm font-medium">View</span>
-                    </div>
-                </div>
-                <div class="mt-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-                    <div class="text-sm">
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Preparation:</strong> 6 hours fasting before examination</p>
-                        <p class="text-gray-800 dark:text-gray-200"><strong>Results:</strong></p>
-                        <ul class="list-disc list-inside mt-1 ml-4">
-                            <li class="text-gray-800 dark:text-gray-200">Liver: normal size, homogeneous echostructure</li>
-                            <li class="text-gray-800 dark:text-gray-200">Gallbladder: wall not thickened, no stones seen</li>
-                            <li class="text-gray-800 dark:text-gray-200">Pancreas: no abnormalities seen</li>
-                            <li class="text-gray-800 dark:text-gray-200">Right-left kidneys: normal size and echogenicity</li>
-                            <li class="text-gray-800 dark:text-gray-200">Bladder: within normal limits</li>
-                        </ul>
-                        <p class="mt-2 font-medium text-green-700 dark:text-green-400">Conclusion: Abdominal ultrasound within normal limits</p>
-                    </div>
-                </div>
-                <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
-                    <span class="material-icons text-sm mr-1">schedule</span>
-                    <p class="text-sm">15 Aug'24, 14:00 PM</p>
-                </div>
+            <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p class="text-sm text-gray-800 dark:text-gray-200">
+                    <strong>Chief Complaint:</strong> Productive cough, high fever, shortness of breath</p>
+                <p class="text-sm text-gray-800 dark:text-gray-200 mt-1">
+                    <strong>Examination:</strong> Temp 39°C, RR 28bpm, O2 Sat 94%</p>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">18 Aug'24, 09:30 AM</p>
             </div>
         </div>
-    </t>
+
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Fracture Closed Radius</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Emily Davis</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">S52.9</p>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">visibility</span>
+                    <span class="ml-2 text-sm font-medium">Detail</span>
+                </div>
+            </div>
+            <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p class="text-sm text-gray-800 dark:text-gray-200">
+                    <strong>Chief Complaint:</strong> Severe pain in right arm after fall</p>
+                <p class="text-sm text-gray-800 dark:text-gray-200 mt-1">
+                    <strong>Examination:</strong> Distal radius deformity, swelling (+)</p>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">17 Aug'24, 13:15 PM</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Diagnosis</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Acute Bronchitis</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Lisa Thompson</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">ICD-10</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">J20.9</p>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">visibility</span>
+                    <span class="ml-2 text-sm font-medium">Detail</span>
+                </div>
+            </div>
+            <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <p class="text-sm text-gray-800 dark:text-gray-200">
+                    <strong>Chief Complaint:</strong> Prolonged dry cough, itchy throat</p>
+                <p class="text-sm text-gray-800 dark:text-gray-200 mt-1">
+                    <strong>Examination:</strong> Temp 37.5°C, fine wet rales (+)</p>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">16 Aug'24, 11:00 AM</p>
+            </div>
+        </div>
+    </div>
+</t>
+
+<!-- Treatment Tab Template -->
+<t t-name="healthnusa.AdmissionTreatment">
+    <div class="space-y-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Procedure</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">IV Insertion</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Staff</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Ns. Maria Santos</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
+                    <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">visibility</span>
+                    <span class="ml-2 text-sm font-medium">View</span>
+                </div>
+            </div>
+            <div class="mt-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                <p class="text-sm text-gray-800 dark:text-gray-200">
+                    <strong>Details:</strong> RL IV 500cc, rate 20 drops/min</p>
+                <p class="text-sm text-gray-800 dark:text-gray-200 mt-1">
+                    <strong>Location:</strong> Right hand dorsum, using 22G cannula</p>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">
+                    <t t-esc="selectedAdmission.admission_date"/>
+, 10:15 AM</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Procedure</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">IM Injection</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Staff</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Ns. Lisa Wong</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
+                    <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">visibility</span>
+                    <span class="ml-2 text-sm font-medium">View</span>
+                </div>
+            </div>
+            <div class="mt-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                <p class="text-sm text-gray-800 dark:text-gray-200">
+                    <strong>Medication:</strong> Antrain 1 ampule (250mg)</p>
+                <p class="text-sm text-gray-800 dark:text-gray-200 mt-1">
+                    <strong>Location:</strong> Right gluteus, Z-track technique</p>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">20 Aug'24, 15:00 PM</p>
+            </div>
+        </div>
+    </div>
+</t>
+
+<!-- Laboratory Tab Template -->
+<t t-name="healthnusa.AdmissionLaboratory">
+    <div class="space-y-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Complete Blood Count</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Technician</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Ahmad Laborant</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
+                    <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">print</span>
+                    <span class="ml-2 text-sm font-medium">Print</span>
+                </div>
+            </div>
+            <div class="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p class="text-gray-800 dark:text-gray-200">
+                            <strong>Hemoglobin:</strong> 12.5 g/dL <span class="text-green-600 dark:text-green-400">(Normal)</span>
+                        </p>
+                        <p class="text-gray-800 dark:text-gray-200">
+                            <strong>Leukosit:</strong> 8,500 /uL <span class="text-green-600 dark:text-green-400">(Normal)</span>
+                        </p>
+                        <p class="text-gray-800 dark:text-gray-200">
+                            <strong>Trombosit:</strong> 280,000 /uL <span class="text-green-600 dark:text-green-400">(Normal)</span>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-gray-800 dark:text-gray-200">
+                            <strong>Hematokrit:</strong> 38% <span class="text-green-600 dark:text-green-400">(Normal)</span>
+                        </p>
+                        <p class="text-gray-800 dark:text-gray-200">
+                            <strong>LED:</strong> 15 mm/jam <span class="text-green-600 dark:text-green-400">(Normal)</span>
+                        </p>
+                        <p class="text-gray-800 dark:text-gray-200">
+                            <strong>Diff Count:</strong> Dalam batas normal</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">22 Aug'24, 08:00 AM</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Fasting Blood Sugar</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Technician</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Sari Laborant</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
+                    <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">print</span>
+                    <span class="ml-2 text-sm font-medium">Print</span>
+                </div>
+            </div>
+            <div class="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                <div class="text-sm">
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>Glukosa Puasa:</strong> 95 mg/dL <span class="text-green-600 dark:text-green-400">(Normal: 70-100 mg/dL)</span>
+                    </p>
+                    <p class="mt-2 text-gray-700 dark:text-gray-300">
+                        <strong>Interpretation:</strong> Fasting blood sugar level within normal limits</p>
+                </div>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">18 Aug'24, 07:30 AM</p>
+            </div>
+        </div>
+    </div>
+</t>
+
+<!-- Radiology Tab Template -->
+<t t-name="healthnusa.AdmissionRadiology">
+    <div class="space-y-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Foto Thorax PA</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Radiographer</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Budi Radiologi</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
+                    <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">image</span>
+                    <span class="ml-2 text-sm font-medium">View</span>
+                </div>
+            </div>
+            <div class="mt-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                <div class="text-sm">
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>Technique:</strong> PA chest X-ray, full inspiration</p>
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>Impression:</strong>
+                    </p>
+                    <ul class="list-disc list-inside mt-1 ml-4">
+                        <li class="text-gray-800 dark:text-gray-200">Heart within normal limits</li>
+                        <li class="text-gray-800 dark:text-gray-200">Lungs: no infiltrate or consolidation seen</li>
+                        <li class="text-gray-800 dark:text-gray-200">Right and left costophrenic angles sharp</li>
+                        <li class="text-gray-800 dark:text-gray-200">Bones intact</li>
+                    </ul>
+                    <p class="mt-2 font-medium text-green-700 dark:text-green-400">Conclusion: Chest X-ray within normal limits</p>
+                </div>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">21 Aug'24, 11:00 AM</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Test</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">USG Abdomen</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Doctor</p>
+                    <p class="font-medium text-gray-900 dark:text-gray-100">Dr. Radiologi Sp.Rad</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Status</p>
+                    <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-semibold px-2 py-1 rounded-full border border-green-200 dark:border-green-700">Completed</span>
+                </div>
+                <div class="flex items-center justify-start text-custom-blue dark:text-blue-400 cursor-pointer">
+                    <span class="material-icons text-xl">image</span>
+                    <span class="ml-2 text-sm font-medium">View</span>
+                </div>
+            </div>
+            <div class="mt-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                <div class="text-sm">
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>Preparation:</strong> 6 hours fasting before examination</p>
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>Results:</strong>
+                    </p>
+                    <ul class="list-disc list-inside mt-1 ml-4">
+                        <li class="text-gray-800 dark:text-gray-200">Liver: normal size, homogeneous echostructure</li>
+                        <li class="text-gray-800 dark:text-gray-200">Gallbladder: wall not thickened, no stones seen</li>
+                        <li class="text-gray-800 dark:text-gray-200">Pancreas: no abnormalities seen</li>
+                        <li class="text-gray-800 dark:text-gray-200">Right-left kidneys: normal size and echogenicity</li>
+                        <li class="text-gray-800 dark:text-gray-200">Bladder: within normal limits</li>
+                    </ul>
+                    <p class="mt-2 font-medium text-green-700 dark:text-green-400">Conclusion: Abdominal ultrasound within normal limits</p>
+                </div>
+            </div>
+            <div class="mt-3 flex items-center text-gray-500 dark:text-gray-400">
+                <span class="material-icons text-sm mr-1">schedule</span>
+                <p class="text-sm">15 Aug'24, 14:00 PM</p>
+            </div>
+        </div>
+    </div>
+</t>
 </templates>

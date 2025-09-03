@@ -13,7 +13,17 @@
                 <!-- Scrollable Content Area -->
                 <div class="flex-1 overflow-y-auto data-list-container px-8 pb-8">
                     <!-- Fixed Controls Section -->
-                    <t t-if="state.currentRoute" t-component="state.currentRoute.Component" t-props="{ router: router, selectApp: selectApp }"/>
+                    <t t-if="state.currentRoute and state.currentRoute.Component" t-component="state.currentRoute.Component" t-props="{ router: router, selectApp: selectApp }"/>
+                    
+                    <!-- Loading state when no route is loaded -->
+                    <div t-if="!state.currentRoute" class="flex items-center justify-center h-64">
+                        <div class="text-center">
+                            <div class="text-gray-400 text-4xl mb-4">
+                                <span class="material-icons text-6xl">hourglass_empty</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400">Loading...</p>
+                        </div>
+                    </div>
                 </div>
 
             </main>

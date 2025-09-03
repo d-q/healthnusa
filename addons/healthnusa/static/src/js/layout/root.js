@@ -7,6 +7,9 @@ import { Breadcrumb } from "./main/breadcrumb";
 import { Router } from "../services/router";
 
 import { Admission } from "../pages/service/admission/admission";
+import { Assessment } from "../pages/service/assessment/assessment";
+import { AssessmentDetail } from "../pages/service/assessment/assessment_detail";
+import { AssessmentForm } from "../pages/service/assessment/assessment_form";
 import { Dashboard } from "../pages/dashboard/dashboard";
 
 import { Doctor } from "../pages/employee/doctor/doctor";
@@ -51,6 +54,9 @@ export class Root extends Component {
         Header,
 
         Admission,
+        Assessment,
+        AssessmentDetail,
+        AssessmentForm,
         Dashboard,
 
         Doctor,
@@ -93,6 +99,7 @@ export class Root extends Component {
         this.apps = [
             { id: "dashboard", icon: "dashboard", name: "Dashboard", Component: Dashboard, category: "Service" },
             { id: "admission", icon: "event_note", name: "Admission", Component: Admission, category: "Service" },
+            { id: "assessment", icon: "assignment", name: "Assessment", Component: Assessment, category: "Service" },
             { id: "patient", icon: "personal_injury", name: "Patient", Component: Patient, category: "Service" },
             { id: "invoices", icon: "payments", name: "Invoices", Component: Invoices, category: "Service" },
             { id: "bills", icon: "receipt_long", name: "Bills", Component: Bills, category: "Service" },
@@ -151,6 +158,27 @@ export class Root extends Component {
                 id: "patient-edit",
                 Component: PatientForm,
                 parent: 'patient',
+                showBackButton: true
+            },
+            {
+                path: '/assessment/detail',
+                id: "assessment-detail",
+                Component: AssessmentDetail,
+                parent: 'assessment',
+                showBackButton: true
+            },
+            {
+                path: '/assessment/new',
+                id: "assessment-new",
+                Component: AssessmentForm,
+                parent: 'assessment',
+                showBackButton: true
+            },
+            {
+                path: '/assessment/edit',
+                id: "assessment-edit",
+                Component: AssessmentForm,
+                parent: 'assessment',
                 showBackButton: true
             },
             {
@@ -285,7 +313,13 @@ export class Root extends Component {
                 this.state.previousApp = this.state.currentApp?.id;
             }
 
-            this.state.currentRoute = route;
+            // Ensure route has a Component before setting it
+            if (route && route.Component) {
+                this.state.currentRoute = route;
+            } else {
+                console.warn('Route missing Component:', route);
+                this.state.currentRoute = null;
+            }
 
             const subRoute = this.subRoutes.find(sr => sr.id === route.id);
             if (subRoute) {

@@ -1,0 +1,1005 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.AssessmentForm">
+        <!-- Patient Profile Content -->
+        <div class="flex flex-wrap lg:flex-nowrap gap-6">
+            <div class="w-full lg:w-[65%] space-y-6">
+                <!-- Patient Info Bar -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-16 h-16 bg-custom-blue rounded-full flex items-center justify-center">
+                                <span class="material-icons text-white text-2xl">person</span>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Abigail Peterson</h2>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">ID: MRN123456</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                    Inpatient
+                            </div>
+                            <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                                    Class 1
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">person</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Gender</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">Female</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">cake</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Birthday</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">Oct. 25, 1992</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">schedule</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Age</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">31 years</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">phone</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Phone</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">+1 (555) 123-4567</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">location_on</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">City</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">San Francisco</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">local_post_office</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">ZIP Code</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">94134</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 md:col-span-2 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">home</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Address</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">250 Executive Park Blvd, Suite 3400<br/>
+San Francisco, CA 94134</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">event</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Registered</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">Oct. 25, 1998</p>
+                        </div>
+
+                    </div>
+
+                    <div class="border-t pt-4 mt-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="material-icons text-gray-400 dark:text-gray-500 text-sm">warning</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Allergies:</span>
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">Penicillin</span>
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">Seafood</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                                <span class="material-icons text-sm">access_time</span>
+                                <span>Last updated: 11 Jul 2025, 14:30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Navigation Bar -->
+                <div class="form-navbar bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm transition-colors duration-300">
+                    <div class="flex">
+                        <div class="nav-item active flex items-center space-x-2 px-6 py-3 rounded-l-lg border-r border-gray-200 dark:border-gray-700 cursor-pointer transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-custom-blue dark:hover:text-blue-400" data-form="general-form">
+                            <span class="material-icons text-gray-600 dark:text-gray-400">assignment</span>
+                            <span class="font-medium">General</span>
+                        </div>
+                        <div class="nav-item flex items-center space-x-2 px-6 py-3 border-r border-gray-200 dark:border-gray-700 cursor-pointer transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-custom-blue dark:hover:text-blue-400" data-form="specialist-form">
+                            <span class="material-icons text-gray-600 dark:text-gray-400">medical_services</span>
+                            <span class="font-medium">Examination</span>
+                        </div>
+                        <div class="nav-item flex items-center space-x-2 px-6 py-3 border-r border-gray-200 dark:border-gray-700 cursor-pointer transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-custom-blue dark:hover:text-blue-400" data-form="medication-form">
+                            <span class="material-icons text-gray-600 dark:text-gray-400">medication</span>
+                            <span class="font-medium">Medication</span>
+                        </div>
+                        <div class="nav-item flex items-center space-x-2 px-6 py-3 rounded-r-lg cursor-pointer transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-custom-blue dark:hover:text-blue-400" data-form="instruction-form">
+                            <span class="material-icons text-gray-600 dark:text-gray-400">task_alt</span>
+                            <span class="font-medium">Instructions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md transition-colors duration-300">
+                    <form class="space-y-8">
+                        <!-- FORMULIR UMUM SECTION -->
+                        <div class="form-section active" id="general-form-section">
+                            <!-- Anamnesis -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Anamnesis</h3>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="chief_complaint">Chief Complaint</label>
+                                        <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="chief_complaint" rows="3" placeholder="Describe the patient's main complaint..."></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="present_illness">Present Illness History</label>
+                                        <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="present_illness" rows="4" placeholder="Current illness history..."></textarea>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="past_medical_history">Past Medical History</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="past_medical_history" rows="3" placeholder="Previous medical history..."></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="family_history">Family Medical History</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="family_history" rows="3" placeholder="Family medical history..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="allergy_history">Allergy History</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="allergy_history" type="text" placeholder="Food, drugs, or other allergens" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="social_history">Social History</label>
+                                            <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="social_history" type="text" placeholder="Smoking, alcohol, drugs, etc." />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Physical Examination -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Physical Examination</h3>
+
+                                <!-- Gambar Anatomi -->
+                                <div class="space-y-4">
+                                    <h4 class="text-md font-medium text-gray-700 dark:text-gray-200">Body Anatomy Image</h4>
+                                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg transition-colors duration-300">
+                                        <div class="flex gap-6 h-[600px]">
+                                            <div class="w-1/2 anatomy-container flex-shrink-0 relative">
+                                                <img src="https://i.pinimg.com/736x/f2/83/23/f283232af4526c45a089481c2cf6f4bc.jpg" alt="Human Body Anatomy" class="w-full h-full object-contain border rounded-lg cursor-crosshair" t-on-click.prevent="onAnatomyClick"/>
+                                                
+                                                <!-- Dynamic markers from state -->
+                                                <t t-foreach="state.anatomyMarkers" t-as="marker" t-key="marker.id">
+                                                    <div class="anatomy-marker absolute w-4 h-4 rounded-full border-2 border-white shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-transform duration-200" 
+                                                         t-att-class="marker.color"
+                                                         t-att-style="'top: ' + marker.y + '%; left: ' + marker.x + '%;'"
+                                                         t-att-title="marker.title + ': ' + marker.note"
+                                                         t-on-click.prevent="(event) => { event.stopPropagation(); this.editMarker(marker.id); }">
+                                                    </div>
+                                                </t>
+                                            </div>
+
+                                            <div class="w-1/2 flex flex-col space-y-4 overflow-hidden">
+                                                <div>
+                                                    <button type="button" class="bg-custom-blue text-white py-2 px-4 rounded-lg text-sm">
+                                                        <span class="material-icons text-sm align-middle mr-1">info</span>
+                                                            How to Add Markers
+                                                    </button>
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                                                        <span class="material-icons text-xs align-middle mr-1">touch_app</span>
+                                                            Click directly on the anatomy image to add new markers
+                                                    </p>
+                                                </div>
+
+                                                <div class="flex-1 flex flex-col min-h-0">
+                                                    <h5 class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">Marker List</h5>
+                                                    <div class="flex-1 overflow-y-auto space-y-2 pr-2" id="marker-list">
+                                                        <!-- Dynamic marker list -->
+                                                        <t t-if="state.anatomyMarkers.length > 0">
+                                                            <t t-foreach="state.anatomyMarkers" t-as="marker" t-key="marker.id">
+                                                                <div class="bg-white dark:bg-gray-600 p-3 rounded border border-gray-200 dark:border-gray-500 transition-colors duration-300">
+                                                                    <div class="flex items-start space-x-2">
+                                                                        <div class="w-3 h-3 rounded-full mt-1 flex-shrink-0" t-att-class="marker.color"></div>
+                                                                        <div class="flex-1">
+                                                                            <p class="text-sm font-medium text-gray-700 dark:text-gray-200" t-esc="marker.title"/>
+                                                                            <p class="text-xs text-gray-500 dark:text-gray-400" t-esc="marker.note"/>
+                                                                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Position: (<t t-esc="Math.round(marker.x)"/>%, <t t-esc="Math.round(marker.y)"/>%)</p>
+                                                                        </div>
+                                                                        <div class="flex space-x-2">
+                                                                            <button type="button" class="p-1.5 rounded-md bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors duration-200" t-on-click.prevent="(event) => { event.stopPropagation(); this.editMarker(marker.id); }" title="Edit marker">
+                                                                                <span class="material-icons text-sm">edit</span>
+                                                                            </button>
+                                                                            <button type="button" class="p-1.5 rounded-md bg-red-50 dark:bg-red-900 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-800 transition-colors duration-200" t-on-click.prevent="(event) => { event.stopPropagation(); this.deleteMarker(marker.id); }" title="Delete marker">
+                                                                                <span class="material-icons text-sm">delete</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                                                                <span class="material-icons text-4xl mb-2 block opacity-50">place</span>
+                                                                <p class="text-sm">No markers added yet</p>
+                                                                <p class="text-xs mt-1">Click on the anatomy image to add markers</p>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="space-y-3 flex-shrink-0">
+                                    <h5 class="text-sm font-medium text-gray-700 dark:text-gray-200">Catatan Physical Examination</h5>
+                                    <textarea class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" rows="4" placeholder="General physical examination notes..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Marker Modal -->
+                        <t t-if="state.showMarkerModal">
+                            <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                                <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" t-on-click="cancelMarker"></div>
+                                    
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
+                                    
+                                    <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                            <div class="sm:flex sm:items-start">
+                                                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 sm:mx-0 sm:h-10 sm:w-10">
+                                                    <span class="material-icons text-blue-600 dark:text-blue-400">place</span>
+                                                </div>
+                                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-1">
+                                                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="modal-title">
+                                                        <t t-if="editingMarker">Edit Anatomy Marker</t>
+                                                        <t t-else="">Add New Anatomy Marker</t>
+                                                    </h3>
+                                                    <div class="mt-4 space-y-4">
+                                                        <div>
+                                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Marker Title</label>
+                                                            <input type="text" class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" placeholder="Enter marker title..." t-model="state.newMarker.title" />
+                                                        </div>
+                                                        <div>
+                                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Note/Description</label>
+                                                            <textarea class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" rows="3" placeholder="Enter detailed description..." t-model="state.newMarker.note"></textarea>
+                                                        </div>
+                                                        <div>
+                                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Marker Color</label>
+                                                            <div class="flex space-x-2">
+                                                                <button type="button" class="w-6 h-6 rounded-full bg-red-500 border-2 focus:outline-none focus:ring-2 focus:ring-red-300" t-att-class="state.newMarker.color === 'bg-red-500' ? 'border-gray-800 dark:border-white' : 'border-gray-300'" t-on-click="() => this.selectMarkerColor('bg-red-500')" title="Red"></button>
+                                                                <button type="button" class="w-6 h-6 rounded-full bg-blue-500 border-2 focus:outline-none focus:ring-2 focus:ring-blue-300" t-att-class="state.newMarker.color === 'bg-blue-500' ? 'border-gray-800 dark:border-white' : 'border-gray-300'" t-on-click="() => this.selectMarkerColor('bg-blue-500')" title="Blue"></button>
+                                                                <button type="button" class="w-6 h-6 rounded-full bg-green-500 border-2 focus:outline-none focus:ring-2 focus:ring-green-300" t-att-class="state.newMarker.color === 'bg-green-500' ? 'border-gray-800 dark:border-white' : 'border-gray-300'" t-on-click="() => this.selectMarkerColor('bg-green-500')" title="Green"></button>
+                                                                <button type="button" class="w-6 h-6 rounded-full bg-yellow-500 border-2 focus:outline-none focus:ring-2 focus:ring-yellow-300" t-att-class="state.newMarker.color === 'bg-yellow-500' ? 'border-gray-800 dark:border-white' : 'border-gray-300'" t-on-click="() => this.selectMarkerColor('bg-yellow-500')" title="Yellow"></button>
+                                                                <button type="button" class="w-6 h-6 rounded-full bg-purple-500 border-2 focus:outline-none focus:ring-2 focus:ring-purple-300" t-att-class="state.newMarker.color === 'bg-purple-500' ? 'border-gray-800 dark:border-white' : 'border-gray-300'" t-on-click="() => this.selectMarkerColor('bg-purple-500')" title="Purple"></button>
+                                                                <button type="button" class="w-6 h-6 rounded-full bg-pink-500 border-2 focus:outline-none focus:ring-2 focus:ring-pink-300" t-att-class="state.newMarker.color === 'bg-pink-500' ? 'border-gray-800 dark:border-white' : 'border-gray-300'" t-on-click="() => this.selectMarkerColor('bg-pink-500')" title="Pink"></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                            <span class="material-icons text-xs align-middle mr-1">info</span>
+                                                            Position: <t t-if="state.newMarker.x">(x: <t t-esc="Math.round(state.newMarker.x)"/>%, y: <t t-esc="Math.round(state.newMarker.y)"/>%)</t>
+                                                            <t t-else="">Click on image to set position</t>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                            <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-custom-blue text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue sm:ml-3 sm:w-auto sm:text-sm" t-on-click="saveMarker" t-att-disabled="!state.newMarker.title || !state.newMarker.note">
+                                                <t t-if="editingMarker">Update Marker</t>
+                                                <t t-else="">Save Marker</t>
+                                            </button>
+                                            <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" t-on-click="cancelMarker">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- Delete Confirmation Modal -->
+                        <t t-if="state.showDeleteConfirmModal">
+                            <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                                <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" t-on-click="cancelDeleteMarker"></div>
+                                    
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
+                                    
+                                    <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                            <div class="sm:flex sm:items-start">
+                                                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900 sm:mx-0 sm:h-10 sm:w-10">
+                                                    <span class="material-icons text-red-600 dark:text-red-400">warning</span>
+                                                </div>
+                                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="modal-title">
+                                                        Delete Anatomy Marker
+                                                    </h3>
+                                                    <div class="mt-2">
+                                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                            Are you sure you want to delete the marker "<span class="font-semibold" t-esc="state.markerToDelete?.title || 'this marker'"/>?"
+                                                        </p>
+                                                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                                            This action cannot be undone.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                            <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm" t-on-click="confirmDeleteMarker">
+                                                Delete Marker
+                                            </button>
+                                            <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" t-on-click="cancelDeleteMarker">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- General Condition -->
+                        <div class="space-y-4">
+                            <h4 class="text-md font-medium text-gray-700 dark:text-gray-200">General Condition</h4>
+                            
+                            <!-- Consciousness Level -->
+                            <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg transition-colors duration-300">
+                                <h5 class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">Consciousness Level</h5>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <label class="flex items-center space-x-2">
+                                        <input type="radio" name="consciousness" value="compos_mentis" class="form-radio text-custom-blue"/>
+                                        <span class="text-sm text-gray-700 dark:text-gray-200">Compos Mentis</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="radio" name="consciousness" value="somnolen" class="form-radio text-custom-blue"/>
+                                        <span class="text-sm text-gray-700 dark:text-gray-200">Somnolen</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="radio" name="consciousness" value="stupor" class="form-radio text-custom-blue"/>
+                                        <span class="text-sm text-gray-700 dark:text-gray-200">Stupor</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="radio" name="consciousness" value="coma" class="form-radio text-custom-blue"/>
+                                        <span class="text-sm text-gray-200">Coma</span>
+                                    </label>
+                                </div>
+                                <div class="mt-3">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="gcs_score">GCS Score</label>
+                                    <div class="grid grid-cols-3 gap-2 mt-1">
+                                        <div>
+                                            <label class="text-xs text-gray-500 dark:text-gray-400">E (Eye)</label>
+                                            <select class="block w-full rounded-lg border-gray-300 dark:border-gray-600 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                                                <option value="4">4 - Spontan</option>
+                                                <option value="3">3 - Suara</option>
+                                                <option value="2">2 - Nyeri</option>
+                                                <option value="1">1 - Tidak ada</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-xs text-gray-500 dark:text-gray-400">V (Verbal)</label>
+                                            <select class="block w-full rounded-lg border-gray-300 dark:border-gray-600 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                                                <option value="5">5 - Orientasi baik</option>
+                                                <option value="4">4 - Bingung</option>
+                                                <option value="3">3 - Kata tidak tepat</option>
+                                                <option value="2">2 - Suara tidak jelas</option>
+                                                <option value="1">1 - Tidak ada</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-xs text-gray-500 dark:text-gray-400">M (Motor)</label>
+                                            <select class="block w-full rounded-lg border-gray-300 dark:border-gray-600 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                                                <option value="6">6 - Mengikuti perintah</option>
+                                                <option value="5">5 - Melokalisir nyeri</option>
+                                                <option value="4">4 - Menarik/fleksi normal</option>
+                                                <option value="3">3 - Fleksi abnormal</option>
+                                                <option value="2">2 - Ekstensi abnormal</option>
+                                                <option value="1">1 - Tidak ada</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Vital Signs -->
+                            <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg transition-colors duration-300">
+                                <h5 class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">Vital Signs</h5>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="blood_pressure">Blood Pressure</label>
+                                        <div class="flex space-x-1 mt-1">
+                                            <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" placeholder="120" />
+                                            <span class="flex items-center text-gray-500 dark:text-gray-400">/</span>
+                                            <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" placeholder="80" />
+                                            <span class="flex items-center text-xs text-gray-500 dark:text-gray-400">mmHg</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="heart_rate">Heart Rate</label>
+                                        <div class="flex space-x-1 mt-1">
+                                            <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" placeholder="80" />
+                                            <span class="flex items-center text-xs text-gray-500 dark:text-gray-400">bpm</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="respiratory_rate">Respiratory Rate</label>
+                                        <div class="flex space-x-1 mt-1">
+                                            <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" placeholder="20" />
+                                            <span class="flex items-center text-xs text-gray-500 dark:text-gray-400">x/min</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="temperature">Temperature</label>
+                                        <div class="flex space-x-1 mt-1">
+                                            <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" step="0.1" placeholder="36.5" />
+                                            <span class="flex items-center text-xs text-gray-500 dark:text-gray-400">°C</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="oxygen_saturation">Oxygen Saturation</label>
+                                        <div class="flex space-x-1 mt-1">
+                                            <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" placeholder="98" />
+                                            <span class="flex items-center text-xs text-gray-500 dark:text-gray-400">%</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="pain_scale">Pain Scale</label>
+                                        <select class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                                            <option value="">Select Scale</option>
+                                            <option value="0">0 - Tidak nyeri</option>
+                                            <option value="1">1 - Minimal pain</option>
+                                            <option value="2">2 - Mild pain</option>
+                                            <option value="3">3 - Moderate pain</option>
+                                            <option value="4">4 - Moderate-severe</option>
+                                            <option value="5">5 - Severe pain</option>
+                                            <option value="6">6 - Severe pain</option>
+                                            <option value="7">7 - Very severe</option>
+                                            <option value="8">8 - Very severe</option>
+                                            <option value="9">9 - Unbearable</option>
+                                            <option value="10">10 - Worst pain</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="height">Height</label>
+                                        <div class="flex space-x-1 mt-1">
+                                            <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" placeholder="170" />
+                                            <span class="flex items-center text-xs text-gray-500 dark:text-gray-400">cm</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="weight">Weight</label>
+                                        <div class="flex space-x-1 mt-1">
+                                            <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" step="0.1" placeholder="70" />
+                                            <span class="flex items-center text-xs text-gray-500 dark:text-gray-400">kg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Psychological, Social Economic, Spiritual Examination -->
+                    <div class="space-y-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Pemeriksaan Psikologis, Sosial Ekonomi, Spiritual</h3>
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="psychological_status">Psychological Status</label>
+                                <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="psychological_status" rows="3" placeholder="Mental condition, emotions, patient behavior..."></textarea>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="social_economic_status">Social Economic Status</label>
+                                    <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="social_economic_status" rows="3" placeholder="Social economic condition, occupation, income..."></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="spiritual_status">Spiritual Status</label>
+                                    <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="spiritual_status" rows="3" placeholder="Spiritual needs, beliefs, spiritual support..."></textarea>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="risk_factors">Risk Factors</label>
+                                    <select class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="risk_factors">
+                                        <option>Select Risk</option>
+                                        <option>Low Risk</option>
+                                        <option>Moderate Risk</option>
+                                        <option>High Risk</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="support_system">Support System</label>
+                                    <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="support_system" type="text" placeholder="Family, friends, community" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="coping_mechanism">Coping Mechanism</label>
+                                    <input class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="coping_mechanism" type="text" placeholder="Ways to handle problems" />
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                        <!-- PEMERIKSAAN SPESIALISTIK SECTION -->
+                        <div class="form-section" id="specialist-form-section">
+
+
+                            <!-- Care Plan -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Care Plan</h3>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="care_level">Tingkat Perawatan</label>
+                                            <select class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="care_level">
+                                                <option>Select Care Level</option>
+                                                <option>Rawat Jalan</option>
+                                                <option>Inpatient</option>
+                                                <option>Rawat Intensif (ICU)</option>
+                                                <option>Rawat Khusus</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="estimated_los">Estimated Length of Stay</label>
+                                            <div class="flex space-x-2 mt-1">
+                                                <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="number" placeholder="7" />
+                                                <select class="block rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                                                    <option>Hari</option>
+                                                    <option>Minggu</option>
+                                                    <option>Bulan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="treatment_goals">Treatment Goals</label>
+                                        <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="treatment_goals" rows="3" placeholder="Targets to be achieved from treatment..."></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="care_plan">Care Plan</label>
+                                        <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="care_plan" rows="4" placeholder="Detailed plan for patient care..."></textarea>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="monitoring_plan">Monitoring Plan</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="monitoring_plan" rows="3" placeholder="Parameters to be monitored..."></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="discharge_criteria">Discharge Criteria</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="discharge_criteria" rows="3" placeholder="Conditions to be met for discharge..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Diagnosis -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Diagnosis</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-md font-medium text-gray-700 dark:text-gray-200">Diagnosis List</h4>
+                                        <button type="button" class="bg-custom-blue text-white py-2 px-4 rounded-lg text-sm" onclick="addDiagnosis()">
+                                            <span class="material-icons text-sm align-middle mr-1">add</span>
+                                                Add Diagnosis
+                                        </button>
+                                    </div>
+                                    <div class="border dark:border-gray-600 rounded-lg overflow-hidden transition-colors duration-300">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50 dark:bg-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Type</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">ICD-10 Code</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Description</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Date</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Status</th>
+                                                    <th class="relative px-6 py-3">
+                                                        <span class="sr-only">Actions</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600 transition-colors duration-300" id="diagnosis-list">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">Primary</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">J44.1</td>
+                                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">Chronic obstructive pulmonary disease with acute exacerbation</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">11/07/2025</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Active</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a class="text-custom-blue hover:text-blue-700 mr-2" href="#">Edit</a>
+                                                        <a class="text-red-600 hover:text-red-800" href="#">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">Secondary</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">E11.9</td>
+                                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">Type 2 diabetes mellitus without complications</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">11/07/2025</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600">Monitoring</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a class="text-custom-blue hover:text-blue-700 mr-2" href="#">Edit</a>
+                                                        <a class="text-red-600 hover:text-red-800" href="#">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="differential_diagnosis">Differential Diagnosis</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="differential_diagnosis" rows="3" placeholder="List of other possible diagnoses..."></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="clinical_impression">Clinical Impression</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="clinical_impression" rows="3" placeholder="Overall clinical impression..."></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="prognosis">Prognosis</label>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-1">
+                                                <select class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                                                    <option>Select Prognosis</option>
+                                                    <option>Good</option>
+                                                    <option>Fair</option>
+                                                    <option>Poor</option>
+                                                    <option>Dubia ad Bonam</option>
+                                                    <option>Dubia ad Malam</option>
+                                                </select>
+                                                <input class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" type="text" placeholder="Estimated recovery time" />
+                                                <textarea class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" rows="1" placeholder="Prognosis notes..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIWAYAT PENGGUNAAN OBAT SECTION -->
+                        <div class="form-section" id="medication-form-section">
+                            <!-- Medication -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Medication</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-md font-medium text-gray-700 dark:text-gray-200">Current Medications List</h4>
+                                        <button type="button" class="bg-custom-blue text-white py-2 px-4 rounded-lg text-sm" onclick="addMedication()">
+                                            <span class="material-icons text-sm align-middle mr-1">add</span>
+                                                Add Medication
+                                        </button>
+                                    </div>
+                                    <div class="border dark:border-gray-600 rounded-lg overflow-hidden transition-colors duration-300">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50 dark:bg-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Medication Name</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Dosage</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Frequency</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Route</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Start Date</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Status</th>
+                                                    <th class="relative px-6 py-3">
+                                                        <span class="sr-only">Actions</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600 transition-colors duration-300" id="medication-list">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">Paracetamol</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">500mg</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">3x daily</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Oral</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">10/07/2025</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Active</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a class="text-custom-blue hover:text-blue-700 mr-2" href="#">Edit</a>
+                                                        <a class="text-red-600 hover:text-red-800" href="#">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="medication_allergy">Drug Allergies</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="medication_allergy" rows="3" placeholder="List of drugs causing allergies..."></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="adverse_reactions">Adverse Drug Reactions</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="adverse_reactions" rows="3" placeholder="Side effects experienced..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- INSTRUKSI MEDIK DAN KEPERAWATAN SECTION -->
+                        <div class="form-section" id="instruction-form-section">
+                            <!-- Instructions -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Instruksi Medical dan Nursing</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-md font-medium text-gray-700 dark:text-gray-200">Instructions List</h4>
+                                        <button type="button" class="bg-custom-blue text-white py-2 px-4 rounded-lg text-sm" onclick="addInstruction()">
+                                            <span class="material-icons text-sm align-middle mr-1">add</span>
+                                                Add Instruction
+                                        </button>
+                                    </div>
+                                    <div class="border dark:border-gray-600 rounded-lg overflow-hidden transition-colors duration-300">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50 dark:bg-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Date</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Type</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Instruksi</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Staff</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Status</th>
+                                                    <th class="relative px-6 py-3">
+                                                        <span class="sr-only">Actions</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600 transition-colors duration-300" id="instruction-list">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">11/07/2025</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">Medical</td>
+                                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">Administer oxygen 2L/min via nasal cannula</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Dr. Alexa</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Active</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a class="text-custom-blue hover:text-blue-700 mr-2" href="#">Edit</a>
+                                                        <a class="text-red-600 hover:text-red-800" href="#">Complete</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">11/07/2025</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">Nursing</td>
+                                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">Monitor vital signs every 4 hours</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Ns. Sarah</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-600">In Progress</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a class="text-custom-blue hover:text-blue-700 mr-2" href="#">Edit</a>
+                                                        <a class="text-red-600 hover:text-red-800" href="#">Complete</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="special_instructions">Special Instructions</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="special_instructions" rows="4" placeholder="Special instructions for patient..."></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="precautions">Precautions</label>
+                                            <textarea class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-custom-blue focus:ring-custom-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-300" id="precautions" rows="4" placeholder="Precautions to be taken..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="flex justify-end space-x-4 pt-4 border-t mt-8">
+                            <button class="py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-300" type="button">
+                                    Cancel
+                            </button>
+                            <button class="py-2 px-4 border border-custom-blue rounded-lg text-sm font-medium text-custom-blue hover:bg-blue-50 dark:hover:bg-blue-900/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue transition-colors duration-300" type="button">
+                                    Save as Draft
+                            </button>
+                            <button class="bg-custom-blue text-white py-2 px-6 rounded-lg font-semibold text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue" type="submit">
+                                    Save Assessment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="w-full lg:w-[35%]">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm h-full flex flex-col transition-colors duration-300">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="font-bold text-gray-800 dark:text-gray-100 text-lg transition-colors duration-300">Visit History</h2>
+                    </div>
+                    <div class="flex-grow overflow-y-auto bg-gray-50 dark:bg-gray-700 rounded-lg p-3 h-[900px] flex justify-center transition-colors duration-300">
+                        <div class="w-full max-w-xl">
+                            <div class="space-y-4 text-sm relative">
+                                <div class="absolute left-4 top-1 bottom-0 w-0.5 bg-custom-blue"></div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-gray-50 dark:bg-gray-700 transition-colors duration-300"></div>
+                                    <h3 class="font-medium text-gray-600 dark:text-gray-300 mb-2 transition-colors duration-300">12 June 2024 - General Clinic</h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg transition-colors duration-300">
+                                            <p class="font-bold text-sm text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-300">Assessment</p>
+                                            <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">History:</td>
+                                                        <td class="py-0.5 text-left">Patient has productive cough for 3 days, fever, runny nose.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Examination:</td>
+                                                        <td class="py-0.5 text-left">BP 120/80, Pulse 88, RR 20, Temp 37.8°C, Rhonchi++.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Diagnosis:</td>
+                                                        <td class="py-0.5 text-left">Acute Bronchitis</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg transition-colors duration-300">
+                                            <p class="font-bold text-sm text-green-800 dark:text-green-300 mb-2 transition-colors duration-300">Prescription</p>
+                                            <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="py-0.5">- Ambroxol syr</td>
+                                                        <td class="py-0.5 font-medium text-left">3x1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="py-0.5">- Paracetamol 500mg</td>
+                                                        <td class="py-0.5 font-medium text-left">3x3</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="py-0.5">- Cetirizine 10mg</td>
+                                                        <td class="py-0.5 font-medium text-left">1x1 tab</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-gray-50 dark:bg-gray-700 transition-colors duration-300"></div>
+                                    <h3 class="font-medium text-gray-600 dark:text-gray-300 mb-2 transition-colors duration-300">10 May 2024 - Laboratory</h3>
+                                    <div class="bg-yellow-50 dark:bg-yellow-900/30 p-3 rounded-lg transition-colors duration-300">
+                                        <p class="font-bold text-sm text-yellow-800 dark:text-yellow-300 mb-2 transition-colors duration-300">Laboratory Test</p>
+                                        <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="py-0.5" colspan="2">Complete Blood Count:</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pl-2 py-0.5">- Hb:</td>
+                                                    <td class="font-medium text-left py-0.5">13.5 g/dL</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pl-2 py-0.5">- WBC:</td>
+                                                    <td class="font-medium text-left py-0.5">11.000 /uL</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pl-2 py-0.5">- Platelets:</td>
+                                                    <td class="font-medium text-left py-0.5">280.000 /uL</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pl-2 py-0.5">- ESR:</td>
+                                                    <td class="font-medium text-left py-0.5">25 mm/hr</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-2 text-left" colspan="2">Impression: Leukocytosis</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-gray-50 dark:bg-gray-700 transition-colors duration-300"></div>
+                                    <h3 class="font-medium text-gray-600 dark:text-gray-300 mb-2 transition-colors duration-300">2 April 2024 - Dental Clinic</h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg transition-colors duration-300">
+                                            <p class="font-bold text-sm text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-300">Assessment</p>
+                                            <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">History:</td>
+                                                        <td class="py-0.5 text-left">Lower right molar pain for 1 week.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Examination:</td>
+                                                        <td class="py-0.5 text-left">Deep caries tooth 46, non-vital.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Diagnosis:</td>
+                                                        <td class="py-0.5 text-left">Irreversible pulpitis</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="bg-purple-50 dark:bg-purple-900/30 p-3 rounded-lg transition-colors duration-300">
+                                            <p class="font-bold text-sm text-purple-800 dark:text-purple-300 mb-2 transition-colors duration-300">Treatment</p>
+                                            <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Treatment:</td>
+                                                        <td class="py-0.5 text-left">RCT phase 1 tooth 46</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-gray-50 dark:bg-gray-700 transition-colors duration-300"></div>
+                                    <h3 class="font-medium text-gray-600 dark:text-gray-300 mb-2 transition-colors duration-300">15 March 2024 - Radiology</h3>
+                                    <div class="bg-red-50 dark:bg-red-900/30 p-3 rounded-lg transition-colors duration-300">
+                                        <p class="font-bold text-sm text-red-800 dark:text-red-300 mb-2 transition-colors duration-300">Radiology Results</p>
+                                        <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">X-Ray:</td>
+                                                    <td class="py-0.5 text-left">Periapical Tooth 46</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Result:</td>
+                                                    <td class="py-0.5 text-left">Radiolucency in crown &amp; periapical area.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-top pr-2 py-0.5">Impression:</td>
+                                                    <td class="py-0.5 text-left">Caries &amp; Abscess</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-gray-50 dark:bg-gray-700 transition-colors duration-300"></div>
+                                    <h3 class="font-medium text-gray-600 dark:text-gray-300 mb-2 transition-colors duration-300">1 February 2024 - ENT Clinic</h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg transition-colors duration-300">
+                                            <p class="font-bold text-sm text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-300">Assessment</p>
+                                            <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">History:</td>
+                                                        <td class="py-0.5 text-left">Left ear pain, decreased hearing.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Examination:</td>
+                                                        <td class="py-0.5 text-left">Tympanic membrane hyperemic, bulging.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Diagnosis:</td>
+                                                        <td class="py-0.5 text-left">Acute Otitis Media</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg transition-colors duration-300">
+                                            <p class="font-bold text-sm text-green-800 dark:text-green-300 mb-2 transition-colors duration-300">Prescription</p>
+                                            <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="py-0.5">- Amoxicillin 500mg</td>
+                                                        <td class="py-0.5 font-medium text-left">3x1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="py-0.5">- Ibuprofen 400mg</td>
+                                                        <td class="py-0.5 font-medium text-left">3x1</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

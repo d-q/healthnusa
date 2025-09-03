@@ -1,0 +1,546 @@
+<templates xml:space="preserve">
+    <t t-name="healthnusa.AssessmentDetail">
+        <!-- Patient Profile Content -->
+        <div class="flex flex-wrap lg:flex-nowrap gap-6">
+            <div class="w-full lg:w-[65%] space-y-6">
+                <!-- Patient Info Bar -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-16 h-16 bg-custom-blue rounded-full flex items-center justify-center">
+                                <span class="material-icons text-white text-2xl">person</span>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Abigail Peterson</h2>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">ID: MRN123456</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                Inpatient
+                            </div>
+                            <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                                Class 1
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">person</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Gender</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">Female</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">cake</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Birthday</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">Oct. 25, 1992</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">schedule</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Age</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">31 years</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">phone</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Phone</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">+1 (555) 123-4567</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">location_on</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">City</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">San Francisco</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">local_post_office</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">ZIP Code</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">94134</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 md:col-span-2 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">home</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Address</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">250 Executive Park Blvd, Suite 3400<br/>
+San Francisco, CA 94134</p>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border-l-3 border-gray-400 dark:border-gray-600 transition-colors duration-300">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="material-icons text-gray-500 dark:text-gray-400 text-sm">event</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300">Registered</p>
+                            </div>
+                            <p class="font-medium text-gray-900 dark:text-gray-100">Oct. 25, 1998</p>
+                        </div>
+                    </div>
+
+                    <div class="border-t pt-4 mt-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="material-icons text-gray-400 dark:text-gray-500 text-sm">warning</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Allergies:</span>
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">Penicillin</span>
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">Seafood</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                                <span class="material-icons text-sm">access_time</span>
+                                <span>Last updated: 11 Jul 2025, 14:30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Navigation Bar (Read-only) -->
+                <div class="form-navbar bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm transition-colors duration-300">
+                    <div class="flex">
+                        <div class="nav-item flex items-center space-x-2 px-6 py-3 rounded-l-lg border-r border-gray-200 dark:border-gray-700 transition-all duration-300" t-att-class="getNavItemClass('general-form')" t-on-click="() => this.switchTab('general-form')" data-form="general-form">
+                            <span class="material-icons" t-att-class="getNavIconClass('general-form')">assignment</span>
+                            <span class="font-medium" t-att-class="getNavTextClass('general-form')">General</span>
+                        </div>
+                        <div class="nav-item flex items-center space-x-2 px-6 py-3 border-r border-gray-200 dark:border-gray-700 transition-all duration-300" t-att-class="getNavItemClass('specialist-form')" t-on-click="() => this.switchTab('specialist-form')" data-form="specialist-form">
+                            <span class="material-icons" t-att-class="getNavIconClass('specialist-form')">medical_services</span>
+                            <span class="font-medium" t-att-class="getNavTextClass('specialist-form')">Examination</span>
+                        </div>
+                        <div class="nav-item flex items-center space-x-2 px-6 py-3 border-r border-gray-200 dark:border-gray-700 transition-all duration-300" t-att-class="getNavItemClass('medication-form')" t-on-click="() => this.switchTab('medication-form')" data-form="medication-form">
+                            <span class="material-icons" t-att-class="getNavIconClass('medication-form')">medication</span>
+                            <span class="font-medium" t-att-class="getNavTextClass('medication-form')">Medication</span>
+                        </div>
+                        <div class="nav-item flex items-center space-x-2 px-6 py-3 rounded-r-lg transition-all duration-300" t-att-class="getNavItemClass('instruction-form')" t-on-click="() => this.switchTab('instruction-form')" data-form="instruction-form">
+                            <span class="material-icons" t-att-class="getNavIconClass('instruction-form')">task_alt</span>
+                            <span class="font-medium" t-att-class="getNavTextClass('instruction-form')">Instructions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md transition-colors duration-300">
+                    <div class="space-y-8">
+                        <!-- FORMULIR UMUM SECTION -->
+                        <div class="form-section active" id="general-form-section">
+                            <!-- Anamnesis -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Anamnesis</h3>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="chief_complaint">Chief Complaint</label>
+                                        <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                            Patient complains of severe chest pain that started 3 days ago, accompanied by shortness of breath and fatigue.
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="present_illness">Present Illness History</label>
+                                        <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                            The patient reports that the chest pain began gradually 3 days ago and has progressively worsened. The pain is described as sharp and stabbing, located in the center of the chest, and radiates to the left arm. The patient also experiences shortness of breath during minimal exertion and general fatigue.
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="past_medical_history">Past Medical History</label>
+                                            <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                History of hypertension diagnosed 5 years ago, currently managed with medication. No previous hospitalizations.
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="family_history">Family Medical History</label>
+                                            <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                Father died of heart attack at age 58. Mother has diabetes type 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="allergy_history">Allergy History</label>
+                                            <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                Penicillin, Seafood
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200" for="social_history">Social History</label>
+                                            <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                Non-smoker, occasional alcohol consumption (1-2 drinks per week)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Physical Examination -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Physical Examination</h3>
+
+                                <!-- Gambar Anatomi -->
+                                <div class="space-y-4">
+                                    <h4 class="text-md font-medium text-gray-700 dark:text-gray-200">Body Anatomy Image</h4>
+                                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg transition-colors duration-300">
+                                        <div class="flex gap-6 h-[600px]">
+                                            <div class="w-1/2 anatomy-container flex-shrink-0">
+                                                <img src="https://i.pinimg.com/736x/f2/83/23/f283232af4526c45a089481c2cf6f4bc.jpg" alt="Human Body Anatomy" class="w-full h-full object-contain border rounded-lg"/>
+                                            </div>
+
+                                            <div class="w-1/2 flex flex-col space-y-4 overflow-hidden">
+                                                <div class="flex-1 flex flex-col min-h-0">
+                                                    <h5 class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">Examination Findings</h5>
+                                                    <div class="flex-1 overflow-y-auto space-y-2 pr-2" id="marker-list">
+                                                        <div class="bg-white dark:bg-gray-600 p-3 rounded border border-gray-200 dark:border-gray-500 transition-colors duration-300">
+                                                            <div class="flex items-start space-x-2">
+                                                                <div class="w-3 h-3 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                                                                <div class="flex-1">
+                                                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-200">Chest Area</p>
+                                                                    <p class="text-xs text-gray-500 dark:text-gray-400">Tenderness on palpation, no visible deformity</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="bg-white dark:bg-gray-600 p-3 rounded border border-gray-200 dark:border-gray-500 transition-colors duration-300">
+                                                            <div class="flex items-start space-x-2">
+                                                                <div class="w-3 h-3 bg-blue-500 rounded-full mt-1 flex-shrink-0"></div>
+                                                                <div class="flex-1">
+                                                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-200">Heart Rate</p>
+                                                                    <p class="text-xs text-gray-500 dark:text-gray-400">Irregular rhythm noted during auscultation</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="space-y-3 flex-shrink-0">
+                                                    <h5 class="text-sm font-medium text-gray-700 dark:text-gray-200">Physical Examination Notes</h5>
+                                                    <div class="w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                        Patient appears in mild distress. Vital signs stable. Heart sounds irregular with possible murmur. Lungs clear to auscultation bilaterally. No peripheral edema noted. Skin warm and dry.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- General Condition -->
+                                <div class="space-y-4">
+                                    <h4 class="text-md font-medium text-gray-700 dark:text-gray-200">General Condition</h4>
+
+                                    <!-- Consciousness Level -->
+                                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg transition-colors duration-300">
+                                        <h5 class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">Consciousness Level</h5>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-4 h-4 bg-custom-blue rounded-full"></div>
+                                                <span class="text-sm text-gray-700 dark:text-gray-200">Compos Mentis</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">GCS Score</label>
+                                            <div class="grid grid-cols-3 gap-2 mt-1">
+                                                <div class="text-center p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500">
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400">E (Eye)</p>
+                                                    <p class="font-medium text-gray-900 dark:text-gray-100">4</p>
+                                                </div>
+                                                <div class="text-center p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500">
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400">V (Verbal)</p>
+                                                    <p class="font-medium text-gray-900 dark:text-gray-100">5</p>
+                                                </div>
+                                                <div class="text-center p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500">
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400">M (Motor)</p>
+                                                    <p class="font-medium text-gray-900 dark:text-gray-100">6</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Vital Signs -->
+                                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg transition-colors duration-300">
+                                        <h5 class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">Vital Signs</h5>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Blood Pressure</label>
+                                                <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                    140/90 mmHg
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Heart Rate</label>
+                                                <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                    88 bpm
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Respiratory Rate</label>
+                                                <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                    22 x/min
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Temperature</label>
+                                                <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                    37.2°C
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Oxygen Saturation</label>
+                                                <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                    96%
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Pain Scale</label>
+                                                <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                    7/10 - Very severe
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Height</label>
+                                                <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                    165 cm
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Weight</label>
+                                                <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                    68.5 kg
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Psychological, Social Economic, Spiritual Examination -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Pemeriksaan Psikologis, Sosial Ekonomi, Spiritual</h3>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Psychological Status</label>
+                                        <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                            Patient appears anxious about her condition. Cooperative during examination. Shows understanding of medical instructions.
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Social Economic Status</label>
+                                            <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                Middle-class family, employed as office manager, has health insurance coverage.
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Spiritual Status</label>
+                                            <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                Patient expresses strong faith and would appreciate spiritual counseling support.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Risk Factors</label>
+                                            <div class="mt-1 p-2 bg-orange-50 dark:bg-orange-900/30 border border-orange-200 dark:border-orange-800 rounded text-orange-800 dark:text-orange-300 font-medium">
+                                                Moderate Risk
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Support System</label>
+                                            <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                Spouse, two children, close extended family
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Coping Mechanism</label>
+                                            <div class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-3 transition-colors duration-300">
+                                                Prayer, family support, regular exercise
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PEMERIKSAAN SPESIALISTIK SECTION -->
+                        <div class="form-section" id="specialist-form-section" style="display: none;">
+                            <!-- Care Plan -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Care Plan</h3>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Tingkat Perawatan</label>
+                                            <div class="mt-1 p-2 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded text-blue-800 dark:text-blue-300 font-medium">
+                                                Inpatient
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Estimated Length of Stay</label>
+                                            <div class="mt-1 p-2 bg-white dark:bg-gray-600 rounded border border-gray-300 dark:border-gray-500 text-gray-900 dark:text-gray-100">
+                                                7 Days
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Diagnosis -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Diagnosis</h3>
+                                <div class="space-y-4">
+                                    <div class="border dark:border-gray-600 rounded-lg overflow-hidden transition-colors duration-300">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50 dark:bg-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Type</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">ICD-10 Code</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Description</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">Primary</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">I10</td>
+                                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">Essential hypertension</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Active</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MEDICATION SECTION -->
+                        <div class="form-section" id="medication-form-section" style="display: none;">
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Current Medications</h3>
+                                <div class="space-y-4">
+                                    <div class="border dark:border-gray-600 rounded-lg overflow-hidden transition-colors duration-300">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50 dark:bg-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Medication Name</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Dosage</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Frequency</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">Lisinopril</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">10mg</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">1x daily</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Active</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- INSTRUCTIONS SECTION -->
+                        <div class="form-section" id="instruction-form-section" style="display: none;">
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 border-b dark:border-gray-600 pb-2 transition-colors duration-300">Medical Instructions</h3>
+                                <div class="space-y-4">
+                                    <div class="border dark:border-gray-600 rounded-lg overflow-hidden transition-colors duration-300">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50 dark:bg-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Date</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Instruction</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Staff</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider transition-colors duration-300">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600 transition-colors duration-300">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">11/07/2025</td>
+                                                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">Monitor blood pressure every 4 hours</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Dr. Johnson</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Completed</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full lg:w-[35%]">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm h-full flex flex-col transition-colors duration-300">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="font-bold text-gray-800 dark:text-gray-100 text-lg transition-colors duration-300">Visit History</h2>
+                    </div>
+                    <div class="flex-grow overflow-y-auto bg-gray-50 dark:bg-gray-700 rounded-lg p-3 h-[900px] flex justify-center transition-colors duration-300">
+                        <div class="w-full max-w-xl">
+                            <div class="space-y-4 text-sm relative">
+                                <div class="absolute left-4 top-1 bottom-0 w-0.5 bg-custom-blue"></div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-4 top-1 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-custom-blue bg-gray-50 dark:bg-gray-700 transition-colors duration-300"></div>
+                                    <h3 class="font-medium text-gray-600 dark:text-gray-300 mb-2 transition-colors duration-300">12 June 2024 - General Clinic</h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg transition-colors duration-300">
+                                            <p class="font-bold text-sm text-gray-800 dark:text-gray-100 mb-2 transition-colors duration-300">Assessment</p>
+                                            <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">History:</td>
+                                                        <td class="py-0.5 text-left">Patient has productive cough for 3 days, fever, runny nose.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Examination:</td>
+                                                        <td class="py-0.5 text-left">BP 120/80, Pulse 88, RR 20, Temp 37.8°C, Rhonchi++.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-top pr-2 py-0.5">Diagnosis:</td>
+                                                        <td class="py-0.5 text-left">Acute Bronchitis</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg transition-colors duration-300">
+                                            <p class="font-bold text-sm text-green-800 dark:text-green-300 mb-2 transition-colors duration-300">Prescription</p>
+                                            <table class="w-full text-left text-gray-700 dark:text-gray-200 transition-colors duration-300">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="py-0.5">- Ambroxol syr</td>
+                                                        <td class="py-0.5 font-medium text-left">3x1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="py-0.5">- Paracetamol 500mg</td>
+                                                        <td class="py-0.5 font-medium text-left">3x3</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="py-0.5">- Cetirizine 10mg</td>
+                                                        <td class="py-0.5 font-medium text-left">1x1 tab</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Additional history entries would continue here... -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
