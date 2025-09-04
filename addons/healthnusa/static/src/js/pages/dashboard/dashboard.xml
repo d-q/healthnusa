@@ -1,31 +1,426 @@
 <templates xml:space="preserve">
     <t t-name="healthnusa.Dashboard">
-        <div class="sticky top-0 z-10 bg-white dark:bg-gray-800 p-6 rounded-t-2xl border-b border-gray-200 dark:border-gray-700">
-            <!-- Top Controls Row -->
-            <div class="flex justify-between items-center mb-6">
-                <!-- Left Side - Add Button and Title -->
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-4">
-                        <div class="flex flex-col justify-center h-10">
-                            <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 leading-tight">Dashboards</h3>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Hospital Dashboard</h2>
+                    <p class="text-gray-500">Real-time hospital operations overview</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white px-4 py-2 rounded-lg shadow">
+                        <span class="text-sm text-gray-500">Last Update:</span>
+                        <span class="font-semibold text-gray-700 ml-1" t-esc="state.currentTime"/>
+                    </div>
+                    <button class="p-2 bg-white rounded-lg shadow" t-on-click="refreshDashboard">
+                        <span class="material-icons text-gray-600">refresh</span>
+                    </button>
+                    <div class="flex items-center space-x-2 bg-white p-2 rounded-lg shadow">
+                        <img alt="Admin avatar" class="w-8 h-8 rounded-full"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiri3a6ED25vF7lzVZ-nJ6ve_iS-xexp41q1sR3_-unUTDtDRUlNDB5XusFaH3a7BK2LpZ6eYxl-JVdAvvXdxWZYdeWctpFtmB308-RSjKk3zCMAzv_DnNqhAf_g_n39X_tMS-Z27o1QcHNHFt_RQI1JexXeey3mgem3wkHxgKySMfYxjdbN0B75P99D-sT3iCtKZ1fs-P-jYirBewB6t1oJSWIk0KrhBE2Z0D7dbBqAwqz2_mUhsun_8tUK7A4iK_oLgXgQEUD8E" />
+                        <span class="font-semibold text-gray-700">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-blue-100 rounded-lg">
+                            <span class="material-icons text-blue-500">hotel</span>
+                        </div>
+                        <span class="text-sm text-green-500 font-semibold">+5.2%</span>
+                    </div>
+                    <h3 class="text-sm text-gray-600 mb-1">Bed Occupancy</h3>
+                    <p class="text-2xl font-bold text-gray-800" t-esc="state.bedOccupancyRate"/>
+                    <p class="text-xs text-gray-500" t-esc="state.bedOccupancyDetail"/>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-green-100 rounded-lg">
+                            <span class="material-icons text-green-500">people</span>
+                        </div>
+                        <span class="text-sm text-blue-500 font-semibold">+12</span>
+                    </div>
+                    <h3 class="text-sm text-gray-600 mb-1">Today's Admissions</h3>
+                    <p class="text-2xl font-bold text-gray-800" t-esc="state.admissionsCount"/>
+                    <p class="text-xs text-gray-500">15 Emergency, 32 Planned</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-yellow-100 rounded-lg">
+                            <span class="material-icons text-yellow-500">schedule</span>
+                        </div>
+                        <span class="text-sm text-red-500 font-semibold">+8 min</span>
+                    </div>
+                    <h3 class="text-sm text-gray-600 mb-1">Avg Wait Time</h3>
+                    <p class="text-2xl font-bold text-gray-800" t-esc="state.waitTime"/>
+                    <p class="text-xs text-gray-500">Emergency: 8 min</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-purple-100 rounded-lg">
+                            <span class="material-icons text-purple-500">attach_money</span>
+                        </div>
+                        <span class="text-sm text-green-500 font-semibold">+15.3%</span>
+                    </div>
+                    <h3 class="text-sm text-gray-600 mb-1">Today's Revenue</h3>
+                    <p class="text-2xl font-bold text-gray-800" t-esc="state.revenueAmount"/>
+                    <p class="text-xs text-gray-500">Target: $95,000</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-8">
+                <div class="col-span-2 space-y-8">
+                    <div class="bg-white p-6 rounded-2xl shadow">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Critical Alerts &amp; Emergency</h3>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                                <span class="text-sm text-red-500 font-semibold">3 Active</span>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center p-3 bg-red-50 rounded-lg border-l-4 border-red-500">
+                                <span class="material-icons text-red-500 mr-3">warning</span>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-red-800">ICU Bed Shortage</p>
+                                    <p class="text-sm text-red-600">Only 2 ICU beds available - 95% capacity</p>
+                                </div>
+                                <span class="text-xs text-red-500">2 min ago</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                                <span class="material-icons text-yellow-500 mr-3">medication</span>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-yellow-800">Low Stock Alert</p>
+                                    <p class="text-sm text-yellow-600">Morphine inventory below minimum threshold</p>
+                                </div>
+                                <span class="text-xs text-yellow-500">15 min ago</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+                                <span class="material-icons text-orange-500 mr-3">build</span>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-orange-800">Equipment Maintenance</p>
+                                    <p class="text-sm text-orange-600">MRI Machine #2 scheduled for maintenance</p>
+                                </div>
+                                <span class="text-xs text-orange-500">30 min ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Revenue Overview</h3>
+                                <p class="text-sm text-gray-500">Performance for selected period</p>
+                            </div>
+                            <div class="flex items-center bg-gray-100 px-3 py-1 rounded-lg">
+                                <span class="font-semibold text-gray-700" t-esc="state.weeklyTotal"/>
+                                <span class="text-sm text-gray-500 ml-2">Total</span>
+                            </div>
+                        </div>
+                        <div class="h-64 p-4">
+                            <!-- Revenue Line Chart -->
+                            <div class="relative h-full">
+                                <!-- Y-axis labels -->
+                                <div class="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-gray-500 pr-3">
+                                    <span>$100K</span>
+                                    <span>$90K</span>
+                                    <span>$80K</span>
+                                    <span>$70K</span>
+                                    <span>$60K</span>
+                                    <span>$50K</span>
+                                    <span>$40K</span>
+                                    <span>$30K</span>
+                                    <span>$20K</span>
+                                    <span>$10K</span>
+                                    <span>$0K</span>
+                                </div>
+                                
+                                <!-- Chart area -->
+                                <div class="ml-12 h-full relative">
+                                    <!-- Grid lines -->
+                                    <div class="absolute inset-0 flex flex-col justify-between">
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-300"></div>
+                                    </div>
+                                    
+                                    <!-- Line chart -->
+                                    <svg class="absolute inset-0 w-full h-full">
+                                        <!-- Line path -->
+                                        <polyline fill="none" stroke="#3B82F6" stroke-width="3" 
+                                                  points="30,180 100,140 170,120 240,125 310,100 380,110 450,135"/>
+                                        <!-- Data points -->
+                                        <circle cx="30" cy="180" r="4" fill="#3B82F6"/>
+                                        <circle cx="100" cy="140" r="4" fill="#3B82F6"/>
+                                        <circle cx="170" cy="120" r="4" fill="#3B82F6"/>
+                                        <circle cx="240" cy="125" r="4" fill="#3B82F6"/>
+                                        <circle cx="310" cy="100" r="4" fill="#3B82F6"/>
+                                        <circle cx="380" cy="110" r="4" fill="#3B82F6"/>
+                                        <circle cx="450" cy="135" r="4" fill="#3B82F6"/>
+                                        
+                                        <!-- Fill area under line -->
+                                        <polygon fill="rgba(59, 130, 246, 0.1)" 
+                                                 points="30,180 100,140 170,120 240,125 310,100 380,110 450,135 450,220 30,220"/>
+                                    </svg>
+                                    
+                                    <!-- X-axis labels -->
+                                    <div class="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-gray-600 mt-2">
+                                        <span>Mon</span>
+                                        <span>Tue</span>
+                                        <span>Wed</span>
+                                        <span>Thu</span>
+                                        <span>Fri</span>
+                                        <span>Sat</span>
+                                        <span>Sun</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Patient Flow</h3>
+                                <p class="text-sm text-gray-500">Admissions vs discharges</p>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                                    <span class="text-sm text-gray-600">Admissions</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                                    <span class="text-sm text-gray-600">Discharges</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="h-64 p-4">
+                            <!-- Patient Flow Bar Chart -->
+                            <div class="relative h-full">
+                                <!-- Y-axis labels -->
+                                <div class="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-gray-500 pr-3">
+                                    <span>14</span>
+                                    <span>12</span>
+                                    <span>10</span>
+                                    <span>8</span>
+                                    <span>6</span>
+                                    <span>4</span>
+                                    <span>2</span>
+                                    <span>0</span>
+                                </div>
+                                
+                                <!-- Chart area -->
+                                <div class="ml-8 h-full relative pb-8">
+                                    <!-- Grid lines -->
+                                    <div class="absolute inset-0 flex flex-col justify-between pb-8">
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-200"></div>
+                                        <div class="border-t border-gray-300"></div>
+                                    </div>
+                                    
+                                    <!-- Bars -->
+                                    <div class="h-full flex items-end justify-between pb-8">
+                                        <div class="flex items-end space-x-1">
+                                            <div class="bg-blue-500 rounded-t w-8" style="height: 30px;"></div>
+                                            <div class="bg-green-500 rounded-t w-8" style="height: 20px;"></div>
+                                        </div>
+                                        <div class="flex items-end space-x-1">
+                                            <div class="bg-blue-500 rounded-t w-8" style="height: 120px;"></div>
+                                            <div class="bg-green-500 rounded-t w-8" style="height: 80px;"></div>
+                                        </div>
+                                        <div class="flex items-end space-x-1">
+                                            <div class="bg-blue-500 rounded-t w-8" style="height: 190px;"></div>
+                                            <div class="bg-green-500 rounded-t w-8" style="height: 140px;"></div>
+                                        </div>
+                                        <div class="flex items-end space-x-1">
+                                            <div class="bg-blue-500 rounded-t w-8" style="height: 200px;"></div>
+                                            <div class="bg-green-500 rounded-t w-8" style="height: 160px;"></div>
+                                        </div>
+                                        <div class="flex items-end space-x-1">
+                                            <div class="bg-blue-500 rounded-t w-8" style="height: 150px;"></div>
+                                            <div class="bg-green-500 rounded-t w-8" style="height: 110px;"></div>
+                                        </div>
+                                        <div class="flex items-end space-x-1">
+                                            <div class="bg-blue-500 rounded-t w-8" style="height: 70px;"></div>
+                                            <div class="bg-green-500 rounded-t w-8" style="height: 40px;"></div>
+                                        </div>
+                                        <div class="flex items-end space-x-1">
+                                            <div class="bg-blue-500 rounded-t w-8" style="height: 80px;"></div>
+                                            <div class="bg-green-500 rounded-t w-8" style="height: 50px;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- X-axis labels -->
+                                    <div class="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-gray-600">
+                                        <span>6AM</span>
+                                        <span>8AM</span>
+                                        <span>10AM</span>
+                                        <span>12PM</span>
+                                        <span>2PM</span>
+                                        <span>4PM</span>
+                                        <span>6PM</span>
+                                        <span>8PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-1 space-y-8">
+                    <!-- Calendar Widget -->
+                    <div class="bg-white p-6 rounded-2xl shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="font-semibold text-gray-800">Calendar</h4>
+                            <div class="flex items-center space-x-2">
+                                <button t-on-click="previousMonth" class="p-1 hover:bg-gray-100 rounded">
+                                    <span class="material-icons text-gray-600 text-lg">chevron_left</span>
+                                </button>
+                                <span class="text-sm font-medium text-gray-700 min-w-24 text-center" t-esc="state.currentMonth"/>
+                                <button t-on-click="nextMonth" class="p-1 hover:bg-gray-100 rounded">
+                                    <span class="material-icons text-gray-600 text-lg">chevron_right</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="calendar-grid">
+                            <div class="grid grid-cols-7 gap-1 mb-2">
+                                <div class="text-xs font-medium text-gray-500 text-center py-2">Sun</div>
+                                <div class="text-xs font-medium text-gray-500 text-center py-2">Mon</div>
+                                <div class="text-xs font-medium text-gray-500 text-center py-2">Tue</div>
+                                <div class="text-xs font-medium text-gray-500 text-center py-2">Wed</div>
+                                <div class="text-xs font-medium text-gray-500 text-center py-2">Thu</div>
+                                <div class="text-xs font-medium text-gray-500 text-center py-2">Fri</div>
+                                <div class="text-xs font-medium text-gray-500 text-center py-2">Sat</div>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1">
+                                <t t-foreach="state.calendarDays" t-as="day" t-key="day.date">
+                                    <div t-att-class="'text-center text-xs py-2 rounded cursor-pointer transition-colors duration-200 ' + day.class" t-esc="day.number"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow">
+                        <h4 class="font-semibold text-gray-800 mb-4">Staff Overview</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Doctors on duty</span>
+                                <span class="font-semibold text-gray-800">45/52</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Nurses on duty</span>
+                                <span class="font-semibold text-gray-800">128/140</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Support staff</span>
+                                <span class="font-semibold text-gray-800">67/75</span>
+                            </div>
+                            <div class="border-t pt-3 mt-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-red-600">Sick leave today</span>
+                                    <span class="font-semibold text-red-600">8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow">
+                        <h4 class="font-semibold text-gray-800 mb-4">Bed Occupancy by Department</h4>
+                        <div class="h-48">
+                            <!-- Bed Occupancy Donut Chart -->
+                            <div class="relative h-full flex items-center">
+                                <!-- Donut Chart -->
+                                <div class="relative w-40 h-40 ml-8">
+                                    <svg class="w-40 h-40 transform -rotate-90" viewBox="0 0 42 42">
+                                        <!-- Background circle -->
+                                        <circle cx="21" cy="21" r="15.915" fill="none" stroke="#f3f4f6" stroke-width="6"/>
+                                        
+                                        <!-- ICU: 85% - Red (#EF4444) -->
+                                        <circle cx="21" cy="21" r="15.915" fill="none" stroke="#EF4444" stroke-width="6"
+                                                stroke-dasharray="21.25 78.75" stroke-dashoffset="0"/>
+                                        
+                                        <!-- General: 70% - Blue (#4F46E5) -->
+                                        <circle cx="21" cy="21" r="15.915" fill="none" stroke="#4F46E5" stroke-width="6"
+                                                stroke-dasharray="17.5 82.5" stroke-dashoffset="-21.25"/>
+                                        
+                                        <!-- Emergency: 90% - Yellow (#F59E0B) -->
+                                        <circle cx="21" cy="21" r="15.915" fill="none" stroke="#F59E0B" stroke-width="6"
+                                                stroke-dasharray="22.5 77.5" stroke-dashoffset="-38.75"/>
+                                        
+                                        <!-- Surgery: 75% - Purple (#8B5CF6) -->
+                                        <circle cx="21" cy="21" r="15.915" fill="none" stroke="#8B5CF6" stroke-width="6"
+                                                stroke-dasharray="18.75 81.25" stroke-dashoffset="-61.25"/>
+                                        
+                                        <!-- Pediatrics: 65% - Green (#10B981) -->
+                                        <circle cx="21" cy="21" r="15.915" fill="none" stroke="#10B981" stroke-width="6"
+                                                stroke-dasharray="16.25 83.75" stroke-dashoffset="-80"/>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Legend -->
+                                <div class="ml-8 space-y-2 text-sm">
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 rounded-full mr-3" style="background-color: #EF4444;"></div>
+                                        <span class="text-gray-700">ICU (85%)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 rounded-full mr-3" style="background-color: #4F46E5;"></div>
+                                        <span class="text-gray-700">General (70%)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 rounded-full mr-3" style="background-color: #F59E0B;"></div>
+                                        <span class="text-gray-700">Emergency (90%)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 rounded-full mr-3" style="background-color: #8B5CF6;"></div>
+                                        <span class="text-gray-700">Surgery (75%)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 rounded-full mr-3" style="background-color: #10B981;"></div>
+                                        <span class="text-gray-700">Pediatrics (65%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow">
+                        <h4 class="font-semibold text-gray-800 mb-4">Recent Activities</h4>
+                        <div class="space-y-4">
+                            <t t-foreach="state.recentActivities" t-as="activity" t-key="activity.id">
+                                <div class="flex items-start">
+                                    <div t-att-class="'p-2 rounded-full mr-3 mt-1 ' + activity.bgColor">
+                                        <span t-att-class="'material-icons text-sm ' + activity.iconColor" t-esc="activity.icon"/>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-gray-800" t-esc="activity.title"/>
+                                        <p class="text-xs text-gray-500" t-esc="activity.description"/>
+                                        <p class="text-xs text-gray-400" t-esc="activity.time"/>
+                                    </div>
+                                </div>
+                            </t>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Scrollable Data List Container -->
-            <div class="p-6 pt-2">
-                <div class="space-y-2 data-list-container">
-                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 leading-tight">Scrollable</h3>
-                </div>
-
-                <!-- Fixed Pagination Container -->
-                <div class="flex justify-center items-center mt-6">
-                    <div class="flex items-center space-x-1 pagination-buttons">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 leading-tight">Pagination</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </main>
     </t>
 </templates>
